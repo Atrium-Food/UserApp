@@ -257,12 +257,39 @@ class SetMenuView extends StatelessWidget {
                                                     ),
                                                     _discount > 0
                                                         ? SizedBox()
-                                                        : Icon(Icons.add,
-                                                            color: Theme.of(
-                                                                    context)
-                                                                .textTheme
-                                                                .bodyText1
-                                                                .color),
+                                                        : GestureDetector(
+                                                            onTap: () {
+                                                              showModalBottomSheet(
+                                                                  context:
+                                                                      context,
+                                                                  isScrollControlled:
+                                                                      true,
+                                                                  backgroundColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  builder: (con) =>
+                                                                      CartBottomSheet(
+                                                                        product:
+                                                                            setMenu.setMenuList[index],
+                                                                        fromSetMenu:
+                                                                            true,
+                                                                        callback:
+                                                                            (CartModel
+                                                                                cartModel) {
+                                                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                                              content: Text(getTranslated('added_to_cart', context)),
+                                                                              backgroundColor: Colors.green));
+                                                                        },
+                                                                      ));
+                                                            },
+                                                            child: Icon(
+                                                                Icons.add,
+                                                                color: Theme.of(
+                                                                        context)
+                                                                    .textTheme
+                                                                    .bodyText1
+                                                                    .color),
+                                                          ),
                                                   ],
                                                 ),
                                                 _discount > 0
