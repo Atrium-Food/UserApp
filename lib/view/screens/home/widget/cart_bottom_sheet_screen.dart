@@ -278,7 +278,6 @@ class CartBottomSheetScreen extends StatelessWidget {
                         ),
                       ]),
                       SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
                       // Quantity
                       Row(children: [
                         Text(getTranslated('quantity', context),
@@ -420,6 +419,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                                   SizedBox(
                                       height:
                                           Dimensions.PADDING_SIZE_EXTRA_SMALL),
+
+                                  /// split description by a comma, display items in a list
                                   Text(product.description ?? '',
                                       style: rubikRegular),
                                   SizedBox(
