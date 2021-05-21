@@ -56,6 +56,9 @@ class CategoryView extends StatelessWidget {
                                       width: 60,
                                       height: 60,
                                       fit: BoxFit.cover,
+                                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                        return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                      },
                                     ),
                                   ),
                                   Text(

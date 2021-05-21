@@ -161,6 +161,9 @@ class SetMenuView extends StatelessWidget {
                                                   Images.placeholder_rectangle,
                                               image:
                                                   '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${setMenu.setMenuList[index].image}',
+                                              imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                                return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                              },
                                               height: 110,
                                               width: 170,
                                               fit: BoxFit.cover,

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,7 @@ import 'package:flutter_restaurant/theme/light_theme.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart';
 import 'package:flutter_restaurant/view/screens/splash/splash_screen.dart';
+import 'package:flutter_restaurant/view/screens/track/order_tracking_screen.dart';
 import 'package:provider/provider.dart';
 import 'di_container.dart' as di;
 
@@ -41,8 +43,24 @@ Future<void> main() async {
   await di.init();
   final NotificationAppLaunchDetails notificationAppLaunchDetails = await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   int _orderID;
+  int _addressID;
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     _orderID = notificationAppLaunchDetails.payload != null ? int.parse(notificationAppLaunchDetails.payload) : null;
+    // if(notificationAppLaunchDetails.payload != null){
+    //   print(notificationAppLaunchDetails.payload);
+    //   _orderID=null;
+    // }
+    //   if(notificationAppLaunchDetails.payload.startsWith('Rating')){
+    //     List payStrs = notificationAppLaunchDetails.payload.split('_');
+    //     print(payStrs[1]);
+    //     Map id= jsonDecode(payStrs[1]);
+    //     _orderID =int.parse(id["order"]);
+    //     _addressID = int.parse(id["address"]);
+    //   } else {
+    //     _orderID = int.parse(notificationAppLaunchDetails.payload);
+    //   }
+    // }
+
   }
   await MyNotification.initialize(flutterLocalNotificationsPlugin);
   FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
@@ -70,13 +88,14 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<WishListProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
     ],
-    child: MyApp(orderId: _orderID),
+    child: MyApp(orderId: _orderID,addressId: _addressID),
   ));
 }
 
 class MyApp extends StatelessWidget {
   final int orderId;
-  MyApp({@required this.orderId});
+  final int addressId;
+  MyApp({@required this.orderId,this.addressId});
 
   static final navigatorKey = new GlobalKey<NavigatorState>();
 
@@ -99,7 +118,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: _locals,
-      home: orderId == null ? SplashScreen() : OrderDetailsScreen(orderModel: null, orderId: orderId),
+      home: orderId == null ? SplashScreen() : OrderTrackingScreen(orderID: orderId.toString(), addressID: null)
     );
   }
 }

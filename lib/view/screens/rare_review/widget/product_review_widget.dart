@@ -49,6 +49,9 @@ class ProductReviewWidget extends StatelessWidget {
                           height: 70,
                           width: 85,
                           fit: BoxFit.cover,
+                          imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                            return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                          },
                         ),
                       ),
                       SizedBox(width: Dimensions.PADDING_SIZE_SMALL),

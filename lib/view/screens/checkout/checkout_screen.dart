@@ -10,6 +10,8 @@ import 'package:flutter_restaurant/data/model/response/config_model.dart';
 import 'package:flutter_restaurant/data/model/response/order_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/notification/my_notification.dart';
+import 'package:flutter_restaurant/notification/my_notification.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
 import 'package:flutter_restaurant/provider/coupon_provider.dart';
@@ -32,6 +34,8 @@ import 'package:flutter_restaurant/view/screens/checkout/widget/custom_check_box
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
+
+import '../../../main.dart';
 
 class CheckoutScreen extends StatefulWidget {
   final List<CartModel> cartList;
@@ -325,6 +329,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     if(isSuccess) {
       Provider.of<CartProvider>(context, listen: false).clearCartList();
       Provider.of<OrderProvider>(context, listen: false).stopLoader();
+
+      MyNotification.scheduleNotification(flutterLocalNotificationsPlugin,"id",'Title',"body",orderID,addressID.toString());
       if(_isCashOnDeliveryActive && Provider.of<OrderProvider>(context, listen: false).paymentMethodIndex == 0) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderSuccessfulScreen(orderID: orderID, status: 0, addressID: addressID)));
       }else {

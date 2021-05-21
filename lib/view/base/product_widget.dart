@@ -97,6 +97,9 @@ class ProductWidget extends StatelessWidget {
                   placeholder: Images.placeholder_image,
                   image:
                       '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
+                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                  },
                   height: 70,
                   width: 85,
                   fit: BoxFit.cover,
