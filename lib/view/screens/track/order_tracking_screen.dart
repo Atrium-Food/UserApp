@@ -6,6 +6,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
+import 'package:flutter_restaurant/view/screens/rare_review/rate_review_screen.dart';
 import 'package:flutter_restaurant/view/screens/track/widget/custom_stepper.dart';
 import 'package:flutter_restaurant/view/screens/track/widget/delivery_man_widget.dart';
 import 'package:flutter_restaurant/view/screens/track/widget/tracking_map_widget.dart';
@@ -77,6 +78,7 @@ class OrderTrackingScreen extends StatelessWidget {
                   title: getTranslated('food_in_the_way', context),
                   isActive: _status != _statusList[0] && _status != _statusList[1] && _status != _statusList[2],
                 ) : SizedBox(),
+
                 CustomStepper(
                   title: getTranslated('delivered_the_food', context),
                   isActive: _status == _statusList[4], height: _status == _statusList[3] ? 240 : 30,
@@ -87,7 +89,11 @@ class OrderTrackingScreen extends StatelessWidget {
                   ) : null,
                 ),
                 SizedBox(height: 50),
-
+                CustomButton(btnTxt: getTranslated('rate_review', context), onTap: () async {
+                  List orderDetailsList = await Provider.of<OrderProvider>(context, listen: false).getOrderDetails(orderID.toString(), context);
+                  Navigator.push(context, MaterialPageRoute(builder: (_) => RateReviewScreen(orderDetailsList: orderDetailsList, deliveryMan: order.trackModel.deliveryMan)),);
+                }),
+                SizedBox(height: 20),
                 CustomButton(btnTxt: getTranslated('back_home', context), onTap: () {
                   Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashboardScreen()), (route) => false);
                 }),

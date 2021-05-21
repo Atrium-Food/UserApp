@@ -3,6 +3,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 
 class AppConstants {
   static const String BASE_URL = 'https://demo.6amtech.com/restaurant';
+
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
   static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
@@ -41,9 +42,11 @@ class AppConstants {
   static const String NOTIFICATION_URI = '/api/v1/notifications';
   static const String UPDATE_PROFILE_URI = '/api/v1/customer/update-profile';
   static const String SEARCH_URI = '/api/v1/products/search?name=';
+
   static const String REVIEW_URI = '/api/v1/products/reviews/submit';
   static const String PRODUCT_DETAILS_URI = '/api/v1/products/details/';
   static const String LAST_LOCATION_URI = '/api/v1/delivery-man/last-location?order_id=';
+
   static const String DELIVER_MAN_REVIEW_URI = '/api/v1/delivery-man/reviews/submit';
 
   // Shared Key
