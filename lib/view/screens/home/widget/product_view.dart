@@ -44,7 +44,6 @@ class ProductView extends StatelessWidget {
         }
 
         return Column(children: [
-
           productList != null ? productList.length > 0 ? ListView.builder(
             itemCount: productList.length,
             padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),

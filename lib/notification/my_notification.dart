@@ -4,10 +4,14 @@ import 'package:dio/dio.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter_restaurant/main.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 class MyNotification {
 
@@ -106,6 +110,36 @@ class MyNotification {
     final File file = File(filePath);
     await file.writeAsBytes(response.data);
     return filePath;
+  }
+
+  static Future<void> scheduleNotification(
+  FlutterLocalNotificationsPlugin fln,
+        String id,
+        String title,
+        String body, String orderID, String addressID) async {
+    print("Scheduling Notification");
+    var androidSpecifics = AndroidNotificationDetails(
+      id,
+      'Rate Ingredients',
+      'We appreciate your feedback',
+    );
+    var iOSSpecifics = IOSNotificationDetails();
+
+    final String currentTimeZone = await FlutterNativeTimezone.getLocalTimezone();
+    tz.initializeTimeZones();
+    // Map payload={
+    //   "order": orderID,
+    //   "address": addressID,
+    // };
+    var location=tz.getLocation('Asia/Kolkata');
+    var time = tz.TZDateTime.now(location).add(const Duration(minutes: 1));
+    var platformChannelSpecifics = NotificationDetails(
+        android: androidSpecifics,iOS:  iOSSpecifics);
+    await fln.zonedSchedule(0, "Rating", "We'd appreciate your feedback",
+        time, platformChannelSpecifics,androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      payload: orderID,
+    );
   }
 
 }

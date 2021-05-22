@@ -58,6 +58,9 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                       placeholder: Images.placeholder_rectangle,
                       image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.categoryImageUrl}/${widget.categoryModel.image}',
                       fit: BoxFit.cover,
+                      imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                        return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                      },
                     ),
                   ),
                 ),

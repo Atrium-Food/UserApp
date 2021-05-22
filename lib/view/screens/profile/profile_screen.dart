@@ -121,6 +121,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   fit: BoxFit.cover,
                                   image:
                                   '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/${profileProvider.userInfoModel.image}',
+                                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                  },
                                 )
                                     : Image.file(file, width: 80, height: 80, fit: BoxFit.fill),
                               ),

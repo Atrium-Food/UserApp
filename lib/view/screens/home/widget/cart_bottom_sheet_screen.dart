@@ -34,6 +34,114 @@ class CartBottomSheetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> ingredients = [
+      Row(children: [
+        Text(
+          'Ingredient1',
+          style: rubikRegular,
+        ),
+        Expanded(child: SizedBox()),
+        Container(
+          decoration: BoxDecoration(
+              color: ColorResources.getBackgroundColor(context),
+              borderRadius: BorderRadius.circular(5)),
+          child: Row(children: [
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: Icon(Icons.remove, size: 20),
+              ),
+            ),
+            Text('1',
+                style: rubikMedium.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: Icon(Icons.add, size: 20),
+              ),
+            ),
+          ]),
+        ),
+      ]),
+      Row(children: [
+        Text(
+          'Ingredient2',
+          style: rubikRegular,
+        ),
+        Expanded(child: SizedBox()),
+        Container(
+          decoration: BoxDecoration(
+              color: ColorResources.getBackgroundColor(context),
+              borderRadius: BorderRadius.circular(5)),
+          child: Row(children: [
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: Icon(Icons.remove, size: 20),
+              ),
+            ),
+            Text('1',
+                style: rubikMedium.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: Icon(Icons.add, size: 20),
+              ),
+            ),
+          ]),
+        ),
+      ]),
+      Row(children: [
+        Text(
+          'Ingredient3',
+          style: rubikRegular,
+        ),
+        Expanded(child: SizedBox()),
+        Container(
+          decoration: BoxDecoration(
+              color: ColorResources.getBackgroundColor(context),
+              borderRadius: BorderRadius.circular(5)),
+          child: Row(children: [
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: Icon(Icons.remove, size: 20),
+              ),
+            ),
+            Text('1',
+                style: rubikMedium.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: Dimensions.PADDING_SIZE_SMALL,
+                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                child: Icon(Icons.add, size: 20),
+              ),
+            ),
+          ]),
+        ),
+      ]),
+    ];
+
     bool fromCart = cart != null;
     Provider.of<ProductProvider>(context, listen: false)
         .initData(product, cart);
@@ -154,7 +262,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                   Provider.of<CartProvider>(context, listen: false)
                       .isExistInCart(_cartModel, fromCart, cartIndex);
 
-              return Container(
+              return SingleChildScrollView(
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -427,6 +535,35 @@ class CartBottomSheetScreen extends StatelessWidget {
                                       height: Dimensions.PADDING_SIZE_LARGE),
                                 ])
                           : SizedBox(),
+
+                      //Ingredients
+
+                      Text('Ingredients',
+                          style: rubikMedium.copyWith(
+                              fontSize: Dimensions.FONT_SIZE_LARGE)),
+
+                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+
+                      ListView.builder(
+                        // Let the ListView know how many items it needs to build.
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: 3,
+                        // Provide a builder function. This is where the magic happens.
+                        // Convert each item into a widget based on the type of item it is.
+                        itemBuilder: (context, index) {
+                          final ingredient = ingredients[index];
+
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ingredient,
+                            ],
+                          );
+                        },
+                      ),
+
+                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                       // Addons
                       product.addOns.length > 0

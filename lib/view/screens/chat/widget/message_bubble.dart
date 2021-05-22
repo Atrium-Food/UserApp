@@ -66,6 +66,9 @@ class MessageBubble extends StatelessWidget {
                                 image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.chatImageUrl}/${chat.image}',
                                 width: MediaQuery.of(context).size.width,
                                 fit: BoxFit.fitWidth,
+                                imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                  return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                },
                               ),
                             ) : SizedBox(),
                           ],
