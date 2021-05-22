@@ -72,6 +72,9 @@ class CartProductWidget extends StatelessWidget {
                             placeholder: Images.placeholder_image,
                             image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${cart.product.image}',
                             height: 70, width: 85, fit: BoxFit.cover,
+                            imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                              return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                            },
                           ),
                         ),
                         isAvailable ? SizedBox() : Positioned(
