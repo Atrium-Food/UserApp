@@ -320,8 +320,6 @@ class SetMenuView extends StatelessWidget {
                                                                 showModalBottomSheet(
                                                                     context:
                                                                         context,
-                                                                    isScrollControlled:
-                                                                        true,
                                                                     backgroundColor:
                                                                         Colors
                                                                             .transparent,
