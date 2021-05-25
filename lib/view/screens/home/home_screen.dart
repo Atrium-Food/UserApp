@@ -46,26 +46,26 @@ class HomeScreen extends StatelessWidget {
           child: CustomScrollView(
             controller: _scrollController,
             slivers: [
-
               // App Bar
               SliverAppBar(
                 floating: true,
                 elevation: 0,
                 centerTitle: false,
                 automaticallyImplyLeading: false,
-                backgroundColor: Theme.of(context).accentColor,
+                backgroundColor: Theme.of(context).primaryColor,
                 title: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(Images.efood_bike, width: 50, height: 50),
+                    Image.asset(Images.home_location_icon, width: 50, height: 50),
                     SizedBox(width: 10),
-                    Image.asset(Images.efood, width: 55, height: 55, color: ColorResources.getPrimaryColor(context)),
+                    Text("City Name",style: rubikMedium.copyWith(fontSize: 20),)
+                    // Image.asset(Images.efood, width: 55, height: 55, color: ColorResources.getAccentColor(context)),
                   ],
                 ),
                 actions: [
                   IconButton(
                     onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationScreen())),
-                    icon: Icon(Icons.notifications, color: Theme.of(context).textTheme.bodyText1.color),
+                    icon: Icon(Icons.notifications, color: Theme.of(context).accentColor),
                   ),
                 ],
               ),
@@ -78,18 +78,25 @@ class HomeScreen extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchScreen()));
                   },
                   child: Container(
-                    height: 50,
-                    color: Theme.of(context).accentColor,
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: 2),
+                    height: 100,
+                    padding: EdgeInsets.fromLTRB(Dimensions.PADDING_SIZE_SMALL, 2,Dimensions.PADDING_SIZE_SMALL, 10),
                     child: Container(
                       decoration: BoxDecoration(
                         color: ColorResources.getSearchBg(context),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(children: [
-                        Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL), child: Icon(Icons.search, size: 25)),
-                        Expanded(child: Text(getTranslated('search_items_here', context), style: rubikRegular.copyWith(fontSize: 12))),
+                        Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL), child: Icon(Icons.search, size: 25,color: ColorResources.getPrimaryColor(context),)),
+                        Expanded(child: Text("Search cuisine or ingredients", style: rubikRegular.copyWith(fontSize: 15,color: Colors.black54))),
+                            // getTranslated('search_cuisine_ingredients', context)
                       ]),
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(10),
+                        bottomRight: Radius.circular(10)
+                      ),
                     ),
                   ),
                 )),
@@ -110,11 +117,11 @@ class HomeScreen extends StatelessWidget {
                     },
                   ),
 
-                  Consumer<BannerProvider>(
-                    builder: (context, banner, child) {
-                      return banner.bannerList == null ? BannerView() : banner.bannerList.length == 0 ? SizedBox() : BannerView();
-                    },
-                  ),
+                  // Consumer<BannerProvider>(
+                  //   builder: (context, banner, child) {
+                  //     return banner.bannerList == null ? BannerView() : banner.bannerList.length == 0 ? SizedBox() : BannerView();
+                  //   },
+                  // ),
 
                   Padding(
                     padding: EdgeInsets.fromLTRB(10, 20, 10, 10),

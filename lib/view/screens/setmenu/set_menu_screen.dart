@@ -85,6 +85,9 @@ class SetMenuScreen extends StatelessWidget {
                               placeholder: Images.placeholder_rectangle,
                               image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${setMenu.setMenuList[index].image}',
                               height: 110, width: MediaQuery.of(context).size.width/2, fit: BoxFit.cover,
+                              imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                                return Image.asset(Images.placeholder_banner, fit: BoxFit.contain);
+                              },
                             ),
                           ),
                           _isAvailable ? SizedBox() : Positioned(

@@ -177,17 +177,14 @@ class DetailsPage extends StatelessWidget {
                           children: [
                             Icon(
                               CupertinoIcons.clock_solid,
-                              color: Colors.black,
+                              color: ColorResources.getAccentColor(context),
                             ),
                             SizedBox(
                               width: 5.0,
                             ),
                             Text(
                               '1 hour 45 mins',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
+                                style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
                             ),
                           ],
                         ),
@@ -200,17 +197,14 @@ class DetailsPage extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.fastfood,
-                              color: Colors.black,
+                              color: ColorResources.getAccentColor(context),
                             ),
                             SizedBox(
                               width: 5.0,
                             ),
                             Text(
                               'Server 2',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
+                              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
                             )
                           ],
                         ),
@@ -228,17 +222,14 @@ class DetailsPage extends StatelessWidget {
                           children: [
                             Icon(
                               CupertinoIcons.globe,
-                              color: Colors.black,
+                              color: ColorResources.getAccentColor(context),
                             ),
                             SizedBox(
                               width: 5.0,
                             ),
                             Text(
                               'Thai Cuisine',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
+                                style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
                             ),
                           ],
                         ),
@@ -251,17 +242,14 @@ class DetailsPage extends StatelessWidget {
                           children: [
                             Icon(
                               Icons.fireplace,
-                              color: Colors.black,
+                              color: ColorResources.getAccentColor(context),
                             ),
                             SizedBox(
                               width: 5.0,
                             ),
                             Text(
                               '569 cal/serving',
-                              style: TextStyle(
-                                fontSize: 14.0,
-                                color: Colors.black,
-                              ),
+                              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
                             )
                           ],
                         ),
@@ -418,10 +406,11 @@ class DetailsPage extends StatelessWidget {
 
               GridView.builder(
                   gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 100,
+                    maxCrossAxisExtent: 80,
                     childAspectRatio: 3 / 3,
                     crossAxisSpacing: 20,
-                    mainAxisSpacing: 35,
+                    mainAxisSpacing: 10,
+                    mainAxisExtent: 100,
                   ),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -432,13 +421,14 @@ class DetailsPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            radius: 35.0,
-                            child: Text('IN'),
+                            radius: 30.0,
+                            child: Text('IN',style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context)),),
+                            backgroundColor: ColorResources.getSearchBg(context),
                           ),
                           SizedBox(
-                            height: 5.0,
+                            height: 10.0,
                           ),
-                          Text(myProducts[index]["name"]),
+                          Text(myProducts[index]["name"],style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),),
                         ],
                       ),
                     );

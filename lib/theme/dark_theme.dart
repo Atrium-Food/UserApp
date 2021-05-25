@@ -3,7 +3,8 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 
 ThemeData dark = ThemeData(
   fontFamily: 'Rubik',
-  primaryColor: Color(0xFFba4f41),
+  primaryColor: Color(0xFF00B37B),
+  // Color(0xFFba4f41),
   brightness: Brightness.dark,
   scaffoldBackgroundColor: Color(0xFF2C2C2C),
   accentColor: Color(0xFF252525),

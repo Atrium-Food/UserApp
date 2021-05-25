@@ -18,6 +18,7 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
+import 'package:flutter_restaurant/view/screens/home/widget/ReviewPage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -163,8 +164,10 @@ class CartBottomSheetScreen extends StatelessWidget {
           headerSliverBuilder: (context, value) {
             return [
               SliverAppBar(
-                backgroundColor: Colors.green,
-                expandedHeight: 200,
+                backgroundColor: ColorResources.getPrimaryColor(context),
+                toolbarHeight: MediaQuery.of(context).size.height*0.065,
+                collapsedHeight: MediaQuery.of(context).size.height*0.065,
+                expandedHeight: MediaQuery.of(context).size.height*0.25,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
@@ -172,12 +175,12 @@ class CartBottomSheetScreen extends StatelessWidget {
                 ),
                 floating: true,
                 pinned: true,
-
                 flexibleSpace: FlexibleSpaceBar(
+                  titlePadding: EdgeInsets.only(left: 15),
                   centerTitle: true,
                   title: Container(
-                    padding: EdgeInsets.only(top: 65.0, right: 120.0),
-                    alignment: Alignment.center,
+                    padding: EdgeInsets.only(top: 65.0),
+                    alignment: Alignment.bottomLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -186,7 +189,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                           product.name,
                           maxLines: 1,
                           overflow: TextOverflow.visible,
-                          style: rubikMedium.copyWith(color: Colors.black),
+                          style: rubikMedium.copyWith(color: ColorResources.getAccentColor(context)),
                         ),
                         RatingBar(
                             rating: product.rating.length > 0
@@ -207,41 +210,44 @@ class CartBottomSheetScreen extends StatelessWidget {
                   preferredSize: Size.fromHeight(10.0),
                   child: Container(
                     alignment: Alignment.center,
-                    margin: EdgeInsets.only(bottom: 20.0, left: 10, right: 10),
+                    margin: EdgeInsets.only(bottom: 20.0, left: 15, right: 15),
                     // padding: EdgeInsets.only(top: 5, bottom: 5),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.all(
-                        Radius.circular(5.0),
+                        Radius.circular(10.0),
                       ),
                     ),
                     child: TabBar(
-                      unselectedLabelColor: Colors.grey,
+                      unselectedLabelColor: ColorResources.getGrayColor(context),
                       labelColor: Colors.white,
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(
-                          Radius.circular(5.0),
+                          Radius.circular(10.0),
                         ),
                         shape: BoxShape.rectangle,
-                        color: Color(0xFF215E23),
+                        color: ColorResources.getIndicatorPrimaryColor(context),
                       ),
                       tabs: [
-                        Text(
-                          'Details',
-                          style: TextStyle(
-                            fontSize: 20.0,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(2.0,8,2,8),
+                          child: Text(
+                            'DETAILS',
+                            style: rubikRegular.copyWith(fontSize: 16)
                           ),
                         ),
-                        Text(
-                          'Recipe',
-                          style: TextStyle(
-                            fontSize: 20.0,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(2.0,8,2,8),
+                          child: Text(
+                            'RECIPE',
+                            style: rubikRegular.copyWith(fontSize: 16)
                           ),
                         ),
-                        Text(
-                          'Review',
-                          style: TextStyle(
-                            fontSize: 20.0,
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(2.0,8,2,8),
+                          child: Text(
+                            'REVIEW',
+                            style: rubikRegular.copyWith(fontSize: 16)
                           ),
                         ),
                       ],
@@ -260,130 +266,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                 cartIndex: cartIndex,
               ),
               RecipePage(product: product),
-              Container(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      '${product.rating.length > 0 ? double.parse(product.rating[0].average).toStringAsFixed(1) : 0.0}',
-                      style: TextStyle(fontSize: 80.0, color: Colors.black),
-                    ),
-                    RatingBar(
-                        rating: product.rating.length > 0
-                            ? double.parse(product.rating[0].average)
-                            : 0.0,
-                        size: 20),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Text('Based on ${product.rating.length} ratings'),
-                    SizedBox(
-                      height: 15.0,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Excellent',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        new LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 150,
-                          lineHeight: 16.0,
-                          animationDuration: 2500,
-                          percent: 0.8,
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Colors.green,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Good',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        new LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 150,
-                          lineHeight: 16.0,
-                          animationDuration: 2500,
-                          percent: 0.4,
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Colors.green,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Average',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        new LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 150,
-                          lineHeight: 16.0,
-                          percent: 0.8,
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Colors.yellow,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Below Average',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        new LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 150,
-                          lineHeight: 16.0,
-                          percent: 0.6,
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Colors.orange,
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Poor',
-                          textAlign: TextAlign.end,
-                          style: TextStyle(color: Colors.grey),
-                        ),
-                        new LinearPercentIndicator(
-                          width: MediaQuery.of(context).size.width - 150,
-                          lineHeight: 16.0,
-                          animationDuration: 2500,
-                          percent: 0.7,
-                          linearStrokeCap: LinearStrokeCap.roundAll,
-                          progressColor: Colors.red,
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+              ReviewPage(product: product),
             ],
           ),
         ),

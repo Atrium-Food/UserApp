@@ -18,6 +18,7 @@ import 'package:flutter_restaurant/view/base/no_data_screen.dart';
 import 'package:flutter_restaurant/view/screens/cart/widget/cart_product_widget.dart';
 import 'package:flutter_restaurant/view/screens/cart/widget/delivery_option_button.dart';
 import 'package:flutter_restaurant/view/screens/checkout/checkout_screen.dart';
+import 'package:flutter_restaurant/view/screens/checkout/widget/checkout_bottom_sheet.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -250,10 +251,30 @@ class CartScreen extends StatelessWidget {
                           .minimumOrderValue)}, you have ${PriceConverter.convertPrice(context, _orderAmount)} in your cart, please add more item.',
                     ), backgroundColor: Colors.red));
                   } else {
-                    Navigator.push(context, MaterialPageRoute(builder: (_) => CheckoutScreen(
-                      cartList: cart.cartList, amount: _total,
-                      orderType: Provider.of<OrderProvider>(context, listen: false).orderType,
-                    )));
+                    showModalBottomSheet(
+                        context:
+                        context,
+                        isScrollControlled:
+                        true,
+                        backgroundColor:
+                        Colors
+                            .transparent,
+                        builder: (con) =>
+                            CheckoutBottomSheet(
+                            cartList: cart.cartList, amount: _total,
+                            orderType: Provider.of<OrderProvider>(context, listen: false).orderType,
+                              // callback:
+                              //     (CartModel
+                              // cartModel) {
+                              //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              //       content: Text(getTranslated('added_to_cart', context)),
+                              //       backgroundColor: Colors.green));
+          // },
+                            ));
+          //           Navigator.push(context, MaterialPageRoute(builder: (_) => CheckoutScreen(
+          //             cartList: cart.cartList, amount: _total,
+          //             orderType: Provider.of<OrderProvider>(context, listen: false).orderType,
+          //           )));
                   }
                 }),
               ),
