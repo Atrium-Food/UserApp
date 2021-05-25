@@ -11,7 +11,8 @@ class PriceConverter {
         price = price - ((discount / 100) * price);
       }
     }
-    return '${Provider.of<SplashProvider>(context, listen: false).configModel.currencySymbol} '
+    return '\u{20B9}'
+      // '${Provider.of<SplashProvider>(context, listen: false).configModel.currencySymbol} '
         '${(price).toStringAsFixed(asFixed).replaceAllMapped(RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},')}';
   }
 

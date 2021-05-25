@@ -257,9 +257,12 @@ class CartBottomSheet extends StatelessWidget {
                     placeholder: Images.placeholder_rectangle,
                     image:
                         '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                    width: 100,
+                    width: 180,
                     height: 100,
                     fit: BoxFit.cover,
+                    imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                      return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                    },
                   ),
                 ),
                 SizedBox(width: 10),
@@ -359,7 +362,8 @@ class CartBottomSheet extends StatelessWidget {
 
               // Quantity
               Row(children: [
-                Text(getTranslated('quantity', context),
+                Text('Meal Size',
+                    // getTranslated('quantity', context),
                     style: rubikMedium.copyWith(
                         fontSize: Dimensions.FONT_SIZE_LARGE)),
                 Expanded(child: SizedBox()),
@@ -517,170 +521,172 @@ class CartBottomSheet extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Addons
-              product.addOns.length > 0
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                          Text(getTranslated('addons', context),
-                              style: rubikMedium.copyWith(
-                                  fontSize: Dimensions.FONT_SIZE_LARGE)),
-                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                          GridView.builder(
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 4,
-                              crossAxisSpacing: 20,
-                              mainAxisSpacing: 10,
-                              childAspectRatio: (1 / 1.1),
-                            ),
-                            shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: product.addOns.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  if (!productProvider.addOnActiveList[index]) {
-                                    productProvider.addAddOn(true, index);
-                                  } else if (productProvider
-                                          .addOnQtyList[index] ==
-                                      1) {
-                                    productProvider.addAddOn(false, index);
-                                  }
-                                },
-                                child: Container(
-                                  alignment: Alignment.center,
-                                  margin: EdgeInsets.only(
-                                      bottom:
-                                          productProvider.addOnActiveList[index]
-                                              ? 2
-                                              : 20),
-                                  decoration: BoxDecoration(
-                                    color:
-                                        productProvider.addOnActiveList[index]
-                                            ? ColorResources.COLOR_PRIMARY
-                                            : ColorResources.BACKGROUND_COLOR,
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: productProvider
-                                            .addOnActiveList[index]
-                                        ? null
-                                        : Border.all(
-                                            color: ColorResources.BORDER_COLOR,
-                                            width: 2),
-                                    boxShadow:
-                                        productProvider.addOnActiveList[index]
-                                            ? [
-                                                BoxShadow(
-                                                    color: Colors.grey[
-                                                        Provider.of<ThemeProvider>(
-                                                                    context)
-                                                                .darkTheme
-                                                            ? 700
-                                                            : 300],
-                                                    blurRadius: 5,
-                                                    spreadRadius: 1)
-                                              ]
-                                            : null,
-                                  ),
-                                  child: Column(children: [
-                                    Expanded(
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                          Text(product.addOns[index].name,
-                                              maxLines: 2,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              style: rubikMedium.copyWith(
-                                                color: productProvider
-                                                        .addOnActiveList[index]
-                                                    ? ColorResources.COLOR_WHITE
-                                                    : ColorResources
-                                                        .COLOR_BLACK,
-                                                fontSize:
-                                                    Dimensions.FONT_SIZE_SMALL,
-                                              )),
-                                          SizedBox(height: 5),
-                                          Text(
-                                            PriceConverter.convertPrice(context,
-                                                product.addOns[index].price),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: rubikRegular.copyWith(
-                                                color: productProvider
-                                                        .addOnActiveList[index]
-                                                    ? ColorResources.COLOR_WHITE
-                                                    : ColorResources
-                                                        .COLOR_BLACK,
-                                                fontSize: Dimensions
-                                                    .FONT_SIZE_EXTRA_SMALL),
-                                          ),
-                                        ])),
-                                    productProvider.addOnActiveList[index]
-                                        ? Container(
-                                            height: 25,
-                                            decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(5),
-                                                color: Theme.of(context)
-                                                    .accentColor),
-                                            child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Expanded(
-                                                    child: InkWell(
-                                                      onTap: () {
-                                                        if (productProvider
-                                                                    .addOnQtyList[
-                                                                index] >
-                                                            1) {
-                                                          productProvider
-                                                              .setAddOnQuantity(
-                                                                  false, index);
-                                                        } else {
-                                                          productProvider
-                                                              .addAddOn(
-                                                                  false, index);
-                                                        }
-                                                      },
-                                                      child: Center(
-                                                          child: Icon(
-                                                              Icons.remove,
-                                                              size: 15)),
-                                                    ),
-                                                  ),
-                                                  Text(
-                                                      productProvider
-                                                          .addOnQtyList[index]
-                                                          .toString(),
-                                                      style: rubikMedium.copyWith(
-                                                          fontSize: Dimensions
-                                                              .FONT_SIZE_SMALL)),
-                                                  Expanded(
-                                                    child: InkWell(
-                                                      onTap: () =>
-                                                          productProvider
-                                                              .setAddOnQuantity(
-                                                                  true, index),
-                                                      child: Center(
-                                                          child: Icon(Icons.add,
-                                                              size: 15)),
-                                                    ),
-                                                  ),
-                                                ]),
-                                          )
-                                        : SizedBox(),
-                                  ]),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        ])
-                  : SizedBox(),
+              // product.addOns.length > 0
+              //     ? Column(
+              //         crossAxisAlignment: CrossAxisAlignment.start,
+              //         children: [
+              //             Text(getTranslated('addons', context),
+              //                 style: rubikMedium.copyWith(
+              //                     fontSize: Dimensions.FONT_SIZE_LARGE)),
+              //             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              //             GridView.builder(
+              //               gridDelegate:
+              //                   SliverGridDelegateWithFixedCrossAxisCount(
+              //                 crossAxisCount: 4,
+              //                 crossAxisSpacing: 20,
+              //                 mainAxisSpacing: 10,
+              //                 childAspectRatio: (1 / 1.1),
+              //               ),
+              //               shrinkWrap: true,
+              //               physics: NeverScrollableScrollPhysics(),
+              //               itemCount: product.addOns.length,
+              //               itemBuilder: (context, index) {
+              //                 return InkWell(
+              //                   onTap: () {
+              //                     if (!productProvider.addOnActiveList[index]) {
+              //                       productProvider.addAddOn(true, index);
+              //                     } else if (productProvider
+              //                             .addOnQtyList[index] ==
+              //                         1) {
+              //                       productProvider.addAddOn(false, index);
+              //                     }
+              //                   },
+              //                   child: Container(
+              //                     alignment: Alignment.center,
+              //                     margin: EdgeInsets.only(
+              //                         bottom:
+              //                             productProvider.addOnActiveList[index]
+              //                                 ? 2
+              //                                 : 20),
+              //                     decoration: BoxDecoration(
+              //                       color:
+              //                           productProvider.addOnActiveList[index]
+              //                               ? ColorResources.COLOR_PRIMARY
+              //                               : ColorResources.BACKGROUND_COLOR,
+              //                       borderRadius: BorderRadius.circular(5),
+              //                       border: productProvider
+              //                               .addOnActiveList[index]
+              //                           ? null
+              //                           : Border.all(
+              //                               color: ColorResources.BORDER_COLOR,
+              //                               width: 2),
+              //                       boxShadow:
+              //                           productProvider.addOnActiveList[index]
+              //                               ? [
+              //                                   BoxShadow(
+              //                                       color: Colors.grey[
+              //                                           Provider.of<ThemeProvider>(
+              //                                                       context)
+              //                                                   .darkTheme
+              //                                               ? 700
+              //                                               : 300],
+              //                                       blurRadius: 5,
+              //                                       spreadRadius: 1)
+              //                                 ]
+              //                               : null,
+              //                     ),
+              //                     child: Column(children: [
+              //                       Expanded(
+              //                           child: Column(
+              //                               mainAxisAlignment:
+              //                                   MainAxisAlignment.center,
+              //                               children: [
+              //                             Text(product.addOns[index].name,
+              //                                 maxLines: 2,
+              //                                 overflow: TextOverflow.ellipsis,
+              //                                 textAlign: TextAlign.center,
+              //                                 style: rubikMedium.copyWith(
+              //                                   color: productProvider
+              //                                           .addOnActiveList[index]
+              //                                       ? ColorResources.COLOR_WHITE
+              //                                       : ColorResources
+              //                                           .COLOR_BLACK,
+              //                                   fontSize:
+              //                                       Dimensions.FONT_SIZE_SMALL,
+              //                                 )),
+              //                             SizedBox(height: 5),
+              //                             Text(
+              //                               PriceConverter.convertPrice(context,
+              //                                   product.addOns[index].price),
+              //                               maxLines: 1,
+              //                               overflow: TextOverflow.ellipsis,
+              //                               style: rubikRegular.copyWith(
+              //                                   color: productProvider
+              //                                           .addOnActiveList[index]
+              //                                       ? ColorResources.COLOR_WHITE
+              //                                       : ColorResources
+              //                                           .COLOR_BLACK,
+              //                                   fontSize: Dimensions
+              //                                       .FONT_SIZE_EXTRA_SMALL),
+              //                             ),
+              //                           ])),
+              //                       // productProvider.addOnActiveList[index]
+              //                       //     ? Container(
+              //                       //         height: 25,
+              //                       //         decoration: BoxDecoration(
+              //                       //             borderRadius:
+              //                       //                 BorderRadius.circular(5),
+              //                       //             color: Theme.of(context)
+              //                       //                 .accentColor),
+              //                       //         child: Row(
+              //                       //             mainAxisAlignment:
+              //                       //                 MainAxisAlignment.center,
+              //                       //             children: [
+              //                       //               Expanded(
+              //                       //                 child: InkWell(
+              //                       //                   onTap: () {
+              //                       //                     if (productProvider
+              //                       //                                 .addOnQtyList[
+              //                       //                             index] >
+              //                       //                         1) {
+              //                       //                       productProvider
+              //                       //                           .setAddOnQuantity(
+              //                       //                               false, index);
+              //                       //                     } else {
+              //                       //                       productProvider
+              //                       //                           .addAddOn(
+              //                       //                               false, index);
+              //                       //                     }
+              //                       //                   },
+              //                       //                   child: Center(
+              //                       //                       child: Icon(
+              //                       //                           Icons.remove,
+              //                       //                           size: 15)),
+              //                       //                 ),
+              //                       //               ),
+              //                       //               Text(
+              //                       //                   productProvider
+              //                       //                       .addOnQtyList[index]
+              //                       //                       .toString(),
+              //                       //                   style: rubikMedium.copyWith(
+              //                       //                       fontSize: Dimensions
+              //                       //                           .FONT_SIZE_SMALL)),
+              //                       //               Expanded(
+              //                       //                 child: InkWell(
+              //                       //                   onTap: () =>
+              //                       //                       productProvider
+              //                       //                           .setAddOnQuantity(
+              //                       //                               true, index),
+              //                       //                   child: Center(
+              //                       //                       child: Icon(Icons.add,
+              //                       //                           size: 15)),
+              //                       //                 ),
+              //                       //               ),
+              //                       //             ]),
+              //                       //       )
+              //                       //     : SizedBox(),
+              //                     ]),
+              //                   ),
+              //                 );
+              //               },
+              //             ),
+              //             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              //           ])
+              //     : SizedBox(),
 
-              Row(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
                 Text('${getTranslated('total_amount', context)}:',
                     style: rubikMedium.copyWith(
                         fontSize: Dimensions.FONT_SIZE_LARGE)),

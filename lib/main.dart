@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_restaurant/localization/app_localization.dart';
@@ -29,6 +30,7 @@ import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/theme/dark_theme.dart';
 import 'package:flutter_restaurant/theme/light_theme.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
+import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart';
 import 'package:flutter_restaurant/view/screens/splash/splash_screen.dart';
 import 'package:flutter_restaurant/view/screens/track/order_tracking_screen.dart';
@@ -105,6 +107,9 @@ class MyApp extends StatelessWidget {
     AppConstants.languages.forEach((language) {
       _locals.add(Locale(language.languageCode, language.countryCode));
     });
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: ColorResources.getPrimaryColor(context)
+    ));
     return MaterialApp(
       title: 'eFood',
       debugShowCheckedModeBanner: false,
@@ -118,6 +123,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
       ],
       supportedLocales: _locals,
+
       home: orderId == null ? SplashScreen() : OrderTrackingScreen(orderID: orderId.toString(), addressID: null)
     );
   }

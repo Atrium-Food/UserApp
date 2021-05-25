@@ -67,25 +67,25 @@ class _DashboardScreenState extends State<DashboardScreen> {
             _barItem(Icons.shopping_cart, getTranslated('cart', context), 1),
             _barItem(Icons.shopping_bag, getTranslated('order', context), 2),
             _barItem(Icons.favorite, getTranslated('favourite', context), 3),
-            _barItem(Icons.menu, getTranslated('menu', context), 4)
+            _barItem(Icons.account_circle, getTranslated('profile', context), 4)
           ],
           onTap: (int index) {
             _setPage(index);
           },
         ),
-        appBar: Provider.of<SplashProvider>(context, listen: false).isRestaurantClosed() ? AppBar(
-          toolbarHeight: 40,
-          backgroundColor: Theme.of(context).primaryColor,
-          elevation: 1,
-          title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL), child: Image.asset(Images.closed, width: 25, height: 25)),
-            Text(
-              '${getTranslated('restaurant_is_close_now', context)} '
-                  '${DateConverter.convertTimeToTime('${Provider.of<SplashProvider>(context, listen: false).configModel.restaurantOpenTime}:00')}',
-              style: rubikRegular.copyWith(fontSize: 12, color: Colors.black),
-            ),
-          ]),
-        ) : null,
+        // Provider.of<SplashProvider>(context, listen: false).isRestaurantClosed() ? AppBar(
+        //   toolbarHeight: 40,
+        //   backgroundColor: Theme.of(context).primaryColor,
+        //   elevation: 1,
+        //   title: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        //     Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL), child: Image.asset(Images.closed, width: 25, height: 25)),
+        //     Text(
+        //       '${getTranslated('restaurant_is_close_now', context)} '
+        //           '${DateConverter.convertTimeToTime('${Provider.of<SplashProvider>(context, listen: false).configModel.restaurantOpenTime}:00')}',
+        //       style: rubikRegular.copyWith(fontSize: 12, color: Colors.black),
+        //     ),
+        //   ]),
+        // ) : null,
         body: PageView.builder(
           controller: _pageController,
           itemCount: _screens.length,

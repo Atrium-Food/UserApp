@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/category_model.dart';
 import 'package:flutter_restaurant/provider/category_provider.dart';
@@ -22,7 +21,7 @@ class CategoryScreen extends StatefulWidget {
 
 class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStateMixin {
   int _tabIndex = 0;
-
+  bool veg=false;
   @override
   void initState() {
     super.initState();
@@ -32,18 +31,18 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: ColorResources.getBackgroundColor(context),
       body: Consumer<CategoryProvider>(
         builder: (context, category, child) {
           return category.subCategoryList != null ? CustomScrollView(
             physics: BouncingScrollPhysics(),
             slivers: [
-
               SliverAppBar(
                 expandedHeight: 200,
                 toolbarHeight: 50 + MediaQuery.of(context).padding.top,
                 pinned: true,
                 floating: false,
-                backgroundColor: Theme.of(context).primaryColor,
+                // backgroundColor: Theme.of(context).primaryColor,
                 leading: IconButton(icon: Icon(Icons.chevron_left, color: ColorResources.COLOR_WHITE), onPressed: () => Navigator.pop(context)),
                 flexibleSpace: FlexibleSpaceBar(
                   title: Text(widget.categoryModel.name, style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE, color: Colors.white)),
@@ -68,29 +67,56 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                   preferredSize: Size.fromHeight(30.0),
                   child: Container(
                     width: MediaQuery.of(context).size.width,
-                    color: Theme.of(context).accentColor,
-                    child: TabBar(
-                      controller: TabController(initialIndex: _tabIndex, length: category.subCategoryList.length+1, vsync: this),
-                      isScrollable: true,
-                      unselectedLabelColor: ColorResources.getGreyColor(context),
-                      indicatorWeight: 3,
-                      indicatorSize: TabBarIndicatorSize.label,
-                      indicatorColor: Theme.of(context).primaryColor,
-                      labelColor: Theme.of(context).textTheme.bodyText1.color,
-                      tabs: _tabs(category),
-                      onTap: (int index) {
-                        _tabIndex = index;
-                        if(index == 0) {
-                          category.getCategoryProductList(context, widget.categoryModel.id.toString());
-                        }else {
-                          category.getCategoryProductList(context, category.subCategoryList[index-1].id.toString());
-                        }
-                      },
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).accentColor,
+                      borderRadius: BorderRadius.only(
+                        topRight: Radius.circular(20),
+                        topLeft: Radius.circular(20)
+                      )
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0,0.0,0.0,0.0),
+                          child: Row(
+                            children: [
+                              Text("Veg",style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
+                              Switch(
+                                activeColor: ColorResources.getPrimaryColor(context),
+                                  value: veg,
+                                  onChanged: (val){
+                                    setState(() {
+                                      veg=val;
+                                    });
+                                  }
+                              )
+                            ],
+                          ),
+                        ),
+                        TabBar(
+                          controller: TabController(initialIndex: _tabIndex, length: category.subCategoryList.length+1, vsync: this),
+                          isScrollable: true,
+                          unselectedLabelColor: ColorResources.getGreyColor(context),
+                          indicatorWeight: 3,
+                          indicatorSize: TabBarIndicatorSize.label,
+                          indicatorColor: Theme.of(context).primaryColor,
+                          labelColor: Theme.of(context).textTheme.bodyText1.color,
+                          tabs: _tabs(category),
+                          onTap: (int index) {
+                            _tabIndex = index;
+                            if(index == 0) {
+                              category.getCategoryProductList(context, widget.categoryModel.id.toString());
+                            }else {
+                              category.getCategoryProductList(context, category.subCategoryList[index-1].id.toString());
+                            }
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ),
               ),
-
               SliverToBoxAdapter(
                 child: category.categoryProductList != null ? category.categoryProductList.length > 0 ? ListView.builder(
                   itemCount: category.categoryProductList.length,
@@ -110,7 +136,6 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                   },
                 ),
               ),
-
             ],
           ) : Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)));
         },

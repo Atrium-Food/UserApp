@@ -7,6 +7,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/no_data_screen.dart';
 import 'package:flutter_restaurant/view/base/not_logged_in_screen.dart';
+import 'package:flutter_restaurant/view/base/product_description_widget.dart';
 import 'package:flutter_restaurant/view/base/product_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -21,7 +22,8 @@ class _WishListScreenState extends State<WishListScreen> {
     final bool _isLoggedIn = Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
 
     return Scaffold(
-      appBar: CustomAppBar(title: getTranslated('my_favourite', context), isBackButtonExist: false),
+      appBar: CustomAppBar(
+          title: getTranslated('my_favourite', context), isBackButtonExist: false),
       body: _isLoggedIn ? Consumer<WishListProvider>(
         builder: (context, wishlistProvider, child) {
           return wishlistProvider.wishList != null ? wishlistProvider.wishIdList.length > 0 ? RefreshIndicator(
@@ -33,10 +35,10 @@ class _WishListScreenState extends State<WishListScreen> {
               itemCount: wishlistProvider.wishList.length,
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               itemBuilder: (context, index) {
-                return ProductWidget(product: wishlistProvider.wishList[index]);
+                return ProductDescriptionWidget(product: wishlistProvider.wishList[index]);
               },
             ),
-          ): NoDataScreen()
+          ): NoDataScreen(isWishList: true,)
             : Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(ColorResources.COLOR_PRIMARY)));
         },
       ) : NotLoggedInScreen(),

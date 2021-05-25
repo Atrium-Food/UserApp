@@ -28,19 +28,22 @@ class SetMenuView extends StatelessWidget {
             Padding(
               padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
               child: TitleWidget(
-                  title: getTranslated('set_menu', context),
+                  title: "Special Menu",
                   onTap: () {
                     Navigator.push(context,
                         MaterialPageRoute(builder: (_) => SetMenuScreen()));
                   }),
             ),
             SizedBox(
-              height: 220,
+              height: 600,
               child: setMenu.setMenuList != null
                   ? setMenu.setMenuList.length > 0
-                      ? ListView.builder(
-                          physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.horizontal,
+                      ? ListView.separated(
+                          separatorBuilder: (context, index) {
+                            return Padding(padding: EdgeInsets.all(2));
+                          },
+                          physics: ClampingScrollPhysics(),
+                          scrollDirection: Axis.vertical,
                           padding: EdgeInsets.only(
                               left: Dimensions.PADDING_SIZE_SMALL),
                           itemCount: setMenu.setMenuList.length > 5
@@ -128,10 +131,10 @@ class SetMenuView extends StatelessWidget {
                               },
                               child: Container(
                                 height: 220,
-                                width: 170,
+                                width: 300,
                                 margin: EdgeInsets.only(
-                                    right: Dimensions.PADDING_SIZE_SMALL,
-                                    bottom: 5),
+                                    right: Dimensions.PADDING_SIZE_LARGE,
+                                    bottom: Dimensions.PADDING_SIZE_LARGE),
                                 decoration: BoxDecoration(
                                     color: Theme.of(context).accentColor,
                                     borderRadius: BorderRadius.circular(10),
@@ -141,32 +144,37 @@ class SetMenuView extends StatelessWidget {
                                             Provider.of<ThemeProvider>(context)
                                                     .darkTheme
                                                 ? 700
-                                                : 300],
+                                                : 400],
                                         blurRadius: 5,
                                         spreadRadius: 1,
                                       )
                                     ]),
                                 child: Column(
                                     crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Stack(
                                         children: [
-                                          ClipRRect(
-                                            borderRadius: BorderRadius.vertical(
-                                                top: Radius.circular(10)),
+                                          ClipRect(
                                             child: FadeInImage.assetNetwork(
                                               placeholder:
                                                   Images.placeholder_rectangle,
                                               image:
                                                   '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${setMenu.setMenuList[index].image}',
-                                              imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                                return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                              imageErrorBuilder:
+                                                  (BuildContext context,
+                                                      Object exception,
+                                                      StackTrace stackTrace) {
+                                                return Image.asset(
+                                                  Images.placeholder_banner,
+                                                  fit: BoxFit.fill,
+                                                  height: 110,
+                                                );
                                               },
                                               height: 110,
-                                              width: 170,
-                                              fit: BoxFit.cover,
+                                              // width: 200,
+                                              fit: BoxFit.fill,
                                             ),
                                           ),
                                           _isAvailable
@@ -214,32 +222,37 @@ class SetMenuView extends StatelessWidget {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: [
-                                                Text(
-                                                  setMenu
-                                                      .setMenuList[index].name,
-                                                  style: rubikMedium.copyWith(
-                                                      fontSize: Dimensions
-                                                          .FONT_SIZE_SMALL),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                ),
-                                                SizedBox(
-                                                    height: Dimensions
-                                                        .PADDING_SIZE_EXTRA_SMALL),
-                                                RatingBar(
-                                                  rating: setMenu
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  children: [
+                                                    Text(
+                                                      setMenu.setMenuList[index]
+                                                          .name,
+                                                      style: rubikMedium.copyWith(
+                                                          fontSize: Dimensions
+                                                              .FONT_SIZE_LARGE),
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                    ),
+                                                    RatingBar(
+                                                      rating: setMenu
+                                                                  .setMenuList[
+                                                                      index]
+                                                                  .rating
+                                                                  .length >
+                                                              0
+                                                          ? double.parse(setMenu
                                                               .setMenuList[
                                                                   index]
-                                                              .rating
-                                                              .length >
-                                                          0
-                                                      ? double.parse(setMenu
-                                                          .setMenuList[index]
-                                                          .rating[0]
-                                                          .average)
-                                                      : 0.0,
-                                                  size: 12,
+                                                              .rating[0]
+                                                              .average)
+                                                          : 0.0,
+                                                      size: 12,
+                                                    ),
+                                                  ],
                                                 ),
                                                 SizedBox(
                                                     height: Dimensions
@@ -255,7 +268,7 @@ class SetMenuView extends StatelessWidget {
                                                         '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: setMenu.setMenuList[index].discount, discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}' : ''}',
                                                         style: rubikBold.copyWith(
                                                             fontSize: Dimensions
-                                                                .FONT_SIZE_SMALL),
+                                                                .FONT_SIZE_DEFAULT),
                                                       ),
                                                     ),
                                                     _discount > 0
@@ -286,7 +299,8 @@ class SetMenuView extends StatelessWidget {
                                                                       ));
                                                             },
                                                             child: Icon(
-                                                                Icons.add,
+                                                                Icons
+                                                                    .add_circle_outline_sharp,
                                                                 color: Theme.of(
                                                                         context)
                                                                     .textTheme
@@ -337,7 +351,8 @@ class SetMenuView extends StatelessWidget {
                                                                             ));
                                                               },
                                                               child: Icon(
-                                                                  Icons.add,
+                                                                  Icons
+                                                                      .add_circle_outline_sharp,
                                                                   color: Theme.of(
                                                                           context)
                                                                       .textTheme

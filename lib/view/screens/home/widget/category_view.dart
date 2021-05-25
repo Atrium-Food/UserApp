@@ -24,7 +24,7 @@ class CategoryView extends StatelessWidget {
                   TitleWidget(title: getTranslated('all_categories', context)),
             ),
             SizedBox(
-              height: 80,
+              height: 210,
               child: category.categoryList != null
                   ? category.categoryList.length > 0
                       ? ListView.builder(
@@ -48,23 +48,27 @@ class CategoryView extends StatelessWidget {
                                   SizedBox(
                                     height: 1.0,
                                   ),
-                                  ClipOval(
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.all(Radius.circular(10)),
                                     child: FadeInImage.assetNetwork(
                                       placeholder: Images.placeholder_image,
                                       image:
                                           '${Provider.of<SplashProvider>(context, listen: false).baseUrls.categoryImageUrl}/${category.categoryList[index].image}',
-                                      width: 60,
-                                      height: 60,
+                                      width: 120,
+                                      height: 180,
                                       fit: BoxFit.cover,
                                       imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
                                         return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
                                       },
                                     ),
                                   ),
+                                  SizedBox(
+                                    height: 4.0,
+                                  ),
                                   Text(
                                     category.categoryList[index].name,
                                     style: rubikMedium.copyWith(
-                                        fontSize: Dimensions.FONT_SIZE_SMALL),
+                                        fontSize: Dimensions.FONT_SIZE_DEFAULT),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),

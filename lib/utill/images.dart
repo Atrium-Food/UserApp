@@ -31,6 +31,11 @@ class Images {
   static const String unselected_restaurant_marker = 'assets/image/unselected_restaurant_marker.png';
   static const String wallet = 'assets/image/wallet.png';
   static const String guest_login = 'assets/image/guest_login.png';
+  static const String add_favorite = 'assets/image/add_favorite.png';
+  static const String customer_support='assets/image/customer_support.png';
+  static const String no_ongoing_orders='assets/image/no_ongoing_orders.png';
+  static const String call_support='assets/image/call_support.png';
+  static const String chat_support='assets/image/chat_support.png';
 
   // for Icon
   static const String efood = 'assets/icon/efood.png';
@@ -51,6 +56,7 @@ class Images {
   static const String done_with_full_background = 'assets/icon/done_with_full_background.png';
   static const String filter_icon = 'assets/icon/filter_icon.png';
   static const String location = 'assets/icon/location.png';
+  static const String home_location_icon='assets/icon/home_location.png';
 
   // for Image
   static const String arabic = 'assets/image/arabic.png';

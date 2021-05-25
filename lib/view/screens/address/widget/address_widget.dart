@@ -26,7 +26,13 @@ class AddressWidget extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 7, horizontal: 7),
         margin: EdgeInsets.only(bottom: 8.0),
         height: 70,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL), color: ColorResources.getSearchBg(context)),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(Dimensions.PADDING_SIZE_SMALL),
+            color: ColorResources.getAddressBg(context),
+          boxShadow: [
+            BoxShadow()
+          ]
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -74,12 +80,12 @@ class AddressWidget extends StatelessWidget {
                     width: 40,
                     height: 40,
                     margin: EdgeInsets.only(right: 20),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Theme.of(context).accentColor,
-                      border: Border.all(width: 1, color: ColorResources.getGreyColor(context)),
-                    ),
-                    child: Icon(Icons.map),
+                    // decoration: BoxDecoration(
+                    //   borderRadius: BorderRadius.circular(5),
+                    //   color: Theme.of(context).accentColor,
+                    //   border: Border.all(width: 1, color: ColorResources.getGreyColor(context)),
+                    // ),
+                    child: Icon(Icons.map,color: ColorResources.getGrayColor(context),),
                   ),
                 ),
                 //SizedBox(width: 9.0),

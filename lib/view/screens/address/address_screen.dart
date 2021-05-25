@@ -4,6 +4,7 @@ import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/location_provider.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
+import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/no_data_screen.dart';
 import 'package:flutter_restaurant/view/base/not_logged_in_screen.dart';
@@ -24,11 +25,20 @@ class AddressScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: CustomAppBar(title: getTranslated('address', context)),
-      floatingActionButton: _isLoggedIn ? FloatingActionButton(
-        child: Icon(Icons.add, color: Colors.white),
-        backgroundColor: Theme.of(context).primaryColor,
-        onPressed: () => _checkPermission(context, AddNewAddressScreen()),
-      ) : null,
+      // floatingActionButton: _isLoggedIn ? FloatingActionButton(
+      //   child: Icon(Icons.add, color: Colors.white),
+      //   backgroundColor: Theme.of(context).primaryColor,
+      //   onPressed: () => _checkPermission(context, AddNewAddressScreen()),
+      // ) : null,
+      bottomNavigationBar: _isLoggedIn? Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: CustomButton(
+          btnTxt: 'Add Address',
+          onTap: (){
+            _checkPermission(context, AddNewAddressScreen());
+          },
+        ),
+      ):null,
       body: _isLoggedIn ? Consumer<LocationProvider>(
         builder: (context, locationProvider, child) {
           return locationProvider.addressList != null ? locationProvider.addressList.length > 0 ? RefreshIndicator(

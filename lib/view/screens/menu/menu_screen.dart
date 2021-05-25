@@ -44,6 +44,9 @@ class MenuScreen extends StatelessWidget {
                     image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
                         '${profileProvider.userInfoModel != null ? profileProvider.userInfoModel.image : ''}',
                     height: 80, width: 80, fit: BoxFit.cover,
+                    imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                      return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                    },
                   ) : Image.asset(Images.placeholder_user, height: 80, width: 80, fit: BoxFit.cover),
                 ),
               ),
