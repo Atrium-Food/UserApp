@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
@@ -13,18 +15,19 @@ import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
+import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
-class CartBottomSheet extends StatelessWidget {
+class DetailsPage extends StatelessWidget {
   final Product product;
   final bool fromSetMenu;
   final Function callback;
   final CartModel cart;
   final int cartIndex;
-  CartBottomSheet(
+  DetailsPage(
       {@required this.product,
       this.fromSetMenu = false,
       this.callback,
@@ -33,113 +36,9 @@ class CartBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> ingredients = [
-      Row(children: [
-        Text(
-          'Ingredient1',
-          style: rubikRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Text(
-          'Ingredient2',
-          style: rubikRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Text(
-          'Ingredient3',
-          style: rubikRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-    ];
+    final List<Map> myProducts =
+        List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
+            .toList();
 
     bool fromCart = cart != null;
     Provider.of<ProductProvider>(context, listen: false)
@@ -150,8 +49,6 @@ class CartBottomSheet extends StatelessWidget {
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
       decoration: BoxDecoration(
         color: Theme.of(context).accentColor,
-        borderRadius: BorderRadius.only(
-            topRight: Radius.circular(20), topLeft: Radius.circular(20)),
       ),
       child: Consumer<ProductProvider>(
         builder: (context, productProvider, child) {
@@ -250,112 +147,133 @@ class CartBottomSheet extends StatelessWidget {
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               //Product
-              Row(children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder_rectangle,
-                    image:
-                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                    width: 180,
-                    height: 100,
-                    fit: BoxFit.cover,
+              Row(
+                children: [
+                  Expanded(
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Images.placeholder_rectangle,
+                        image:
+                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
+                        height: 170,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                    flex: 1,
                   ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          product.name,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: rubikMedium.copyWith(
-                              fontSize: Dimensions.FONT_SIZE_LARGE),
-                        ),
-                        RatingBar(
-                            rating: product.rating.length > 0
-                                ? double.parse(product.rating[0].average)
-                                : 0.0,
-                            size: 15),
-                        SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                ],
+              ),
+              SizedBox(height: 20.0),
+
+              //Details
+              Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Row(
                           children: [
-                            Text(
-                              '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType)}'
-                              '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType)}' : ''}',
-                              style: rubikMedium.copyWith(
-                                  fontSize: Dimensions.FONT_SIZE_LARGE),
+                            Icon(
+                              CupertinoIcons.clock_solid,
+                              color: Colors.black,
                             ),
-                            price == priceWithDiscount
-                                ? Consumer<WishListProvider>(
-                                    builder: (context, wishList, child) {
-                                    return InkWell(
-                                      onTap: () {
-                                        wishList.wishIdList.contains(product.id)
-                                            ? wishList.removeFromWishList(
-                                                product, (message) {})
-                                            : wishList.addToWishList(
-                                                product, (message) {});
-                                      },
-                                      child: Icon(
-                                        wishList.wishIdList.contains(product.id)
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: wishList.wishIdList
-                                                .contains(product.id)
-                                            ? ColorResources.COLOR_PRIMARY
-                                            : ColorResources.COLOR_GREY,
-                                      ),
-                                    );
-                                  })
-                                : SizedBox(),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              '1 hour 45 mins',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                            ),
                           ],
                         ),
-                        price > priceWithDiscount
-                            ? Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                    Text(
-                                      '${PriceConverter.convertPrice(context, _startingPrice)}'
-                                      '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                                      style: rubikMedium.copyWith(
-                                          color: ColorResources.COLOR_GREY,
-                                          decoration:
-                                              TextDecoration.lineThrough),
-                                    ),
-                                    Consumer<WishListProvider>(
-                                        builder: (context, wishList, child) {
-                                      return InkWell(
-                                        onTap: () {
-                                          wishList.wishIdList
-                                                  .contains(product.id)
-                                              ? wishList.removeFromWishList(
-                                                  product, (message) {})
-                                              : wishList.addToWishList(
-                                                  product, (message) {});
-                                        },
-                                        child: Icon(
-                                          wishList.wishIdList
-                                                  .contains(product.id)
-                                              ? Icons.favorite
-                                              : Icons.favorite_border,
-                                          color: wishList.wishIdList
-                                                  .contains(product.id)
-                                              ? ColorResources.COLOR_PRIMARY
-                                              : ColorResources.COLOR_GREY,
-                                        ),
-                                      );
-                                    }),
-                                  ])
-                            : SizedBox(),
-                      ]),
-                ),
-              ]),
-              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.fastfood,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              'Server 2',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 15.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Icon(
+                              CupertinoIcons.globe,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              'Thai Cuisine',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        width: 10.0,
+                      ),
+                      Expanded(
+                        child: Row(
+                          children: [
+                            Icon(
+                              Icons.fireplace,
+                              color: Colors.black,
+                            ),
+                            SizedBox(
+                              width: 5.0,
+                            ),
+                            Text(
+                              '569 cal/serving',
+                              style: TextStyle(
+                                fontSize: 14.0,
+                                color: Colors.black,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+
+              SizedBox(
+                height: 20.0,
+              ),
 
               // Quantity
               Row(children: [
@@ -483,36 +401,48 @@ class CartBottomSheet extends StatelessWidget {
                               style: rubikMedium.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_LARGE)),
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+
+                          /// split description by a comma, display items in a list
                           Text(product.description ?? '', style: rubikRegular),
                           SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                         ])
                   : SizedBox(),
 
               //Ingredients
+
               Text('Ingredients',
                   style: rubikMedium.copyWith(
                       fontSize: Dimensions.FONT_SIZE_LARGE)),
 
               SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
-              ListView.builder(
-                // Let the ListView know how many items it needs to build.
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: 3,
-                // Provide a builder function. This is where the magic happens.
-                // Convert each item into a widget based on the type of item it is.
-                itemBuilder: (context, index) {
-                  final ingredient = ingredients[index];
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ingredient,
-                    ],
-                  );
-                },
-              ),
+              GridView.builder(
+                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 100,
+                    childAspectRatio: 3 / 3,
+                    crossAxisSpacing: 20,
+                    mainAxisSpacing: 35,
+                  ),
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: myProducts.length,
+                  itemBuilder: (BuildContext ctx, index) {
+                    return Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircleAvatar(
+                            radius: 35.0,
+                            child: Text('IN'),
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          Text(myProducts[index]["name"]),
+                        ],
+                      ),
+                    );
+                  }),
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
@@ -691,7 +621,7 @@ class CartBottomSheet extends StatelessWidget {
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                     )),
               ]),
-              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+              SizedBox(height: 18.0),
 
               _isAvailable
                   ? CustomButton(

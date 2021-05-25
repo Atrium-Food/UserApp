@@ -16,7 +16,7 @@ class RatingBar extends StatelessWidget {
 
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
-        _starList.add(Icon(Icons.star, color: ColorResources.COLOR_PRIMARY, size: size));
+        _starList.add(Icon(Icons.star, color: Colors.black, size: size));
       } else if (i == realNumber) {
         _starList.add(SizedBox(
           height: size,
@@ -24,16 +24,16 @@ class RatingBar extends StatelessWidget {
           child: Stack(
             fit: StackFit.expand,
             children: [
-              Icon(Icons.star, color: ColorResources.COLOR_PRIMARY, size: size),
+              Icon(Icons.star, color: Colors.black, size: size),
               ClipRect(
                 clipper: _Clipper(part: partNumber),
-                child: Icon(Icons.star, color: Colors.grey, size: size),
+                child: Icon(Icons.star_border, color: Colors.black, size: size),
               )
             ],
           ),
         ));
       } else {
-        _starList.add(Icon(Icons.star, color: Colors.grey, size: size));
+        _starList.add(Icon(Icons.star_border, color: Colors.black, size: size));
       }
     }
 

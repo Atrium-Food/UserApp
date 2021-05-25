@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
@@ -16,8 +18,11 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
+import 'package:percent_indicator/linear_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'detailsPage.dart';
+import 'recipePage.dart';
 
 class CartBottomSheetScreen extends StatelessWidget {
   final Product product;
@@ -34,6 +39,10 @@ class CartBottomSheetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final List<Map> myProducts =
+        List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
+            .toList();
+
     final List<Widget> ingredients = [
       Row(children: [
         Text(
@@ -148,691 +157,241 @@ class CartBottomSheetScreen extends StatelessWidget {
     Variation _variation = Variation();
 
     return Scaffold(
-      appBar: CustomAppBar(title: getTranslated('set_menu', context)),
-      body: SafeArea(
-        child: Container(
-          padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-          decoration: BoxDecoration(
-            color: Theme.of(context).accentColor,
-          ),
-          child: Consumer<ProductProvider>(
-            builder: (context, productProvider, child) {
-              double _startingPrice;
-              double _endingPrice;
-              if (product.choiceOptions.length != 0) {
-                List<double> _priceList = [];
-                product.variations
-                    .forEach((variation) => _priceList.add(variation.price));
-                _priceList.sort((a, b) => a.compareTo(b));
-                _startingPrice = _priceList[0];
-                if (_priceList[0] < _priceList[_priceList.length - 1]) {
-                  _endingPrice = _priceList[_priceList.length - 1];
-                }
-              } else {
-                _startingPrice = product.price;
-              }
+      body: DefaultTabController(
+        length: 3,
+        child: NestedScrollView(
+          headerSliverBuilder: (context, value) {
+            return [
+              SliverAppBar(
+                backgroundColor: Colors.green,
+                expandedHeight: 200,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15)),
+                ),
+                floating: true,
+                pinned: true,
 
-              List<String> _variationList = [];
-              for (int index = 0;
-                  index < product.choiceOptions.length;
-                  index++) {
-                _variationList.add(product.choiceOptions[index]
-                    .options[productProvider.variationIndex[index]]
-                    .replaceAll(' ', ''));
-              }
-              String variationType = '';
-              bool isFirst = true;
-              _variationList.forEach((variation) {
-                if (isFirst) {
-                  variationType = '$variationType$variation';
-                  isFirst = false;
-                } else {
-                  variationType = '$variationType-$variation';
-                }
-              });
-
-              double price = product.price;
-              for (Variation variation in product.variations) {
-                if (variation.type == variationType) {
-                  price = variation.price;
-                  _variation = variation;
-                  break;
-                }
-              }
-              double priceWithDiscount = PriceConverter.convertWithDiscount(
-                  context, price, product.discount, product.discountType);
-              double priceWithQuantity =
-                  priceWithDiscount * productProvider.quantity;
-              double addonsCost = 0;
-              List<AddOn> _addOnIdList = [];
-              for (int index = 0; index < product.addOns.length; index++) {
-                if (productProvider.addOnActiveList[index]) {
-                  addonsCost = addonsCost +
-                      (product.addOns[index].price *
-                          productProvider.addOnQtyList[index]);
-                  _addOnIdList.add(AddOn(
-                      id: product.addOns[index].id,
-                      quantity: productProvider.addOnQtyList[index]));
-                }
-              }
-              double priceWithAddons = priceWithQuantity + addonsCost;
-
-              DateTime _currentTime =
-                  Provider.of<SplashProvider>(context, listen: false)
-                      .currentTime;
-              DateTime _start =
-                  DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
-              DateTime _end =
-                  DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
-              DateTime _startTime = DateTime(
-                  _currentTime.year,
-                  _currentTime.month,
-                  _currentTime.day,
-                  _start.hour,
-                  _start.minute,
-                  _start.second);
-              DateTime _endTime = DateTime(
-                  _currentTime.year,
-                  _currentTime.month,
-                  _currentTime.day,
-                  _end.hour,
-                  _end.minute,
-                  _end.second);
-              if (_endTime.isBefore(_startTime)) {
-                _endTime = _endTime.add(Duration(days: 1));
-              }
-              bool _isAvailable = _currentTime.isAfter(_startTime) &&
-                  _currentTime.isBefore(_endTime);
-
-              CartModel _cartModel = CartModel(
-                price,
-                priceWithDiscount,
-                [_variation],
-                (price -
-                    PriceConverter.convertWithDiscount(context, price,
-                        product.discount, product.discountType)),
-                productProvider.quantity,
-                price -
-                    PriceConverter.convertWithDiscount(
-                        context, price, product.tax, product.taxType),
-                _addOnIdList,
-                product,
-              );
-              bool isExistInCart =
-                  Provider.of<CartProvider>(context, listen: false)
-                      .isExistInCart(_cartModel, fromCart, cartIndex);
-
-              return SingleChildScrollView(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      //Product
-                      Row(children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: FadeInImage.assetNetwork(
-                            placeholder: Images.placeholder_rectangle,
-                            image:
-                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                            width: 100,
-                            height: 100,
-                            fit: BoxFit.cover,
+                flexibleSpace: FlexibleSpaceBar(
+                  centerTitle: true,
+                  title: Container(
+                    padding: EdgeInsets.only(top: 65.0, right: 120.0),
+                    alignment: Alignment.center,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          product.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          style: rubikMedium.copyWith(color: Colors.black),
+                        ),
+                        RatingBar(
+                            rating: product.rating.length > 0
+                                ? double.parse(product.rating[0].average)
+                                : 0.0,
+                            size: 10),
+                      ],
+                    ),
+                  ),
+                ),
+                //title: Text('My App Bar'),
+                leading: IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  color: Theme.of(context).textTheme.bodyText1.color,
+                  onPressed: () => Navigator.pop(context),
+                ),
+                bottom: PreferredSize(
+                  preferredSize: Size.fromHeight(10.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: EdgeInsets.only(bottom: 20.0, left: 10, right: 10),
+                    // padding: EdgeInsets.only(top: 5, bottom: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(5.0),
+                      ),
+                    ),
+                    child: TabBar(
+                      unselectedLabelColor: Colors.grey,
+                      labelColor: Colors.white,
+                      indicator: BoxDecoration(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(5.0),
+                        ),
+                        shape: BoxShape.rectangle,
+                        color: Color(0xFF215E23),
+                      ),
+                      tabs: [
+                        Text(
+                          'Details',
+                          style: TextStyle(
+                            fontSize: 20.0,
                           ),
                         ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  product.name,
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: rubikMedium.copyWith(
-                                      fontSize: Dimensions.FONT_SIZE_LARGE),
-                                ),
-                                RatingBar(
-                                    rating: product.rating.length > 0
-                                        ? double.parse(
-                                            product.rating[0].average)
-                                        : 0.0,
-                                    size: 15),
-                                SizedBox(height: 10),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType)}'
-                                      '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType)}' : ''}',
-                                      style: rubikMedium.copyWith(
-                                          fontSize: Dimensions.FONT_SIZE_LARGE),
-                                    ),
-                                    price == priceWithDiscount
-                                        ? Consumer<WishListProvider>(builder:
-                                            (context, wishList, child) {
-                                            return InkWell(
-                                              onTap: () {
-                                                wishList.wishIdList
-                                                        .contains(product.id)
-                                                    ? wishList
-                                                        .removeFromWishList(
-                                                            product,
-                                                            (message) {})
-                                                    : wishList.addToWishList(
-                                                        product, (message) {});
-                                              },
-                                              child: Icon(
-                                                wishList.wishIdList
-                                                        .contains(product.id)
-                                                    ? Icons.favorite
-                                                    : Icons.favorite_border,
-                                                color: wishList.wishIdList
-                                                        .contains(product.id)
-                                                    ? ColorResources
-                                                        .COLOR_PRIMARY
-                                                    : ColorResources.COLOR_GREY,
-                                              ),
-                                            );
-                                          })
-                                        : SizedBox(),
-                                  ],
-                                ),
-                                price > priceWithDiscount
-                                    ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                            Text(
-                                              '${PriceConverter.convertPrice(context, _startingPrice)}'
-                                              '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                                              style: rubikMedium.copyWith(
-                                                  color:
-                                                      ColorResources.COLOR_GREY,
-                                                  decoration: TextDecoration
-                                                      .lineThrough),
-                                            ),
-                                            Consumer<WishListProvider>(builder:
-                                                (context, wishList, child) {
-                                              return InkWell(
-                                                onTap: () {
-                                                  wishList.wishIdList
-                                                          .contains(product.id)
-                                                      ? wishList
-                                                          .removeFromWishList(
-                                                              product,
-                                                              (message) {})
-                                                      : wishList.addToWishList(
-                                                          product,
-                                                          (message) {});
-                                                },
-                                                child: Icon(
-                                                  wishList.wishIdList
-                                                          .contains(product.id)
-                                                      ? Icons.favorite
-                                                      : Icons.favorite_border,
-                                                  color: wishList.wishIdList
-                                                          .contains(product.id)
-                                                      ? ColorResources
-                                                          .COLOR_PRIMARY
-                                                      : ColorResources
-                                                          .COLOR_GREY,
-                                                ),
-                                              );
-                                            }),
-                                          ])
-                                    : SizedBox(),
-                              ]),
-                        ),
-                      ]),
-                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-                      // Quantity
-                      Row(children: [
-                        Text(getTranslated('quantity', context),
-                            style: rubikMedium.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_LARGE)),
-                        Expanded(child: SizedBox()),
-                        Container(
-                          decoration: BoxDecoration(
-                              color: ColorResources.getBackgroundColor(context),
-                              borderRadius: BorderRadius.circular(5)),
-                          child: Row(children: [
-                            InkWell(
-                              onTap: () {
-                                if (productProvider.quantity > 1) {
-                                  productProvider.setQuantity(false);
-                                }
-                              },
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                                    vertical:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                child: Icon(Icons.remove, size: 20),
-                              ),
-                            ),
-                            Text(productProvider.quantity.toString(),
-                                style: rubikMedium.copyWith(
-                                    fontSize:
-                                        Dimensions.FONT_SIZE_EXTRA_LARGE)),
-                            InkWell(
-                              onTap: () => productProvider.setQuantity(true),
-                              child: Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                                    vertical:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                child: Icon(Icons.add, size: 20),
-                              ),
-                            ),
-                          ]),
-                        ),
-                      ]),
-                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
-                      // Variation
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: product.choiceOptions.length,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(product.choiceOptions[index].title,
-                                    style: rubikMedium.copyWith(
-                                        fontSize: Dimensions.FONT_SIZE_LARGE)),
-                                SizedBox(
-                                    height:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                GridView.builder(
-                                  gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 3,
-                                    crossAxisSpacing: 20,
-                                    mainAxisSpacing: 10,
-                                    childAspectRatio: (1 / 0.25),
-                                  ),
-                                  shrinkWrap: true,
-                                  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: product
-                                      .choiceOptions[index].options.length,
-                                  itemBuilder: (context, i) {
-                                    return InkWell(
-                                      onTap: () {
-                                        productProvider.setCartVariationIndex(
-                                            index, i);
-                                      },
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: Dimensions
-                                                .PADDING_SIZE_EXTRA_SMALL),
-                                        decoration: BoxDecoration(
-                                          color: productProvider
-                                                      .variationIndex[index] !=
-                                                  i
-                                              ? ColorResources.BACKGROUND_COLOR
-                                              : ColorResources.COLOR_PRIMARY,
-                                          borderRadius:
-                                              BorderRadius.circular(5),
-                                          border: productProvider
-                                                      .variationIndex[index] !=
-                                                  i
-                                              ? Border.all(
-                                                  color: ColorResources
-                                                      .BORDER_COLOR,
-                                                  width: 2)
-                                              : null,
-                                        ),
-                                        child: Text(
-                                          product
-                                              .choiceOptions[index].options[i]
-                                              .trim(),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: rubikRegular.copyWith(
-                                            color: productProvider
-                                                            .variationIndex[
-                                                        index] !=
-                                                    i
-                                                ? ColorResources.COLOR_BLACK
-                                                : ColorResources.COLOR_WHITE,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                SizedBox(
-                                    height: index !=
-                                            product.choiceOptions.length - 1
-                                        ? Dimensions.PADDING_SIZE_LARGE
-                                        : 0),
-                              ]);
-                        },
-                      ),
-                      product.choiceOptions.length > 0
-                          ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
-                          : SizedBox(),
-
-                      fromSetMenu
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                  Text(getTranslated('description', context),
-                                      style: rubikMedium.copyWith(
-                                          fontSize:
-                                              Dimensions.FONT_SIZE_LARGE)),
-                                  SizedBox(
-                                      height:
-                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
-
-                                  /// split description by a comma, display items in a list
-                                  Text(product.description ?? '',
-                                      style: rubikRegular),
-                                  SizedBox(
-                                      height: Dimensions.PADDING_SIZE_LARGE),
-                                ])
-                          : SizedBox(),
-
-                      //Ingredients
-
-                      Text('Ingredients',
-                          style: rubikMedium.copyWith(
-                              fontSize: Dimensions.FONT_SIZE_LARGE)),
-
-                      SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-
-                      ListView.builder(
-                        // Let the ListView know how many items it needs to build.
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: 3,
-                        // Provide a builder function. This is where the magic happens.
-                        // Convert each item into a widget based on the type of item it is.
-                        itemBuilder: (context, index) {
-                          final ingredient = ingredients[index];
-
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ingredient,
-                            ],
-                          );
-                        },
-                      ),
-
-                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
-
-                      // Addons
-                      product.addOns.length > 0
-                          ? Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                  Text(getTranslated('addons', context),
-                                      style: rubikMedium.copyWith(
-                                          fontSize:
-                                              Dimensions.FONT_SIZE_LARGE)),
-                                  SizedBox(
-                                      height:
-                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                  GridView.builder(
-                                    gridDelegate:
-                                        SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 4,
-                                      crossAxisSpacing: 20,
-                                      mainAxisSpacing: 10,
-                                      childAspectRatio: (1 / 1.1),
-                                    ),
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: product.addOns.length,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          if (!productProvider
-                                              .addOnActiveList[index]) {
-                                            productProvider.addAddOn(
-                                                true, index);
-                                          } else if (productProvider
-                                                  .addOnQtyList[index] ==
-                                              1) {
-                                            productProvider.addAddOn(
-                                                false, index);
-                                          }
-                                        },
-                                        child: Container(
-                                          alignment: Alignment.center,
-                                          margin: EdgeInsets.only(
-                                              bottom: productProvider
-                                                      .addOnActiveList[index]
-                                                  ? 2
-                                                  : 20),
-                                          decoration: BoxDecoration(
-                                            color: productProvider
-                                                    .addOnActiveList[index]
-                                                ? ColorResources.COLOR_PRIMARY
-                                                : ColorResources
-                                                    .BACKGROUND_COLOR,
-                                            borderRadius:
-                                                BorderRadius.circular(5),
-                                            border: productProvider
-                                                    .addOnActiveList[index]
-                                                ? null
-                                                : Border.all(
-                                                    color: ColorResources
-                                                        .BORDER_COLOR,
-                                                    width: 2),
-                                            boxShadow: productProvider
-                                                    .addOnActiveList[index]
-                                                ? [
-                                                    BoxShadow(
-                                                        color: Colors.grey[
-                                                            Provider.of<ThemeProvider>(
-                                                                        context)
-                                                                    .darkTheme
-                                                                ? 700
-                                                                : 300],
-                                                        blurRadius: 5,
-                                                        spreadRadius: 1)
-                                                  ]
-                                                : null,
-                                          ),
-                                          child: Column(children: [
-                                            Expanded(
-                                                child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                  Text(
-                                                      product
-                                                          .addOns[index].name,
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                      style:
-                                                          rubikMedium.copyWith(
-                                                        color: productProvider
-                                                                    .addOnActiveList[
-                                                                index]
-                                                            ? ColorResources
-                                                                .COLOR_WHITE
-                                                            : ColorResources
-                                                                .COLOR_BLACK,
-                                                        fontSize: Dimensions
-                                                            .FONT_SIZE_SMALL,
-                                                      )),
-                                                  SizedBox(height: 5),
-                                                  Text(
-                                                    PriceConverter.convertPrice(
-                                                        context,
-                                                        product.addOns[index]
-                                                            .price),
-                                                    maxLines: 1,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: rubikRegular.copyWith(
-                                                        color: productProvider
-                                                                    .addOnActiveList[
-                                                                index]
-                                                            ? ColorResources
-                                                                .COLOR_WHITE
-                                                            : ColorResources
-                                                                .COLOR_BLACK,
-                                                        fontSize: Dimensions
-                                                            .FONT_SIZE_EXTRA_SMALL),
-                                                  ),
-                                                ])),
-                                            productProvider
-                                                    .addOnActiveList[index]
-                                                ? Container(
-                                                    height: 25,
-                                                    decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(5),
-                                                        color: Theme.of(context)
-                                                            .accentColor),
-                                                    child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Expanded(
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                if (productProvider
-                                                                            .addOnQtyList[
-                                                                        index] >
-                                                                    1) {
-                                                                  productProvider
-                                                                      .setAddOnQuantity(
-                                                                          false,
-                                                                          index);
-                                                                } else {
-                                                                  productProvider
-                                                                      .addAddOn(
-                                                                          false,
-                                                                          index);
-                                                                }
-                                                              },
-                                                              child: Center(
-                                                                  child: Icon(
-                                                                      Icons
-                                                                          .remove,
-                                                                      size:
-                                                                          15)),
-                                                            ),
-                                                          ),
-                                                          Text(
-                                                              productProvider
-                                                                  .addOnQtyList[
-                                                                      index]
-                                                                  .toString(),
-                                                              style: rubikMedium
-                                                                  .copyWith(
-                                                                      fontSize:
-                                                                          Dimensions
-                                                                              .FONT_SIZE_SMALL)),
-                                                          Expanded(
-                                                            child: InkWell(
-                                                              onTap: () =>
-                                                                  productProvider
-                                                                      .setAddOnQuantity(
-                                                                          true,
-                                                                          index),
-                                                              child: Center(
-                                                                  child: Icon(
-                                                                      Icons.add,
-                                                                      size:
-                                                                          15)),
-                                                            ),
-                                                          ),
-                                                        ]),
-                                                  )
-                                                : SizedBox(),
-                                          ]),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(
-                                      height:
-                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                ])
-                          : SizedBox(),
-
-                      Row(children: [
-                        Text('${getTranslated('total_amount', context)}:',
-                            style: rubikMedium.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_LARGE)),
-                        SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         Text(
-                            PriceConverter.convertPrice(
-                                context, priceWithAddons),
-                            style: rubikBold.copyWith(
-                              color: ColorResources.COLOR_PRIMARY,
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                            )),
-                      ]),
-                      SizedBox(height: 18.0),
-
-                      _isAvailable
-                          ? CustomButton(
-                              btnTxt: getTranslated(
-                                  isExistInCart
-                                      ? 'already_added_in_cart'
-                                      : fromCart
-                                          ? 'update_in_cart'
-                                          : 'add_to_cart',
-                                  context),
-                              backgroundColor: Theme.of(context).primaryColor,
-                              onTap: (!isExistInCart)
-                                  ? () {
-                                      if (!isExistInCart) {
-                                        Navigator.pop(context);
-                                        Provider.of<CartProvider>(context,
-                                                listen: false)
-                                            .addToCart(_cartModel, cartIndex);
-                                        callback(_cartModel);
-                                      }
-                                    }
-                                  : null,
-                            )
-                          : Container(
-                              alignment: Alignment.center,
-                              padding:
-                                  EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context)
-                                    .primaryColor
-                                    .withOpacity(0.1),
-                              ),
-                              child: Column(children: [
-                                Text(
-                                    getTranslated('not_available_now', context),
-                                    style: rubikMedium.copyWith(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: Dimensions.FONT_SIZE_LARGE,
-                                    )),
-                                Text(
-                                  '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
-                                  '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
-                                  style: rubikRegular,
-                                ),
-                              ]),
-                            ),
-                    ]),
-              );
-            },
+                          'Recipe',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                        Text(
+                          'Review',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ];
+          },
+          body: TabBarView(
+            children: [
+              DetailsPage(
+                product: product,
+                callback: callback,
+                cart: cart,
+                cartIndex: cartIndex,
+              ),
+              RecipePage(product: product),
+              Container(
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      '${product.rating.length > 0 ? double.parse(product.rating[0].average).toStringAsFixed(1) : 0.0}',
+                      style: TextStyle(fontSize: 80.0, color: Colors.black),
+                    ),
+                    RatingBar(
+                        rating: product.rating.length > 0
+                            ? double.parse(product.rating[0].average)
+                            : 0.0,
+                        size: 20),
+                    SizedBox(
+                      height: 5,
+                    ),
+                    Text('Based on ${product.rating.length} ratings'),
+                    SizedBox(
+                      height: 15.0,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Excellent',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 150,
+                          lineHeight: 16.0,
+                          animationDuration: 2500,
+                          percent: 0.8,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Colors.green,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Good',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 150,
+                          lineHeight: 16.0,
+                          animationDuration: 2500,
+                          percent: 0.4,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Colors.green,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Average',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 150,
+                          lineHeight: 16.0,
+                          percent: 0.8,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Colors.yellow,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Below Average',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 150,
+                          lineHeight: 16.0,
+                          percent: 0.6,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Colors.orange,
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Poor',
+                          textAlign: TextAlign.end,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                        new LinearPercentIndicator(
+                          width: MediaQuery.of(context).size.width - 150,
+                          lineHeight: 16.0,
+                          animationDuration: 2500,
+                          percent: 0.7,
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: Colors.red,
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
+  }
+
+  Widget buildImages() {
+    return Text('tab1');
   }
 }
