@@ -17,6 +17,7 @@ class CustomButton extends StatelessWidget {
               ? Theme.of(context).primaryColor
               : backgroundColor,
       minimumSize: Size(MediaQuery.of(context).size.width, 50),
+      elevation: 3.0,
       padding: EdgeInsets.zero,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(30),
