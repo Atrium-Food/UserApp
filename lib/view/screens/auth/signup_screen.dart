@@ -12,6 +12,7 @@ import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/auth/create_account_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/forgot_password/verification_screen.dart';
+import 'package:flutter_restaurant/view/screens/welcome_screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -40,7 +41,10 @@ class SignUpScreen extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()));
                     },
                     child: Icon(
                       CupertinoIcons.back,
