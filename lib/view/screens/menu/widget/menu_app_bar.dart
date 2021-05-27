@@ -1,24 +1,28 @@
+import 'package:flutter/material.dart';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final String title;
+class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
+  // final String title;
   final bool isBackButtonExist;
   final Function onBackPressed;
-  CustomAppBar(
-      {@required this.title,
-      this.isBackButtonExist = true,
-      this.onBackPressed});
+  MenuAppBar(
+      {
+        this.isBackButtonExist = true,
+        this.onBackPressed});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: Text(title,
-          style: rubikMedium.copyWith(
-              fontSize: Dimensions.FONT_SIZE_LARGE,
-              color: Theme.of(context).textTheme.bodyText1.color)),
+      backgroundColor: ColorResources.getThemeColor(context),
+      // title: Text(title,
+      //     style: rubikMedium.copyWith(
+      //         fontSize: Dimensions.FONT_SIZE_LARGE,
+      //         color: Theme.of(context).textTheme.bodyText1.color)),
       centerTitle: true,
       shape: ContinuousRectangleBorder(
         borderRadius: const BorderRadius.only(
@@ -28,12 +32,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       leading: isBackButtonExist
           ? IconButton(
-              icon: Icon(Icons.arrow_back_ios),
-              color: Theme.of(context).textTheme.bodyText1.color,
-              onPressed: () => onBackPressed != null
-                  ? onBackPressed()
-                  : Navigator.pop(context),
-            )
+        icon: Icon(Icons.arrow_back_ios),
+        color: Theme.of(context).textTheme.bodyText1.color,
+        onPressed: () => onBackPressed != null
+            ? onBackPressed()
+            : Navigator.pop(context),
+      )
           : SizedBox(),
       elevation: 0,
     );

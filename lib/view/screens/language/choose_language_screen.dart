@@ -11,6 +11,7 @@ import 'package:flutter_restaurant/utill/strings.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/screens/language/widget/search_widget.dart';
+import 'package:flutter_restaurant/view/screens/menu/widget/menu_app_bar.dart';
 import 'package:flutter_restaurant/view/screens/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -24,11 +25,12 @@ class ChooseLanguageScreen extends StatelessWidget {
     Provider.of<LanguageProvider>(context, listen: false).initializeAllLanguages(context);
 
     return Scaffold(
+      appBar: MenuAppBar(),
+      backgroundColor: ColorResources.getThemeColor(context),
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 30),
             Padding(
               padding: const EdgeInsets.only(left: Dimensions.PADDING_SIZE_LARGE, top: Dimensions.PADDING_SIZE_LARGE),
               child: Text(

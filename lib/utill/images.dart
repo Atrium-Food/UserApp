@@ -57,6 +57,14 @@ class Images {
   static const String filter_icon = 'assets/icon/filter_icon.png';
   static const String location = 'assets/icon/location.png';
   static const String home_location_icon='assets/icon/home_location.png';
+  static const String add_card_icon = 'assets/icon/add_card.png';
+  static const String gpay_icon='assets/icon/gpay.png';
+  static const String pay_tm_icon='assets/icon/pay_tm.png';
+  static const String upi_icon='assets/icon/upi.png';
+  static const String net_banking_icon='assets/icon/net_banking.png';
+  static const String generic_card_icon='assets/icon/generic_card.png';
+  static const String black_wallet_icon='assets/icon/black_wallet.png';
+  static const String no_cards_icon='assets/icon/no_cards.png';
 
   // for Image
   static const String arabic = 'assets/image/arabic.png';

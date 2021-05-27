@@ -65,7 +65,7 @@ class ProductDescriptionWidget extends StatelessWidget {
                 callback: (CartModel cartModel) {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(getTranslated('added_to_cart', context)),
-                      backgroundColor: Colors.green));
+                      backgroundColor: ColorResources.COLOR_PRIMARY));
                 },
               ),
             ));

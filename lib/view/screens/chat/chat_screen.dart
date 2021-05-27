@@ -15,6 +15,7 @@ import 'package:flutter_restaurant/view/base/not_logged_in_screen.dart';
 import 'package:flutter_restaurant/view/screens/chat/widget/message_bubble.dart';
 import 'package:flutter_restaurant/view/screens/chat/widget/message_bubble_shimmer.dart';
 import 'package:image_picker/image_picker.dart';
+// import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -28,6 +29,12 @@ class ChatScreen extends StatelessWidget {
       Provider.of<ChatProvider>(context, listen: false).getChatList(context);
     }
 
+    // dynamic conversationObject = {
+    //   'appId': '',// The APP_ID obtained from kommunicate dashboard.
+    // };
+    // KommunicateFlutterPlugin.buildConversation(conversationObject) .then((clientConversationId) {
+    //   print("Conversation builder success : " + clientConversationId.toString()); }).catchError((error) {
+    //     print("Conversation builder error : " + error.toString()); });
     return Scaffold(
       appBar: CustomAppBar(title: getTranslated('message', context)),
       body: _isLoggedIn ? Consumer<ChatProvider>(

@@ -17,6 +17,7 @@ class CustomTextField extends StatefulWidget {
   final bool isPassword;
   final bool isCountryPicker;
   final bool isShowBorder;
+  final bool isShowBottomBorder;
   final bool isIcon;
   final bool isShowSuffixIcon;
   final bool isShowPrefixIcon;
@@ -49,6 +50,7 @@ class CustomTextField extends StatefulWidget {
       this.capitalization = TextCapitalization.none,
       this.isCountryPicker = false,
       this.isShowBorder = false,
+      this.isShowBottomBorder = false,
       this.isShowSuffixIcon = false,
       this.isShowPrefixIcon = false,
       this.onTap,
@@ -89,19 +91,24 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ]
           : null,
       decoration: InputDecoration(
-        enabledBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.green,
-            width: 2,
-          ),
-        ),
-        focusedBorder: UnderlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.greenAccent,
-            width: 3,
-          ),
-        ),
-        contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 22),
+        contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
+        border: widget.isShowBottomBorder
+            ? UnderlineInputBorder(
+                borderSide:
+                    BorderSide(color: ColorResources.getGrayColor(context)))
+            : null,
+        enabledBorder: widget.isShowBottomBorder
+            ? UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: ColorResources.getGrayColor(context), width: 1.5),
+              )
+            : null,
+        focusedBorder: widget.isShowBottomBorder
+            ? UnderlineInputBorder(
+                borderSide: BorderSide(
+                    color: ColorResources.getPrimaryColor(context), width: 2),
+              )
+            : null,
         // border: OutlineInputBorder(
         //   borderRadius: BorderRadius.circular(10.0),
         //   borderSide: BorderSide(style: BorderStyle.none, width: 0),

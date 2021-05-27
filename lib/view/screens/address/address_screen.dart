@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/location_provider.dart';
+import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
+import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_restaurant/view/base/no_data_screen.dart';
 import 'package:flutter_restaurant/view/base/not_logged_in_screen.dart';
 import 'package:flutter_restaurant/view/screens/address/widget/address_widget.dart';
 import 'package:flutter_restaurant/view/screens/address/widget/permission_dialog.dart';
+import 'package:flutter_restaurant/view/screens/menu/widget/menu_app_bar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +27,13 @@ class AddressScreen extends StatelessWidget {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(title: getTranslated('address', context)),
+      appBar: MenuAppBar(),
       // floatingActionButton: _isLoggedIn ? FloatingActionButton(
       //   child: Icon(Icons.add, color: Colors.white),
       //   backgroundColor: Theme.of(context).primaryColor,
       //   onPressed: () => _checkPermission(context, AddNewAddressScreen()),
       // ) : null,
+      backgroundColor: ColorResources.getThemeColor(context),
       bottomNavigationBar: _isLoggedIn? Padding(
         padding: const EdgeInsets.all(20.0),
         child: CustomButton(
@@ -46,13 +50,24 @@ class AddressScreen extends StatelessWidget {
               await Provider.of<LocationProvider>(context, listen: false).initAddressList(context);
             },
             backgroundColor: Theme.of(context).primaryColor,
-            child: ListView.builder(
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-              itemCount: locationProvider.addressList.length,
-              itemBuilder: (context, index) => AddressWidget(
-                addressModel: locationProvider.addressList[index],
-                index: index,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  child: Text('Saved Addresses', style: rubikRegular.copyWith(fontSize: 25,color: ColorResources.getAccentColor(context)),),
+                ),
+                Expanded(
+                  child: ListView.builder(
+                    padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                    itemCount: locationProvider.addressList.length,
+                    itemBuilder: (context, index) => AddressWidget(
+                      addressModel: locationProvider.addressList[index],
+                      index: index,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ) : NoDataScreen()
               : Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)));

@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 class ProductView extends StatelessWidget {
   final ProductType productType;
   final ScrollController scrollController;
-  ProductView({@required this.productType, this.scrollController});
+  ProductView({@required this.productType,this.scrollController});
 
   @override
   Widget build(BuildContext context) {
@@ -36,39 +36,41 @@ class ProductView extends StatelessWidget {
         }
       }
     });
-    return Consumer<ProductProvider>(
-      builder: (context, prodProvider, child) {
-        List<Product> productList;
-        if(productType == ProductType.POPULAR_PRODUCT) {
-          productList = prodProvider.popularProductList;
-        }
+    return Container(
+      child: Consumer<ProductProvider>(
+        builder: (context, prodProvider, child) {
+          List<Product> productList;
+          if(productType == ProductType.POPULAR_PRODUCT) {
+            productList = prodProvider.popularProductList;
+          }
 
-        return Column(children: [
-          productList != null ? productList.length > 0 ? ListView.builder(
-            itemCount: productList.length,
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return ProductWidget(product: productList[index]);
-            },
-          ) : NoDataScreen() : ListView.builder(
-            itemCount: 10,
-            padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            itemBuilder: (BuildContext context, int index) {
-              return ProductShimmer(isEnabled: productList == null);
-            },
-          ),
+          return Column(children: [
+            productList != null ? productList.length > 0 ? ListView.builder(
+              itemCount: productList.length,
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return ProductWidget(product: productList[index]);
+              },
+            ) : NoDataScreen() : ListView.builder(
+              itemCount: 10,
+              padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemBuilder: (BuildContext context, int index) {
+                return ProductShimmer(isEnabled: productList == null);
+              },
+            ),
 
-          prodProvider.isLoading ? Center(child: Padding(
-            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-            child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-          )) : SizedBox.shrink(),
+            prodProvider.isLoading ? Center(child: Padding(
+              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
+            )) : SizedBox.shrink(),
 
-        ]);
-      },
+          ]);
+        },
+      ),
     );
   }
 }
