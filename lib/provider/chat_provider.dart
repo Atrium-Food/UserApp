@@ -78,6 +78,10 @@ class ChatProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> sendMessageDialogFlow(){
+
+  }
+
   void toggleSendButtonActivity() {
     _isSendButtonActive = !_isSendButtonActive;
     notifyListeners();

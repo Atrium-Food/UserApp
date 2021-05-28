@@ -78,7 +78,6 @@ class OrderTrackingScreen extends StatelessWidget {
                   title: getTranslated('food_in_the_way', context),
                   isActive: _status != _statusList[0] && _status != _statusList[1] && _status != _statusList[2],
                 ) : SizedBox(),
-
                 CustomStepper(
                   title: getTranslated('delivered_the_food', context),
                   isActive: _status == _statusList[4], height: _status == _statusList[3] ? 240 : 30,

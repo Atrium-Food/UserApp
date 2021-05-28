@@ -152,6 +152,7 @@ class SetMenuView extends StatelessWidget {
                                           spreadRadius: 1,
                                         )
                                       ]),
+
                                   child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.center,
@@ -160,7 +161,11 @@ class SetMenuView extends StatelessWidget {
                                       children: [
                                         Stack(
                                           children: [
-                                            ClipRect(
+                                            ClipRRect(
+                                              borderRadius: BorderRadius.only(
+                                                topRight: Radius.circular(10),
+                                                topLeft: Radius.circular(10)
+                                              ),
                                               child: FadeInImage.assetNetwork(
                                                 placeholder: Images
                                                     .placeholder_rectangle,
@@ -172,13 +177,13 @@ class SetMenuView extends StatelessWidget {
                                                         StackTrace stackTrace) {
                                                   return Image.asset(
                                                     Images.placeholder_banner,
-                                                    fit: BoxFit.fill,
+                                                    fit: BoxFit.cover,
                                                     height: 110,
                                                   );
                                                 },
                                                 height: 110,
-                                                // width: 200,
-                                                fit: BoxFit.fill,
+                                                width: 365,
+                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                             _isAvailable
@@ -217,7 +222,8 @@ class SetMenuView extends StatelessWidget {
                                           ],
                                         ),
                                         Expanded(
-                                          child: Padding(
+                                          child: Container(
+                                            color: ColorResources.getThemeColor(context),
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: Dimensions
                                                     .PADDING_SIZE_SMALL),

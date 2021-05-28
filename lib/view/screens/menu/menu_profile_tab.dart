@@ -6,6 +6,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/screens/address/address_screen.dart';
 import 'package:flutter_restaurant/view/screens/chat/chat_screen.dart';
+import '../chat_support/dialogflow_chat_screen.dart';
 import 'package:flutter_restaurant/view/screens/coupon/coupon_screen.dart';
 import 'package:flutter_restaurant/view/screens/language/choose_language_screen.dart';
 import 'package:flutter_restaurant/view/screens/menu/widget/sign_out_confirmation_dialog.dart';
@@ -47,7 +48,7 @@ class MenuProfileTab extends StatelessWidget {
           title: Text(getTranslated('address', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
         ),
         ListTile(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen())),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DialogFlowChatScreen())),
           leading: Image.asset(Images.message, width: 20, height: 20, color: Theme.of(context).textTheme.bodyText1.color),
           title: Text(getTranslated('message', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
         ),

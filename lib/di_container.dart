@@ -36,6 +36,7 @@ import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
 import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
+import 'package:flutter_restaurant/view/screens/chat_support/dialogflow_utils/chat_provider_dialogflow.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'data/datasource/remote/dio/dio_client.dart';
@@ -86,6 +87,7 @@ Future<void> init() async {
   sl.registerFactory(() => WishListProvider(wishListRepo: sl(), productRepo: sl()));
   sl.registerFactory(() => CouponProvider(couponRepo: sl()));
   sl.registerFactory(() => SearchProvider(searchRepo: sl()));
+  sl.registerFactory(() => ChatProviderDialogFlow());
 
   // External
   final sharedPreferences = await SharedPreferences.getInstance();
