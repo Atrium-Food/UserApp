@@ -75,13 +75,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Colors.white,
                         fontWeight: FontWeight.bold),
                   ),
-                  // Text(
-                  //   'Back!',
-                  //   style: TextStyle(
-                  //       fontSize: 50,
-                  //       color: Colors.white,
-                  //       fontWeight: FontWeight.bold),
-                  // ),
+
                   Text(
                     'Hey, we are happy to have you.',
                     style: TextStyle(
@@ -89,7 +83,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 70.0,
+                    height: 20,
+                  ),
+
+                  SizedBox(
+                    height: 50.0,
                   ),
                   Text(
                     getTranslated('login', context),

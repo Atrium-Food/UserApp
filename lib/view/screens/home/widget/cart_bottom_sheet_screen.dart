@@ -165,9 +165,9 @@ class CartBottomSheetScreen extends StatelessWidget {
             return [
               SliverAppBar(
                 backgroundColor: ColorResources.getPrimaryColor(context),
-                toolbarHeight: MediaQuery.of(context).size.height*0.065,
-                collapsedHeight: MediaQuery.of(context).size.height*0.065,
-                expandedHeight: MediaQuery.of(context).size.height*0.25,
+                toolbarHeight: MediaQuery.of(context).size.height * 0.065,
+                collapsedHeight: MediaQuery.of(context).size.height * 0.065,
+                expandedHeight: MediaQuery.of(context).size.height * 0.25,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
@@ -189,7 +189,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                           product.name,
                           maxLines: 1,
                           overflow: TextOverflow.visible,
-                          style: rubikMedium.copyWith(color: ColorResources.getAccentColor(context)),
+                          style: rubikMedium.copyWith(
+                              color: ColorResources.getAccentColor(context)),
                         ),
                         RatingBar(
                             rating: product.rating.length > 0
@@ -207,7 +208,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                   onPressed: () => Navigator.pop(context),
                 ),
                 bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(10.0),
+                  preferredSize: Size.fromHeight(20.0),
                   child: Container(
                     alignment: Alignment.center,
                     margin: EdgeInsets.only(bottom: 20.0, left: 15, right: 15),
@@ -219,7 +220,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                       ),
                     ),
                     child: TabBar(
-                      unselectedLabelColor: ColorResources.getGrayColor(context),
+                      unselectedLabelColor:
+                          ColorResources.getGrayColor(context),
                       labelColor: Colors.white,
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(
@@ -230,25 +232,19 @@ class CartBottomSheetScreen extends StatelessWidget {
                       ),
                       tabs: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0,8,2,8),
-                          child: Text(
-                            'DETAILS',
-                            style: rubikRegular.copyWith(fontSize: 16)
-                          ),
+                          padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                          child: Text('DETAILS',
+                              style: rubikRegular.copyWith(fontSize: 16)),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0,8,2,8),
-                          child: Text(
-                            'RECIPE',
-                            style: rubikRegular.copyWith(fontSize: 16)
-                          ),
+                          padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                          child: Text('RECIPE',
+                              style: rubikRegular.copyWith(fontSize: 16)),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0,8,2,8),
-                          child: Text(
-                            'REVIEW',
-                            style: rubikRegular.copyWith(fontSize: 16)
-                          ),
+                          padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                          child: Text('REVIEW',
+                              style: rubikRegular.copyWith(fontSize: 16)),
                         ),
                       ],
                     ),
