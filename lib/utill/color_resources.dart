@@ -12,6 +12,10 @@ class ColorResources {
     return Provider.of<ThemeProvider>(context).darkTheme ? Colors.white : Colors.black;
     // Color(0xFFba4f41) : Color(0xFFFC6A57);
   }
+  static Color getThemeColor(BuildContext context) {
+    return Provider.of<ThemeProvider>(context).darkTheme ? Colors.black:Colors.white;
+    // Color(0xFFba4f41) : Color(0xFFFC6A57);
+  }
   static Color getIndicatorPrimaryColor(BuildContext context) {
     return Provider.of<ThemeProvider>(context).darkTheme ? Color(0xFF00B37B):Color(0xFF007A54);
     // Color(0xFFba4f41) : Color(0xFFFC6A57);

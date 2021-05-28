@@ -17,6 +17,7 @@ import 'package:flutter_restaurant/view/screens/home/widget/product_view.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/set_menu_view.dart';
 import 'package:flutter_restaurant/view/screens/notification/notification_screen.dart';
 import 'package:flutter_restaurant/view/screens/search/search_screen.dart';
+import 'package:flutter_restaurant/view/screens/setmenu/set_menu_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -30,9 +31,9 @@ class HomeScreen extends StatelessWidget {
     await Provider.of<BannerProvider>(context, listen: false).getBannerList(context, reload);
   }
 
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
     _loadData(context, false);
 
     return Scaffold(
@@ -104,18 +105,22 @@ class HomeScreen extends StatelessWidget {
 
               SliverToBoxAdapter(
                 child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-
                   Consumer<CategoryProvider>(
                     builder: (context, category, child) {
                       return category.categoryList == null ? CategoryView() : category.categoryList.length == 0 ? SizedBox() : CategoryView();
                     },
                   ),
-
-                  Consumer<SetMenuProvider>(
-                    builder: (context, setMenu, child) {
-                      return setMenu.setMenuList == null ? SetMenuView() : setMenu.setMenuList.length == 0 ? SizedBox() : SetMenuView();
-                    },
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                    child: TitleWidget(
+                        title: "Special Menu",
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (_) => SetMenuScreen()));
+                        }),
                   ),
+                  SetMenuView(),
+
 
                   // Consumer<BannerProvider>(
                   //   builder: (context, banner, child) {
@@ -127,7 +132,7 @@ class HomeScreen extends StatelessWidget {
                     padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
                     child: TitleWidget(title: getTranslated('popular_item', context)),
                   ),
-                  ProductView(productType: ProductType.POPULAR_PRODUCT, scrollController: _scrollController),
+                  ProductView(productType: ProductType.POPULAR_PRODUCT,scrollController: _scrollController,),
 
                 ]),
               ),

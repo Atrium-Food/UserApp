@@ -4,6 +4,7 @@ import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
+import 'package:flutter_restaurant/view/screens/home/widget/review_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
 
@@ -14,26 +15,30 @@ class ReviewPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: ListView(
+        shrinkWrap: true,
         children: [
-          Text(
-            '${product.rating.length > 0 ? double.parse(product.rating[0].average).toStringAsFixed(1) : 0.0}',
-            style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context),fontSize: 70)
+          Center(
+            child: Text(
+              '${product.rating.length > 0 ? double.parse(product.rating[0].average).toStringAsFixed(1) : 0.0}',
+              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context),fontSize: 70)
+            ),
           ),
           SizedBox(
             height: 5,
           ),
-          RatingBar(
-              rating: product.rating.length > 0
-                  ? double.parse(product.rating[0].average)
-                  : 0.0,
-              size: 20,
+          Center(
+            child: RatingBar(
+                rating: product.rating.length > 0
+                    ? double.parse(product.rating[0].average)
+                    : 0.0,
+                size: 20,
+            ),
           ),
           SizedBox(
             height: 5,
           ),
-          Text('Based on ${product.rating.length} ratings'),
+          Center(child: Text('Based on ${product.rating.length} ratings')),
           SizedBox(
             height: 15.0,
           ),
@@ -136,6 +141,17 @@ class ReviewPage extends StatelessWidget {
               ),
             ],
           ),
+          SizedBox(
+            height: 30,
+          ),
+          ListView.builder(
+            shrinkWrap: true,
+              physics: ClampingScrollPhysics(),
+              itemCount: 2,
+              itemBuilder: (context,index){
+              return ReviewWidget();
+              }
+          )
         ],
       ),
     );

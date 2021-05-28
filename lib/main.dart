@@ -31,6 +31,7 @@ import 'package:flutter_restaurant/theme/dark_theme.dart';
 import 'package:flutter_restaurant/theme/light_theme.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
+import 'package:flutter_restaurant/view/screens/chat_support/dialogflow_utils/chat_provider_dialogflow.dart';
 import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart';
 import 'package:flutter_restaurant/view/screens/splash/splash_screen.dart';
 import 'package:flutter_restaurant/view/screens/track/order_tracking_screen.dart';
@@ -89,6 +90,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (context) => di.sl<CouponProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<WishListProvider>()),
       ChangeNotifierProvider(create: (context) => di.sl<SearchProvider>()),
+      ChangeNotifierProvider(create: (context) => di.sl<ChatProviderDialogFlow>()),
     ],
     child: MyApp(orderId: _orderID,addressId: _addressID),
   ));

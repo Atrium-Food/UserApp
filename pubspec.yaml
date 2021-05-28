@@ -16,7 +16,7 @@ dependencies:
   get_it: ^6.0.0
   provider: ^5.0.0
   shared_preferences: ^2.0.5
-  dio: ^4.0.0-prev2
+  dio: ^4.0.0-prev
   image_picker: ^0.7.3
   pin_code_fields: ^7.0.0
   google_maps_flutter: ^2.0.1
@@ -33,6 +33,10 @@ dependencies:
   connectivity: ^3.0.2
   flutter_native_timezone: ^1.0.10
   percent_indicator: ^3.0.1
+  googleapis_auth: ^1.1.0
+#  flutter_dialogflow_v2: ^0.3.2
+#  kommunicate_flutter: ^1.1.7
+
 
 dev_dependencies:
   flutter_test:

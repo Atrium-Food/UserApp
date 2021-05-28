@@ -35,7 +35,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
       CartScreen(),
       OrderScreen(),
       WishListScreen(),
-      MenuScreen(onTap: (int pageIndex) {
+      MenuScreen(
+          onTap: (int pageIndex) {
         _setPage(pageIndex);
       }),
     ];

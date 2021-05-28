@@ -18,6 +18,7 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
+import 'package:flutter_restaurant/view/screens/home/widget/nutrient_values.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -36,6 +37,9 @@ class DetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color link = Colors.greenAccent;
+    bool isPressed = false;
+
     final List<Map> myProducts =
         List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
             .toList();
@@ -182,10 +186,10 @@ class DetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text(
-                              '1 hour 45 mins',
-                                style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
-                            ),
+                            Text('1 hour 45 mins',
+                                style: rubikRegular.copyWith(
+                                    color: ColorResources.getAccentColor(
+                                        context))),
                           ],
                         ),
                       ),
@@ -202,17 +206,17 @@ class DetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text(
-                              'Server 2',
-                              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
-                            )
+                            Text('Server 2',
+                                style: rubikRegular.copyWith(
+                                    color:
+                                        ColorResources.getAccentColor(context)))
                           ],
                         ),
                       ),
                     ],
                   ),
                   SizedBox(
-                    height: 15.0,
+                    height: 21.0,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -227,10 +231,10 @@ class DetailsPage extends StatelessWidget {
                             SizedBox(
                               width: 5.0,
                             ),
-                            Text(
-                              'Thai Cuisine',
-                                style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
-                            ),
+                            Text('Thai Cuisine',
+                                style: rubikRegular.copyWith(
+                                    color: ColorResources.getAccentColor(
+                                        context))),
                           ],
                         ),
                       ),
@@ -238,18 +242,66 @@ class DetailsPage extends StatelessWidget {
                         width: 10.0,
                       ),
                       Expanded(
-                        child: Row(
+                        child: Column(
                           children: [
-                            Icon(
-                              Icons.fireplace,
-                              color: ColorResources.getAccentColor(context),
-                            ),
                             SizedBox(
-                              width: 5.0,
+                              height: 15,
                             ),
-                            Text(
-                              '569 cal/serving',
-                              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context))
+                            Row(children: [
+                              Icon(
+                                Icons.fireplace,
+                                color: ColorResources.getAccentColor(context),
+                              ),
+                              SizedBox(
+                                width: 5.0,
+                              ),
+                              Text('569 cal/serving',
+                                  style: rubikRegular.copyWith(
+                                      color: ColorResources.getAccentColor(
+                                          context))),
+                            ]),
+                            SizedBox(
+                              height: 5.0,
+                            ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  width: 31.0,
+                                ),
+                                GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => NutrientValues(
+                                            product: product,
+                                          ),
+                                        ));
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'View Details',
+                                        style: rubikRegular.copyWith(
+                                          color: ColorResources.getPrimaryColor(
+                                              context),
+                                          fontSize: 11,
+                                          decoration: TextDecoration.underline,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 2.0,
+                                      ),
+                                      Icon(
+                                        CupertinoIcons.forward,
+                                        color: ColorResources.getPrimaryColor(
+                                            context),
+                                        size: 11.0,
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ],
                             )
                           ],
                         ),
@@ -259,9 +311,7 @@ class DetailsPage extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(
-                height: 20.0,
-              ),
+              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Quantity
               Row(children: [
@@ -405,11 +455,11 @@ class DetailsPage extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
               GridView.builder(
-                  gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 80,
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 3,
                     childAspectRatio: 3 / 3,
                     crossAxisSpacing: 20,
-                    mainAxisSpacing: 10,
+                    mainAxisSpacing: 15,
                     mainAxisExtent: 100,
                   ),
                   shrinkWrap: true,
@@ -421,14 +471,24 @@ class DetailsPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            radius: 30.0,
-                            child: Text('IN',style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context)),),
-                            backgroundColor: ColorResources.getSearchBg(context),
+                            radius: 28.0,
+                            child: Text(
+                              'IN',
+                              style: rubikRegular.copyWith(
+                                  color:
+                                      ColorResources.getAccentColor(context)),
+                            ),
+                            backgroundColor:
+                                ColorResources.getSearchBg(context),
                           ),
                           SizedBox(
                             height: 10.0,
                           ),
-                          Text(myProducts[index]["name"],style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),),
+                          Text(
+                            myProducts[index]["name"],
+                            style: rubikRegular.copyWith(
+                                fontSize: Dimensions.FONT_SIZE_SMALL),
+                          ),
                         ],
                       ),
                     );

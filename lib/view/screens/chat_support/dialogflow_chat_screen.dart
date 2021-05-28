@@ -14,34 +14,44 @@ import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/not_logged_in_screen.dart';
 import 'package:flutter_restaurant/view/screens/chat/widget/message_bubble.dart';
 import 'package:flutter_restaurant/view/screens/chat/widget/message_bubble_shimmer.dart';
+import 'package:flutter_restaurant/view/screens/chat_support/dialogflow_utils/chat_provider_dialogflow.dart';
+import 'package:flutter_restaurant/view/screens/chat_support/dialogflow_utils/oauth.dart';
+import 'package:flutter_restaurant/view/screens/chat_support/widget/message_support_bubble.dart';
 import 'package:image_picker/image_picker.dart';
 // import 'package:kommunicate_flutter/kommunicate_flutter.dart';
 import 'package:provider/provider.dart';
 
-class ChatScreen extends StatelessWidget {
-  final ImagePicker picker = ImagePicker();
+class DialogFlowChatScreen extends StatefulWidget {
+  @override
+  _DialogFlowChatScreenState createState() => _DialogFlowChatScreenState();
+}
+
+class _DialogFlowChatScreenState extends State<DialogFlowChatScreen> {
   final TextEditingController _controller = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final bool _isLoggedIn = Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
-    if(_isLoggedIn) {
-      Provider.of<ChatProvider>(context, listen: false).getChatList(context);
-    }
+    GoogleAPIs.createAuthCreds();
     return Scaffold(
       appBar: CustomAppBar(title: getTranslated('message', context)),
-      body: _isLoggedIn ? Consumer<ChatProvider>(
-        builder: (context, chat, child) {
+      body: _isLoggedIn ? Consumer<ChatProviderDialogFlow>(
+        builder: (context, chatProvider, child) {
+          print(chatProvider.chat.length);
           return Column(children: [
-
             Expanded(
-              child: chat.chatList != null ? chat.chatList.length > 0 ? ListView.builder(
+              child: chatProvider.chat != null ? chatProvider.chat.length > 0 ? ListView.builder(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                itemCount: chat.chatList.length,
+                itemCount: chatProvider.chat.length,
                 reverse: true,
                 itemBuilder: (context, index) {
-                  return MessageBubble(chat: chat.chatList[index], addDate: chat.showDate[index]);
+                  return MessageSupportBubble(message:chatProvider.chat[index], addDate: true);
                 },
               ) : SizedBox() : ListView.builder(
                 physics: BouncingScrollPhysics(),
@@ -58,46 +68,11 @@ class ChatScreen extends StatelessWidget {
             // Bottom TextField
             Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
 
-              Provider.of<ChatProvider>(context).imageFile != null ? Padding(
-                padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_DEFAULT),
-                child: Stack(
-                  clipBehavior: Clip.none, children: [
-                    Image.file(Provider.of<ChatProvider>(context).imageFile, height: 70, width: 70, fit: BoxFit.cover),
-                    Positioned(
-                      top: -2, right: -2,
-                      child: InkWell(
-                        onTap: () => Provider.of<ChatProvider>(context, listen: false).setImage(null),
-                        child: Icon(Icons.cancel, color: ColorResources.COLOR_WHITE),
-                      ),
-                    ),
-                  ],
-                ),
-              ) : SizedBox.shrink(),
-
               ConstrainedBox(
                 constraints: BoxConstraints(maxHeight: 100),
                 child: Ink(
                   color: Theme.of(context).accentColor,
                   child: Row(children: [
-
-                    InkWell(
-                      onTap: () async {
-                        final PickedFile pickedFile = await picker.getImage(source: ImageSource.gallery);
-                        if (pickedFile != null) {
-                          Provider.of<ChatProvider>(context, listen: false).setImage(File(pickedFile.path));
-                        } else {
-                          print('No image selected.');
-                        }
-                      },
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_DEFAULT),
-                        child: Image.asset(Images.image, width: 25, height: 25, color: ColorResources.getGreyBunkerColor(context)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 25,
-                      child: VerticalDivider(width: 0, thickness: 1, color: ColorResources.getGreyBunkerColor(context)),
-                    ),
                     SizedBox(width: Dimensions.PADDING_SIZE_DEFAULT),
 
                     Expanded(
@@ -112,22 +87,29 @@ class ChatScreen extends StatelessWidget {
                           hintStyle: rubikRegular.copyWith(color: ColorResources.getGreyBunkerColor(context), fontSize: Dimensions.FONT_SIZE_LARGE),
                         ),
                         onChanged: (String newText) {
-                          if(newText.isNotEmpty && !Provider.of<ChatProvider>(context, listen: false).isSendButtonActive) {
-                            Provider.of<ChatProvider>(context, listen: false).toggleSendButtonActivity();
-                          }else if(newText.isEmpty && Provider.of<ChatProvider>(context, listen: false).isSendButtonActive) {
-                            Provider.of<ChatProvider>(context, listen: false).toggleSendButtonActivity();
-                          }
+                          // if(newText.isNotEmpty && !Provider.of<ChatProvider>(context, listen: false).isSendButtonActive) {
+                          //   Provider.of<ChatProvider>(context, listen: false).toggleSendButtonActivity();
+                          // }else if(newText.isEmpty && Provider.of<ChatProvider>(context, listen: false).isSendButtonActive) {
+                          //   Provider.of<ChatProvider>(context, listen: false).toggleSendButtonActivity();
+                          // }
                         },
                       ),
                     ),
 
                     InkWell(
                       onTap: () async {
-                        if(Provider.of<ChatProvider>(context, listen: false).isSendButtonActive){
-                          Provider.of<ChatProvider>(context, listen: false).sendMessage(
-                            _controller.text, Provider.of<AuthProvider>(context, listen: false).getUserToken(),
-                            Provider.of<ProfileProvider>(context, listen: false).userInfoModel.id.toString(), context,
-                          );
+                        if(_controller.text.isNotEmpty){
+                          // Provider.of<ChatProvider>(context, listen: false).sendMessage(
+                          //   _controller.text, Provider.of<AuthProvider>(context, listen: false).getUserToken(),
+                          //   Provider.of<ProfileProvider>(context, listen: false).userInfoModel.id.toString(), context,
+                          // );
+                          DateTime sentAt = DateTime.now();
+                          Provider.of<ChatProviderDialogFlow>(context,listen: false).addMessage(_controller.text, sentAt, true);
+                          var reply = await GoogleAPIs.sendMessage(_controller.text);
+                          if(reply!=null){
+                            print("Not null");
+                            Provider.of<ChatProviderDialogFlow>(context,listen: false).addMessageModel(reply);
+                          }
                           _controller.text = '';
                         }else {
                           showCustomSnackBar('Write something', context);
@@ -138,7 +120,7 @@ class ChatScreen extends StatelessWidget {
                         child: Image.asset(
                           Images.send,
                           width: 25, height: 25,
-                          color: Provider.of<ChatProvider>(context).isSendButtonActive ? Theme.of(context).primaryColor : ColorResources.getGreyBunkerColor(context),
+                          // color: Provider.of<ChatProvider>(context).isSendButtonActive ? Theme.of(context).primaryColor : ColorResources.getGreyBunkerColor(context),
                         ),
                       ),
                     ),
