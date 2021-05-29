@@ -19,6 +19,7 @@ import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/nutrient_values.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -168,7 +169,27 @@ class DetailsPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 20.0),
+
+              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
+              Text(
+                'From Atrium',
+                style: rubikMedium.copyWith(fontSize: 20),
+              ),
+
+              SizedBox(
+                height: 15,
+              ),
+
+              Text(
+                '“The Ultimate Thai Platter comes with a bunch of fresh meats and all the herbs and spices that you’ll ever need to cook your very own thai dish in your own kitchen.”',
+                maxLines: 20,
+                style: rubikRegular.copyWith(
+                  height: 1.5,
+                ),
+              ),
+
+              SizedBox(height: Dimensions.PADDING_SIZE_LARGE + 10),
 
               //Details
               Column(
@@ -244,65 +265,21 @@ class DetailsPage extends StatelessWidget {
                       Expanded(
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: 15,
-                            ),
-                            Row(children: [
-                              Icon(
-                                Icons.fireplace,
-                                color: ColorResources.getAccentColor(context),
-                              ),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Text('569 cal/serving',
-                                  style: rubikRegular.copyWith(
-                                      color: ColorResources.getAccentColor(
-                                          context))),
-                            ]),
-                            SizedBox(
-                              height: 5.0,
-                            ),
                             Row(
                               children: [
+                                Icon(
+                                  Icons.fireplace,
+                                  color: ColorResources.getAccentColor(context),
+                                ),
                                 SizedBox(
-                                  width: 31.0,
+                                  width: 5.0,
                                 ),
-                                GestureDetector(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => NutrientValues(
-                                            product: product,
-                                          ),
-                                        ));
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'View Details',
-                                        style: rubikRegular.copyWith(
-                                          color: ColorResources.getPrimaryColor(
-                                              context),
-                                          fontSize: 11,
-                                          decoration: TextDecoration.underline,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 2.0,
-                                      ),
-                                      Icon(
-                                        CupertinoIcons.forward,
-                                        color: ColorResources.getPrimaryColor(
-                                            context),
-                                        size: 11.0,
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                Text('569 cal/serving',
+                                    style: rubikRegular.copyWith(
+                                        color: ColorResources.getAccentColor(
+                                            context))),
                               ],
-                            )
+                            ),
                           ],
                         ),
                       ),
@@ -311,7 +288,114 @@ class DetailsPage extends StatelessWidget {
                 ],
               ),
 
-              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+              SizedBox(height: Dimensions.PADDING_SIZE_LARGE + 10),
+
+              Container(
+                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(Radius.circular(10)),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5),
+                      spreadRadius: 2,
+                      blurRadius: 5,
+                      offset: Offset(0, 3), // changes position of shadow
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      children: [
+                        Text(
+                          'Nutritional Score',
+                          style: rubikMedium,
+                        ),
+                        SizedBox(
+                          height: 15,
+                        ),
+                        Row(
+                          children: [
+                            Text('Glycemic Index'),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 7, right: 7),
+                              decoration: BoxDecoration(
+                                color: ColorResources.getPrimaryColor(context),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Text('9'),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Row(
+                          children: [
+                            Text('Glycemic Index'),
+                            SizedBox(
+                              width: 7,
+                            ),
+                            Container(
+                              padding: EdgeInsets.only(left: 7, right: 7),
+                              decoration: BoxDecoration(
+                                color: ColorResources.getPrimaryColor(context),
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(10)),
+                              ),
+                              child: Text('3'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 55,
+                    ),
+                    CircularPercentIndicator(
+                      lineWidth: 6,
+                      radius: 60,
+                      backgroundColor: ColorResources.COLOR_WHITE,
+                      percent: 0.74,
+                      circularStrokeCap: CircularStrokeCap.round,
+                      progressColor: ColorResources.getPrimaryColor(context),
+                      center: Text(
+                        '7.4',
+                        style: rubikMedium.copyWith(
+                            color: ColorResources.getPrimaryColor(context),
+                            fontSize: 20),
+                      ),
+                    ),
+                    VerticalDivider(
+                      color: ColorResources.COLOR_BLACK,
+                      width: 5,
+                      thickness: 2,
+                      indent: 0,
+                      endIndent: 0,
+                    ),
+                    IconButton(
+                      icon: Icon(
+                        Icons.info,
+                        color: ColorResources.getPrimaryColor(context),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => NutrientValues()));
+                      },
+                    ),
+                  ],
+                ),
+              ),
+
+              SizedBox(height: Dimensions.PADDING_SIZE_LARGE + 10),
 
               // Quantity
               Row(children: [
@@ -330,23 +414,54 @@ class DetailsPage extends StatelessWidget {
                           productProvider.setQuantity(false);
                         }
                       },
-                      child: Padding(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffDEDEDE),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(10),
+                            bottomLeft: Radius.circular(10),
+                          ),
+                        ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_SMALL,
+                            horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        child: Icon(Icons.remove, size: 20),
+                        child: Icon(
+                          Icons.remove,
+                          size: 20,
+                          color: ColorResources.COLOR_GRAY,
+                        ),
                       ),
                     ),
-                    Text(productProvider.quantity.toString(),
-                        style: rubikMedium.copyWith(
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL - 2,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Color(0xffDEDEDE),
+                      ),
+                      child: Text(productProvider.quantity.toString(),
+                          style: rubikMedium.copyWith(
+                              fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+                    ),
                     InkWell(
                       onTap: () => productProvider.setQuantity(true),
-                      child: Padding(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Color(0xffDEDEDE),
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(10),
+                            bottomRight: Radius.circular(10),
+                          ),
+                        ),
                         padding: EdgeInsets.symmetric(
-                            horizontal: Dimensions.PADDING_SIZE_SMALL,
+                            horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        child: Icon(Icons.add, size: 20),
+                        child: Icon(
+                          Icons.add,
+                          size: 20,
+                          color: ColorResources.COLOR_BLACK,
+                        ),
                       ),
                     ),
                   ]),
@@ -446,6 +561,7 @@ class DetailsPage extends StatelessWidget {
                         ])
                   : SizedBox(),
 
+              SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
               //Ingredients
 
               Text('Ingredients',
@@ -459,8 +575,8 @@ class DetailsPage extends StatelessWidget {
                     crossAxisCount: 3,
                     childAspectRatio: 3 / 3,
                     crossAxisSpacing: 20,
-                    mainAxisSpacing: 15,
-                    mainAxisExtent: 100,
+                    mainAxisSpacing: 30,
+                    mainAxisExtent: 130,
                   ),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
@@ -489,6 +605,72 @@ class DetailsPage extends StatelessWidget {
                             style: rubikRegular.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_SMALL),
                           ),
+                          SizedBox(
+                            height: 7,
+                          ),
+                          Row(children: [
+                            InkWell(
+                              onTap: () {
+                                if (productProvider.quantity > 1) {
+                                  productProvider.setQuantity(false);
+                                }
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xffDEDEDE),
+                                  borderRadius: BorderRadius.only(
+                                    topLeft: Radius.circular(10),
+                                    bottomLeft: Radius.circular(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                    vertical:
+                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                child: Icon(
+                                  Icons.remove,
+                                  size: 20,
+                                  color: ColorResources.COLOR_GRAY,
+                                ),
+                              ),
+                            ),
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8,
+                                vertical:
+                                    Dimensions.PADDING_SIZE_EXTRA_SMALL - 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Color(0xffDEDEDE),
+                              ),
+                              child: Text(productProvider.quantity.toString(),
+                                  style: rubikMedium.copyWith(
+                                      fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+                            ),
+                            InkWell(
+                              onTap: () => productProvider.setQuantity(true),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Color(0xffDEDEDE),
+                                  borderRadius: BorderRadius.only(
+                                    topRight: Radius.circular(10),
+                                    bottomRight: Radius.circular(10),
+                                  ),
+                                ),
+                                padding: EdgeInsets.symmetric(
+                                    horizontal:
+                                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                    vertical:
+                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                child: Icon(
+                                  Icons.add,
+                                  size: 20,
+                                  color: ColorResources.COLOR_BLACK,
+                                ),
+                              ),
+                            ),
+                          ]),
                         ],
                       ),
                     );
