@@ -1,3 +1,4 @@
+import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/utill/strings.dart';
 
 class ProductModel {
@@ -68,6 +69,7 @@ class Product {
   List<Ingredients> _ingredients;
   Recipe _recipe;
   Nutrients _nutrients;
+  List<ReviewBody> _reviews;
 
   Product({
     int id,
@@ -94,6 +96,7 @@ class Product {
     List<Ingredients> ingredients,
     Recipe recipe,
     Nutrients nutrients,
+    List<ReviewBody> reviews,
   }) {
     this._id = id;
     this._name = name;
@@ -119,6 +122,7 @@ class Product {
     this._ingredients = ingredients;
     this._recipe = recipe;
     this._nutrients = nutrients;
+    this._reviews = reviews;
   }
 
   int get id => _id;
@@ -145,6 +149,7 @@ class Product {
   List<Ingredients> get ingredients => _ingredients;
   Recipe get recipe => _recipe;
   Nutrients get nutrients => _nutrients;
+  List<ReviewBody> get reviews => _reviews;
 
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -209,6 +214,12 @@ class Product {
     if (json['nutrients'] != null) {
       _nutrients = json['nutrients'];
     }
+
+    if (json['reviews'] != null) {
+      json['reviews'].forEach((v) {
+        _reviews.add(new ReviewBody.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -256,6 +267,9 @@ class Product {
 
     if (this._nutrients != null) {
       data['nutrients'] = this._nutrients;
+    }
+    if (this._reviews != null) {
+      data['reviews'] = this._reviews.map((v) => v.toJson()).toList();
     }
 
     return data;
