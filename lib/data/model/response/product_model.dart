@@ -1,3 +1,5 @@
+import 'package:flutter_restaurant/utill/strings.dart';
+
 class ProductModel {
   int _totalSize;
   String _limit;
@@ -63,29 +65,36 @@ class Product {
   String _taxType;
   int _setMenu;
   List<Rating> _rating;
+  List<Ingredients> _ingredients;
+  Recipe _recipe;
+  Nutrients _nutrients;
 
-  Product(
-      {int id,
-        String name,
-        String description,
-        String image,
-        double price,
-        List<Variation> variations,
-        List<AddOns> addOns,
-        double tax,
-        String availableTimeStarts,
-        String availableTimeEnds,
-        int status,
-        String createdAt,
-        String updatedAt,
-        List<String> attributes,
-        List<CategoryId> categoryIds,
-        List<ChoiceOption> choiceOptions,
-        double discount,
-        String discountType,
-        String taxType,
-        int setMenu,
-        List<Rating> rating}) {
+  Product({
+    int id,
+    String name,
+    String description,
+    String image,
+    double price,
+    List<Variation> variations,
+    List<AddOns> addOns,
+    double tax,
+    String availableTimeStarts,
+    String availableTimeEnds,
+    int status,
+    String createdAt,
+    String updatedAt,
+    List<String> attributes,
+    List<CategoryId> categoryIds,
+    List<ChoiceOption> choiceOptions,
+    double discount,
+    String discountType,
+    String taxType,
+    int setMenu,
+    List<Rating> rating,
+    List<Ingredients> ingredients,
+    Recipe recipe,
+    Nutrients nutrients,
+  }) {
     this._id = id;
     this._name = name;
     this._description = description;
@@ -107,6 +116,9 @@ class Product {
     this._taxType = taxType;
     this._setMenu = setMenu;
     this._rating = rating;
+    this._ingredients = ingredients;
+    this._recipe = recipe;
+    this._nutrients = nutrients;
   }
 
   int get id => _id;
@@ -130,6 +142,9 @@ class Product {
   String get taxType => _taxType;
   int get setMenu => _setMenu;
   List<Rating> get rating => _rating;
+  List<Ingredients> get ingredients => _ingredients;
+  Recipe get recipe => _recipe;
+  Nutrients get nutrients => _nutrients;
 
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -149,6 +164,14 @@ class Product {
         _addOns.add(new AddOns.fromJson(v));
       });
     }
+
+    if (json['ingredients'] != null) {
+      _ingredients = [];
+      json['ingredients'].forEach((v) {
+        _ingredients.add(new Ingredients.fromJson(v));
+      });
+    }
+
     _tax = json['tax'].toDouble();
     _availableTimeStarts = json['available_time_starts'];
     _availableTimeEnds = json['available_time_ends'];
@@ -177,6 +200,14 @@ class Product {
       json['rating'].forEach((v) {
         _rating.add(new Rating.fromJson(v));
       });
+    }
+
+    if (json['recipe'] != null) {
+      _recipe = json['recipe'];
+    }
+
+    if (json['nutrients'] != null) {
+      _nutrients = json['nutrients'];
     }
   }
 
@@ -214,6 +245,19 @@ class Product {
     if (this._rating != null) {
       data['rating'] = this._rating.map((v) => v.toJson()).toList();
     }
+
+    if (this._ingredients != null) {
+      data['ingredients'] = this._ingredients.map((v) => v.toJson()).toList();
+    }
+
+    if (this._recipe != null) {
+      data['recipe'] = this._recipe;
+    }
+
+    if (this._nutrients != null) {
+      data['nutrients'] = this._nutrients;
+    }
+
     return data;
   }
 }
@@ -232,7 +276,7 @@ class Variation {
 
   Variation.fromJson(Map<String, dynamic> json) {
     _type = json['type'];
-    if(json['price'] != null) {
+    if (json['price'] != null) {
       _price = json['price'].toDouble();
     }
   }
@@ -245,6 +289,115 @@ class Variation {
   }
 }
 
+class Recipe {
+  List<String> _procedure;
+  String _description;
+
+  Recipe({List<String> procedure, String description}) {
+    this._procedure = procedure;
+    this._description = description;
+  }
+
+  List<String> get procedure => _procedure;
+  String get description => _description;
+
+  Recipe.fromJson(Map<String, dynamic> json) {
+    _procedure = json['procedure'];
+    _description = json['description'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['procedure'] = this.procedure;
+    data['description'] = this.description;
+
+    return data;
+  }
+}
+
+class Nutrients {
+  int _glycemicIndex;
+  int _glycemicLoad;
+  double _score;
+  double _protein;
+  double _calories;
+  double _carbs;
+  double _energy;
+  double _fats;
+  double _fiber;
+  double _sugar;
+  String _suggestion;
+
+  Nutrients(
+      {int glycemicIndex,
+      int glycemicLoad,
+      double score,
+      double protein,
+      double calories,
+      double carbs,
+      double energy,
+      double fats,
+      double fiber,
+      double sugar,
+      String suggestion}) {
+    this._glycemicIndex = glycemicIndex;
+    this._glycemicLoad = glycemicLoad;
+    this._score = score;
+    this._protein = protein;
+    this._calories = calories;
+    this._energy = energy;
+    this._fats = fats;
+    this._fiber = fiber;
+    this._sugar = sugar;
+    this._suggestion = suggestion;
+  }
+
+  int get glycemicIndex => _glycemicIndex;
+  int get glycemicLoad => _glycemicLoad;
+  double get score => _score;
+  double get protein => _protein;
+  double get calories => _calories;
+  double get carbs => _carbs;
+  double get energy => _energy;
+  double get fats => _fats;
+  double get fiber => _fiber;
+  double get sugar => _sugar;
+  String get suggestion => _suggestion;
+
+  Nutrients.fromJson(Map<String, dynamic> json) {
+    _glycemicIndex = json['glycemicIndex'];
+    _glycemicLoad = json['glycemicLoad'];
+    _score = json['score'];
+    _protein = json['protein'];
+    _calories = json['calories'];
+    _carbs = json['carbs'];
+    _energy = json['energy'];
+    _fats = json['fats'];
+    _fiber = json['fiber'];
+    _sugar = json['sugar'];
+    _suggestion = json['suggestion'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+
+    data['glycemicIndex'] = _glycemicIndex;
+    data['glycemicLoad'] = _glycemicLoad;
+    data['score'] = _score;
+    data['protein'] = _protein;
+    data['calories'] = _calories;
+    data['carbs'] = _carbs;
+    data['energy'] = _energy;
+    data['fats'] = _fats;
+    data['fiber'] = _fiber;
+    data['sugar'] = _sugar;
+    data['suggestion'] = _suggestion;
+
+    return data;
+  }
+}
+
 class AddOns {
   int _id;
   String _name;
@@ -252,7 +405,8 @@ class AddOns {
   String _createdAt;
   String _updatedAt;
 
-  AddOns({int id, String name, double price, String createdAt, String updatedAt}) {
+  AddOns(
+      {int id, String name, double price, String createdAt, String updatedAt}) {
     this._id = id;
     this._name = name;
     this._price = price;
@@ -281,6 +435,57 @@ class AddOns {
     data['price'] = this._price;
     data['created_at'] = this._createdAt;
     data['updated_at'] = this._updatedAt;
+    return data;
+  }
+}
+
+class Ingredients {
+  int _id;
+  String _name;
+  int _quantity;
+  double _price;
+  String _createdAt;
+  String _updatedAt;
+
+  Ingredients(
+      {int id,
+      String name,
+      double price,
+      String createdAt,
+      String updatedAt,
+      int quantity}) {
+    this._id = id;
+    this._name = name;
+    this._price = price;
+    this._createdAt = createdAt;
+    this._updatedAt = updatedAt;
+    this._quantity = quantity;
+  }
+
+  int get id => _id;
+  int get quantity => _quantity;
+  String get name => _name;
+  double get price => _price;
+  String get createdAt => _createdAt;
+  String get updatedAt => _updatedAt;
+
+  Ingredients.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _name = json['name'];
+    _price = json['price'].toDouble();
+    _createdAt = json['created_at'];
+    _updatedAt = json['updated_at'];
+    _quantity = json['quantity'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
+    data['name'] = this._name;
+    data['price'] = this._price;
+    data['created_at'] = this._createdAt;
+    data['updated_at'] = this._updatedAt;
+    data['quantity'] = this.quantity;
     return data;
   }
 }
