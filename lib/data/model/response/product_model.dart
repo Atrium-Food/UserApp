@@ -590,4 +590,3 @@ class Rating {
     return data;
   }
 }
-
