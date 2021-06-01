@@ -1,3 +1,4 @@
+
 class WishListModel {
   int id;
   int userId;

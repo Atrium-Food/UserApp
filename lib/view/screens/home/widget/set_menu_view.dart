@@ -29,7 +29,6 @@ class SetMenuView extends StatelessWidget {
         builder: (context, setMenu, child) {
           return Column(
             children: [
-
               setMenu.setMenuList != null
                   ? setMenu.setMenuList.length > 0
                       ? ListView.builder(

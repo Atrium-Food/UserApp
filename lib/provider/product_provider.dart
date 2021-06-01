@@ -5,6 +5,7 @@ import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/data/model/response/base/api_response.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/data/model/response/response_model.dart';
+import 'package:flutter_restaurant/data/model/response/userinfo_model.dart';
 import 'package:flutter_restaurant/data/repository/product_repo.dart';
 
 class ProductProvider extends ChangeNotifier {
@@ -29,6 +30,7 @@ class ProductProvider extends ChangeNotifier {
   int get quantity => _quantity;
   List<bool> get addOnActiveList => _addOnActiveList;
   List<int> get addOnQtyList => _addOnQtyList;
+
 
   void getPopularProductList(BuildContext context, String offset) async {
     if (!_offsetList.contains(offset)) {

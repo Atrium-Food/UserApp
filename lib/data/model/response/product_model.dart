@@ -1,3 +1,4 @@
+import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/utill/strings.dart';
 
 class ProductModel {
@@ -446,6 +447,7 @@ class Ingredients {
   double _price;
   String _createdAt;
   String _updatedAt;
+  int _minQuantity;
 
   Ingredients(
       {int id,
@@ -453,13 +455,15 @@ class Ingredients {
       double price,
       String createdAt,
       String updatedAt,
-      int quantity}) {
+      int quantity,
+      int minQuantity}) {
     this._id = id;
     this._name = name;
     this._price = price;
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;
     this._quantity = quantity;
+    this._minQuantity = minQuantity;
   }
 
   int get id => _id;
@@ -468,6 +472,7 @@ class Ingredients {
   double get price => _price;
   String get createdAt => _createdAt;
   String get updatedAt => _updatedAt;
+  int get minQuantity => _minQuantity;
 
   Ingredients.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
@@ -476,6 +481,7 @@ class Ingredients {
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _quantity = json['quantity'];
+    _minQuantity = json['min_quantity'];
   }
 
   Map<String, dynamic> toJson() {
@@ -548,6 +554,8 @@ class ChoiceOption {
 class Rating {
   String _average;
   int _productId;
+  List<int> _countRating;
+  int _countTotalRating;
 
   Rating({String average, int productId}) {
     this._average = average;
@@ -569,3 +577,4 @@ class Rating {
     return data;
   }
 }
+

@@ -63,7 +63,16 @@ class ProfileProvider with ChangeNotifier {
     return _responseModel;
   }
 
-
+  Future<ResponseModel> updateCardInfo(CardModel cardModel){
+    _isLoading=true;
+    notifyListeners();
+    ResponseModel _responseModel;
+    http.StreamedResponse response;
+    // http.StreamedResponse response = await profileRepo.updateCardProfile(cardModel);
+    if(response.statusCode==200){
+    //  update userInfoModel.
+    }
+  }
 
 
 }
