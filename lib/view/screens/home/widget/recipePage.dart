@@ -18,6 +18,8 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
+import 'package:flutter_restaurant/view/screens/rare_review/rate_review_screen.dart';
+import 'package:flutter_restaurant/view/screens/rare_review/review_screen.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 import 'detailsPage.dart';
@@ -161,7 +163,10 @@ class RecipePage extends StatelessWidget {
                 height: 20,
               ),
               Center(
-                child: GestureDetector(
+                child: InkWell(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductReviewScreen(product: product,)));
+                  },
                   child: Container(
                     padding: EdgeInsets.only(
                       top: Dimensions.PADDING_SIZE_SMALL,
@@ -176,7 +181,7 @@ class RecipePage extends StatelessWidget {
                           color: ColorResources.COLOR_PRIMARY, width: 3),
                     ),
                     child: Text(
-                      'I Have Made It!!',
+                      'Write a review',
                       style: rubikRegular.copyWith(
                           color: ColorResources.COLOR_PRIMARY, fontSize: 18),
                     ),

@@ -5,6 +5,7 @@ import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/set_menu_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
+import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -132,7 +133,7 @@ class SetMenuView extends StatelessWidget {
                                 },
                                 child: Container(
                                   height: 220,
-                                  width: 300,
+                                  // width: 300,
                                   margin: EdgeInsets.only(
                                       right: Dimensions.PADDING_SIZE_LARGE,
                                       bottom: Dimensions.PADDING_SIZE_LARGE),
@@ -181,7 +182,7 @@ class SetMenuView extends StatelessWidget {
                                                   );
                                                 },
                                                 height: 110,
-                                                width: 365,
+                                                width: MediaQuery.of(context).size.width-Dimensions.PADDING_SIZE_LARGE,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
@@ -218,6 +219,35 @@ class SetMenuView extends StatelessWidget {
                                                           )),
                                                     ),
                                                   ),
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: Padding(
+                                                padding: const EdgeInsets.all(8.0),
+                                                child: Consumer<WishListProvider>(
+                                                    builder: (context, wishList, child) {
+                                                      return InkWell(
+                                                        onTap: () {
+                                                          wishList.wishIdList.contains(setMenu.setMenuList[index].id)
+                                                              ? wishList.removeFromWishList(
+                                                              setMenu.setMenuList[index], (message) {})
+                                                              : wishList.addToWishList(
+                                                              setMenu.setMenuList[index], (message) {});
+                                                        },
+                                                        child: Icon(
+                                                          wishList.wishIdList.contains(setMenu.setMenuList[index].id)
+                                                              ? Icons.favorite
+                                                              : Icons.favorite_border,
+                                                          color: wishList.wishIdList
+                                                              .contains(setMenu.setMenuList[index].id)
+                                                              ? ColorResources.COLOR_PRIMARY
+                                                              : ColorResources.COLOR_WHITE,
+                                                          size: 30,
+                                                        ),
+                                                      );
+                                                    }),
+                                              ),
+                                            )
                                           ],
                                         ),
                                         Expanded(
@@ -252,14 +282,13 @@ class SetMenuView extends StatelessWidget {
                                                         rating: setMenu
                                                                     .setMenuList[
                                                                         index]
-                                                                    .rating
-                                                                    .length >
-                                                                0
+                                                                    .rating !=null
+
                                                             ? double.parse(
                                                                 setMenu
                                                                     .setMenuList[
                                                                         index]
-                                                                    .rating[0]
+                                                                    .rating
                                                                     .average)
                                                             : 0.0,
                                                         size: 12,
@@ -301,7 +330,7 @@ class SetMenuView extends StatelessWidget {
                                                                               product: setMenu.setMenuList[index],
                                                                               fromSetMenu: true,
                                                                               callback: (CartModel cartModel) {
-                                                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('added_to_cart', context)), backgroundColor: Colors.green));
+                                                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('added_to_cart', context)), backgroundColor: ColorResources.getPrimaryColor(context)));
                                                                               },
                                                                             ));
                                                               },

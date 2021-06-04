@@ -34,7 +34,7 @@ class ReviewBody {
     _comment = json['comment'];
     _orderId = json['order_id'];
     _rating = json['rating'];
-    _fileUpload = json['attachment'].cast<String>();
+    _fileUpload = json['attachment']!=null? json['attachment'].cast<String>():null;
   }
 
   Map<String, dynamic> toJson() {

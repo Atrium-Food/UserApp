@@ -99,7 +99,11 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
               children: [
                 widget.orderType != 'take_away'
                     ? ExpansionTile(
-                        title: Text("Select Delivery Address",style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context)),),
+                        title: Text(
+                          "Select Delivery Address",
+                          style: rubikRegular.copyWith(
+                              color: ColorResources.getAccentColor(context)),
+                        ),
                         subtitle: Text("Home"),
                         onExpansionChanged: (value) {
                           setState(() {
@@ -212,7 +216,9 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                                         Dimensions
                                                                             .PADDING_SIZE_EXTRA_SMALL),
                                                             child: Column(
-                                                              crossAxisAlignment: CrossAxisAlignment.start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
                                                               children: [
                                                                 Icon(
                                                                   address.addressList[index].addressType ==
@@ -374,16 +380,19 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   color: ColorResources.getAccentColor(context),
                   thickness: 0.3,
                 ),
-                RichText(
-                  text: TextSpan(
-                    children:[
-                      TextSpan(text: "Expected Delivery Time: ",style: rubikRegular.copyWith(
-                          fontSize: Dimensions.FONT_SIZE_LARGE,color: ColorResources.getAccentColor(context))),
-                      TextSpan(text: "25 minutes",style: rubikMedium.copyWith(
-            fontSize: Dimensions.FONT_SIZE_LARGE,color: ColorResources.getAccentColor(context)))
-                    ]
-                  )
-                ),
+                // RichText(
+                //     text: TextSpan(children: [
+                //   TextSpan(
+                //       text: "Expected Delivery Time: ",
+                //       style: rubikRegular.copyWith(
+                //           fontSize: Dimensions.FONT_SIZE_LARGE,
+                //           color: ColorResources.getAccentColor(context))),
+                //   TextSpan(
+                //       text: "25 minutes",
+                //       style: rubikMedium.copyWith(
+                //           fontSize: Dimensions.FONT_SIZE_LARGE,
+                //           color: ColorResources.getAccentColor(context)))
+                // ])),
                 Divider(
                   color: ColorResources.getAccentColor(context),
                   thickness: 0.3,
@@ -418,7 +427,8 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                 color: ColorResources
                                                     .getAccentColor(context))),
                                         TextSpan(
-                                            text: ", "+profile.userInfoModel.phone,
+                                            text: ", " +
+                                                profile.userInfoModel.phone,
                                             style: rubikRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
@@ -439,79 +449,162 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                   color: ColorResources.getAccentColor(context),
                   thickness: 0.3,
                 ),
-                _isCashOnDeliveryActive ? CustomCheckBox(title: getTranslated('cash_on_delivery', context), index: 0) : SizedBox(),
-                _isDigitalPaymentActive ? CustomCheckBox(title: getTranslated('digital_payment', context), index: _isCashOnDeliveryActive ? 1 : 0)
+                _isCashOnDeliveryActive
+                    ? CustomCheckBox(
+                        title: getTranslated('cash_on_delivery', context),
+                        index: 0)
+                    : SizedBox(),
+                _isDigitalPaymentActive
+                    ? CustomCheckBox(
+                        title: getTranslated('digital_payment', context),
+                        index: _isCashOnDeliveryActive ? 1 : 0)
                     : SizedBox(),
                 Padding(
                   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  child: !order.isLoading ? Builder(
-                    builder: (context) => CustomButton(btnTxt: getTranslated('confirm_order', context), onTap: () {
-                      print("Tap Confirm Order");
-                      if(widget.amount < Provider.of<SplashProvider>(context, listen: false).configModel.minimumOrderValue) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(
-                          'Minimum order amount is ${Provider.of<SplashProvider>(context, listen: false).configModel.minimumOrderValue}',
-                        ), backgroundColor: Colors.red));
-                      }else if(widget.orderType != 'take_away' && (address.addressList == null || address.addressList.length == 0 || order.addressIndex < 0)) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(getTranslated('select_an_address', context)),
-                          backgroundColor: Colors.red,
-                          behavior: SnackBarBehavior.floating,
-                        ));
-                      }else {
-                        List<Cart> carts = [];
-                        for (int index = 0; index < widget.cartList.length; index++) {
-                          CartModel cart = widget.cartList[index];
-                          List<int> _addOnIdList = [];
-                          List<int> _addOnQtyList = [];
-                          cart.addOnIds.forEach((addOn) {
-                            _addOnIdList.add(addOn.id);
-                            _addOnQtyList.add(addOn.quantity);
-                          });
-                          carts.add(Cart(
-                            cart.product.id.toString(), cart.discountedPrice.toString(), '', cart.variation,
-                            cart.discountAmount, cart.quantity, cart.taxAmount, _addOnIdList, _addOnQtyList,
-                          ));
-                        }
-                        order.placeOrder(
-                          PlaceOrderBody(
-                            cart: carts, couponDiscountAmount: Provider.of<CouponProvider>(context, listen: false).discount, couponDiscountTitle: '',
-                            deliveryAddressId: widget.orderType != 'take_away' ? Provider.of<LocationProvider>(context, listen: false)
-                                .addressList[order.addressIndex].id : 0,
-                            orderAmount: widget.amount, orderNote: _noteController.text ?? '', orderType: widget.orderType,
-                            paymentMethod: _isCashOnDeliveryActive ? order.paymentMethodIndex == 0 ? 'cash_on_delivery' : null : null,
-                            couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null
-                                ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
-                            branchId: _branches[order.branchIndex].id,
-                          ), _callback,
-                        );
-                      }
-                    }),
-                  ) : Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor))),
+                  child: !order.isLoading
+                      ? Builder(
+                          builder: (context) => CustomButton(
+                              btnTxt: getTranslated('confirm_order', context),
+                              onTap: () {
+                                print("Tap Confirm Order");
+                                if (widget.amount <
+                                    Provider.of<SplashProvider>(context,
+                                            listen: false)
+                                        .configModel
+                                        .minimumOrderValue) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          content: Text(
+                                            'Minimum order amount is ${Provider.of<SplashProvider>(context, listen: false).configModel.minimumOrderValue}',
+                                          ),
+                                          backgroundColor: Colors.red));
+                                } else if (widget.orderType != 'take_away' &&
+                                    (address.addressList == null ||
+                                        address.addressList.length == 0 ||
+                                        order.addressIndex < 0)) {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text(getTranslated(
+                                        'select_an_address', context)),
+                                    backgroundColor: Colors.red,
+                                    behavior: SnackBarBehavior.floating,
+                                  ));
+                                } else {
+                                  List<Cart> carts = [];
+                                  for (int index = 0;
+                                      index < widget.cartList.length;
+                                      index++) {
+                                    CartModel cart = widget.cartList[index];
+                                    List<int> _addOnIdList = [];
+                                    List<int> _addOnQtyList = [];
+                                    cart.addOnIds.forEach((addOn) {
+                                      _addOnIdList.add(addOn.id);
+                                      _addOnQtyList.add(addOn.quantity);
+                                    });
+                                    carts.add(Cart(
+                                      cart.product.id.toString(),
+                                      cart.discountedPrice.toString(),
+                                      '',
+                                      cart.variation,
+                                      cart.discountAmount,
+                                      cart.quantity,
+                                      cart.taxAmount,
+                                      _addOnIdList,
+                                      _addOnQtyList,
+                                    ));
+                                  }
+                                  order.placeOrder(
+                                    PlaceOrderBody(
+                                      cart: carts,
+                                      couponDiscountAmount:
+                                          Provider.of<CouponProvider>(context,
+                                                  listen: false)
+                                              .discount,
+                                      couponDiscountTitle: '',
+                                      deliveryAddressId: widget.orderType !=
+                                              'take_away'
+                                          ? Provider.of<LocationProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .addressList[order.addressIndex]
+                                              .id
+                                          : 0,
+                                      orderAmount: widget.amount,
+                                      orderNote: _noteController.text ?? '',
+                                      orderType: widget.orderType,
+                                      paymentMethod: _isCashOnDeliveryActive
+                                          ? order.paymentMethodIndex == 0
+                                              ? 'cash_on_delivery'
+                                              : null
+                                          : null,
+                                      couponCode: Provider.of<CouponProvider>(
+                                                      context,
+                                                      listen: false)
+                                                  .coupon !=
+                                              null
+                                          ? Provider.of<CouponProvider>(context,
+                                                  listen: false)
+                                              .coupon
+                                              .code
+                                          : null,
+                                      branchId: _branches[order.branchIndex].id,
+                                    ),
+                                    _callback,
+                                  );
+                                }
+                              }),
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Theme.of(context).primaryColor))),
                 ),
               ],
             );
           });
         }));
   }
-  void _callback(bool isSuccess, String message, String orderID, int addressID) async {
-    if(isSuccess) {
+
+  void _callback(
+      bool isSuccess, String message, String orderID, int addressID) async {
+    if (isSuccess) {
       Provider.of<CartProvider>(context, listen: false).clearCartList();
       Provider.of<OrderProvider>(context, listen: false).stopLoader();
 
-      MyNotification.scheduleNotification(flutterLocalNotificationsPlugin,"id",'Title',"body",orderID,addressID.toString());
-      if(_isCashOnDeliveryActive && Provider.of<OrderProvider>(context, listen: false).paymentMethodIndex == 0) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderSuccessfulScreen(orderID: orderID, status: 0, addressID: addressID)));
-      }else {
+      MyNotification.scheduleNotification(flutterLocalNotificationsPlugin, "id",
+          'Title', "body", orderID, addressID.toString());
+      if (_isCashOnDeliveryActive &&
+          Provider.of<OrderProvider>(context, listen: false)
+                  .paymentMethodIndex ==
+              0) {
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) => OrderSuccessfulScreen(
+                    orderID: orderID, status: 0, addressID: addressID)));
+      } else {
         OrderModel _orderModel = OrderModel(
-          paymentMethod: '', id: int.parse(orderID), userId: Provider.of<ProfileProvider>(context, listen: false).userInfoModel.id,
-          couponDiscountAmount: Provider.of<CouponProvider>(context, listen: false).discount,
-          createdAt: DateConverter.localDateToIsoString(DateTime.now()), updatedAt: DateConverter.localDateToIsoString(DateTime.now()),
-          orderStatus: 'pending', paymentStatus: 'unpaid',
+          paymentMethod: '',
+          id: int.parse(orderID),
+          userId: Provider.of<ProfileProvider>(context, listen: false)
+              .userInfoModel
+              .id,
+          couponDiscountAmount:
+              Provider.of<CouponProvider>(context, listen: false).discount,
+          createdAt: DateConverter.localDateToIsoString(DateTime.now()),
+          updatedAt: DateConverter.localDateToIsoString(DateTime.now()),
+          orderStatus: 'pending',
+          paymentStatus: 'unpaid',
         );
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => PaymentScreen(orderModel: _orderModel, fromCheckout: true)));
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (_) => PaymentScreen(
+                    orderModel: _orderModel, fromCheckout: true)));
       }
-    }else {
-      _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(message), backgroundColor: Colors.red));
+    } else {
+      _scaffoldKey.currentState.showSnackBar(
+          SnackBar(content: Text(message), backgroundColor: Colors.red));
     }
   }
 }

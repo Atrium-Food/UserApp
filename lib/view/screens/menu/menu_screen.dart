@@ -41,7 +41,7 @@ class MenuScreen extends StatelessWidget {
                 backgroundColor: ColorResources.getPrimaryColor(context),
                 toolbarHeight: MediaQuery.of(context).size.height * 0.065,
                 collapsedHeight: MediaQuery.of(context).size.height * 0.065,
-                expandedHeight: MediaQuery.of(context).size.height * 0.25,
+                expandedHeight: MediaQuery.of(context).size.height * 0.30,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
@@ -53,11 +53,12 @@ class MenuScreen extends StatelessWidget {
                   titlePadding: EdgeInsets.only(left: 15),
                   centerTitle: true,
                   title: Container(
-                    padding: EdgeInsets.only(top: 50.0),
+                    padding: EdgeInsets.only(bottom:45.0),
                     child: Consumer<ProfileProvider>(
                         builder: (context, profileProvider, child) {
-                      return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+                      return ListView(
+                        shrinkWrap: true,
+                          // mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Container(
                               height: 40,
@@ -176,17 +177,17 @@ class MenuScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PROFILE',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.width*0.038)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PAYMENT',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.width*0.038)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REFER',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.width*0.038)),
                         ),
                       ],
                     ),

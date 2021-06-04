@@ -293,9 +293,9 @@ class CartBottomSheetScreen extends StatelessWidget {
                                       fontSize: Dimensions.FONT_SIZE_LARGE),
                                 ),
                                 RatingBar(
-                                    rating: product.rating.length > 0
+                                    rating: product.rating != null
                                         ? double.parse(
-                                            product.rating[0].average)
+                                            product.rating.average)
                                         : 0.0,
                                     size: 15),
                                 SizedBox(height: 10),

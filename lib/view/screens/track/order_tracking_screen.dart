@@ -52,6 +52,7 @@ class OrderTrackingScreen extends StatelessWidget {
             onRefresh: () async {
               await Provider.of<OrderProvider>(context, listen: false).getDeliveryManData(orderID, context);
               await Provider.of<OrderProvider>(context, listen: false).trackOrder(orderID, null, context, true);
+              print("Delivery Man: "+order.deliveryManModel.latitude.toString());
             },
             backgroundColor: Theme.of(context).primaryColor,
             child: ListView(

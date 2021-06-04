@@ -179,25 +179,51 @@ class CartBottomSheetScreen extends StatelessWidget {
                   titlePadding: EdgeInsets.only(left: 15),
                   centerTitle: true,
                   title: Container(
-                    padding: EdgeInsets.only(top: 52.0),
+                    padding: EdgeInsets.only(top: 65.0, right: 8),
                     alignment: Alignment.bottomLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
                       children: [
-                        Text(
-                          product.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.visible,
-                          style: rubikMedium.copyWith(
-                              color: ColorResources.getAccentColor(context),
-                              fontSize: 13),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              product.name,
+                              maxLines: 1,
+                              overflow: TextOverflow.visible,
+                              style: rubikMedium.copyWith(
+                                color: ColorResources.getAccentColor(context),
+                              ),
+                            ),
+                            RatingBar(
+                                rating: product.rating != null
+                                    ? double.parse(product.rating.average)
+                                    : 0.0,
+                                size: 10),
+                          ],
                         ),
-                        RatingBar(
-                            rating: product.rating.length > 0
-                                ? double.parse(product.rating[0].average)
-                                : 0.0,
-                            size: 10),
+                        Spacer(),
+                        Consumer<WishListProvider>(
+                            builder: (context, wishList, child) {
+                          return IconButton(
+                            onPressed: () {
+                              wishList.wishIdList.contains(product.id)
+                                  ? wishList.removeFromWishList(
+                                      product, (message) {})
+                                  : wishList.addToWishList(
+                                      product, (message) {});
+                            },
+                            icon: Icon(
+                              wishList.wishIdList.contains(product.id)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: wishList.wishIdList.contains(product.id)
+                                  ? ColorResources.getAccentColor(context)
+                                  : ColorResources.getAccentColor(context),
+                              size: 20,
+                            ),
+                          );
+                        })
                       ],
                     ),
                   ),

@@ -17,8 +17,8 @@ class GoogleAPIs {
   static var accountCredentials = ServiceAccountCredentials.fromJson({
     "private_key_id": "69adeac62370f5b5703a87eaddd2501f8ec601d1",
     "private_key":
-  "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfz0OiurfjUm+2\nm2uLgV2UcmiFmiOSFcKgF0T7wDYaz/G0T3XI/aKaGEq0ZQ9g2jkZ68fi1n5z1739\nxJZNB7mNl/bdvJJP8bhscZSJ+HqXpIRF9BlaOFzcfbpnkhEloJFICpAQ8bBf7+pN\nvQTdPHpQ7Xm6e23D55UNSKQcx97h7klGx1SHuJyUbHGkxo9jqTbAGF+Egb0qoQGT\nglrhp2ytIjsG9QgUMz41xZ555bHtrs5VniUh5OP49DGCcRrVAbSsTKx9NU040BL8\nP6jH5o0BXZ27KE5Zg6lIXvNmrNWxqpKneRSjuSkNyjdURSLiGwPsnNneyPAD4ep4\nHMM5xShnAgMBAAECggEAI0fqSjBHrZ+C+0EHtqZKRx4U9j3n0XYNYDOS7rNqHnQ/\nC8wpGETqk3N+dqIDCaJTzeWwXON2ylNcZfxzJDFq5RgiD6T0dkLKsOJIZUdepUDU\nVO9Fc5YS5ji5oOjt8S0oNcvjL2J0SlHYm+35d3BFHr22zJU4T/I+BU8+r/3uNlmA\nM72CB9zEr0WeDNEA9gfRyKP9dO7fu5HhR71IUGQL9hOqOub+qIXov0LpVULbxhHc\nWWm+P2rcHfXNz6MUA9twMEdFkCNVdelNY3qYQtP1/mYHdzSVgh+LBX/qMoN6kSLe\n0x4oeJVemysyhz53Z0nv+NbjhMbTH2W7e7rPPY8hrQKBgQDKyIKRVi1Jo3OBO/Q7\nVWRioPrpzGgeF31FPDtg5asN1b5IK340g7/wdsKKiXAM3KoJwjdKN3guDch9mvUf\nW1inZ8J1DNCvZt1/YJJoEV+8Ri2SCb4pe0+qrCXv9dS9FIz7dw/di/98oKSws7MN\nLgF1wyECdNasOu4otrmJCFtGTQKBgQDJv62cKem6N9tFIvCSFsQDeGjuImW+xhvE\nc4qr2uj7G/EscuQVWUoU5wO0T6XVLTqMjY+uKCojRvUs0ssolhO+VSwvycPpmzm1\nXM/JVegf4JCldst5CGbFzdz+jL5r2e38kt4NquvXJZsfe73SHkXtIKp7/PBUQPhy\noVkf8mZrgwKBgFUgh29rtedL7pk6CfU+i727xpmPbcX0JmqCNose3wgXyqGRYJG7\nHUBdGp39xEQh/l/KYFuPnav3rUrNWkmnlzfvnvp0Psbjb+ihKdT2NjJbY5YC8QmI\n8pC7Y9GwaXZWwjhuawKeWsp+xaRIS8oknghJufnGAriapJAC5TBZibehAoGATACi\ntY7wlw+N0ijMeiyLYUdOOE/LBqh5M3PXjNBmLpsjKvyJQiWmC+PPeHD85ycnxGVb\n+F73KN0FZgJvOHX5MB3EDKi03l90yQcS3CU50jB2LW9oTctFdEUOePKqldS+nAT0\nFDAMsrtfCehC5VI0Q5WnxBfQrdzf+8ce3TMjNGMCgYEAl7m04d28j2guRs/LBL4Y\nq3sM39ii9RhX4p7MWmcdcCNyrqf9UzD+aP0FmDj+hQpuZ/J2/nus64VRmgxbzmYK\nLvoZH/7gG+6h0tUSqUhSo0mHXDznvKbmxc1qhGwR+h3jGTbhT4hjP2O5gpbSLkcD\n2kI9s5iRklY0/C+iX0/E8P0=\n-----END PRIVATE KEY-----\n",
-  "client_email": "atriumservice@atrium-315506.iam.gserviceaccount.com",
+        "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCfz0OiurfjUm+2\nm2uLgV2UcmiFmiOSFcKgF0T7wDYaz/G0T3XI/aKaGEq0ZQ9g2jkZ68fi1n5z1739\nxJZNB7mNl/bdvJJP8bhscZSJ+HqXpIRF9BlaOFzcfbpnkhEloJFICpAQ8bBf7+pN\nvQTdPHpQ7Xm6e23D55UNSKQcx97h7klGx1SHuJyUbHGkxo9jqTbAGF+Egb0qoQGT\nglrhp2ytIjsG9QgUMz41xZ555bHtrs5VniUh5OP49DGCcRrVAbSsTKx9NU040BL8\nP6jH5o0BXZ27KE5Zg6lIXvNmrNWxqpKneRSjuSkNyjdURSLiGwPsnNneyPAD4ep4\nHMM5xShnAgMBAAECggEAI0fqSjBHrZ+C+0EHtqZKRx4U9j3n0XYNYDOS7rNqHnQ/\nC8wpGETqk3N+dqIDCaJTzeWwXON2ylNcZfxzJDFq5RgiD6T0dkLKsOJIZUdepUDU\nVO9Fc5YS5ji5oOjt8S0oNcvjL2J0SlHYm+35d3BFHr22zJU4T/I+BU8+r/3uNlmA\nM72CB9zEr0WeDNEA9gfRyKP9dO7fu5HhR71IUGQL9hOqOub+qIXov0LpVULbxhHc\nWWm+P2rcHfXNz6MUA9twMEdFkCNVdelNY3qYQtP1/mYHdzSVgh+LBX/qMoN6kSLe\n0x4oeJVemysyhz53Z0nv+NbjhMbTH2W7e7rPPY8hrQKBgQDKyIKRVi1Jo3OBO/Q7\nVWRioPrpzGgeF31FPDtg5asN1b5IK340g7/wdsKKiXAM3KoJwjdKN3guDch9mvUf\nW1inZ8J1DNCvZt1/YJJoEV+8Ri2SCb4pe0+qrCXv9dS9FIz7dw/di/98oKSws7MN\nLgF1wyECdNasOu4otrmJCFtGTQKBgQDJv62cKem6N9tFIvCSFsQDeGjuImW+xhvE\nc4qr2uj7G/EscuQVWUoU5wO0T6XVLTqMjY+uKCojRvUs0ssolhO+VSwvycPpmzm1\nXM/JVegf4JCldst5CGbFzdz+jL5r2e38kt4NquvXJZsfe73SHkXtIKp7/PBUQPhy\noVkf8mZrgwKBgFUgh29rtedL7pk6CfU+i727xpmPbcX0JmqCNose3wgXyqGRYJG7\nHUBdGp39xEQh/l/KYFuPnav3rUrNWkmnlzfvnvp0Psbjb+ihKdT2NjJbY5YC8QmI\n8pC7Y9GwaXZWwjhuawKeWsp+xaRIS8oknghJufnGAriapJAC5TBZibehAoGATACi\ntY7wlw+N0ijMeiyLYUdOOE/LBqh5M3PXjNBmLpsjKvyJQiWmC+PPeHD85ycnxGVb\n+F73KN0FZgJvOHX5MB3EDKi03l90yQcS3CU50jB2LW9oTctFdEUOePKqldS+nAT0\nFDAMsrtfCehC5VI0Q5WnxBfQrdzf+8ce3TMjNGMCgYEAl7m04d28j2guRs/LBL4Y\nq3sM39ii9RhX4p7MWmcdcCNyrqf9UzD+aP0FmDj+hQpuZ/J2/nus64VRmgxbzmYK\nLvoZH/7gG+6h0tUSqUhSo0mHXDznvKbmxc1qhGwR+h3jGTbhT4hjP2O5gpbSLkcD\n2kI9s5iRklY0/C+iX0/E8P0=\n-----END PRIVATE KEY-----\n",
+    "client_email": "atriumservice@atrium-315506.iam.gserviceaccount.com",
     "client_id": "103933781867876724492.apps.googleusercontent.com",
     "type": "service_account"
   });
@@ -35,8 +35,8 @@ class GoogleAPIs {
 
     obtainAccessCredentialsViaServiceAccount(accountCredentials, scopes, client)
         .then((AccessCredentials creds) async {
-         token= creds.accessToken.data;
-         print("Token Created: $token");
+      token = creds.accessToken.data;
+      print("Token Created: $token");
       client.close();
     });
   }
@@ -44,29 +44,29 @@ class GoogleAPIs {
   static Future sendMessage(String text) async {
     var client = http.Client();
     print("Token Use: $token");
-    var resp=await client.post(
-      Uri.parse(
-          "https://dialogflow.googleapis.com/v2/projects/atrium-315506/agent/sessions/1234567:detectIntent"),
-      body: jsonEncode({
-        "query_input": {
-          "text": {
-            "text": text,
-            "language_code": "en-US"}
-        }
-      }),headers: {
-        'Content-Type': 'application/json',
-      'Accept': 'application/json',
-      'Authorization': 'Bearer $token',
-    }
-    );
+    var resp = await client.post(
+        Uri.parse(
+            "https://dialogflow.googleapis.com/v2/projects/atrium-315506/agent/sessions/1234567:detectIntent"),
+        body: jsonEncode({
+          "query_input": {
+            "text": {"text": text, "language_code": "en-US"}
+          }
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        });
     print(resp.body);
-    if(resp.statusCode==200){
-      Map reply=jsonDecode(resp.body);
+    if (resp.statusCode == 200) {
+      Map reply = jsonDecode(resp.body);
       print("Status 200 ${reply["queryResult"]["fulfillmentText"]}");
-      return MessageModel(message: reply["queryResult"]["fulfillmentText"],sendTime: DateTime.now(),isUser: false);
+      return MessageModel(
+          message: reply["queryResult"]["fulfillmentText"],
+          sendTime: DateTime.now(),
+          isUser: false);
     } else {
       return null;
     }
-
   }
 }

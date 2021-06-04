@@ -34,7 +34,7 @@ class CartProductWidget extends StatelessWidget {
             cartIndex: cartIndex,
             cart: cart,
             callback: (CartModel cartModel) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('updated_in_cart', context)), backgroundColor: Colors.green));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('updated_in_cart', context)), backgroundColor: ColorResources.getPrimaryColor(context)));
             },
           ),
         );
@@ -62,7 +62,6 @@ class CartProductWidget extends StatelessWidget {
               ),
               child: Column(
                 children: [
-
                   Row(children: [
                     Stack(
                       children: [
@@ -95,7 +94,7 @@ class CartProductWidget extends StatelessWidget {
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                         Text(cart.product.name, style: rubikMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                         SizedBox(height: 2),
-                        RatingBar(rating: cart.product.rating.length > 0 ? double.parse(cart.product.rating[0].average) : 0.0, size: 12),
+                        RatingBar(rating: cart.product.rating!=null ? double.parse(cart.product.rating.average) : 0.0, size: 12),
                         SizedBox(height: 5),
                         Row(children: [
                           Flexible(
@@ -121,7 +120,14 @@ class CartProductWidget extends StatelessWidget {
                       child: Row(children: [
                         InkWell(
                           onTap: () {
+                            if(cart.quantity==1){
+                              // print("Quantity 1 ");
+                              // print("Cart ${cart.toJson()}");
+                              Provider.of<CartProvider>(context, listen: false).removeFromCart(cart);
+                            }
                             if (cart.quantity > 1) {
+                              // print("Quantity > 1 ");
+                              // print("${cart.toJson()}");
                               Provider.of<CartProvider>(context, listen: false).setQuantity(false, cart);
                             }
                           },
@@ -132,6 +138,7 @@ class CartProductWidget extends StatelessWidget {
                         ),
                         Text(cart.quantity.toString(), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
                         InkWell(
+                          // onTap: () => print("${cart.toJson()}"),
                           onTap: () => Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),

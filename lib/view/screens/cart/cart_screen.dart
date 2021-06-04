@@ -36,7 +36,7 @@ class CartScreen extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
         child: Consumer<CartProvider>(
-          builder: (context, cart, child) {
+          builder: (context, cartProvider, child) {
             double deliveryCharge = 0;
             Provider.of<OrderProvider>(context).orderType == 'delivery'
                 ? deliveryCharge = double.parse(Provider.of<SplashProvider>(context, listen: false).configModel.deliveryCharge) : deliveryCharge = 0;
@@ -46,7 +46,7 @@ class CartScreen extends StatelessWidget {
             double _discount = 0;
             double _tax = 0;
             double _addOns = 0;
-            cart.cartList.forEach((cartModel) {
+            cartProvider.cartList.forEach((cartModel) {
 
               List<AddOns> _addOnList = [];
               cartModel.addOnIds.forEach((addOnId) {
@@ -82,18 +82,21 @@ class CartScreen extends StatelessWidget {
 
             double _orderAmount = _itemPrice + _addOns;
 
-            return cart.cartList.length > 0 ? Column(
+            return cartProvider.cartList.length > 0 ? Column(
               children: [
-
                 Expanded(
                   child: ListView(padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL), physics: BouncingScrollPhysics(), children: [
                     // Product
+                    Container(
+                      padding: EdgeInsets.only(bottom: 5),
+                      alignment: Alignment.topRight,
+                      child: Text("Swipe to delete"),),
                     ListView.builder(
                       physics: NeverScrollableScrollPhysics(),
                       shrinkWrap: true,
-                      itemCount: cart.cartList.length,
+                      itemCount: cartProvider.cartList.length,
                       itemBuilder: (context, index) {
-                        return CartProductWidget(cart: cart.cartList[index], cartIndex: index, addOns: _addOnsList[index], isAvailable: _availableList[index]);
+                        return CartProductWidget(cart: cartProvider.cartList[index], cartIndex: index, addOns: _addOnsList[index], isAvailable: _availableList[index]);
                       },
                     ),
 
@@ -262,7 +265,7 @@ class CartScreen extends StatelessWidget {
                               .transparent,
                           builder: (con) =>
                               CheckoutBottomSheet(
-                              cartList: cart.cartList, amount: _total,
+                              cartList: cartProvider.cartList, amount: _total,
                               orderType: Provider.of<OrderProvider>(context, listen: false).orderType,
                                 // callback:
                                 //     (CartModel
