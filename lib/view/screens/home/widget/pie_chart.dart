@@ -113,6 +113,7 @@ class PieChartSample3State extends State {
           return PieChartSectionData(
             color: Colors.red,
             value: 40,
+            showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
               40,
@@ -124,6 +125,7 @@ class PieChartSample3State extends State {
         case 1:
           return PieChartSectionData(
             color: const Color(0xfff8b250),
+            showTitle: false,
             value: 30,
             radius: radius,
             badgeWidget: _Badge(
@@ -136,6 +138,7 @@ class PieChartSample3State extends State {
         case 2:
           return PieChartSectionData(
             color: const Color(0xff845bef),
+            showTitle: false,
             value: 1,
             radius: radius,
             badgeWidget: _Badge(
@@ -149,6 +152,7 @@ class PieChartSample3State extends State {
           return PieChartSectionData(
             color: const Color(0xff13d38e),
             value: 15,
+            showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
               15,
