@@ -260,8 +260,10 @@ class CartBottomSheet extends StatelessWidget {
                     width: 180,
                     height: 100,
                     fit: BoxFit.cover,
-                    imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                      return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                    imageErrorBuilder: (BuildContext context, Object exception,
+                        StackTrace stackTrace) {
+                      return Image.asset(Images.placeholder_image,
+                          fit: BoxFit.contain);
                     },
                   ),
                 ),
@@ -286,34 +288,42 @@ class CartBottomSheet extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType)}'
-                              '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType)}' : ''}',
-                              style: rubikMedium.copyWith(
-                                  fontSize: Dimensions.FONT_SIZE_LARGE),
+                            Expanded(
+                              child: Text(
+                                '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType)}'
+                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType)}' : ''}',
+                                style: rubikMedium.copyWith(
+                                    fontSize: Dimensions.FONT_SIZE_DEFAULT),
+                                maxLines: 20,
+                                textWidthBasis: TextWidthBasis.parent,
+                              ),
                             ),
                             price == priceWithDiscount
-                                ? Consumer<WishListProvider>(
-                                    builder: (context, wishList, child) {
-                                    return InkWell(
-                                      onTap: () {
-                                        wishList.wishIdList.contains(product.id)
-                                            ? wishList.removeFromWishList(
-                                                product, (message) {})
-                                            : wishList.addToWishList(
-                                                product, (message) {});
-                                      },
-                                      child: Icon(
-                                        wishList.wishIdList.contains(product.id)
-                                            ? Icons.favorite
-                                            : Icons.favorite_border,
-                                        color: wishList.wishIdList
-                                                .contains(product.id)
-                                            ? ColorResources.COLOR_PRIMARY
-                                            : ColorResources.COLOR_GREY,
-                                      ),
-                                    );
-                                  })
+                                ? Expanded(
+                                    child: Consumer<WishListProvider>(
+                                        builder: (context, wishList, child) {
+                                      return InkWell(
+                                        onTap: () {
+                                          wishList.wishIdList
+                                                  .contains(product.id)
+                                              ? wishList.removeFromWishList(
+                                                  product, (message) {})
+                                              : wishList.addToWishList(
+                                                  product, (message) {});
+                                        },
+                                        child: Icon(
+                                          wishList.wishIdList
+                                                  .contains(product.id)
+                                              ? Icons.favorite
+                                              : Icons.favorite_border,
+                                          color: wishList.wishIdList
+                                                  .contains(product.id)
+                                              ? ColorResources.COLOR_PRIMARY
+                                              : ColorResources.COLOR_GREY,
+                                        ),
+                                      );
+                                    }),
+                                  )
                                 : SizedBox(),
                           ],
                         ),
@@ -684,9 +694,7 @@ class CartBottomSheet extends StatelessWidget {
               //           ])
               //     : SizedBox(),
 
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text('${getTranslated('total_amount', context)}:',
                     style: rubikMedium.copyWith(
                         fontSize: Dimensions.FONT_SIZE_LARGE)),

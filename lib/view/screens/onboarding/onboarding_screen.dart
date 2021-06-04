@@ -6,6 +6,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/screens/welcome_screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -55,7 +56,7 @@ class OnBoardingScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.all(30),
-                            child: Image.asset(
+                            child: SvgPicture.asset(
                                 onBoardingList.onBoardingList[index].imageUrl),
                           );
                         },

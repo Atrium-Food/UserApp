@@ -208,11 +208,11 @@ class Product {
     }
 
     if (json['recipe'] != null) {
-      _recipe = json['recipe'];
+      _recipe = Recipe.fromJson(json['recipe']);
     }
 
     if (json['nutrients'] != null) {
-      _nutrients = json['nutrients'];
+      _nutrients = Nutrients.fromJson(json['nutrients']);
     }
 
     if (json['reviews'] != null) {
@@ -262,11 +262,11 @@ class Product {
     }
 
     if (this._recipe != null) {
-      data['recipe'] = this._recipe;
+      data['recipe'] = this._recipe.toJson();
     }
 
     if (this._nutrients != null) {
-      data['nutrients'] = this._nutrients;
+      data['nutrients'] = this._nutrients.toJson();
     }
     if (this._reviews != null) {
       data['reviews'] = this._reviews.map((v) => v.toJson()).toList();

@@ -179,7 +179,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                   titlePadding: EdgeInsets.only(left: 15),
                   centerTitle: true,
                   title: Container(
-                    padding: EdgeInsets.only(top: 65.0),
+                    padding: EdgeInsets.only(top: 52.0),
                     alignment: Alignment.bottomLeft,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -190,7 +190,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                           maxLines: 1,
                           overflow: TextOverflow.visible,
                           style: rubikMedium.copyWith(
-                              color: ColorResources.getAccentColor(context)),
+                              color: ColorResources.getAccentColor(context),
+                              fontSize: 13),
                         ),
                         RatingBar(
                             rating: product.rating.length > 0
@@ -234,17 +235,17 @@ class CartBottomSheetScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('DETAILS',
-                              style: rubikRegular.copyWith(fontSize: 16)),
+                              style: rubikRegular.copyWith(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('RECIPE',
-                              style: rubikRegular.copyWith(fontSize: 16)),
+                              style: rubikRegular.copyWith(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REVIEW',
-                              style: rubikRegular.copyWith(fontSize: 16)),
+                              style: rubikRegular.copyWith(fontSize: 13)),
                         ),
                       ],
                     ),

@@ -35,6 +35,7 @@ dependencies:
   percent_indicator: ^3.0.1
   googleapis_auth: ^1.1.0
   fl_chart: ^0.36.1-nullsafety
+  flutter_svg: ^0.22.0
 #  flutter_dialogflow_v2: ^0.3.2
 #  kommunicate_flutter: ^1.1.7
 

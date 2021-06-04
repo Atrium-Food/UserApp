@@ -21,14 +21,17 @@ import 'package:flutter_restaurant/view/screens/setmenu/set_menu_screen.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
-
   Future<void> _loadData(BuildContext context, bool reload) async {
-    if(Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
-      await Provider.of<ProfileProvider>(context, listen: false).getUserInfo(context);
+    if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
+      await Provider.of<ProfileProvider>(context, listen: false)
+          .getUserInfo(context);
     }
-    await Provider.of<CategoryProvider>(context, listen: false).getCategoryList(context, reload);
-    await Provider.of<SetMenuProvider>(context, listen: false).getSetMenuList(context, reload);
-    await Provider.of<BannerProvider>(context, listen: false).getBannerList(context, reload);
+    await Provider.of<CategoryProvider>(context, listen: false)
+        .getCategoryList(context, reload);
+    await Provider.of<SetMenuProvider>(context, listen: false)
+        .getSetMenuList(context, reload);
+    await Provider.of<BannerProvider>(context, listen: false)
+        .getBannerList(context, reload);
   }
 
   final ScrollController _scrollController = ScrollController();
@@ -57,16 +60,24 @@ class HomeScreen extends StatelessWidget {
                 title: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(Images.home_location_icon, width: 50, height: 50),
+                    Image.asset(Images.home_location_icon,
+                        width: 50, height: 50),
                     SizedBox(width: 10),
-                    Text("City Name",style: rubikMedium.copyWith(fontSize: 20),)
+                    Text(
+                      "City Name",
+                      style: rubikMedium.copyWith(fontSize: 20),
+                    )
                     // Image.asset(Images.efood, width: 55, height: 55, color: ColorResources.getAccentColor(context)),
                   ],
                 ),
                 actions: [
                   IconButton(
-                    onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => NotificationScreen())),
-                    icon: Icon(Icons.notifications, color: Theme.of(context).accentColor),
+                    onPressed: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => NotificationScreen())),
+                    icon: Icon(Icons.notifications,
+                        color: Theme.of(context).accentColor),
                   ),
                 ],
               ),
@@ -74,67 +85,89 @@ class HomeScreen extends StatelessWidget {
               // Search Button
               SliverPersistentHeader(
                 pinned: true,
-                delegate: SliverDelegate(child: InkWell(
+                delegate: SliverDelegate(
+                    child: InkWell(
                   onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(builder: (context) => SearchScreen()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SearchScreen()));
                   },
                   child: Container(
                     height: 100,
-                    padding: EdgeInsets.fromLTRB(Dimensions.PADDING_SIZE_SMALL, 2,Dimensions.PADDING_SIZE_SMALL, 10),
+                    padding: EdgeInsets.fromLTRB(Dimensions.PADDING_SIZE_SMALL,
+                        2, Dimensions.PADDING_SIZE_SMALL, 10),
                     child: Container(
                       decoration: BoxDecoration(
                         color: ColorResources.getSearchBg(context),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Row(children: [
-                        Padding(padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL), child: Icon(Icons.search, size: 25,color: ColorResources.getPrimaryColor(context),)),
-                        Expanded(child: Text("Search cuisine or ingredients", style: rubikRegular.copyWith(fontSize: 15,color: Colors.black54))),
-                            // getTranslated('search_cuisine_ingredients', context)
+                        Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: Dimensions.PADDING_SIZE_SMALL),
+                            child: Icon(
+                              Icons.search,
+                              size: 25,
+                              color: ColorResources.getPrimaryColor(context),
+                            )),
+                        Expanded(
+                            child: Text("Search cuisine or ingredients",
+                                style: rubikRegular.copyWith(
+                                    fontSize: 15, color: Colors.black54))),
+                        // getTranslated('search_cuisine_ingredients', context)
                       ]),
                     ),
                     decoration: BoxDecoration(
                       color: Theme.of(context).primaryColor,
                       borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(10),
-                        bottomRight: Radius.circular(10)
-                      ),
+                          bottomLeft: Radius.circular(10),
+                          bottomRight: Radius.circular(10)),
                     ),
                   ),
                 )),
               ),
 
               SliverToBoxAdapter(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                  Consumer<CategoryProvider>(
-                    builder: (context, category, child) {
-                      return category.categoryList == null ? CategoryView() : category.categoryList.length == 0 ? SizedBox() : CategoryView();
-                    },
-                  ),
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                    child: TitleWidget(
-                        title: "Special Menu",
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (_) => SetMenuScreen()));
-                        }),
-                  ),
-                  SetMenuView(),
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Consumer<CategoryProvider>(
+                        builder: (context, category, child) {
+                          return category.categoryList == null
+                              ? CategoryView()
+                              : category.categoryList.length == 0
+                                  ? SizedBox()
+                                  : CategoryView();
+                        },
+                      ),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                        child: TitleWidget(
+                            title: "Special Menu",
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => SetMenuScreen()));
+                            }),
+                      ),
+                      SetMenuView(),
 
+                      // Consumer<BannerProvider>(
+                      //   builder: (context, banner, child) {
+                      //     return banner.bannerList == null ? BannerView() : banner.bannerList.length == 0 ? SizedBox() : BannerView();
+                      //   },
+                      // ),
 
-                  // Consumer<BannerProvider>(
-                  //   builder: (context, banner, child) {
-                  //     return banner.bannerList == null ? BannerView() : banner.bannerList.length == 0 ? SizedBox() : BannerView();
-                  //   },
-                  // ),
-
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                    child: TitleWidget(title: getTranslated('popular_item', context)),
-                  ),
-                  ProductView(productType: ProductType.POPULAR_PRODUCT,scrollController: _scrollController,),
-
-                ]),
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                        child: TitleWidget(
+                            title: getTranslated('popular_item', context)),
+                      ),
+                      ProductView(
+                        productType: ProductType.POPULAR_PRODUCT,
+                        scrollController: _scrollController,
+                      ),
+                    ]),
               ),
             ],
           ),
@@ -150,7 +183,8 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
   SliverDelegate({@required this.child});
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return child;
   }
 
@@ -162,6 +196,8 @@ class SliverDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   bool shouldRebuild(SliverDelegate oldDelegate) {
-    return oldDelegate.maxExtent != 50 || oldDelegate.minExtent != 50 || child != oldDelegate.child;
+    return oldDelegate.maxExtent != 50 ||
+        oldDelegate.minExtent != 50 ||
+        child != oldDelegate.child;
   }
 }

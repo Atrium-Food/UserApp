@@ -7,6 +7,7 @@ import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
+import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/custom_text_field.dart';
@@ -54,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/image/Ellipse8.png"),
+            image: AssetImage("assets/image/Ellipse9.png"),
             alignment: AlignmentDirectional.topCenter,
             scale: 1,
           ),
@@ -67,13 +68,24 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
+                  SizedBox(
+                    height: 30,
+                  ),
                   Text(
-                    'Welcome Back!',
+                    'Welcome',
                     maxLines: 2,
-                    style: TextStyle(
-                        fontSize: 40,
+                    style: rubikBold.copyWith(
+                        fontSize: 35,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'Back!',
+                    maxLines: 2,
+                    style: rubikBold.copyWith(
+                        fontSize: 35,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
                   ),
 
                   Text(
@@ -91,10 +103,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     getTranslated('login', context),
-                    style: Theme.of(context).textTheme.headline3.copyWith(
-                        fontSize: 24,
-                        color: ColorResources.COLOR_WHITE,
-                        fontWeight: FontWeight.bold),
+                    style: rubikBold.copyWith(
+                        fontSize: 25,
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600),
                   ),
 
                   SizedBox(height: 30.0),
@@ -121,6 +133,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           'Please fill your valid info',
                           style: TextStyle(

@@ -72,9 +72,9 @@ class CreateAccountScreen extends StatelessWidget {
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(1, 1), // changes position of shadow
                       ),
                     ],
                   ),
@@ -87,6 +87,9 @@ class CreateAccountScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Enter the following details.',
                         style: TextStyle(
