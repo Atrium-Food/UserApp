@@ -149,7 +149,7 @@ class NutrientValues extends StatelessWidget {
                   style: rubikMedium.copyWith(fontSize: 20),
                 ),
                 Center(
-                  child: PieChartSample2(),
+                  child: PieChartSample3(),
                 ),
                 SizedBox(
                   height: 20,

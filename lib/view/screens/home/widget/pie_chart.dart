@@ -1,14 +1,17 @@
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/pie_chart_indicator.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/gestures.dart';
 
-class PieChartSample2 extends StatefulWidget {
+/// Icons by svgrepo.com (https://www.svgrepo.com/collection/job-and-professions-3/)
+class PieChartSample3 extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => PieChart2State();
+  State<StatefulWidget> createState() => PieChartSample3State();
 }
 
-class PieChart2State extends State {
+class PieChartSample3State extends State {
   int touchedIndex = -1;
 
   @override
@@ -46,7 +49,7 @@ class PieChart2State extends State {
                         show: false,
                       ),
                       sectionsSpace: 0,
-                      centerSpaceRadius: 40,
+                      centerSpaceRadius: 0,
                       sections: showingSections()),
                 ),
               ),
@@ -57,33 +60,33 @@ class PieChart2State extends State {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: const <Widget>[
                 Indicator(
-                  color: Color(0xff0293ee),
-                  text: 'First',
-                  isSquare: true,
+                  color: Colors.red,
+                  text: 'Meat',
+                  isSquare: false,
                 ),
                 SizedBox(
                   height: 4,
                 ),
                 Indicator(
                   color: Color(0xfff8b250),
-                  text: 'Second',
-                  isSquare: true,
+                  text: 'Energy',
+                  isSquare: false,
                 ),
                 SizedBox(
                   height: 4,
                 ),
                 Indicator(
                   color: Color(0xff845bef),
-                  text: 'Third',
-                  isSquare: true,
+                  text: 'Protein',
+                  isSquare: false,
                 ),
                 SizedBox(
                   height: 4,
                 ),
                 Indicator(
                   color: Color(0xff13d38e),
-                  text: 'Fourth',
-                  isSquare: true,
+                  text: 'Veges',
+                  isSquare: false,
                 ),
                 SizedBox(
                   height: 18,
@@ -102,56 +105,104 @@ class PieChart2State extends State {
   List<PieChartSectionData> showingSections() {
     return List.generate(4, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 25.0 : 16.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final radius = isTouched ? 110.0 : 100.0;
+      final widgetSize = isTouched ? 55.0 : 40.0;
+
       switch (i) {
         case 0:
           return PieChartSectionData(
-            color: const Color(0xff0293ee),
+            color: Colors.red,
             value: 40,
-            title: '40%',
             radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+            badgeWidget: _Badge(
+              40,
+              size: widgetSize,
+              borderColor: const Color(0xff0293ee),
+            ),
+            badgePositionPercentageOffset: .98,
           );
         case 1:
           return PieChartSectionData(
             color: const Color(0xfff8b250),
             value: 30,
-            title: '30%',
             radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+            badgeWidget: _Badge(
+              30,
+              size: widgetSize,
+              borderColor: const Color(0xfff8b250),
+            ),
+            badgePositionPercentageOffset: .98,
           );
         case 2:
           return PieChartSectionData(
             color: const Color(0xff845bef),
-            value: 15,
-            title: '15%',
+            value: 1,
             radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+            badgeWidget: _Badge(
+              1,
+              size: widgetSize,
+              borderColor: const Color(0xff845bef),
+            ),
+            badgePositionPercentageOffset: .98,
           );
         case 3:
           return PieChartSectionData(
             color: const Color(0xff13d38e),
             value: 15,
-            title: '15%',
             radius: radius,
-            titleStyle: TextStyle(
-                fontSize: fontSize,
-                fontWeight: FontWeight.bold,
-                color: const Color(0xffffffff)),
+            badgeWidget: _Badge(
+              15,
+              size: widgetSize,
+              borderColor: const Color(0xff13d38e),
+            ),
+            badgePositionPercentageOffset: .98,
           );
         default:
-          throw Error();
+          throw 'Oh no';
       }
     });
+  }
+}
+
+class _Badge extends StatelessWidget {
+  final double percent;
+  final double size;
+  final Color borderColor;
+
+  const _Badge(
+    this.percent, {
+    @required this.size,
+    @required this.borderColor,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+      duration: PieChart.defaultDuration,
+      width: size,
+      height: size,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: borderColor,
+          width: 2,
+        ),
+        boxShadow: <BoxShadow>[
+          BoxShadow(
+            color: Colors.black.withOpacity(.5),
+            offset: const Offset(3, 3),
+            blurRadius: 3,
+          ),
+        ],
+      ),
+      padding: EdgeInsets.all(size * .15),
+      child: Center(
+          child: Text(
+        percent.toInt().toString(),
+        style: TextStyle(
+            color: borderColor, fontWeight: FontWeight.bold, fontSize: 11),
+      )),
+    );
   }
 }
