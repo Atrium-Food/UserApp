@@ -75,7 +75,7 @@ class RecipePage extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       launch(
-                          'tel:${Provider.of<SplashProvider>(context, listen: false).configModel.restaurantPhone}');
+                          'tel:${Provider.of<SplashProvider>(context, listen: false).configModel.recipePhone}');
                     },
                     child: Container(
                       padding: EdgeInsets.all(
@@ -169,8 +169,13 @@ class RecipePage extends StatelessWidget {
               ),
               Center(
                 child: InkWell(
-                  onTap: (){
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => ProductReviewScreen(product: product,)));
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductReviewScreen(
+                                  product: product,
+                                )));
                   },
                   child: Container(
                     padding: EdgeInsets.only(

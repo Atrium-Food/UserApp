@@ -6,13 +6,20 @@ class CustomButton extends StatelessWidget {
   final Function onTap;
   final String btnTxt;
   final Color backgroundColor;
-  CustomButton({this.onTap, @required this.btnTxt, this.backgroundColor});
+  final Widget child;
+  final Color inactiveColor;
+  CustomButton(
+      {this.onTap,
+      @required this.btnTxt,
+      this.backgroundColor,
+      this.child,
+      this.inactiveColor = ColorResources.COLOR_GREY});
 
   @override
   Widget build(BuildContext context) {
     final ButtonStyle flatButtonStyle = TextButton.styleFrom(
       backgroundColor: onTap == null
-          ? ColorResources.getGreyColor(context)
+          ? inactiveColor
           : backgroundColor == null
               ? Theme.of(context).primaryColor
               : backgroundColor,
@@ -27,10 +34,12 @@ class CustomButton extends StatelessWidget {
     return TextButton(
       onPressed: onTap,
       style: flatButtonStyle,
-      child: Text(btnTxt ?? "",
-          style: Theme.of(context).textTheme.headline3.copyWith(
-              color: ColorResources.COLOR_WHITE,
-              fontSize: Dimensions.FONT_SIZE_LARGE)),
+      child: child == null
+          ? Text(btnTxt ?? "",
+              style: Theme.of(context).textTheme.headline3.copyWith(
+                  color: ColorResources.COLOR_WHITE,
+                  fontSize: Dimensions.FONT_SIZE_LARGE))
+          : child,
     );
   }
 }

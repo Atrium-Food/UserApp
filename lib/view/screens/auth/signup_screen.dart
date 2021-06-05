@@ -173,7 +173,7 @@ class SignUpScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                                 builder: (_) =>
                                                     VerificationScreen(
-                                                        emailAddress: _email,
+                                                        contact: _email,
                                                         fromSignUp: true)));
                                       } else {
                                         Navigator.of(context).push(

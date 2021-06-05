@@ -11,13 +11,13 @@ import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/forgot_password/verification_screen.dart';
 import 'package:provider/provider.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+class MobileOTP extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextEditingController _emailController = TextEditingController();
+    TextEditingController _numberController = TextEditingController();
 
     return Scaffold(
-      appBar: CustomAppBar(title: getTranslated('forgot_password', context)),
+      appBar: CustomAppBar(title: 'Login'),
       body: Consumer<AuthProvider>(
         builder: (context, auth, child) {
           return ListView(
@@ -31,7 +31,7 @@ class ForgotPasswordScreen extends StatelessWidget {
               SizedBox(height: 40),
               Center(
                   child: Text(
-                getTranslated('please_enter_your_number_to', context),
+                'Please enter your registered mobile number to receive the One Time Password',
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -45,15 +45,15 @@ class ForgotPasswordScreen extends StatelessWidget {
                   children: [
                     SizedBox(height: 80),
                     Text(
-                      getTranslated('email', context),
+                      'Mobile Number',
                       style: Theme.of(context).textTheme.headline2.copyWith(
                           color: ColorResources.getHintColor(context)),
                     ),
                     SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                     CustomTextField(
-                      hintText: getTranslated('demo_gmail', context),
+                      hintText: 'Mobile number',
                       isShowBorder: true,
-                      controller: _emailController,
+                      controller: _numberController,
                       inputType: TextInputType.emailAddress,
                       inputAction: TextInputAction.done,
                     ),
@@ -62,26 +62,28 @@ class ForgotPasswordScreen extends StatelessWidget {
                         ? CustomButton(
                             btnTxt: getTranslated('send', context),
                             onTap: () {
-                              if (_emailController.text.isEmpty) {
+                              if (_numberController.text.isEmpty) {
                                 showCustomSnackBar(
                                     getTranslated(
                                         'enter_email_address', context),
                                     context);
-                              } else if (!_emailController.text.contains('@')) {
+                              } else if (!_numberController.text
+                                  .contains('@')) {
                                 showCustomSnackBar(
                                     getTranslated('enter_valid_email', context),
                                     context);
                               } else {
                                 Provider.of<AuthProvider>(context,
                                         listen: false)
-                                    .forgetPassword(_emailController.text)
+                                    .forgetPassword(_numberController.text)
                                     .then((value) {
                                   if (value.isSuccess) {
                                     Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (_) => VerificationScreen(
+                                                forLogin: true,
                                                 contact:
-                                                    _emailController.text)));
+                                                    _numberController.text)));
                                   } else {
                                     showCustomSnackBar(value.message, context);
                                   }

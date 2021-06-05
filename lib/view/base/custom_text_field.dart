@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 
 class CustomTextField extends StatefulWidget {
   final String hintText;
+  final String errorMessage;
   final TextEditingController controller;
   final FocusNode focusNode;
   final FocusNode nextFocus;
@@ -37,6 +38,7 @@ class CustomTextField extends StatefulWidget {
       {this.hintText = 'Write something...',
       this.controller,
       this.prefixIcon,
+      this.errorMessage = '',
       this.focusNode,
       this.nextFocus,
       this.isEnabled = true,
@@ -91,6 +93,10 @@ class _CustomTextFieldState extends State<CustomTextField> {
             ]
           : null,
       decoration: InputDecoration(
+        errorText:
+            widget.errorMessage.length > 0 ? '${widget.errorMessage}!' : null,
+        errorStyle: TextStyle(
+            fontSize: 13, color: Colors.red, fontWeight: FontWeight.w100),
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
         border: widget.isShowBottomBorder
             ? UnderlineInputBorder(

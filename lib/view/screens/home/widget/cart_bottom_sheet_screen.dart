@@ -176,10 +176,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                 floating: true,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: EdgeInsets.only(left: 15),
-                  centerTitle: true,
-                  title: Container(
-                    padding: EdgeInsets.only(top: 65.0, right: 8),
+                  background: Container(
+                    padding: EdgeInsets.only(top: 0.0, right: 8, left: 20),
                     alignment: Alignment.bottomLeft,
                     child: Row(
                       children: [
@@ -192,8 +190,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                               maxLines: 1,
                               overflow: TextOverflow.visible,
                               style: rubikMedium.copyWith(
-                                color: ColorResources.getAccentColor(context),
-                              ),
+                                  color: ColorResources.getAccentColor(context),
+                                  fontSize: 25),
                             ),
                             RatingBar(
                                 rating: product.rating != null
@@ -227,6 +225,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+                  titlePadding: EdgeInsets.only(left: 15),
+                  centerTitle: true,
                 ),
                 //title: Text('My App Bar'),
                 leading: IconButton(

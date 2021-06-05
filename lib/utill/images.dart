@@ -57,6 +57,7 @@ class Images {
   static const String map = 'assets/icon/map.png';
   static const String notification = 'assets/icon/notification.png';
   static const String close_lock = 'assets/icon/close_lock.png';
+  static const String google_logo = 'assets/icon/google_logo.svg';
   static const String email_with_background =
       'assets/icon/email_with_background.png';
   static const String open_lock = 'assets/icon/open_lock.png';
