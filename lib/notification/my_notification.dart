@@ -8,6 +8,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter_restaurant/main.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart';
+import 'package:flutter_restaurant/view/screens/rare_review/review_screen.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:timezone/data/latest.dart' as tz;
@@ -25,6 +26,10 @@ class MyNotification {
           MyApp.navigatorKey.currentState.push(
               MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderModel: null, orderId: int.parse(payload))));
         }
+        // else if(payload != null && payload.isNotEmpty && payload.startsWith('P')){
+        //   MyApp.navigatorKey.currentState.push(
+        //       MaterialPageRoute(builder: (context) => ProductReviewScreen(productID: int.parse(payload.substring(1)))));
+        // }
       }catch (e) {
         
       }
@@ -62,7 +67,7 @@ class MyNotification {
       importance: Importance.max, priority: Priority.high,
     );
     const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, _title, _body, platformChannelSpecifics, payload: _orderID);
+    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "${_orderID}");
   }
 
   static Future<void> showBigTextNotification(Map<String, dynamic> message, FlutterLocalNotificationsPlugin fln) async {
@@ -78,7 +83,7 @@ class MyNotification {
       styleInformation: bigTextStyleInformation, priority: Priority.high, sound: RawResourceAndroidNotificationSound('notification'),
     );
     NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, _title, _body, platformChannelSpecifics, payload: _orderID);
+    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "${_orderID}");
   }
 
   static Future<void> showBigPictureNotificationHiddenLargeIcon(Map<String, dynamic> message, FlutterLocalNotificationsPlugin fln) async {
@@ -100,7 +105,7 @@ class MyNotification {
       styleInformation: bigPictureStyleInformation, importance: Importance.max,
     );
     final NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, _title, _body, platformChannelSpecifics, payload: _orderID);
+    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "${_orderID}");
   }
 
   static Future<String> _downloadAndSaveFile(String url, String fileName) async {
@@ -116,7 +121,7 @@ class MyNotification {
   FlutterLocalNotificationsPlugin fln,
         String id,
         String title,
-        String body, String orderID, String addressID) async {
+        String body, String productID) async {
     print("Scheduling Notification");
     var androidSpecifics = AndroidNotificationDetails(
       id,
@@ -138,7 +143,7 @@ class MyNotification {
     await fln.zonedSchedule(0, "Rating", "We'd appreciate your feedback",
         time, platformChannelSpecifics,androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      payload: orderID,
+      payload: "${productID}",
     );
   }
 

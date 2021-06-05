@@ -37,15 +37,15 @@ class ProductReviewWidget extends StatelessWidget {
               ),
               child: Column(
                 children: [
-
                   // Product details
                   Row(
                     children: [
-                      ClipRRect(
+                  // (Provider.of<SplashProvider>(context, listen: false).baseUrls!=null)?
+                  ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: FadeInImage.assetNetwork(
                           placeholder: Images.placeholder_image,
-                          image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${orderDetailsList[index].productDetails.image}',
+                          image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl}/${orderDetailsList[index].productDetails.image}',
                           height: 70,
                           width: 85,
                           fit: BoxFit.cover,
@@ -54,6 +54,7 @@ class ProductReviewWidget extends StatelessWidget {
                           },
                         ),
                       ),
+                      // :null,
                       SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                       Expanded(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,

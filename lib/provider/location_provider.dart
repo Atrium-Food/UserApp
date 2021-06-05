@@ -42,13 +42,25 @@ class LocationProvider with ChangeNotifier {
 
   List<Marker> get markers => _markers;
 
+  LatLng _latLng;
+  LatLng get latLng => _latLng;
+
+  bool newAddress = false;
+
   // for get current location
   void getCurrentLocation({GoogleMapController mapController}) async {
     _loading = true;
     notifyListeners();
     try {
-      Position newLocalData = await Geolocator.getCurrentPosition(
-          desiredAccuracy: LocationAccuracy.high);
+      Position newLocalData;
+      try {
+        newLocalData = await Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.high);
+      } on Exception catch(e){
+        newAddress=false;
+        notifyListeners();
+        return;
+      }
       if (mapController != null) {
         mapController.animateCamera(CameraUpdate.newCameraPosition(
             CameraPosition(
@@ -59,6 +71,7 @@ class LocationProvider with ChangeNotifier {
         List<Placemark> placemarks = await placemarkFromCoordinates(
             newLocalData.latitude, newLocalData.longitude);
         _address = placemarks.first;
+        newAddress=true;
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
@@ -69,6 +82,23 @@ class LocationProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  getLatLongfromAddress(String query)async {
+    try {
+      var addresses = await locationFromAddress(query);
+      var first = addresses.first;
+      _latLng=LatLng(first.latitude,first.longitude);
+      return _latLng;
+      // print("${first.latitude} : ${first.longitude}");
+    } on Exception catch(e){
+      print("LatLong Error");
+      print(e.toString());
+      return;
+    }
+  }
+
+  void clearLatLng(){
+    _latLng=null;
+  }
   // update Position
   void updatePosition(CameraPosition position) async {
     _position = Position(
@@ -153,8 +183,8 @@ class LocationProvider with ChangeNotifier {
     }
   }
 
-  void getUserLocation(BuildContext context) async {
-    if(_address==null || _address.locality==null) {
+  void getUserLocation(BuildContext context,bool isReset) async {
+    if(isReset || _address==null || _address.locality==null) {
       _currentLocation = await locateUser();
       if (_currentLocation == null) {
         showModalBottomSheet(

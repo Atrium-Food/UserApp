@@ -273,37 +273,27 @@ class OrderDetailsScreen extends StatelessWidget {
                     // Total
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text(getTranslated('items_price', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text(PriceConverter.convertPrice(context, _itemsPrice), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text(PriceConverter.convertPrice(context, _itemsPrice+_addOns), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     ]),
                     SizedBox(height: 10),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('tax', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text('Taxes', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                       Text('(+) ${PriceConverter.convertPrice(context, _tax)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     ]),
+
+
+                    // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //   Text(getTranslated('subtotal', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text(PriceConverter.convertPrice(context, _subTotal), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // ]),
                     SizedBox(height: 10),
 
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('addons', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text('(+) ${PriceConverter.convertPrice(context, _addOns)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    ]),
-
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
-                      child: CustomDivider(),
-                    ),
-
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('subtotal', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text(PriceConverter.convertPrice(context, _subTotal), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    ]),
-                    SizedBox(height: 10),
-
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text('(-) ${PriceConverter.convertPrice(context, _discount)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    ]),
-                    SizedBox(height: 10),
+                    // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //   Text(getTranslated('discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text('(-) ${PriceConverter.convertPrice(context, _discount)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // ]),
+                    // SizedBox(height: 10),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text(getTranslated('coupon_discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
@@ -321,7 +311,10 @@ class OrderDetailsScreen extends StatelessWidget {
 
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
-                      child: CustomDivider(),
+                      child: Divider(
+                        thickness: 0.8,
+                        color: ColorResources.getGrayColor(context),
+                      ),
                     ),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -405,6 +398,7 @@ class OrderDetailsScreen extends StatelessWidget {
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(builder: (_) => OrderTrackingScreen(
                       orderID: order.trackModel.id.toString(), addressID: order.trackModel.deliveryAddressId,
+                      fromNotifs: false,
                     )));
                   },
                 ),

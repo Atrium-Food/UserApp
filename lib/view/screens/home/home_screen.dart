@@ -24,7 +24,7 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   Future<void> _loadData(BuildContext context, bool reload) async {
     Provider.of<LocationProvider>(context, listen: false)
-        .getUserLocation(context);
+        .getUserLocation(context,false);
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
@@ -62,12 +62,18 @@ class HomeScreen extends StatelessWidget {
                 title: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Image.asset(Images.home_location_icon,
-                        width: 50, height: 50),
+                    InkWell(
+                      onTap: (){
+                        Provider.of<LocationProvider>(context, listen: false)
+                            .getUserLocation(context,true);
+          },
+                      child: Image.asset(Images.home_location_icon,
+                          width: 50, height: 50),
+                    ),
                     SizedBox(width: 10),
                     Consumer<LocationProvider>(
                         builder: (context, locationProvider, child) {
-                      return locationProvider.address.locality != null
+                      return (locationProvider.address==null || locationProvider.address.locality != null)
                           ? Text(
                               locationProvider.address.locality,
                               style: rubikMedium.copyWith(fontSize: 20),

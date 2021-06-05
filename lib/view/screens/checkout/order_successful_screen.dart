@@ -48,7 +48,7 @@ class OrderSuccessfulScreen extends StatelessWidget {
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           child: CustomButton(btnTxt: getTranslated(status == 0 ? 'track_order' : 'back_home', context), onTap: () {
             if(status == 0) {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderTrackingScreen(orderID: orderID, addressID: addressID)));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderTrackingScreen(orderID: orderID, addressID: addressID,fromNotifs: false,)));
             }else {
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashboardScreen()), (route) => false);
             }

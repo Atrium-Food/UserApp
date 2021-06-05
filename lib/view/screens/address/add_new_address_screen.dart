@@ -205,20 +205,20 @@ class AddNewAddressScreen extends StatelessWidget {
                         ),
 
                         // for Address Field
-                        Text(
-                          getTranslated('address_line_01', context),
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
-                        ),
-                        SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                        CustomTextField(
-                          hintText: getTranslated('address_line_02', context),
-                          isShowBorder: true,
-                          inputType: TextInputType.streetAddress,
-                          inputAction: TextInputAction.next,
-                          focusNode: _addressNode,
-                          nextFocus: _nameNode,
-                          controller: _locationController,
-                        ),
+                        // Text(
+                        //   getTranslated('address_line_01', context),
+                        //   style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
+                        // ),
+                        // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                        // CustomTextField(
+                        //   hintText: getTranslated('address_line_02', context),
+                        //   isShowBorder: true,
+                        //   inputType: TextInputType.streetAddress,
+                        //   inputAction: TextInputAction.next,
+                        //   focusNode: _addressNode,
+                        //   nextFocus: _nameNode,
+                        //   controller: _locationController,
+                        // ),
                         SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                         // for Contact Person Name

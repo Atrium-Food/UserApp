@@ -98,12 +98,15 @@ class OrderProvider extends ChangeNotifier {
       _orderDetails = null;
     }
     _showCancelled = false;
+
+    print("Track Order null");
     if(orderModel == null) {
       _isLoading = true;
       ApiResponse apiResponse = await orderRepo.trackOrder(orderID);
       if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
         _trackModel = OrderModel.fromJson(apiResponse.response.data);
         _responseModel = ResponseModel(true, apiResponse.response.data.toString());
+
       } else {
         _responseModel = ResponseModel(false, apiResponse.error.errors[0].message);
         ApiChecker.checkApi(context, apiResponse);

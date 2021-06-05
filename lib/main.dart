@@ -49,10 +49,11 @@ Future<void> main() async {
   int _addressID;
   if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
     _orderID = notificationAppLaunchDetails.payload != null ? int.parse(notificationAppLaunchDetails.payload) : null;
-    // if(notificationAppLaunchDetails.payload != null){
-    //   print(notificationAppLaunchDetails.payload);
-    //   _orderID=null;
-    // }
+    print(_orderID);
+    if(notificationAppLaunchDetails.payload != null){
+      print("Notification Payload"+notificationAppLaunchDetails.payload);
+      // _orderID=null;
+    }
     //   if(notificationAppLaunchDetails.payload.startsWith('Rating')){
     //     List payStrs = notificationAppLaunchDetails.payload.split('_');
     //     print(payStrs[1]);
@@ -126,7 +127,7 @@ class MyApp extends StatelessWidget {
       ],
       supportedLocales: _locals,
 
-      home: orderId == null ? SplashScreen() : OrderTrackingScreen(orderID: orderId.toString(), addressID: null)
+      home: orderId == null ? SplashScreen() : OrderTrackingScreen(orderID: orderId.toString(), addressID: null,fromNotifs: true,)
     );
   }
 }

@@ -99,115 +99,123 @@ class CartScreen extends StatelessWidget {
                         return CartProductWidget(cart: cartProvider.cartList[index], cartIndex: index, addOns: _addOnsList[index], isAvailable: _availableList[index]);
                       },
                     ),
-
+                    SizedBox(
+                      height: 20,
+                    ),
                     // Coupon
                     Consumer<CouponProvider>(
                       builder: (context, coupon, child) {
-                        return Row(children: [
-                          Expanded(
-                            child: TextField(
-                              controller: _couponController,
-                              style: rubikRegular,
-                              decoration: InputDecoration(
-                                  hintText: getTranslated('enter_promo_code', context),
-                                  hintStyle: rubikRegular.copyWith(color: ColorResources.getHintColor(context)),
-                                  isDense: true,
-                                  filled: true,
-                                  enabled: coupon.discount == 0,
-                                  fillColor: Theme.of(context).accentColor,
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.horizontal(
-                                      left: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 10 : 0),
-                                      right: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 0 : 10),
+                        return Card(
+                          elevation: 5,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                          child: Row(children: [
+                            Expanded(
+                              child: TextField(
+                                controller: _couponController,
+                                style: rubikRegular,
+                                decoration: InputDecoration(
+                                    hintText: getTranslated('enter_promo_code', context),
+                                    hintStyle: rubikRegular.copyWith(color: ColorResources.getHintColor(context)),
+                                    isDense: true,
+                                    filled: true,
+                                    enabled: coupon.discount == 0,
+                                    fillColor: Theme.of(context).accentColor,
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.horizontal(
+                                        left: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 10 : 0),
+                                        right: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 0 : 10),
+                                      ),
+                                      borderSide: BorderSide.none,
                                     ),
-                                    borderSide: BorderSide.none,
-                                  ),
-                              ),
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              if(_couponController.text.isNotEmpty && !coupon.isLoading) {
-                                if(coupon.discount < 1) {
-                                  coupon.applyCoupon(_couponController.text, _total).then((discount) {
-                                    if (discount > 0) {
-                                      _scaffoldKey.currentState.showSnackBar(
-                                          SnackBar(content: Text('You got ${Provider.of<SplashProvider>(context, listen: false)
-                                              .configModel.currencySymbol}$discount discount'), backgroundColor: Colors.green));
-                                    } else {
-                                      _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                        content: Text(getTranslated('invalid_code_or', context)),
-                                        backgroundColor: Colors.red,
-                                      ));
-                                    }
-                                  });
-                                } else {
-                                  coupon.removeCouponData(true);
-                                }
-                              } else if(_couponController.text.isEmpty) {
-                                showCustomSnackBar(getTranslated('enter_a_Coupon_code', context), context);
-                              }
-                            },
-                            child: Container(
-                              height: 50, width: 100,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: Theme.of(context).primaryColor,
-                                borderRadius: BorderRadius.horizontal(
-                                  left: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 0 : 10),
-                                  right: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 10 : 0),
                                 ),
                               ),
-                              child: coupon.discount <= 0 ? !coupon.isLoading ? Text(
-                                getTranslated('apply', context),
-                                style: rubikMedium.copyWith(color: Colors.white),
-                              ) : CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)) : Icon(Icons.clear, color: Colors.white),
                             ),
-                          ),
-                        ]);
+
+                            InkWell(
+                              onTap: () {
+                                if(_couponController.text.isNotEmpty && !coupon.isLoading) {
+                                  if(coupon.discount < 1) {
+                                    coupon.applyCoupon(_couponController.text, _total).then((discount) {
+                                      if (discount > 0) {
+                                        _scaffoldKey.currentState.showSnackBar(
+                                            SnackBar(content: Text('You got ${Provider.of<SplashProvider>(context, listen: false)
+                                                .configModel.currencySymbol}$discount discount'), backgroundColor: Colors.green));
+                                      } else {
+                                        _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                          content: Text(getTranslated('invalid_code_or', context)),
+                                          backgroundColor: Colors.red,
+                                        ));
+                                      }
+                                    });
+                                  } else {
+                                    coupon.removeCouponData(true);
+                                  }
+                                } else if(_couponController.text.isEmpty) {
+                                  showCustomSnackBar(getTranslated('enter_a_Coupon_code', context), context);
+                                }
+                              },
+                              child: Container(
+                                height: 50, width: 100,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).primaryColor,
+                                  borderRadius: BorderRadius.horizontal(
+                                    left:Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 0 : 10),
+                                    right: Radius.circular(Provider.of<LocalizationProvider>(context, listen: false).isLtr ? 10 : 0),
+                                  ),
+                                ),
+                                child: coupon.discount <= 0 ? !coupon.isLoading ? Text(
+                                  getTranslated('apply', context),
+                                  style: rubikMedium.copyWith(color: Colors.white),
+                                ) : CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)) : Icon(Icons.clear, color: Colors.white),
+                              ),
+                            ),
+                          ]),
+                        );
                       },
                     ),
-                    SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                    SizedBox(height: 20),
 
                     // Order type
-                    Text(getTranslated('delivery_option', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    DeliveryOptionButton(value: 'delivery', title: getTranslated('delivery', context)),
-                    DeliveryOptionButton(value: 'take_away', title: getTranslated('take_away', context)),
+                    // Text(getTranslated('delivery_option', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // DeliveryOptionButton(value: 'delivery', title: getTranslated('delivery', context)),
+                    // DeliveryOptionButton(value: 'take_away', title: getTranslated('take_away', context)),
 
                     // Total
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('items_price', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text(PriceConverter.convertPrice(context, _itemPrice), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text('Order Price', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,fontWeight: FontWeight.w500)),
+                      Text(PriceConverter.convertPrice(context, _itemPrice+_addOns), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,fontWeight: FontWeight.w500)),
                     ]),
                     SizedBox(height: 10),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('tax', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text('Taxes', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                       Text('(+) ${PriceConverter.convertPrice(context, _tax)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     ]),
-                    SizedBox(height: 10),
+                    // SizedBox(height: 10),
 
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('addons', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text('(+) ${PriceConverter.convertPrice(context, _addOns)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    ]),
+                    // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //   Text(getTranslated('addons', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text('(+) ${PriceConverter.convertPrice(context, _addOns)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // ]),
 
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
-                      child: CustomDivider(),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
+                    //   child: CustomDivider(),
+                    // ),
 
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('subtotal', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text(PriceConverter.convertPrice(context, _subTotal), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    ]),
-                    SizedBox(height: 10),
+                    // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //   Text(getTranslated('subtotal', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text(PriceConverter.convertPrice(context, _subTotal), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // ]),
+                    SizedBox(height: 13),
 
-                    Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text('(-) ${PriceConverter.convertPrice(context, _discount)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    ]),
-                    SizedBox(height: 10),
+                    // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                    //   Text(getTranslated('discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text('(-) ${PriceConverter.convertPrice(context, _discount)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // ]),
+                    // SizedBox(height: 10),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text(getTranslated('coupon_discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
@@ -216,7 +224,7 @@ class CartScreen extends StatelessWidget {
                         style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                       ),
                     ]),
-                    SizedBox(height: 10),
+                    SizedBox(height: 13),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text(getTranslated('delivery_fee', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
@@ -225,16 +233,19 @@ class CartScreen extends StatelessWidget {
 
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
-                      child: CustomDivider(),
+                      child: Divider(
+                        thickness: 2,
+                        color: ColorResources.getGreyColor(context),
+                      ),
                     ),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                       Text(getTranslated('total_amount', context), style: rubikMedium.copyWith(
-                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: Theme.of(context).primaryColor,
+                        fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                       )),
                       Text(
                         PriceConverter.convertPrice(context, _total),
-                        style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: Theme.of(context).primaryColor),
+                        style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                       ),
                     ]),
 

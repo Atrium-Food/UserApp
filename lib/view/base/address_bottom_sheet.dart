@@ -13,205 +13,209 @@ import 'package:provider/provider.dart';
 class AddressBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Provider.of<LocationProvider>(context,listen: false).initAddressList(context);
+    Provider.of<LocationProvider>(context, listen: false)
+        .initAddressList(context);
     return BottomSheet(
-        onClosing: (){},
-        builder: (context){
-          return Consumer<LocationProvider>(
-            builder: (context, address,child) {
-              return Container(
-                padding: EdgeInsets.all(10),
-                child: Consumer<OrderProvider>(
-                  builder: (context, order,child) {
-                    return Column(
-                      mainAxisSize: MainAxisSize.min,
-                        children: [
-                      SizedBox(
-                        // height: 100,
-                        child: address.addressList != null
-                            ? address.addressList.length > 0
+        onClosing: () {},
+        builder: (context) {
+          return Consumer<LocationProvider>(builder: (context, address, child) {
+            return Container(
+              padding: EdgeInsets.all(10),
+              child: Consumer<OrderProvider>(builder: (context, order, child) {
+                return
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                      children: [
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxHeight: MediaQuery.of(context).size.height*0.4,
+                      minHeight: MediaQuery.of(context).size.height*0.1
+                    ),
+                    child: address.addressList != null
+                        ? address.addressList.length > 0
                             ? ListView.separated(
-                          // physics: BouncingScrollPhysics(),
-                          scrollDirection: Axis.vertical,
-                          separatorBuilder:
-                              (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.all(4),
-                            );
-                          },
-                          shrinkWrap: true,
-                          padding: EdgeInsets.only(
-                              left: Dimensions
-                                  .PADDING_SIZE_SMALL),
-                          itemCount:
-                          address.addressList.length,
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                  order.setAddressIndex(
-                                      index);
-                                  address.setAddress(index);
-                              },
-                              child: Stack(children: [
-                                Container(
-                                  height: 60,
-                                  // width: 200,
-                                  margin: EdgeInsets.only(
-                                      right: Dimensions
-                                          .PADDING_SIZE_LARGE),
-                                  decoration:
-                                  BoxDecoration(
-                                    color: index ==
-                                        order
-                                            .addressIndex
-                                        ? Theme.of(
-                                        context)
-                                        .accentColor
-                                        : ColorResources
-                                        .getBackgroundColor(
-                                        context),
-                                    borderRadius:
-                                    BorderRadius
-                                        .circular(10),
-                                    border: index ==
-                                        order
-                                            .addressIndex
-                                        ? Border.all(
-                                        color: ColorResources
-                                            .getPrimaryColor(
-                                            context),
-                                        width: 2)
-                                        : null,
-                                  ),
-                                  child: Row(children: [
-                                    Padding(
-                                      padding: EdgeInsets
-                                          .symmetric(
-                                          horizontal:
-                                          Dimensions
-                                              .PADDING_SIZE_EXTRA_SMALL),
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Icon(
-                                            address.addressList[index].addressType ==
-                                                'Home'
-                                                ? Icons
-                                                .home_outlined
-                                                : address.addressList[index].addressType ==
-                                                'Workplace'
-                                                ? Icons
-                                                .work_outline
-                                                : Icons
-                                                .list_alt_outlined,
-                                            color: index ==
-                                                order
-                                                    .addressIndex
-                                                ? ColorResources
-                                                .getPrimaryColor(
-                                                context)
-                                                : Theme.of(
-                                                context)
-                                                .textTheme
-                                                .bodyText1
-                                                .color,
-                                            size: 30,
+                                // physics: BouncingScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                separatorBuilder: (context, index) {
+                                  return Padding(
+                                    padding: EdgeInsets.all(4),
+                                  );
+                                },
+                                shrinkWrap: true,
+                                padding: EdgeInsets.only(
+                                    left: Dimensions.PADDING_SIZE_SMALL),
+                                itemCount: address.addressList.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      order.setAddressIndex(index);
+                                      address.setAddress(index);
+                                      print(address.addressList[index].address);
+                                      Navigator.pop(context);
+                                    },
+                                    child: Stack(children: [
+                                      Container(
+                                        height: 60,
+                                        // width: 200,
+                                        margin: EdgeInsets.only(
+                                            right:
+                                                Dimensions.PADDING_SIZE_LARGE),
+                                        decoration: BoxDecoration(
+                                          color: index == order.addressIndex
+                                              ? Theme.of(context).accentColor
+                                              : ColorResources
+                                                  .getBackgroundColor(context),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                          border: index == order.addressIndex
+                                              ? Border.all(
+                                                  color: ColorResources
+                                                      .getPrimaryColor(context),
+                                                  width: 2)
+                                              : null,
+                                        ),
+                                        child: Row(children: [
+                                          Padding(
+                                            padding: EdgeInsets.symmetric(
+                                                horizontal: Dimensions
+                                                    .PADDING_SIZE_EXTRA_SMALL),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Icon(
+                                                  address.addressList[index]
+                                                              .addressType ==
+                                                          'Home'
+                                                      ? Icons.home_outlined
+                                                      : address
+                                                                  .addressList[
+                                                                      index]
+                                                                  .addressType ==
+                                                              'Workplace'
+                                                          ? Icons.work_outline
+                                                          : Icons
+                                                              .list_alt_outlined,
+                                                  color: index ==
+                                                          order.addressIndex
+                                                      ? ColorResources
+                                                          .getPrimaryColor(
+                                                              context)
+                                                      : Theme.of(context)
+                                                          .textTheme
+                                                          .bodyText1
+                                                          .color,
+                                                  size: 30,
+                                                ),
+                                                Text(
+                                                    address.addressList[index]
+                                                        .addressType,
+                                                    style:
+                                                        rubikRegular.copyWith(
+                                                      fontSize: Dimensions
+                                                          .FONT_SIZE_SMALL,
+                                                      color: ColorResources
+                                                          .getGreyBunkerColor(
+                                                              context),
+                                                    )),
+                                              ],
+                                            ),
                                           ),
-                                          Text(
-                                              address
-                                                  .addressList[
-                                              index]
-                                                  .addressType,
-                                              style: rubikRegular
-                                                  .copyWith(
-                                                fontSize:
-                                                Dimensions
-                                                    .FONT_SIZE_SMALL,
-                                                color: ColorResources
-                                                    .getGreyBunkerColor(
-                                                    context),
-                                              )),
-                                        ],
+                                          Padding(
+                                              padding: EdgeInsets.all(Dimensions
+                                                  .PADDING_SIZE_EXTRA_SMALL)),
+                                          Expanded(
+                                            child: Text(
+                                                address
+                                                    .addressList[index].address,
+                                                style: rubikRegular,
+                                                overflow:
+                                                    TextOverflow.ellipsis),
+                                          ),
+                                          Spacer(),
+                                          PopupMenuButton(
+                                              icon:
+                                                  Icon(Icons.more_vert_rounded),
+                                              onSelected: (val) {
+                                                if (val == 'edit') {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              AddLocationScreen(
+                                                                address: address
+                                                                        .addressList[
+                                                                    index],
+                                                                fromCheckout:
+                                                                    true,
+                                                                isEnableUpdate:
+                                                                    true,
+                                                              )));
+                                                } else if (val == 'delete') {
+                                                  Provider.of<LocationProvider>(
+                                                          context,
+                                                          listen: false)
+                                                      .deleteUserAddressByID(
+                                                          address
+                                                              .addressList[
+                                                                  index]
+                                                              .id,
+                                                          index,
+                                                          (bool isSuccessful,
+                                                              String message) {
+                                                    // showCustomSnackBar(message, context, isError: !isSuccessful);
+                                                  });
+                                                }
+                                              },
+                                              itemBuilder: (context) {
+                                                List<PopupMenuEntry> items = [];
+                                                items.add(PopupMenuItem(
+                                                    value: 'edit',
+                                                    child: Text("Edit")));
+                                                items.add(PopupMenuItem(
+                                                    value: 'delete',
+                                                    child: Text("Delete")));
+                                                return items;
+                                              }),
+                                          // IconButton(
+                                          //     onPressed: (){
+                                          //
+                                          //     },
+                                          //     icon: Icon(Icons.more_vert_rounded))
+                                        ]),
                                       ),
-                                    ),
-                                    Padding(
-                                        padding: EdgeInsets
-                                            .all(Dimensions
-                                            .PADDING_SIZE_EXTRA_SMALL)),
-                                    Text(
-                                        address
-                                            .addressList[
-                                        index]
-                                            .address,
-                                        style:
-                                        rubikRegular,
-                                        overflow:
-                                        TextOverflow
-                                            .ellipsis),
-                                    Spacer(),
-                                    PopupMenuButton(
-                                        icon: Icon(Icons
-                                            .more_vert_rounded),
-                                        itemBuilder:
-                                            (context) {
-                                          List<PopupMenuEntry>
-                                          items = [];
-                                          items.add(PopupMenuItem(
-                                              child: Text(
-                                                  "Edit")));
-                                          items.add(PopupMenuItem(
-                                              child: Text(
-                                                  "Delete")));
-                                          return items;
-                                        }),
-                                    // IconButton(
-                                    //     onPressed: (){
-                                    //
-                                    //     },
-                                    //     icon: Icon(Icons.more_vert_rounded))
-                                  ]),
-                                ),
-                              ]),
-                            );
-                          },
-                        )
+                                    ]),
+                                  );
+                                },
+                              )
                             : Center(
-                            child: Text(getTranslated(
-                                'no_address_available',
-                                context)))
-                            : Center(
+                                child: Text(getTranslated(
+                                    'no_address_available', context)))
+                        : Center(
                             child: CircularProgressIndicator(
-                                valueColor:
-                                AlwaysStoppedAnimation<
-                                    Color>(
-                                    Theme.of(context)
-                                        .primaryColor))),
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    Theme.of(context).primaryColor))),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
+                    child: Row(children: [
+                      TextButton.icon(
+                        onPressed: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => AddLocationScreen(
+                                      isEnableUpdate: false,
+                                    ))),
+                        icon: Icon(Icons.add),
+                        label: Text('Add address', style: rubikRegular),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal:
-                            Dimensions.PADDING_SIZE_SMALL),
-                        child: Row(children: [
-                          TextButton.icon(
-                            onPressed: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (_) =>
-                                        AddLocationScreen(
-                                            fromCheckout: true))),
-                            icon: Icon(Icons.add),
-                            label: Text('Add address',
-                                style: rubikRegular),
-                          ),
-                        ]),
-                      ),
-                    ]);
-                  }
-                ),
-              );
-            }
-          );
-        }
-    );
+                    ]),
+                  ),
+                ]);
+              }),
+            );
+          });
+        });
   }
 }

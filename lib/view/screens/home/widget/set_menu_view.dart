@@ -240,8 +240,8 @@ class SetMenuView extends StatelessWidget {
                                                               : Icons.favorite_border,
                                                           color: wishList.wishIdList
                                                               .contains(setMenu.setMenuList[index].id)
-                                                              ? ColorResources.COLOR_PRIMARY
-                                                              : ColorResources.COLOR_WHITE,
+                                                              ? Colors.redAccent
+                                                              : Colors.redAccent,
                                                           size: 30,
                                                         ),
                                                       );
