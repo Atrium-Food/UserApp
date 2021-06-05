@@ -20,6 +20,7 @@ import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'detailsPage.dart';
 
 class RecipePage extends StatelessWidget {
@@ -70,6 +71,10 @@ class RecipePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   GestureDetector(
+                    onTap: () {
+                      launch(
+                          'tel:${Provider.of<SplashProvider>(context, listen: false).configModel.restaurantPhone}');
+                    },
                     child: Container(
                       padding: EdgeInsets.all(
                         Dimensions.PADDING_SIZE_EXTRA_SMALL,
@@ -82,7 +87,7 @@ class RecipePage extends StatelessWidget {
                             color: ColorResources.COLOR_PRIMARY, width: 2),
                       ),
                       child: Text(
-                        'Help',
+                        'Cooking Support',
                         style: rubikMedium.copyWith(
                           fontSize: 13,
                           color: ColorResources.COLOR_PRIMARY,

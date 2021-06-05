@@ -7,6 +7,7 @@ import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/pie_chart.dart';
+import 'package:flutter_restaurant/view/screens/home/widget/pie_chart_indicator.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 

@@ -16,89 +16,89 @@ class PieChartSample3State extends State {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1.3,
-      child: Card(
-        color: Colors.white,
-        child: Row(
-          children: <Widget>[
-            const SizedBox(
-              height: 18,
-            ),
-            Expanded(
-              child: AspectRatio(
-                aspectRatio: 1,
-                child: PieChart(
-                  PieChartData(
-                      pieTouchData:
-                          PieTouchData(touchCallback: (pieTouchResponse) {
-                        setState(() {
-                          final desiredTouch = pieTouchResponse.touchInput
-                                  is! PointerExitEvent &&
-                              pieTouchResponse.touchInput is! PointerUpEvent;
-                          if (desiredTouch &&
-                              pieTouchResponse.touchedSection != null) {
-                            touchedIndex = pieTouchResponse
-                                .touchedSection.touchedSectionIndex;
-                          } else {
-                            touchedIndex = -1;
-                          }
-                        });
-                      }),
-                      borderData: FlBorderData(
-                        show: false,
-                      ),
-                      sectionsSpace: 0,
-                      centerSpaceRadius: 0,
-                      sections: showingSections()),
-                ),
-              ),
-            ),
-            Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const <Widget>[
-                Indicator(
-                  color: Colors.red,
-                  text: 'Meat',
-                  isSquare: false,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Indicator(
-                  color: Color(0xfff8b250),
-                  text: 'Energy',
-                  isSquare: false,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Indicator(
-                  color: Color(0xff845bef),
-                  text: 'Protein',
-                  isSquare: false,
-                ),
-                SizedBox(
-                  height: 4,
-                ),
-                Indicator(
-                  color: Color(0xff13d38e),
-                  text: 'Veges',
-                  isSquare: false,
-                ),
-                SizedBox(
+    return Column(
+      children: [
+        AspectRatio(
+          aspectRatio: 1.3,
+          child: Card(
+            color: Colors.white,
+            child: Row(
+              children: <Widget>[
+                const SizedBox(
                   height: 18,
+                ),
+                Expanded(
+                  child: AspectRatio(
+                    aspectRatio: 1,
+                    child: PieChart(
+                      PieChartData(
+                          pieTouchData:
+                              PieTouchData(touchCallback: (pieTouchResponse) {
+                            setState(() {
+                              final desiredTouch = pieTouchResponse.touchInput
+                                      is! PointerExitEvent &&
+                                  pieTouchResponse.touchInput
+                                      is! PointerUpEvent;
+                              if (desiredTouch &&
+                                  pieTouchResponse.touchedSection != null) {
+                                touchedIndex = pieTouchResponse
+                                    .touchedSection.touchedSectionIndex;
+                              } else {
+                                touchedIndex = -1;
+                              }
+                            });
+                          }),
+                          borderData: FlBorderData(
+                            show: false,
+                          ),
+                          sectionsSpace: 5,
+                          centerSpaceRadius: 0,
+                          sections: showingSections()),
+                    ),
+                  ),
+                ),
+                const SizedBox(
+                  width: 28,
                 ),
               ],
             ),
-            const SizedBox(
-              width: 28,
+          ),
+        ),
+        GridView(
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+            mainAxisSpacing: 10,
+            mainAxisExtent: 30,
+          ),
+          children: <Widget>[
+            Indicator(
+              textColor: touchedIndex == 0 ? Colors.black : Colors.grey,
+              color: Colors.red,
+              text: 'Meat',
+              isSquare: false,
+            ),
+            Indicator(
+              textColor: touchedIndex == 1 ? Colors.black : Colors.grey,
+              color: Color(0xfff8b250),
+              text: 'Energy',
+              isSquare: false,
+            ),
+            Indicator(
+              textColor: touchedIndex == 2 ? Colors.black : Colors.grey,
+              color: Color(0xff845bef),
+              text: 'Protein',
+              isSquare: false,
+            ),
+            Indicator(
+              textColor: touchedIndex == 3 ? Colors.black : Colors.grey,
+              color: Color(0xff13d38e),
+              text: 'Veges',
+              isSquare: false,
             ),
           ],
         ),
-      ),
+      ],
     );
   }
 
@@ -139,7 +139,7 @@ class PieChartSample3State extends State {
           return PieChartSectionData(
             color: const Color(0xff845bef),
             showTitle: false,
-            value: 1,
+            value: 10,
             radius: radius,
             badgeWidget: _Badge(
               1,
