@@ -4,6 +4,7 @@ import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/banner_provider.dart';
 import 'package:flutter_restaurant/provider/category_provider.dart';
+import 'package:flutter_restaurant/provider/location_provider.dart';
 import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/provider/set_menu_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
@@ -22,6 +23,8 @@ import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
   Future<void> _loadData(BuildContext context, bool reload) async {
+    Provider.of<LocationProvider>(context, listen: false)
+        .getUserLocation(context);
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
@@ -38,7 +41,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _loadData(context, false);
-
     return Scaffold(
       backgroundColor: ColorResources.getBackgroundColor(context),
       body: SafeArea(
@@ -63,10 +65,19 @@ class HomeScreen extends StatelessWidget {
                     Image.asset(Images.home_location_icon,
                         width: 50, height: 50),
                     SizedBox(width: 10),
-                    Text(
-                      "City Name",
-                      style: rubikMedium.copyWith(fontSize: 20),
-                    )
+                    Consumer<LocationProvider>(
+                        builder: (context, locationProvider, child) {
+                      return locationProvider.address.locality != null
+                          ? Text(
+                              locationProvider.address.locality,
+                              style: rubikMedium.copyWith(fontSize: 20),
+                            )
+                          : Text(
+                              "City Name",
+                              style: rubikMedium.copyWith(fontSize: 20),
+                            );
+                    }),
+
                     // Image.asset(Images.efood, width: 55, height: 55, color: ColorResources.getAccentColor(context)),
                   ],
                 ),

@@ -41,6 +41,9 @@ class ProductProvider extends ChangeNotifier {
           _popularProductList = [];
         }
         _popularProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
+        // for (Product p in _popularProductList){
+        //   p.rating.length>1 ?? print("Ratingss"+p.rating.toString());
+        // }
         _popularPageSize = ProductModel.fromJson(apiResponse.response.data).totalSize;
         _isLoading = false;
         notifyListeners();
@@ -189,6 +192,29 @@ class ProductProvider extends ChangeNotifier {
       responseModel = ResponseModel(false, errorMessage);
     }
     _loadingList[index] = false;
+    notifyListeners();
+    return responseModel;
+  }
+
+  Future<ResponseModel> submitProductReview(ReviewBody reviewBody) async {
+    _isLoading = true;
+    notifyListeners();
+
+    ApiResponse response = await productRepo.submitReview(reviewBody);
+    ResponseModel responseModel;
+    if (response.response != null && response.response.statusCode == 200) {
+      responseModel = ResponseModel(true, 'Review submitted successfully');
+      notifyListeners();
+    } else {
+      String errorMessage;
+      if(response.error is String) {
+        errorMessage = response.error.toString();
+      }else {
+        errorMessage = response.error.errors[0].message;
+      }
+      responseModel = ResponseModel(false, errorMessage);
+    }
+    _isLoading = false;
     notifyListeners();
     return responseModel;
   }

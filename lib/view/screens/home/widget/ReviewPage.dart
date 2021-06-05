@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
@@ -20,7 +21,7 @@ class ReviewPage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              '${product.rating.length > 0 ? double.parse(product.rating[0].average).toStringAsFixed(1) : 0.0}',
+              '${product.rating!=null ? double.parse(product.rating.average).toStringAsFixed(1) : 0.0}',
               style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context),fontSize: 70)
             ),
           ),
@@ -29,8 +30,8 @@ class ReviewPage extends StatelessWidget {
           ),
           Center(
             child: RatingBar(
-                rating: product.rating.length > 0
-                    ? double.parse(product.rating[0].average)
+                rating: product.rating !=null
+                    ? double.parse(product.rating.average)
                     : 0.0,
                 size: 20,
             ),
@@ -38,7 +39,7 @@ class ReviewPage extends StatelessWidget {
           SizedBox(
             height: 5,
           ),
-          Center(child: Text('Based on ${product.rating.length} ratings')),
+          Center(child: product.rating!=null ?Text('Based on ${product.rating.countTotalRating} ratings'):null),
           SizedBox(
             height: 15.0,
           ),
@@ -149,7 +150,14 @@ class ReviewPage extends StatelessWidget {
               physics: ClampingScrollPhysics(),
               itemCount: 2,
               itemBuilder: (context,index){
-              return ReviewWidget();
+                Map<String,dynamic> json={
+                  'product_id': '1',
+                  'comment': 'Lovely lunch today. Ordered the food without much expectations from myself as in the end I was the one who had to cook, but in the end everything turned out to be great. The chef who was guiding me through the whole session was so calm and he motivated me to cook. Giving a four so that I can improve myself and cook better next time. Hoping to update the review soon.',
+                  'rating': '3',
+                };
+              return ReviewWidget(
+                review: ReviewBody.fromJson(json)
+              );
               }
           )
         ],

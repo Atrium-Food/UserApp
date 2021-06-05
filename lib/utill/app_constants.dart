@@ -6,7 +6,7 @@ class AppConstants {
 
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
-  static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
+  // static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
   static const String SEARCH_PRODUCT_URI = '/api/v1/products/details/';
   static const String SUB_CATEGORY_URI = '/api/v1/categories/childes/';
   static const String CATEGORY_PRODUCT_URI = '/api/v1/categories/products/';
@@ -28,7 +28,7 @@ class AppConstants {
   static const String REMOVE_ADDRESS_URI = '/api/v1/customer/address/delete?address_id=';
   static const String ADD_ADDRESS_URI = '/api/v1/customer/address/add';
   static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';
-  static const String SET_MENU_URI = '/api/v1/products/set-menu';
+  // static const String SET_MENU_URI = '/api/v1/products/set-menu';
   static const String CUSTOMER_INFO_URI = '/api/v1/customer/info';
   static const String COUPON_URI = '/api/v1/coupon/list';
   static const String COUPON_APPLY_URI = '/api/v1/coupon/apply?code=';
@@ -48,6 +48,12 @@ class AppConstants {
   static const String LAST_LOCATION_URI = '/api/v1/delivery-man/last-location?order_id=';
 
   static const String DELIVER_MAN_REVIEW_URI = '/api/v1/delivery-man/reviews/submit';
+
+  /// New and Modified URIs
+  static const String SET_MENU_URI = '/api/v1/products/set-menu';
+  static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
+  static const String ADD_CARD_URI = '/api/v1/customer/add-card';
+
 
   // Shared Key
   static const String THEME = 'theme';

@@ -69,6 +69,7 @@ class UserInfoModel {
 
 class CardModel{
   int _id;
+  int _userId;
   String _cardHolderName;
   String _cardNumber;
   int _expiryMonth;
@@ -77,8 +78,9 @@ class CardModel{
   String _updatedAt;
 
 
-  CardModel({int id, String cardHolderName, String cardNumber, int expiryMonth, int expiryYear, String createdAt, String updatedAt}){
+  CardModel({int userId,int id, String cardHolderName, String cardNumber, int expiryMonth, int expiryYear, String createdAt, String updatedAt}){
     this._id=id;
+    this._userId=userId;
     this._cardHolderName=cardHolderName;
     this._cardNumber=cardNumber;
     this._expiryMonth=expiryMonth;
@@ -103,17 +105,18 @@ class CardModel{
     _expiryYear=json["expiry_year"];
     _createdAt=json["created_at"];
     _updatedAt=json["updated_at"];
+    _userId=json["user_id"];
   }
 
   Map<String, dynamic> toJson(){
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this._id;
     data['card_holder_name'] = this._cardHolderName;
     data['card_number'] = this._cardNumber;
     data['expiry_month'] = this._expiryMonth;
     data['expiry_year'] = this._expiryYear;
-    data['created_at'] = this._createdAt;
-    data['updated_at'] = this._updatedAt;
+    // data['created_at'] = this._createdAt;
+    // data['updated_at'] = this._updatedAt;
+    data['user_id'] = this._userId;
     return data;
   }
 

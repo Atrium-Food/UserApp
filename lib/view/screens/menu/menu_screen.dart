@@ -41,7 +41,7 @@ class MenuScreen extends StatelessWidget {
                 backgroundColor: ColorResources.getPrimaryColor(context),
                 toolbarHeight: MediaQuery.of(context).size.height * 0.065,
                 collapsedHeight: MediaQuery.of(context).size.height * 0.065,
-                expandedHeight: MediaQuery.of(context).size.height * 0.25,
+                expandedHeight: MediaQuery.of(context).size.height * 0.30,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(15),
@@ -50,102 +50,106 @@ class MenuScreen extends StatelessWidget {
                 floating: true,
                 pinned: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: EdgeInsets.only(left: 15),
-                  centerTitle: true,
-                  title: Container(
-                    padding: EdgeInsets.only(top: 50.0),
+                  background:Container(
+                    // padding: EdgeInsets.only(top:65.0),
                     child: Consumer<ProfileProvider>(
                         builder: (context, profileProvider, child) {
-                      return Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              height: 40,
-                              width: 40,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  border: Border.all(
-                                      color: ColorResources.COLOR_WHITE,
-                                      width: 2)),
-                              child: ClipOval(
-                                child: _isLoggedIn
-                                    ? FadeInImage.assetNetwork(
-                                        placeholder: Images.placeholder_user,
-                                        image:
-                                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
-                                            '${profileProvider.userInfoModel != null ? profileProvider.userInfoModel.image : ''}',
-                                        height: 40,
-                                        width: 40,
-                                        fit: BoxFit.cover,
-                                        imageErrorBuilder:
-                                            (BuildContext context,
-                                                Object exception,
-                                                StackTrace stackTrace) {
-                                          return Image.asset(
-                                              Images.placeholder_user,
-                                              fit: BoxFit.contain);
-                                        },
-                                      )
-                                    : Image.asset(Images.placeholder_user,
+                          return Column(
+                            // shrinkWrap: true,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: 70,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: ColorResources.COLOR_WHITE,
+                                          width: 2)),
+                                  child: ClipOval(
+                                    child: _isLoggedIn
+                                        ? FadeInImage.assetNetwork(
+                                      placeholder: Images.placeholder_user,
+                                      image:
+                                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls.customerImageUrl}/'
+                                          '${profileProvider.userInfoModel != null ? profileProvider.userInfoModel.image : ''}',
+                                      height: 40,
+                                      width: 40,
+                                      fit: BoxFit.cover,
+                                      imageErrorBuilder:
+                                          (BuildContext context,
+                                          Object exception,
+                                          StackTrace stackTrace) {
+                                        return Image.asset(
+                                          Images.placeholder_user,
+                                          fit: BoxFit.contain,
+                                          width: 40,
+                                        );
+                                      },
+                                    )
+                                        : Image.asset(Images.placeholder_user,
                                         height: 40,
                                         width: 40,
                                         fit: BoxFit.cover),
-                              ),
-                            ),
-                            Shimmer.fromColors(
-                              baseColor: Colors.grey[300],
-                              highlightColor: Colors.grey[100],
-                              enabled: profileProvider.userInfoModel == null,
-                              child: Column(children: [
-                                SizedBox(height: 10),
-                                _isLoggedIn
-                                    ? profileProvider.userInfoModel != null
+                                  ),
+                                ),
+                                Shimmer.fromColors(
+                                  baseColor: Colors.grey[300],
+                                  highlightColor: Colors.grey[100],
+                                  enabled: profileProvider.userInfoModel == null,
+                                  child: Column(children: [
+                                    SizedBox(height: 10),
+                                    _isLoggedIn
+                                        ? profileProvider.userInfoModel != null
                                         ? Text(
-                                            '${profileProvider.userInfoModel.fName ?? ''} ${profileProvider.userInfoModel.lName ?? ''}',
-                                            style: rubikRegular.copyWith(
-                                                fontSize:
-                                                    Dimensions.FONT_SIZE_SMALL,
-                                                color:
-                                                    ColorResources.COLOR_WHITE),
-                                          )
+                                      '${profileProvider.userInfoModel.fName ?? ''} ${profileProvider.userInfoModel.lName ?? ''}',
+                                      style: rubikRegular.copyWith(
+                                          fontSize:
+                                          Dimensions.FONT_SIZE_DEFAULT,
+                                          color:
+                                          ColorResources.COLOR_WHITE),
+                                    )
                                         : Container(
-                                            height: 15,
-                                            width: 150,
-                                            color: Colors.white)
-                                    : Text(
-                                        getTranslated('guest', context),
-                                        style: rubikRegular.copyWith(
-                                            fontSize:
-                                                Dimensions.FONT_SIZE_SMALL,
-                                            color: ColorResources.COLOR_WHITE),
-                                      ),
-                                // SizedBox(height: 10),
-                                _isLoggedIn
-                                    ? profileProvider.userInfoModel != null
+                                        height: 15,
+                                        width: 150,
+                                        color: Colors.white)
+                                        : Text(
+                                      getTranslated('guest', context),
+                                      style: rubikRegular.copyWith(
+                                          fontSize:
+                                          Dimensions.FONT_SIZE_DEFAULT,
+                                          color: ColorResources.COLOR_WHITE),
+                                    ),
+                                    // SizedBox(height: 10),
+                                    _isLoggedIn
+                                        ? profileProvider.userInfoModel != null
                                         ? Text(
-                                            '${profileProvider.userInfoModel.email ?? ''}',
-                                            style: rubikRegular.copyWith(
-                                                fontSize: Dimensions
-                                                    .FONT_SIZE_EXTRA_SMALL,
-                                                color: ColorResources
-                                                    .BACKGROUND_COLOR),
-                                          )
+                                      '${profileProvider.userInfoModel.email ?? ''}',
+                                      style: rubikRegular.copyWith(
+                                          fontSize: Dimensions
+                                              .FONT_SIZE_DEFAULT,
+                                          color: ColorResources
+                                              .BACKGROUND_COLOR),
+                                    )
                                         : Container(
-                                            height: 15,
-                                            width: 100,
-                                            color: Colors.white)
-                                    : Text(
-                                        'demo@demo.com',
-                                        style: rubikRegular.copyWith(
-                                            fontSize: Dimensions
-                                                .FONT_SIZE_EXTRA_SMALL,
-                                            color: ColorResources.COLOR_WHITE),
-                                      ),
-                              ]),
-                            )
-                          ]);
-                    }),
-                  ),
+                                        height: 15,
+                                        width: 100,
+                                        color: Colors.white)
+                                        : Text(
+                                      'demo@demo.com',
+                                      style: rubikRegular.copyWith(
+                                          fontSize: Dimensions
+                                              .FONT_SIZE_DEFAULT,
+                                          color: ColorResources.COLOR_WHITE),
+                                    ),
+                                  ]),
+                                )
+                              ]);
+                        }),
+                  ) ,
+                  titlePadding: EdgeInsets.only(left: 15),
+                  centerTitle: true,
+                  // title: ,
                 ),
                 //title: Text('My App Bar'),
                 bottom: PreferredSize(
@@ -176,17 +180,17 @@ class MenuScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PROFILE',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.width*0.038)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PAYMENT',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.width*0.038)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REFER',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.width*0.038)),
                         ),
                       ],
                     ),

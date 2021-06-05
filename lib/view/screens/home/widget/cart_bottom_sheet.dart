@@ -34,111 +34,111 @@ class CartBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final List<Widget> ingredients = [
-      Row(children: [
+      // Row(children: [
         Text(
           'Ingredient1',
           style: rubikRegular,
         ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
+        // Expanded(child: SizedBox()),
+        // Container(
+        //   decoration: BoxDecoration(
+        //       color: ColorResources.getBackgroundColor(context),
+        //       borderRadius: BorderRadius.circular(5)),
+        //   child: Row(children: [
+        //     InkWell(
+        //       onTap: () {},
+        //       child: Padding(
+        //         padding: EdgeInsets.symmetric(
+        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        //         child: Icon(Icons.remove, size: 20),
+        //       ),
+        //     ),
+        //     Text('1',
+        //         style: rubikMedium.copyWith(
+        //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+        //     InkWell(
+        //       onTap: () {},
+        //       child: Padding(
+        //         padding: EdgeInsets.symmetric(
+        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        //         child: Icon(Icons.add, size: 20),
+        //       ),
+        //     ),
+        //   ]),
+        // ),
+      // ]),
+      // Row(children: [
         Text(
           'Ingredient2',
           style: rubikRegular,
         ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
+        // Expanded(child: SizedBox()),
+        // Container(
+        //   decoration: BoxDecoration(
+        //       color: ColorResources.getBackgroundColor(context),
+        //       borderRadius: BorderRadius.circular(5)),
+        //   child: Row(children: [
+        //     InkWell(
+        //       onTap: () {},
+        //       child: Padding(
+        //         padding: EdgeInsets.symmetric(
+        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        //         child: Icon(Icons.remove, size: 20),
+        //       ),
+        //     ),
+        //     Text('1',
+        //         style: rubikMedium.copyWith(
+        //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+        //     InkWell(
+        //       onTap: () {},
+        //       child: Padding(
+        //         padding: EdgeInsets.symmetric(
+        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        //         child: Icon(Icons.add, size: 20),
+        //       ),
+        //     ),
+        //   ]),
+        // ),
+      // ]),
+      // Row(children: [
         Text(
           'Ingredient3',
           style: rubikRegular,
         ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
+        // Expanded(child: SizedBox()),
+        // Container(
+        //   decoration: BoxDecoration(
+        //       color: ColorResources.getBackgroundColor(context),
+        //       borderRadius: BorderRadius.circular(5)),
+        //   child: Row(children: [
+        //     InkWell(
+        //       onTap: () {},
+        //       child: Padding(
+        //         padding: EdgeInsets.symmetric(
+        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        //         child: Icon(Icons.remove, size: 20),
+        //       ),
+        //     ),
+        //     Text('1',
+        //         style: rubikMedium.copyWith(
+        //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+        //     InkWell(
+        //       onTap: () {},
+        //       child: Padding(
+        //         padding: EdgeInsets.symmetric(
+        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+        //         child: Icon(Icons.add, size: 20),
+        //       ),
+        //     ),
+        //   ]),
+        // ),
+      // ]),
     ];
 
     bool fromCart = cart != null;
@@ -280,8 +280,8 @@ class CartBottomSheet extends StatelessWidget {
                               fontSize: Dimensions.FONT_SIZE_LARGE),
                         ),
                         RatingBar(
-                            rating: product.rating.length > 0
-                                ? double.parse(product.rating[0].average)
+                            rating: product.rating !=null
+                                ? double.parse(product.rating.average)
                                 : 0.0,
                             size: 15),
                         SizedBox(height: 10),
@@ -384,6 +384,9 @@ class CartBottomSheet extends StatelessWidget {
                   child: Row(children: [
                     InkWell(
                       onTap: () {
+                        if(productProvider.quantity==1){
+                          Provider.of<CartProvider>(context, listen: false).removeFromCart(cart);
+                        }
                         if (productProvider.quantity > 1) {
                           productProvider.setQuantity(false);
                         }

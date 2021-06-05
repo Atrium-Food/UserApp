@@ -63,14 +63,24 @@ class ProfileProvider with ChangeNotifier {
     return _responseModel;
   }
 
-  Future<ResponseModel> updateCardInfo(CardModel cardModel){
+  Future<ResponseModel> addCardInfo(CardModel cardModel) async {
+    ResponseModel _responseModel;
     _isLoading=true;
     notifyListeners();
-    ResponseModel _responseModel;
-    http.StreamedResponse response;
-    // http.StreamedResponse response = await profileRepo.updateCardProfile(cardModel);
-    if(response.statusCode==200){
+    ApiResponse apiResponse = await profileRepo.addCardProfile(cardModel);
+    if(apiResponse.response!=null && apiResponse.response.statusCode==200){
     //  update userInfoModel.
+        _userInfoModel.cards.add(CardModel.fromJson(apiResponse.response.data));
+    } else {
+      String _errorMessage;
+      if (apiResponse.error is String) {
+        _errorMessage = apiResponse.error.toString();
+      } else {
+        _errorMessage = apiResponse.error.errors[0].message;
+      }
+      print(_errorMessage);
+      _responseModel = ResponseModel(false, _errorMessage);
+      // ApiChecker.checkApi(context, apiResponse);
     }
   }
 

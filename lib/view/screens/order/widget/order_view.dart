@@ -121,6 +121,7 @@ class OrderView extends StatelessWidget {
                             if(isRunning) {
                               Navigator.push(context, MaterialPageRoute(builder: (_) => OrderTrackingScreen(
                                 orderID: orderList[index].id.toString(), addressID: orderList[index].deliveryAddressId,
+
                               )));
                             }else {
                               List<OrderDetailsModel> orderDetails = await order.getOrderDetails(orderList[index].id.toString(), context);

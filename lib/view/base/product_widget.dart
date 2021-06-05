@@ -178,8 +178,9 @@ class ProductWidget extends StatelessWidget {
                 child: Icon(Icons.add)),
             Expanded(child: SizedBox()),
             RatingBar(
-                rating: product.rating.length > 0
-                    ? double.parse(product.rating[0].average)
+                rating: product.rating!=null
+                // product.rating.length > 0
+                    ? double.parse(product.rating.average)
                     : 0.0,
                 size: 10),
           ]),

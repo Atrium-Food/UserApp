@@ -11,7 +11,6 @@ import 'package:flutter_restaurant/data/model/response/order_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/notification/my_notification.dart';
-import 'package:flutter_restaurant/notification/my_notification.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
 import 'package:flutter_restaurant/provider/coupon_provider.dart';
@@ -83,10 +82,8 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
             builder: (context, address, child) {
               return Column(
                 children: [
-
                   Expanded(
                     child: ListView(physics: BouncingScrollPhysics(), children: [
-
                       _branches.length > 1 ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(10, 10, 10, 0),

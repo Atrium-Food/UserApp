@@ -355,9 +355,7 @@ class DetailsPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(
-                      width: 55,
-                    ),
+                    Spacer(),
                     CircularPercentIndicator(
                       lineWidth: 6,
                       radius: 60,
@@ -608,69 +606,69 @@ class DetailsPage extends StatelessWidget {
                           SizedBox(
                             height: 7,
                           ),
-                          Row(children: [
-                            InkWell(
-                              onTap: () {
-                                if (productProvider.quantity > 1) {
-                                  productProvider.setQuantity(false);
-                                }
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffDEDEDE),
-                                  borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(10),
-                                    bottomLeft: Radius.circular(10),
-                                  ),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                                    vertical:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                child: Icon(
-                                  Icons.remove,
-                                  size: 20,
-                                  color: ColorResources.COLOR_GRAY,
-                                ),
-                              ),
-                            ),
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: 8,
-                                vertical:
-                                    Dimensions.PADDING_SIZE_EXTRA_SMALL - 2,
-                              ),
-                              decoration: BoxDecoration(
-                                color: Color(0xffDEDEDE),
-                              ),
-                              child: Text(productProvider.quantity.toString(),
-                                  style: rubikMedium.copyWith(
-                                      fontSize: Dimensions.FONT_SIZE_DEFAULT)),
-                            ),
-                            InkWell(
-                              onTap: () => productProvider.setQuantity(true),
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Color(0xffDEDEDE),
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(10),
-                                    bottomRight: Radius.circular(10),
-                                  ),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL,
-                                    vertical:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                child: Icon(
-                                  Icons.add,
-                                  size: 20,
-                                  color: ColorResources.COLOR_BLACK,
-                                ),
-                              ),
-                            ),
-                          ]),
+                          // Row(children: [
+                          //   InkWell(
+                          //     onTap: () {
+                          //       if (productProvider.quantity > 1) {
+                          //         productProvider.setQuantity(false);
+                          //       }
+                          //     },
+                          //     child: Container(
+                          //       decoration: BoxDecoration(
+                          //         color: Color(0xffDEDEDE),
+                          //         borderRadius: BorderRadius.only(
+                          //           topLeft: Radius.circular(10),
+                          //           bottomLeft: Radius.circular(10),
+                          //         ),
+                          //       ),
+                          //       padding: EdgeInsets.symmetric(
+                          //           horizontal:
+                          //               Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          //           vertical:
+                          //               Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          //       child: Icon(
+                          //         Icons.remove,
+                          //         size: 20,
+                          //         color: ColorResources.COLOR_GRAY,
+                          //       ),
+                          //     ),
+                          //   ),
+                          //   Container(
+                          //     padding: EdgeInsets.symmetric(
+                          //       horizontal: 8,
+                          //       vertical:
+                          //           Dimensions.PADDING_SIZE_EXTRA_SMALL - 2,
+                          //     ),
+                          //     decoration: BoxDecoration(
+                          //       color: Color(0xffDEDEDE),
+                          //     ),
+                          //     child: Text(productProvider.quantity.toString(),
+                          //         style: rubikMedium.copyWith(
+                          //             fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+                          //   ),
+                          //   InkWell(
+                          //     onTap: () => productProvider.setQuantity(true),
+                          //     child: Container(
+                          //       decoration: BoxDecoration(
+                          //         color: Color(0xffDEDEDE),
+                          //         borderRadius: BorderRadius.only(
+                          //           topRight: Radius.circular(10),
+                          //           bottomRight: Radius.circular(10),
+                          //         ),
+                          //       ),
+                          //       padding: EdgeInsets.symmetric(
+                          //           horizontal:
+                          //               Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                          //           vertical:
+                          //               Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          //       child: Icon(
+                          //         Icons.add,
+                          //         size: 20,
+                          //         color: ColorResources.COLOR_BLACK,
+                          //       ),
+                          //     ),
+                          //   ),
+                          // ]),
                         ],
                       ),
                     );
