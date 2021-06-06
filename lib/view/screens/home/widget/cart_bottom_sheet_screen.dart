@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
@@ -40,6 +41,8 @@ class CartBottomSheetScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ScrollController _scrollController = ScrollController();
+
     final List<Map> myProducts =
         List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
             .toList();
@@ -161,6 +164,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       body: DefaultTabController(
         length: 3,
         child: NestedScrollView(
+          controller: _scrollController,
           headerSliverBuilder: (context, value) {
             return [
               SliverAppBar(

@@ -8,9 +8,8 @@ import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/review_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-
 class ReviewPage extends StatelessWidget {
-  Product product;
+  final Product product;
   ReviewPage({@required this.product});
   @override
   Widget build(BuildContext context) {
@@ -21,25 +20,29 @@ class ReviewPage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              '${product.rating!=null ? double.parse(product.rating.average).toStringAsFixed(1) : 0.0}',
-              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context),fontSize: 70)
-            ),
+                '${product.rating != null ? double.parse(product.rating.average).toStringAsFixed(1) : 0.0}',
+                style: rubikRegular.copyWith(
+                    color: ColorResources.getAccentColor(context),
+                    fontSize: 70)),
           ),
           SizedBox(
             height: 5,
           ),
           Center(
             child: RatingBar(
-                rating: product.rating !=null
-                    ? double.parse(product.rating.average)
-                    : 0.0,
-                size: 20,
+              rating: product.rating != null
+                  ? double.parse(product.rating.average)
+                  : 0.0,
+              size: 20,
             ),
           ),
           SizedBox(
             height: 5,
           ),
-          Center(child: product.rating!=null ?Text('Based on ${product.rating.countTotalRating} ratings'):null),
+          Center(
+              child: product.rating != null
+                  ? Text('Based on ${product.rating.countTotalRating} ratings')
+                  : null),
           SizedBox(
             height: 15.0,
           ),
@@ -49,7 +52,9 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Excellent',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: rubikRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
@@ -70,7 +75,9 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Good',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: rubikRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
@@ -91,7 +98,9 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Average',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: rubikRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
@@ -110,7 +119,10 @@ class ReviewPage extends StatelessWidget {
             children: [
               Text(
                 'Below Average',
-                textAlign: TextAlign.end,style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                textAlign: TextAlign.end,
+                style: rubikRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
@@ -130,7 +142,9 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Poor',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: rubikRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
@@ -146,20 +160,18 @@ class ReviewPage extends StatelessWidget {
             height: 30,
           ),
           ListView.builder(
-            shrinkWrap: true,
+              shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemCount: 2,
-              itemBuilder: (context,index){
-                Map<String,dynamic> json={
+              itemBuilder: (context, index) {
+                Map<String, dynamic> json = {
                   'product_id': '1',
-                  'comment': 'Lovely lunch today. Ordered the food without much expectations from myself as in the end I was the one who had to cook, but in the end everything turned out to be great. The chef who was guiding me through the whole session was so calm and he motivated me to cook. Giving a four so that I can improve myself and cook better next time. Hoping to update the review soon.',
+                  'comment':
+                      'Lovely lunch today. Ordered the food without much expectations from myself as in the end I was the one who had to cook, but in the end everything turned out to be great. The chef who was guiding me through the whole session was so calm and he motivated me to cook. Giving a four so that I can improve myself and cook better next time. Hoping to update the review soon.',
                   'rating': '3',
                 };
-              return ReviewWidget(
-                review: ReviewBody.fromJson(json)
-              );
-              }
-          )
+                return ReviewWidget(review: ReviewBody.fromJson(json));
+              })
         ],
       ),
     );

@@ -94,7 +94,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           : null,
       decoration: InputDecoration(
         errorText:
-            widget.errorMessage.length > 0 ? '${widget.errorMessage}!' : null,
+            widget.errorMessage.length > 0 ? 'ⓘ ${widget.errorMessage}' : null,
         errorStyle: TextStyle(
             fontSize: 13, color: Colors.red, fontWeight: FontWeight.w100),
         contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),

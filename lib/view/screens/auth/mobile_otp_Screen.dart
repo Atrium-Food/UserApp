@@ -11,7 +11,14 @@ import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/forgot_password/verification_screen.dart';
 import 'package:provider/provider.dart';
 
-class MobileOTP extends StatelessWidget {
+class MobileOTP extends StatefulWidget {
+  @override
+  _MobileOTPState createState() => _MobileOTPState();
+}
+
+class _MobileOTPState extends State<MobileOTP> {
+  String _numberError = '';
+
   @override
   Widget build(BuildContext context) {
     TextEditingController _numberController = TextEditingController();
@@ -51,6 +58,7 @@ class MobileOTP extends StatelessWidget {
                     ),
                     SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                     CustomTextField(
+                      errorMessage: _numberError,
                       hintText: 'Mobile number',
                       isShowBorder: true,
                       controller: _numberController,
@@ -62,33 +70,42 @@ class MobileOTP extends StatelessWidget {
                         ? CustomButton(
                             btnTxt: getTranslated('send', context),
                             onTap: () {
-                              if (_numberController.text.isEmpty) {
-                                showCustomSnackBar(
-                                    getTranslated(
-                                        'enter_email_address', context),
-                                    context);
-                              } else if (!_numberController.text
-                                  .contains('@')) {
-                                showCustomSnackBar(
-                                    getTranslated('enter_valid_email', context),
-                                    context);
-                              } else {
-                                Provider.of<AuthProvider>(context,
-                                        listen: false)
-                                    .forgetPassword(_numberController.text)
-                                    .then((value) {
-                                  if (value.isSuccess) {
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (_) => VerificationScreen(
-                                                forLogin: true,
-                                                contact:
-                                                    _numberController.text)));
-                                  } else {
-                                    showCustomSnackBar(value.message, context);
+                              setState(() {
+                                if (_numberController.text.isEmpty ||
+                                    _numberController.text.length != 10) {
+                                  if (_numberController.text.isEmpty) {
+                                    _numberError = 'required';
+                                    // showCustomSnackBar(
+                                    //     getTranslated(
+                                    //         'enter_email_address', context),
+                                  } else if (_numberController.text.length !=
+                                      10) {
+                                    _numberError = 'Invalid number';
+                                    // showCustomSnackBar(
+                                    //     getTranslated('enter_valid_email', context),
+                                    //     context);
                                   }
-                                });
-                              }
+                                } else {
+                                  _numberError = '';
+                                  Provider.of<AuthProvider>(context,
+                                          listen: false)
+                                      .forgetPassword(_numberController.text)
+                                      .then((value) {
+                                    if (value.isSuccess) {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  VerificationScreen(
+                                                      forLogin: true,
+                                                      contact: _numberController
+                                                          .text)));
+                                    } else {
+                                      showCustomSnackBar(
+                                          value.message, context);
+                                    }
+                                  });
+                                }
+                              });
                             },
                           )
                         : Center(

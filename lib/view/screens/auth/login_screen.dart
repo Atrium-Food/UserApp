@@ -258,9 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             authProvider.loginErrorMessage.length > 0
                                 ? CircleAvatar(
-                                    backgroundColor:
-                                        ColorResources.getPrimaryColor(context),
-                                    radius: 5)
+                                    backgroundColor: Colors.red, radius: 5)
                                 : SizedBox.shrink(),
                             SizedBox(width: 8),
                             Expanded(
@@ -271,8 +269,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .headline2
                                     .copyWith(
                                       fontSize: Dimensions.FONT_SIZE_SMALL,
-                                      color: ColorResources.getPrimaryColor(
-                                          context),
+                                      color: Colors.red,
                                     ),
                               ),
                             )
@@ -292,14 +289,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                         EmailChecker.isNotValid(_email) ||
                                         _password.isEmpty ||
                                         _password.length < 6) {
-                                      if (EmailChecker.isNotValid(_email)) {
-                                        _emailError = getTranslated(
-                                            'enter_valid_email', context);
-                                      }
-
                                       if (_email.isEmpty) {
                                         _emailError = 'required';
+                                      } else if (EmailChecker.isNotValid(
+                                          _email)) {
+                                        _emailError = getTranslated(
+                                            'enter_valid_email', context);
+                                      } else {
+                                        _emailError = '';
                                       }
+
                                       // if (EmailChecker.isNotValid(_email)) {
                                       //   // showCustomSnackBar(
                                       //   //     getTranslated(
@@ -307,18 +306,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                       //   //     context);
                                       //   _emailValidate = true;
                                       // }
-                                      if (_password.length < 6) {
+                                      if (_password.isEmpty) {
                                         _passwordError = getTranslated(
                                             'enter_password', context);
                                         // showCustomSnackBar(
                                         //     getTranslated(
                                         //         'enter_password', context),
                                         //     context);
-                                      }
-                                      if (_password.isEmpty) {
-                                        getTranslated(
+                                      } else if (_password.length < 6) {
+                                        _passwordError = getTranslated(
                                             'password_should_be', context);
-                                      }
+                                      } else
+                                        _passwordError = '';
                                     }
                                     // if (_password.length < 6) {
                                     //   // showCustomSnackBar(
