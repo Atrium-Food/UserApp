@@ -77,9 +77,10 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        Container(
                           padding: const EdgeInsets.fromLTRB(10.0,0.0,0.0,0.0),
                           child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               Text("Veg",style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
                               Switch(

@@ -30,6 +30,8 @@ class AppConstants {
       '/api/v1/customer/address/delete?address_id=';
   static const String ADD_ADDRESS_URI = '/api/v1/customer/address/add';
   static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';
+
+
   // static const String SET_MENU_URI = '/api/v1/products/set-menu';
   static const String CUSTOMER_INFO_URI = '/api/v1/customer/info';
   static const String COUPON_URI = '/api/v1/coupon/list';
@@ -61,6 +63,7 @@ class AppConstants {
   static const String SET_MENU_URI = '/api/v1/products/set-menu';
   static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
   static const String ADD_CARD_URI = '/api/v1/customer/add-card';
+  static const String CARDS_URI = '/api/v1/customer/cards/';
 
   // Shared Key
   static const String THEME = 'theme';

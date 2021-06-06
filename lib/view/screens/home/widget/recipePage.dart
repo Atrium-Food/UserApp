@@ -174,7 +174,7 @@ class RecipePage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                             builder: (context) => ProductReviewScreen(
-                                  product: product,
+                                  productID: product.id,
                                 )));
                   },
                   child: Container(

@@ -327,7 +327,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       Provider.of<CartProvider>(context, listen: false).clearCartList();
       Provider.of<OrderProvider>(context, listen: false).stopLoader();
 
-      MyNotification.scheduleNotification(flutterLocalNotificationsPlugin,"id",'Title',"body",orderID,addressID.toString());
+      MyNotification.scheduleNotification(flutterLocalNotificationsPlugin,"id",'Title',"body",orderID);
       if(_isCashOnDeliveryActive && Provider.of<OrderProvider>(context, listen: false).paymentMethodIndex == 0) {
         Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderSuccessfulScreen(orderID: orderID, status: 0, addressID: addressID)));
       }else {

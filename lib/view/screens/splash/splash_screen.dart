@@ -11,6 +11,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter_restaurant/view/screens/language/choose_language_screen.dart';
+import 'package:flutter_restaurant/view/screens/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -70,7 +71,7 @@ class _SplashScreenState extends State<SplashScreen> {
             await Provider.of<WishListProvider>(context, listen: false).initWishList(context);
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashboardScreen()));
           } else {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => LoginScreen()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => OnBoardingScreen()));
           }
         });
       }

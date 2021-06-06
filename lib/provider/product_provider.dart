@@ -58,6 +58,15 @@ class ProductProvider extends ChangeNotifier {
     }
   }
 
+  Future<Product> getProductDetails(String productID) async {
+    ApiResponse apiResponse = await productRepo.searchProduct(productID);
+    if (apiResponse.response != null && apiResponse.response.statusCode == 200){
+      Product product=Product.fromJson(apiResponse.response.data);
+      return product;
+    } else {
+      return null;
+    }
+  }
   void showBottomLoader() {
     _isLoading = true;
     notifyListeners();
