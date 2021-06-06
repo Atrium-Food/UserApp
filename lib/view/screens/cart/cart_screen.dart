@@ -113,10 +113,10 @@ class CartScreen extends StatelessWidget {
                             Expanded(
                               child: TextField(
                                 controller: _couponController,
-                                style: rubikRegular,
+                                style: robotoRegular,
                                 decoration: InputDecoration(
                                     hintText: getTranslated('enter_promo_code', context),
-                                    hintStyle: rubikRegular.copyWith(color: ColorResources.getHintColor(context)),
+                                    hintStyle: robotoRegular.copyWith(color: ColorResources.getHintColor(context)),
                                     isDense: true,
                                     filled: true,
                                     enabled: coupon.discount == 0,
@@ -167,7 +167,7 @@ class CartScreen extends StatelessWidget {
                                 ),
                                 child: coupon.discount <= 0 ? !coupon.isLoading ? Text(
                                   getTranslated('apply', context),
-                                  style: rubikMedium.copyWith(color: Colors.white),
+                                  style: robotoMedium.copyWith(color: Colors.white),
                                 ) : CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)) : Icon(Icons.clear, color: Colors.white),
                               ),
                             ),
@@ -178,26 +178,26 @@ class CartScreen extends StatelessWidget {
                     SizedBox(height: 20),
 
                     // Order type
-                    // Text(getTranslated('delivery_option', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    // Text(getTranslated('delivery_option', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     // DeliveryOptionButton(value: 'delivery', title: getTranslated('delivery', context)),
                     // DeliveryOptionButton(value: 'take_away', title: getTranslated('take_away', context)),
 
                     // Total
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text('Order Price', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,fontWeight: FontWeight.w500)),
-                      Text(PriceConverter.convertPrice(context, _itemPrice+_addOns), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,fontWeight: FontWeight.w500)),
+                      Text('Order Price', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,fontWeight: FontWeight.w500)),
+                      Text(PriceConverter.convertPrice(context, _itemPrice+_addOns), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,fontWeight: FontWeight.w500)),
                     ]),
                     SizedBox(height: 10),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text('Taxes', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text('(+) ${PriceConverter.convertPrice(context, _tax)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text('Taxes', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text('(+) ${PriceConverter.convertPrice(context, _tax)}', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     ]),
                     // SizedBox(height: 10),
 
                     // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    //   Text(getTranslated('addons', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    //   Text('(+) ${PriceConverter.convertPrice(context, _addOns)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text(getTranslated('addons', context), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text('(+) ${PriceConverter.convertPrice(context, _addOns)}', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     // ]),
 
                     // Padding(
@@ -206,29 +206,29 @@ class CartScreen extends StatelessWidget {
                     // ),
 
                     // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    //   Text(getTranslated('subtotal', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    //   Text(PriceConverter.convertPrice(context, _subTotal), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text(getTranslated('subtotal', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text(PriceConverter.convertPrice(context, _subTotal), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     // ]),
                     SizedBox(height: 13),
 
                     // Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    //   Text(getTranslated('discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                    //   Text('(-) ${PriceConverter.convertPrice(context, _discount)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text(getTranslated('discount', context), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                    //   Text('(-) ${PriceConverter.convertPrice(context, _discount)}', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     // ]),
                     // SizedBox(height: 10),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('coupon_discount', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text(getTranslated('coupon_discount', context), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                       Text(
                         '(-) ${PriceConverter.convertPrice(context, Provider.of<CouponProvider>(context).discount)}',
-                        style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+                        style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                       ),
                     ]),
                     SizedBox(height: 13),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('delivery_fee', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                      Text('(+) ${PriceConverter.convertPrice(context, deliveryCharge)}', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text(getTranslated('delivery_fee', context), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      Text('(+) ${PriceConverter.convertPrice(context, deliveryCharge)}', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                     ]),
 
                     Padding(
@@ -240,12 +240,12 @@ class CartScreen extends StatelessWidget {
                     ),
 
                     Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                      Text(getTranslated('total_amount', context), style: rubikMedium.copyWith(
+                      Text(getTranslated('total_amount', context), style: robotoMedium.copyWith(
                         fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE,
                       )),
                       Text(
                         PriceConverter.convertPrice(context, _total),
-                        style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                        style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                       ),
                     ]),
 

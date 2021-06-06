@@ -54,12 +54,23 @@ class RecipePage extends StatelessWidget {
                 children: [
                   Expanded(
                     child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
                       child: FadeInImage.assetNetwork(
                         placeholder: Images.placeholder_rectangle,
                         image:
                             '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
+                        imageErrorBuilder: (BuildContext context,
+                            Object exception, StackTrace stackTrace) {
+                          return Image.asset(
+                            Images.placeholder_image,
+                            fit: BoxFit.contain,
+                            height: 180,
+                            width: MediaQuery.of(context).size.width * 0.9,
+                          );
+                        },
                         height: 180,
-                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        fit: BoxFit.cover,
                       ),
                     ),
                     flex: 1,
@@ -90,7 +101,7 @@ class RecipePage extends StatelessWidget {
                       ),
                       child: Text(
                         'Cooking Support',
-                        style: rubikMedium.copyWith(
+                        style: robotoMedium.copyWith(
                           fontSize: 13,
                           color: ColorResources.COLOR_PRIMARY,
                         ),
@@ -101,7 +112,7 @@ class RecipePage extends StatelessWidget {
               ),
               Text(
                 'Directions',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                   color: ColorResources.getAccentColor(context),
                   fontSize: 24.0,
                   fontWeight: FontWeight.w600,
@@ -149,9 +160,8 @@ class RecipePage extends StatelessWidget {
                           radius: 12,
                           child: Text(
                             '${index + 1}',
-                            style: rubikRegular.copyWith(
-                                color: ColorResources.getAccentColor(context),
-                                fontSize: 13),
+                            style: robotoRegular.copyWith(
+                                color: Colors.black, fontSize: 13),
                           ),
                         ),
                         SizedBox(
@@ -195,7 +205,7 @@ class RecipePage extends StatelessWidget {
                     ),
                     child: Text(
                       'Write a review',
-                      style: rubikRegular.copyWith(
+                      style: robotoRegular.copyWith(
                           color: ColorResources.COLOR_PRIMARY, fontSize: 18),
                     ),
                   ),

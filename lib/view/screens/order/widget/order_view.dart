@@ -67,19 +67,19 @@ class OrderView extends StatelessWidget {
                       Expanded(
                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                           Row(children: [
-                            Text('${getTranslated('order_id', context)}:', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+                            Text('${getTranslated('order_id', context)}:', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
                             SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                            Text(orderList[index].id.toString(), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+                            Text(orderList[index].id.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
                             SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             Expanded(child: orderList[index].orderType == 'take_away' ? Text(
                               '(${getTranslated('take_away', context)})',
-                              style: rubikMedium.copyWith(color: Theme.of(context).primaryColor),
+                              style: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
                             ) : SizedBox()),
                           ]),
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           Text(
                             '${orderList[index].detailsCount} ${getTranslated( orderList[index].detailsCount > 1 ? 'items' : 'item', context)}',
-                            style: rubikRegular.copyWith(color: ColorResources.COLOR_GREY),
+                            style: robotoRegular.copyWith(color: ColorResources.COLOR_GREY),
                           ),
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           Row(children: [
@@ -87,7 +87,7 @@ class OrderView extends StatelessWidget {
                             SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             Text(
                               '${orderList[index].orderStatus[0].toUpperCase()}${orderList[index].orderStatus.substring(1).replaceAll('_', ' ')}',
-                              style: rubikRegular.copyWith(color: ColorResources.COLOR_PRIMARY),
+                              style: robotoRegular.copyWith(color: ColorResources.COLOR_PRIMARY),
                             ),
                           ]),
                         ]),

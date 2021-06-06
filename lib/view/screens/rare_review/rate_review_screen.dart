@@ -56,8 +56,8 @@ class _RateReviewScreenState extends State<RateReviewScreen> with TickerProvider
             labelColor: Theme.of(context).textTheme.bodyText1.color,
             indicatorColor: ColorResources.COLOR_PRIMARY,
             indicatorWeight: 3,
-            unselectedLabelStyle: rubikRegular.copyWith(color: ColorResources.COLOR_HINT, fontSize: Dimensions.FONT_SIZE_SMALL),
-            labelStyle: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+            unselectedLabelStyle: robotoRegular.copyWith(color: ColorResources.COLOR_HINT, fontSize: Dimensions.FONT_SIZE_SMALL),
+            labelStyle: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
             tabs: widget.deliveryMan != null ? [
               Tab(text: getTranslated(widget.orderDetailsList.length > 1 ? 'items' : 'item', context)),
               Tab(text: getTranslated('delivery_man', context)),

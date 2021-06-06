@@ -24,7 +24,7 @@ class OrderProvider extends ChangeNotifier {
   bool _showCancelled = false;
   DeliveryManModel _deliveryManModel;
   String _orderType = 'delivery';
-  int _branchIndex = 0;
+  // int _branchIndex = 0;
 
   List<OrderModel> get runningOrderList => _runningOrderList;
   List<OrderModel> get historyOrderList => _historyOrderList;
@@ -37,7 +37,7 @@ class OrderProvider extends ChangeNotifier {
   bool get showCancelled => _showCancelled;
   DeliveryManModel get deliveryManModel => _deliveryManModel;
   String get orderType => _orderType;
-  int get branchIndex => _branchIndex;
+  // int get branchIndex => _branchIndex;
 
   Future<void> getOrderList(BuildContext context) async {
     ApiResponse apiResponse = await orderRepo.getOrderList();
@@ -158,7 +158,7 @@ class OrderProvider extends ChangeNotifier {
 
   void clearPrevData() {
     _addressIndex = -1;
-    _branchIndex = 0;
+    // _branchIndex = 0;
     _paymentMethodIndex = 0;
   }
 
@@ -216,7 +216,7 @@ class OrderProvider extends ChangeNotifier {
   }
 
   void setBranchIndex(int index) {
-    _branchIndex = index;
+    // _branchIndex = index;
     _addressIndex = -1;
     notifyListeners();
   }

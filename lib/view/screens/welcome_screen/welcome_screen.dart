@@ -63,8 +63,8 @@ class WelcomeScreen extends StatelessWidget {
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => DashboardScreen()));
             },
             child: RichText(text: TextSpan(children: [
-              TextSpan(text: '${getTranslated('login_as_a', context)} ', style: rubikRegular.copyWith(color: ColorResources.getGreyColor(context))),
-              TextSpan(text: getTranslated('guest', context), style: rubikMedium.copyWith(color: Theme.of(context).textTheme.bodyText1.color)),
+              TextSpan(text: '${getTranslated('login_as_a', context)} ', style: robotoRegular.copyWith(color: ColorResources.getGreyColor(context))),
+              TextSpan(text: getTranslated('guest', context), style: robotoMedium.copyWith(color: Theme.of(context).textTheme.bodyText1.color)),
             ])),
           ),
         ],

@@ -26,7 +26,7 @@ class NutrientValues extends StatelessWidget {
         child: AppBar(
           title: Text(
             'Nutritional Values',
-            style: rubikMedium.copyWith(
+            style: robotoMedium.copyWith(
               fontWeight: FontWeight.w600,
               fontSize: 20,
               color: ColorResources.getAccentColor(context),
@@ -79,7 +79,7 @@ class NutrientValues extends StatelessWidget {
                         children: [
                           Text(
                             'Nutritional Score',
-                            style: rubikMedium,
+                            style: robotoMedium,
                           ),
                           SizedBox(
                             height: 15,
@@ -136,7 +136,7 @@ class NutrientValues extends StatelessWidget {
                         progressColor: ColorResources.getPrimaryColor(context),
                         center: Text(
                           '7.4',
-                          style: rubikMedium.copyWith(
+                          style: robotoMedium.copyWith(
                               color: ColorResources.getPrimaryColor(context),
                               fontSize: 30),
                         ),
@@ -149,7 +149,7 @@ class NutrientValues extends StatelessWidget {
                 ),
                 Text(
                   'Nutritional Indices',
-                  style: rubikMedium.copyWith(fontSize: 20),
+                  style: robotoMedium.copyWith(fontSize: 20),
                 ),
                 Center(
                   child: PieChartSample3(),
@@ -205,7 +205,7 @@ class NutrientValues extends StatelessWidget {
                 ),
                 Text(
                   'Food Suggestion',
-                  style: rubikMedium.copyWith(fontSize: 20),
+                  style: robotoMedium.copyWith(fontSize: 20),
                 ),
                 SizedBox(
                   height: 20,
@@ -229,7 +229,7 @@ class NutrientValues extends StatelessWidget {
                     child: Text(
                       'Pair this dish with a vegetable gourmet filled with fibers and low carbohydrates inorder to make a perfect meal good enough for your tummy and full of protein.',
                       maxLines: 20,
-                      style: rubikRegular,
+                      style: robotoRegular,
                     ),
                   ),
                 ),
@@ -252,7 +252,7 @@ class NutrientValues extends StatelessWidget {
         children: [
           Text(
             nutrient,
-            style: rubikMedium.copyWith(color: ColorResources.COLOR_BLACK),
+            style: robotoMedium,
           ),
           Expanded(
             child: Row(
@@ -260,7 +260,7 @@ class NutrientValues extends StatelessWidget {
               children: [
                 Text(
                   mass.toString(),
-                  style: rubikMedium.copyWith(color: Colors.grey),
+                  style: robotoMedium.copyWith(color: Colors.grey),
                 ),
                 SizedBox(
                   width: 20,
@@ -295,11 +295,11 @@ class NutrientValues extends StatelessWidget {
 // children: [
 // Text(
 // 'Energy',
-// style: rubikMedium,
+// style: robotoMedium,
 // ),
 // Text(
 // '1883 KJ',
-// style: rubikMedium,
+// style: robotoMedium,
 // ),
 // ],
 // )

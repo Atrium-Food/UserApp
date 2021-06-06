@@ -11,7 +11,7 @@ class PlaceOrderBody {
   String _paymentMethod;
   String _orderNote;
   String _couponCode;
-  int _branchId;
+  // int _branchId;
 
   PlaceOrderBody(
       {@required List<Cart> cart,
@@ -22,7 +22,7 @@ class PlaceOrderBody {
         @required int deliveryAddressId,
         @required String orderType,
         @required String paymentMethod,
-        @required int branchId,
+        // @required int branchId,
         @required String orderNote}) {
     this._cart = cart;
     this._couponDiscountAmount = couponDiscountAmount;
@@ -33,7 +33,7 @@ class PlaceOrderBody {
     this._paymentMethod = paymentMethod;
     this._orderNote = orderNote;
     this._couponCode = couponCode;
-    this._branchId = branchId;
+    // this._branchId = branchId;
   }
 
   List<Cart> get cart => _cart;
@@ -45,7 +45,7 @@ class PlaceOrderBody {
   String get paymentMethod => _paymentMethod;
   String get orderNote => _orderNote;
   String get couponCode => _couponCode;
-  int get branchId => _branchId;
+  // int get branchId => _branchId;
 
   PlaceOrderBody.fromJson(Map<String, dynamic> json) {
     if (json['cart'] != null) {
@@ -62,7 +62,7 @@ class PlaceOrderBody {
     _paymentMethod = json['payment_method'];
     _orderNote = json['order_note'];
     _couponCode = json['coupon_code'];
-    _branchId = json['branch_id'];
+    // _branchId = json['branch_id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -78,7 +78,7 @@ class PlaceOrderBody {
     data['payment_method'] = this._paymentMethod;
     data['order_note'] = this._orderNote;
     data['coupon_code'] = this._couponCode;
-    data['branch_id'] = this._branchId;
+    // data['branch_id'] = this._branchId;
     return data;
   }
 }

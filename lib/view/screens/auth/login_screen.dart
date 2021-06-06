@@ -79,7 +79,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Welcome',
                     maxLines: 2,
-                    style: rubikBold.copyWith(
+                    style: robotoBold.copyWith(
                         fontSize: 35,
                         color: Colors.white,
                         fontWeight: FontWeight.w600),
@@ -87,7 +87,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   Text(
                     'Back!',
                     maxLines: 2,
-                    style: rubikBold.copyWith(
+                    style: robotoBold.copyWith(
                         fontSize: 35,
                         color: Colors.white,
                         fontWeight: FontWeight.w600),
@@ -108,7 +108,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     getTranslated('login', context),
-                    style: rubikBold.copyWith(
+                    style: robotoBold.copyWith(
                         fontSize: 25,
                         color: Colors.white,
                         fontWeight: FontWeight.w600),

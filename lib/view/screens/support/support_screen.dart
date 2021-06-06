@@ -24,17 +24,17 @@ class SupportScreen extends StatelessWidget {
 
             // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             //   Icon(Icons.location_on, color: Theme.of(context).primaryColor, size: 25),
-            //   Text(getTranslated('restaurant_address', context), style: rubikMedium),
+            //   Text(getTranslated('restaurant_address', context), style: robotoMedium),
             // ]),
             // SizedBox(height: 10),
             Text(
               'How can we help you?',
-              style: rubikMedium,
+              style: robotoMedium,
               textAlign: TextAlign.center,
             ),
             Text(
               'Feel free to ask help from our expert chefs',
-              style: rubikRegular,
+              style: robotoRegular,
               textAlign: TextAlign.center,
             ),
             // Divider(thickness: 2),
@@ -60,7 +60,7 @@ class SupportScreen extends StatelessWidget {
                       ),
                       Text(
                         'Call us',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: Dimensions.FONT_SIZE_DEFAULT),
                       ),
                     ],
@@ -91,7 +91,7 @@ class SupportScreen extends StatelessWidget {
                       ),
                       Text(
                         'Call us',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: Dimensions.FONT_SIZE_DEFAULT),
                       ),
                     ],

@@ -27,7 +27,7 @@ class MessageBubble extends StatelessWidget {
       children: [
         addDate ? Padding(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-          child: Align(alignment: Alignment.center, child: Text(_date, style: rubikMedium, textAlign: TextAlign.center)),
+          child: Align(alignment: Alignment.center, child: Text(_date, style: robotoMedium, textAlign: TextAlign.center)),
         ) : SizedBox(),
         Padding(
           padding: isMe ?  EdgeInsets.fromLTRB(50, 5, 10, 5) : EdgeInsets.fromLTRB(10, 5, 50, 5),
@@ -55,7 +55,7 @@ class MessageBubble extends StatelessWidget {
 
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: Dimensions.PADDING_SIZE_SMALL),
-                              child: Text(isMe ? chat.message : chat.reply, style: rubikRegular.copyWith(color: isMe ? Theme.of(context).accentColor
+                              child: Text(isMe ? chat.message : chat.reply, style: robotoRegular.copyWith(color: isMe ? Theme.of(context).accentColor
                                   : Theme.of(context).textTheme.bodyText1.color)),
                             ),
 
@@ -79,7 +79,7 @@ class MessageBubble extends StatelessWidget {
               ),
 
               SizedBox(height: 1),
-              Text(dateTime, style: rubikRegular.copyWith(fontSize: 8, color: ColorResources.COLOR_GREY_BUNKER)),
+              Text(dateTime, style: robotoRegular.copyWith(fontSize: 8, color: ColorResources.COLOR_GREY_BUNKER)),
             ],
           ),
         ),

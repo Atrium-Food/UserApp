@@ -149,7 +149,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       Center(
                           child: Text(
                             '${profileProvider.userInfoModel.fName} ${profileProvider.userInfoModel.lName}',
-                            style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                            style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                           )),
 
                       SizedBox(height: 28),

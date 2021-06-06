@@ -61,7 +61,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               Text(
                 'Add Card',
-                style: rubikRegular.copyWith(fontSize: 25),
+                style: robotoRegular.copyWith(fontSize: 25),
               ),
               SizedBox(
                 height: 20,
@@ -90,7 +90,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         SizedBox(height: 10,),
                         Text(
                           'Add New Credit/Debit Card',
-                          style: rubikMedium.copyWith(fontSize: 15),
+                          style: robotoMedium.copyWith(fontSize: 15),
                         ),
                         SizedBox(
                           height: 20,

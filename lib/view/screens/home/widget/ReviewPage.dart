@@ -21,7 +21,7 @@ class ReviewPage extends StatelessWidget {
           Center(
             child: Text(
                 '${product.rating != null ? double.parse(product.rating.average).toStringAsFixed(1) : 0.0}',
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                     color: ColorResources.getAccentColor(context),
                     fontSize: 70)),
           ),
@@ -52,7 +52,7 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Excellent',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_SMALL,
                     color: ColorResources.getGreyBunkerColor(context)),
               ),
@@ -75,7 +75,7 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Good',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_SMALL,
                     color: ColorResources.getGreyBunkerColor(context)),
               ),
@@ -98,7 +98,7 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Average',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_SMALL,
                     color: ColorResources.getGreyBunkerColor(context)),
               ),
@@ -120,7 +120,7 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Below Average',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_SMALL,
                     color: ColorResources.getGreyBunkerColor(context)),
               ),
@@ -142,7 +142,7 @@ class ReviewPage extends StatelessWidget {
               Text(
                 'Poor',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                     fontSize: Dimensions.FONT_SIZE_SMALL,
                     color: ColorResources.getGreyBunkerColor(context)),
               ),

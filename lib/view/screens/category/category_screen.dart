@@ -45,7 +45,7 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                 // backgroundColor: Theme.of(context).primaryColor,
                 leading: IconButton(icon: Icon(Icons.chevron_left, color: ColorResources.COLOR_WHITE), onPressed: () => Navigator.pop(context)),
                 flexibleSpace: FlexibleSpaceBar(
-                  title: Text(widget.categoryModel.name, style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE, color: Colors.white)),
+                  title: Text(widget.categoryModel.name, style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE, color: Colors.white)),
                   titlePadding: EdgeInsets.only(
                     bottom: 54 + (MediaQuery.of(context).padding.top/2),
                     left: 50,
@@ -82,7 +82,7 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text("Veg",style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
+                              Text("Veg",style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
                               Switch(
                                 activeColor: ColorResources.getPrimaryColor(context),
                                   value: veg,

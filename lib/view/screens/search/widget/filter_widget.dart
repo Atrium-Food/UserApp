@@ -137,7 +137,7 @@ class FilterWidget extends StatelessWidget {
                             child: Text(
                               category.categoryList[index].name,
                               textAlign: TextAlign.center,
-                              style: rubikMedium.copyWith(
+                              style: robotoMedium.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
                                   color: category.selectCategory == index ? Colors.white : ColorResources.getHintColor(context)),
                               maxLines: 1,

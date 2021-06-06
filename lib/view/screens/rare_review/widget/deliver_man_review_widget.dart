@@ -42,7 +42,7 @@ class DeliveryManReviewWidget extends StatelessWidget {
             child: Column(children: [
               Text(
                 getTranslated('rate_his_service', context),
-                style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
               SizedBox(
@@ -71,7 +71,7 @@ class DeliveryManReviewWidget extends StatelessWidget {
 
               Text(
                 getTranslated('share_your_opinion', context),
-                style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
               ),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
               CustomTextField(

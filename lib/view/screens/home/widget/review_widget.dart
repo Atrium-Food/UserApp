@@ -43,7 +43,7 @@ class ReviewWidget extends StatelessWidget {
             height: 5,
           ),
           Text(review.comment,
-              style: rubikRegular.copyWith(color: ColorResources.getGrayColor(context))),
+              style: robotoRegular.copyWith(color: ColorResources.getGrayColor(context))),
         ],
       ),
     );

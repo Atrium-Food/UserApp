@@ -70,22 +70,22 @@ class _MapWidgetState extends State<MapWidget> {
                   Expanded(
                     child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
 
-                      Text(widget.address.addressType, style: rubikRegular.copyWith(
+                      Text(widget.address.addressType, style: robotoRegular.copyWith(
                         fontSize: Dimensions.FONT_SIZE_SMALL, color: ColorResources.getGreyBunkerColor(context),
                       )),
 
-                      Text(widget.address.address, style: rubikMedium),
+                      Text(widget.address.address, style: robotoMedium),
 
                     ]),
                   ),
                 ]),
 
-                Text('- ${widget.address.contactPersonName}', style: rubikMedium.copyWith(
+                Text('- ${widget.address.contactPersonName}', style: robotoMedium.copyWith(
                   color: Theme.of(context).primaryColor,
                   fontSize: Dimensions.FONT_SIZE_LARGE,
                 )),
 
-                Text('- ${widget.address.contactPersonNumber}', style: rubikRegular),
+                Text('- ${widget.address.contactPersonNumber}', style: robotoRegular),
 
               ],
             ),

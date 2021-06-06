@@ -55,7 +55,7 @@ class AddressScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  child: Text('Saved Addresses', style: rubikRegular.copyWith(fontSize: 25,color: ColorResources.getAccentColor(context)),),
+                  child: Text('Saved Addresses', style: robotoRegular.copyWith(fontSize: 25,color: ColorResources.getAccentColor(context)),),
                 ),
                 Expanded(
                   child: ListView.builder(

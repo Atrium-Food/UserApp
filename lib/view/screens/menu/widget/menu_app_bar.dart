@@ -19,7 +19,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: ColorResources.getThemeColor(context),
       // title: Text(title,
-      //     style: rubikMedium.copyWith(
+      //     style: robotoMedium.copyWith(
       //         fontSize: Dimensions.FONT_SIZE_LARGE,
       //         color: Theme.of(context).textTheme.bodyText1.color)),
       centerTitle: true,
@@ -47,7 +47,7 @@ class MenuAppBar extends StatelessWidget implements PreferredSizeWidget {
 }
 
 // title: Text(title,
-// style: rubikMedium.copyWith(
+// style: robotoMedium.copyWith(
 // fontSize: Dimensions.FONT_SIZE_LARGE,
 // color: Theme.of(context).textTheme.bodyText1.color)),
 // centerTitle: true,

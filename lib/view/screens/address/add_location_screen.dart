@@ -39,6 +39,9 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
 
   final FocusNode _numberNode = FocusNode();
 
+  String _addressError='';
+  String _nameError='';
+  String _numberError='';
   bool newAddress=false;
   @override
   Widget build(BuildContext context) {
@@ -247,6 +250,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                   inputType: TextInputType.streetAddress,
                                   inputAction: TextInputAction.next,
                                   focusNode: _addressNode,
+                                  errorMessage: _addressError,
                                   nextFocus: _nameNode,
                                   controller: _locationController,
                                 ),
@@ -265,6 +269,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                   controller: _contactPersonNameController,
                                   focusNode: _nameNode,
                                   nextFocus: _numberNode,
+                                  errorMessage: _numberError,
                                   inputAction: TextInputAction.next,
                                   capitalization: TextCapitalization.words,
                                 ),
@@ -281,6 +286,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                   isShowBorder: true,
                                   inputType: TextInputType.phone,
                                   inputAction: TextInputAction.done,
+                                  errorMessage: _numberError,
                                   focusNode: _numberNode,
                                   controller: _contactPersonNumberController,
                                 ),
@@ -289,131 +295,130 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                 SizedBox(
                                   height: Dimensions.PADDING_SIZE_DEFAULT,
                                 ),
-
+                                locationProvider.addressStatusMessage != null
+                                    ? Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    locationProvider.addressStatusMessage.length > 0 ? CircleAvatar(backgroundColor: Colors.green, radius: 5) : SizedBox.shrink(),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        locationProvider.addressStatusMessage ?? "",
+                                        style:
+                                        Theme.of(context).textTheme.headline2.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL, color: Colors.green, height: 1),
+                                      ),
+                                    )
+                                  ],
+                                )
+                                    : Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    locationProvider.errorMessage.length > 0
+                                        ? CircleAvatar(backgroundColor: ColorResources.getPrimaryColor(context), radius: 5)
+                                        : SizedBox.shrink(),
+                                    SizedBox(width: 8),
+                                    Expanded(
+                                      child: Text(
+                                        locationProvider.errorMessage ?? "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .headline2
+                                            .copyWith(fontSize: Dimensions.FONT_SIZE_SMALL, color: ColorResources.getPrimaryColor(context), height: 1),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Container(
+                                  height: 50.0,
+                                  padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,right: Dimensions.PADDING_SIZE_SMALL),
+                                  child: !locationProvider.isLoading ? CustomButton(
+                                    btnTxt: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('save_location', context),
+                                    onTap: locationProvider.loading ? null : () async {
+                                      /// branch logic
+                                      // List<Branches> _branches = Provider.of<SplashProvider>(context, listen: false).configModel.branches;
+                                      // bool _isAvailable = _branches.length == 1 && (_branches[0].latitude == null || _branches[0].latitude.isEmpty);
+                                      // if(!_isAvailable) {
+                                      //   for (Branches branch in _branches) {
+                                      //     double _distance = Geolocator.distanceBetween(
+                                      //       double.parse(branch.latitude), double.parse(branch.longitude),
+                                      //       locationProvider.position.latitude, locationProvider.position.longitude,
+                                      //     ) / 1000;
+                                      //     if (_distance < branch.coverage) {
+                                      //       _isAvailable = true;
+                                      //       break;
+                                      //     }
+                                      //   }
+                                      // }
+                                      // if(!_isAvailable) {
+                                      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      //     content: Text(getTranslated('service_is_not_available', context)),
+                                      //     backgroundColor: Colors.red,
+                                      //   ));
+                                      // }else {
+                                      String _latitude;
+                                      String _longitude;
+                                      print("Add Address");
+                                      print(locationProvider.newAddress);
+                                      if(!locationProvider.newAddress && !widget.isEnableUpdate) {
+                                        print("Null latitude");
+                                        LatLng latLng= await Provider.of<LocationProvider>(context,listen: false).getLatLongfromAddress(_locationController.text);
+                                        _latitude=latLng.latitude.toString();
+                                        _longitude=latLng.longitude.toString();
+                                      } else if(newAddress){
+                                        _latitude=locationProvider.position.latitude.toString();
+                                        _longitude=locationProvider.position.longitude.toString();
+                                      } else if(widget.isEnableUpdate){
+                                        _latitude=widget.address.latitude;
+                                        _longitude=widget.address.longitude;
+                                      }
+                                      AddressModel addressModel = AddressModel(
+                                        addressType: locationProvider.getAllAddressType[locationProvider.selectAddressIndex],
+                                        contactPersonName: _contactPersonNameController.text ?? '',
+                                        contactPersonNumber: _contactPersonNumberController.text ?? '',
+                                        address: _locationController.text ?? '',
+                                        latitude: _latitude,
+                                        longitude: _longitude,
+                                        // latitude: isEnableUpdate ? locationProvider.position.latitude.toString() ?? address.latitude
+                                        //     : locationProvider.position.latitude.toString() ?? '',
+                                        // longitude: locationProvider.position.longitude.toString() ?? '',
+                                      );
+                                      print(addressModel.toJson());
+                                      Provider.of<LocationProvider>(context,listen: false).clearLatLng();
+                                      if (widget.isEnableUpdate) {
+                                        addressModel.id = widget.address.id;
+                                        addressModel.userId = widget.address.userId;
+                                        addressModel.method = 'put';
+                                        locationProvider.updateAddress(context, addressModel: addressModel, addressId: addressModel.id).then((value) {});
+                                      } else {
+                                        locationProvider.addAddress(addressModel).then((value) {
+                                          if (value.isSuccess) {
+                                            if (widget.fromCheckout) {
+                                              Provider.of<LocationProvider>(context, listen: false).initAddressList(context);
+                                              Provider.of<OrderProvider>(context, listen: false).setAddressIndex(-1);
+                                              Navigator.pop(context);
+                                            } else {
+                                              // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), backgroundColor: Colors.green));
+                                              Navigator.pop(context);
+                                            }
+                                          } else {
+                                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), backgroundColor: Colors.red));
+                                          }
+                                        });
+                                      }
+                                      // }
+                                    },
+                                  )
+                                      : Center(
+                                      child: CircularProgressIndicator(
+                                        valueColor: new AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryColor(context)),
+                                      )),
+                                )
                               ],
                             ),
                           );
                         },
                       ),
-                      locationProvider.addressStatusMessage != null
-                          ? Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          locationProvider.addressStatusMessage.length > 0 ? CircleAvatar(backgroundColor: Colors.green, radius: 5) : SizedBox.shrink(),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              locationProvider.addressStatusMessage ?? "",
-                              style:
-                              Theme.of(context).textTheme.headline2.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL, color: Colors.green, height: 1),
-                            ),
-                          )
-                        ],
-                      )
-                          : Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          locationProvider.errorMessage.length > 0
-                              ? CircleAvatar(backgroundColor: ColorResources.getPrimaryColor(context), radius: 5)
-                              : SizedBox.shrink(),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: Text(
-                              locationProvider.errorMessage ?? "",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline2
-                                  .copyWith(fontSize: Dimensions.FONT_SIZE_SMALL, color: ColorResources.getPrimaryColor(context), height: 1),
-                            ),
-                          )
-                        ],
-                      ),
-                      Container(
-                        height: 50.0,
-                        padding: EdgeInsets.only(left:Dimensions.PADDING_SIZE_SMALL,right: Dimensions.PADDING_SIZE_SMALL),
-                        child: !locationProvider.isLoading ? CustomButton(
-                          btnTxt: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('save_location', context),
-                          onTap: locationProvider.loading ? null : () async {
 
-                            /// branch logic
-                            // List<Branches> _branches = Provider.of<SplashProvider>(context, listen: false).configModel.branches;
-                            // bool _isAvailable = _branches.length == 1 && (_branches[0].latitude == null || _branches[0].latitude.isEmpty);
-                            // if(!_isAvailable) {
-                            //   for (Branches branch in _branches) {
-                            //     double _distance = Geolocator.distanceBetween(
-                            //       double.parse(branch.latitude), double.parse(branch.longitude),
-                            //       locationProvider.position.latitude, locationProvider.position.longitude,
-                            //     ) / 1000;
-                            //     if (_distance < branch.coverage) {
-                            //       _isAvailable = true;
-                            //       break;
-                            //     }
-                            //   }
-                            // }
-                            // if(!_isAvailable) {
-                            //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            //     content: Text(getTranslated('service_is_not_available', context)),
-                            //     backgroundColor: Colors.red,
-                            //   ));
-                            // }else {
-                            String _latitude;
-                            String _longitude;
-                            print("Add Address");
-                            print(locationProvider.newAddress);
-                            if(!locationProvider.newAddress && !widget.isEnableUpdate) {
-                              print("Null latitude");
-                              LatLng latLng= await Provider.of<LocationProvider>(context,listen: false).getLatLongfromAddress(_locationController.text);
-                              _latitude=latLng.latitude.toString();
-                              _longitude=latLng.longitude.toString();
-                            } else if(newAddress){
-                              _latitude=locationProvider.position.latitude.toString();
-                              _longitude=locationProvider.position.longitude.toString();
-                            } else if(widget.isEnableUpdate){
-                              _latitude=widget.address.latitude;
-                              _longitude=widget.address.longitude;
-                            }
-                            AddressModel addressModel = AddressModel(
-                              addressType: locationProvider.getAllAddressType[locationProvider.selectAddressIndex],
-                              contactPersonName: _contactPersonNameController.text ?? '',
-                              contactPersonNumber: _contactPersonNumberController.text ?? '',
-                              address: _locationController.text ?? '',
-                              latitude: _latitude,
-                              longitude: _longitude,
-                              // latitude: isEnableUpdate ? locationProvider.position.latitude.toString() ?? address.latitude
-                              //     : locationProvider.position.latitude.toString() ?? '',
-                              // longitude: locationProvider.position.longitude.toString() ?? '',
-                            );
-                            print(addressModel.toJson());
-                            Provider.of<LocationProvider>(context,listen: false).clearLatLng();
-                            if (widget.isEnableUpdate) {
-                              addressModel.id = widget.address.id;
-                              addressModel.userId = widget.address.userId;
-                              addressModel.method = 'put';
-                              locationProvider.updateAddress(context, addressModel: addressModel, addressId: addressModel.id).then((value) {});
-                            } else {
-                              locationProvider.addAddress(addressModel).then((value) {
-                                if (value.isSuccess) {
-                                  if (widget.fromCheckout) {
-                                    Provider.of<LocationProvider>(context, listen: false).initAddressList(context);
-                                    Provider.of<OrderProvider>(context, listen: false).setAddressIndex(-1);
-                                    Navigator.pop(context);
-                                  } else {
-                                    // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), backgroundColor: Colors.green));
-                                    Navigator.pop(context);
-                                  }
-                                } else {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), backgroundColor: Colors.red));
-                                }
-                              });
-                            }
-                            // }
-                          },
-                        )
-                            : Center(
-                            child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(ColorResources.getPrimaryColor(context)),
-                            )),
-                      )
                     ],
                   ),
                 ),

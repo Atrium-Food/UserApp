@@ -63,7 +63,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
     _isLoggedIn = Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
     if(_isLoggedIn) {
-      _branches = Provider.of<SplashProvider>(context, listen: false).configModel.branches;
+      // _branches = Provider.of<SplashProvider>(context, listen: false).configModel.branches;
       Provider.of<LocationProvider>(context, listen: false).initAddressList(context);
       Provider.of<OrderProvider>(context, listen: false).clearPrevData();
       _isCashOnDeliveryActive = Provider.of<SplashProvider>(context, listen: false).configModel.cashOnDelivery == 'true';
@@ -84,85 +84,85 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                 children: [
                   Expanded(
                     child: ListView(physics: BouncingScrollPhysics(), children: [
-                      _branches.length > 1 ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          child: Text(getTranslated('select_branch', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
-                        ),
-
-                        SizedBox(
-                          height: 50,
-                          child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                            physics: BouncingScrollPhysics(),
-                            itemCount: _branches.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  order.setBranchIndex(index);
-                                  _setMarkers(index);
-                                },
-                                child: Container(
-                                  margin: EdgeInsets.only(right: Dimensions.PADDING_SIZE_SMALL),
-                                  padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL, horizontal: Dimensions.PADDING_SIZE_SMALL),
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    color: index == order.branchIndex ? Theme.of(context).primaryColor : ColorResources.getBackgroundColor(context),
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Text(_branches[index].name, maxLines: 1, overflow: TextOverflow.ellipsis, style: rubikMedium.copyWith(
-                                    color: index == order.branchIndex ? Colors.white : Theme.of(context).textTheme.bodyText1.color,
-                                  )),
-                                ),
-                              );
-                            },
-                          ),
-                        ),
-
-                        Container(
-                          height: 200,
-                          padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                          margin: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).accentColor,
-                          ),
-                          child: Stack(children: [
-                            GoogleMap(
-                              mapType: MapType.normal,
-                              initialCameraPosition: CameraPosition(target: LatLng(
-                                double.parse(_branches[0].latitude),
-                                double.parse(_branches[0].longitude),
-                              ), zoom: 18),
-                              zoomControlsEnabled: true,
-                              markers: _markers,
-                              onMapCreated: (GoogleMapController controller) async {
-                                await Geolocator.requestPermission();
-                                _mapController = controller;
-                                _loading = false;
-                                _setMarkers(0);
-                              },
-                            ),
-                            _loading ? Center(child: CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
-                            )) : SizedBox(),
-                          ]),
-                        ),
-                      ]) : SizedBox(),
+                      // _branches.length > 1 ? Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                      //   Padding(
+                      //     padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      //     child: Text(getTranslated('select_branch', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                      //   ),
+                      //
+                      //   SizedBox(
+                      //     height: 50,
+                      //     child: ListView.builder(
+                      //       scrollDirection: Axis.horizontal,
+                      //       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                      //       physics: BouncingScrollPhysics(),
+                      //       itemCount: _branches.length,
+                      //       itemBuilder: (context, index) {
+                      //         return InkWell(
+                      //           onTap: () {
+                      //             order.setBranchIndex(index);
+                      //             _setMarkers(index);
+                      //           },
+                      //           child: Container(
+                      //             margin: EdgeInsets.only(right: Dimensions.PADDING_SIZE_SMALL),
+                      //             padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL, horizontal: Dimensions.PADDING_SIZE_SMALL),
+                      //             alignment: Alignment.center,
+                      //             decoration: BoxDecoration(
+                      //               color: index == order.branchIndex ? Theme.of(context).primaryColor : ColorResources.getBackgroundColor(context),
+                      //               borderRadius: BorderRadius.circular(5),
+                      //             ),
+                      //             child: Text(_branches[index].name, maxLines: 1, overflow: TextOverflow.ellipsis, style: robotoMedium.copyWith(
+                      //               color: index == order.branchIndex ? Colors.white : Theme.of(context).textTheme.bodyText1.color,
+                      //             )),
+                      //           ),
+                      //         );
+                      //       },
+                      //     ),
+                      //   ),
+                      //
+                      //   Container(
+                      //     height: 200,
+                      //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                      //     margin: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
+                      //     alignment: Alignment.center,
+                      //     decoration: BoxDecoration(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //       color: Theme.of(context).accentColor,
+                      //     ),
+                      //     child: Stack(children: [
+                      //       GoogleMap(
+                      //         mapType: MapType.normal,
+                      //         initialCameraPosition: CameraPosition(target: LatLng(
+                      //           double.parse(_branches[0].latitude),
+                      //           double.parse(_branches[0].longitude),
+                      //         ), zoom: 18),
+                      //         zoomControlsEnabled: true,
+                      //         markers: _markers,
+                      //         onMapCreated: (GoogleMapController controller) async {
+                      //           await Geolocator.requestPermission();
+                      //           _mapController = controller;
+                      //           _loading = false;
+                      //           _setMarkers(0);
+                      //         },
+                      //       ),
+                      //       _loading ? Center(child: CircularProgressIndicator(
+                      //         valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor),
+                      //       )) : SizedBox(),
+                      //     ]),
+                      //   ),
+                      // ]) : SizedBox(),
 
                       // Address
                       widget.orderType != 'take_away' ? Column(children: [
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
                           child: Row(children: [
-                            Text(getTranslated('delivery_address', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                            Text(getTranslated('delivery_address', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                             Expanded(child: SizedBox()),
                             TextButton.icon(
                               onPressed: () => Navigator.push(context, MaterialPageRoute(builder: (_) => AddNewAddressScreen(fromCheckout: true))),
                               icon: Icon(Icons.add),
-                              label: Text(getTranslated('add', context), style: rubikRegular),
+                              label: Text(getTranslated('add', context), style: robotoRegular),
                             ),
                           ]),
                         ),
@@ -175,19 +175,19 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                             padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
                             itemCount: address.addressList.length,
                             itemBuilder: (context, index) {
-                              bool _isAvailable = _branches.length == 1 && (_branches[0].latitude == null || _branches[0].latitude.isEmpty);
-                              if(!_isAvailable) {
-                                double _distance = Geolocator.distanceBetween(
-                                  double.parse(_branches[order.branchIndex].latitude), double.parse(_branches[order.branchIndex].longitude),
-                                  double.parse(address.addressList[index].latitude), double.parse(address.addressList[index].longitude),
-                                ) / 1000;
-                                _isAvailable = _distance < _branches[order.branchIndex].coverage;
-                              }
+                              // bool _isAvailable = _branches.length == 1 && (_branches[0].latitude == null || _branches[0].latitude.isEmpty);
+                              // if(!_isAvailable) {
+                              //   double _distance = Geolocator.distanceBetween(
+                              //     double.parse(_branches[order.branchIndex].latitude), double.parse(_branches[order.branchIndex].longitude),
+                              //     double.parse(address.addressList[index].latitude), double.parse(address.addressList[index].longitude),
+                              //   ) / 1000;
+                              //   _isAvailable = _distance < _branches[order.branchIndex].coverage;
+                              // }
                               return InkWell(
                                 onTap: () {
-                                  if(_isAvailable) {
+                                  // if(_isAvailable) {
                                     order.setAddressIndex(index);
-                                  }
+                                  // }
                                 },
                                 child: Stack(children: [
                                   Container(
@@ -212,10 +212,10 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ),
                                       Expanded(
                                         child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                                          Text(address.addressList[index].addressType, style: rubikRegular.copyWith(
+                                          Text(address.addressList[index].addressType, style: robotoRegular.copyWith(
                                             fontSize: Dimensions.FONT_SIZE_SMALL, color: ColorResources.getGreyBunkerColor(context),
                                           )),
-                                          Text(address.addressList[index].address, style: rubikRegular, maxLines: 1, overflow: TextOverflow.ellipsis),
+                                          Text(address.addressList[index].address, style: robotoRegular, maxLines: 1, overflow: TextOverflow.ellipsis),
                                         ]),
                                       ),
                                       index == order.addressIndex ? Align(
@@ -224,18 +224,18 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                                       ) : SizedBox(),
                                     ]),
                                   ),
-                                  !_isAvailable ? Positioned(
-                                    top: 0, left: 0, bottom: 0, right: 20,
-                                    child: Container(
-                                      alignment: Alignment.center,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black.withOpacity(0.6)),
-                                      child: Text(
-                                        getTranslated('out_of_coverage_for_this_branch', context),
-                                        textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis,
-                                        style: rubikRegular.copyWith(color: Colors.white, fontSize: 10),
-                                      ),
-                                    ),
-                                  ) : SizedBox(),
+                                  // !_isAvailable ? Positioned(
+                                  //   top: 0, left: 0, bottom: 0, right: 20,
+                                  //   child: Container(
+                                  //     alignment: Alignment.center,
+                                  //     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black.withOpacity(0.6)),
+                                  //     child: Text(
+                                  //       getTranslated('out_of_coverage_for_this_branch', context),
+                                  //       textAlign: TextAlign.center, maxLines: 2, overflow: TextOverflow.ellipsis,
+                                  //       style: robotoRegular.copyWith(color: Colors.white, fontSize: 10),
+                                  //     ),
+                                  //   ),
+                                  // ) : SizedBox(),
                                 ]),
                               );
                             },
@@ -247,7 +247,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
 
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-                        child: Text(getTranslated('payment_method', context), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
+                        child: Text(getTranslated('payment_method', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
                       ),
                       _isCashOnDeliveryActive ? CustomCheckBox(title: getTranslated('cash_on_delivery', context), index: 0) : SizedBox(),
                       _isDigitalPaymentActive ? CustomCheckBox(title: getTranslated('digital_payment', context), index: _isCashOnDeliveryActive ? 1 : 0)
@@ -305,7 +305,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               paymentMethod: _isCashOnDeliveryActive ? order.paymentMethodIndex == 0 ? 'cash_on_delivery' : null : null,
                               couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null
                                   ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
-                              branchId: _branches[order.branchIndex].id,
+                              // branchId: _branches[order.branchIndex].id,
                             ), _callback,
                           );
                         }

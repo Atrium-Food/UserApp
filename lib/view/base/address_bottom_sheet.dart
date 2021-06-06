@@ -111,7 +111,7 @@ class AddressBottomSheet extends StatelessWidget {
                                                     address.addressList[index]
                                                         .addressType,
                                                     style:
-                                                        rubikRegular.copyWith(
+                                                        robotoRegular.copyWith(
                                                       fontSize: Dimensions
                                                           .FONT_SIZE_SMALL,
                                                       color: ColorResources
@@ -128,7 +128,7 @@ class AddressBottomSheet extends StatelessWidget {
                                             child: Text(
                                                 address
                                                     .addressList[index].address,
-                                                style: rubikRegular,
+                                                style: robotoRegular,
                                                 overflow:
                                                     TextOverflow.ellipsis),
                                           ),
@@ -208,7 +208,7 @@ class AddressBottomSheet extends StatelessWidget {
                                       isEnableUpdate: false,
                                     ))),
                         icon: Icon(Icons.add),
-                        label: Text('Add address', style: rubikRegular),
+                        label: Text('Add address', style: robotoRegular),
                       ),
                     ]),
                   ),

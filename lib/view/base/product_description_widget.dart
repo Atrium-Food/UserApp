@@ -120,7 +120,7 @@ class ProductDescriptionWidget extends StatelessWidget {
                   child: Text(
                       getTranslated('not_available_now_break', context),
                       textAlign: TextAlign.center,
-                      style: rubikRegular.copyWith(
+                      style: robotoRegular.copyWith(
                         color: Colors.white,
                         fontSize: 8,
                       )),
@@ -135,12 +135,12 @@ class ProductDescriptionWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(product.name,
-                      style: rubikMedium,
+                      style: robotoMedium,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis),
                   SizedBox(height: 5.0),
                   product.description!=null ? Text(product.description,
-                      style: rubikRegular.copyWith(fontSize: 12),
+                      style: robotoRegular.copyWith(fontSize: 12),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis):Text(''),
                 ]),
@@ -168,14 +168,14 @@ class ProductDescriptionWidget extends StatelessWidget {
             Text(
               '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
                   '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
-              style: rubikMedium.copyWith(
+              style: robotoMedium.copyWith(
                   fontSize: Dimensions.FONT_SIZE_SMALL),
             ),
             product.price > _discountedPrice
                 ? Text(
                 '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
                     '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                   color: ColorResources.COLOR_GREY,
                   decoration: TextDecoration.lineThrough,
                   fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
