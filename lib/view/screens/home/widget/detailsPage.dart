@@ -19,6 +19,7 @@ import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/nutrient_values.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -185,211 +186,364 @@ class DetailsPage extends StatelessWidget {
                 '“The Ultimate Thai Platter comes with a bunch of fresh meats and all the herbs and spices that you’ll ever need to cook your very own thai dish in your own kitchen.”',
                 maxLines: 20,
                 style: rubikRegular.copyWith(
+                  fontSize: 12.5,
                   height: 1.5,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE + 10),
 
-              //Details
-              Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Column(
                     children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.clock_solid,
-                              color: ColorResources.getAccentColor(context),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text('1 hour 45 mins',
-                                style: rubikRegular.copyWith(
-                                    color: ColorResources.getAccentColor(
-                                        context))),
-                          ],
-                        ),
+                      Text(
+                        'Cuisine',
+                        style: rubikRegular.copyWith(
+                            fontSize: 11, color: Colors.grey),
                       ),
                       SizedBox(
-                        width: 10.0,
+                        height: 5,
                       ),
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.fastfood,
-                              color: ColorResources.getAccentColor(context),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text('Server 2',
-                                style: rubikRegular.copyWith(
-                                    color:
-                                        ColorResources.getAccentColor(context)))
-                          ],
-                        ),
+                      SvgPicture.asset(Images.cuisine),
+                      SizedBox(
+                        height: 5,
                       ),
+                      Text('Thai Cuisine', style: TextStyle(fontSize: 11)),
                     ],
                   ),
-                  SizedBox(
-                    height: 21.0,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  Column(
                     children: [
-                      Expanded(
-                        child: Row(
-                          children: [
-                            Icon(
-                              CupertinoIcons.globe,
-                              color: ColorResources.getAccentColor(context),
-                            ),
-                            SizedBox(
-                              width: 5.0,
-                            ),
-                            Text('Thai Cuisine',
-                                style: rubikRegular.copyWith(
-                                    color: ColorResources.getAccentColor(
-                                        context))),
-                          ],
-                        ),
+                      Text(
+                        'Time',
+                        style: rubikRegular.copyWith(
+                            fontSize: 11, color: Colors.grey),
                       ),
                       SizedBox(
-                        width: 10.0,
+                        height: 5,
                       ),
-                      Expanded(
-                        child: Column(
-                          children: [
-                            Row(
-                              children: [
-                                Icon(
-                                  Icons.fireplace,
-                                  color: ColorResources.getAccentColor(context),
-                                ),
-                                SizedBox(
-                                  width: 5.0,
-                                ),
-                                Text('569 cal/serving',
-                                    style: rubikRegular.copyWith(
-                                        color: ColorResources.getAccentColor(
-                                            context))),
-                              ],
-                            ),
-                          ],
-                        ),
+                      Icon(CupertinoIcons.time),
+                      SizedBox(
+                        height: 5,
                       ),
+                      Text('1 hr 45 min', style: TextStyle(fontSize: 11)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Serves',
+                        style: rubikRegular.copyWith(
+                            fontSize: 11, color: Colors.grey),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      SvgPicture.asset(Images.serving),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text('2', style: TextStyle(fontSize: 11)),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        'Per Serving',
+                        style: rubikRegular.copyWith(
+                            fontSize: 11, color: Colors.grey),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      SvgPicture.asset(Images.hot),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text('590 cal', style: TextStyle(fontSize: 11)),
                     ],
                   ),
                 ],
               ),
 
+              // Column(
+              //   children: [
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         Expanded(
+              //           child: Row(
+              //             children: [
+              //               Icon(
+              //                 CupertinoIcons.clock_solid,
+              //                 color: ColorResources.getAccentColor(context),
+              //               ),
+              //               SizedBox(
+              //                 width: 5.0,
+              //               ),
+              //               Text('1 hour 45 mins',
+              //                   style: rubikRegular.copyWith(
+              //                       color: ColorResources.getAccentColor(
+              //                           context))),
+              //             ],
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: 10.0,
+              //         ),
+              //         Expanded(
+              //           child: Row(
+              //             children: [
+              //               SvgPicture.asset(Images.serving),
+              //               SizedBox(
+              //                 width: 5.0,
+              //               ),
+              //               Text('Server 2',
+              //                   style: rubikRegular.copyWith(
+              //                       color:
+              //                           ColorResources.getAccentColor(context)))
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(
+              //       height: 21.0,
+              //     ),
+              //     Row(
+              //       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //       children: [
+              //         Expanded(
+              //           child: Row(
+              //             children: [
+              //               SvgPicture.asset(Images.cuisine),
+              //               SizedBox(
+              //                 width: 5.0,
+              //               ),
+              //               Text('Thai Cuisine',
+              //                   style: rubikRegular.copyWith(
+              //                       color: ColorResources.getAccentColor(
+              //                           context))),
+              //             ],
+              //           ),
+              //         ),
+              //         SizedBox(
+              //           width: 10.0,
+              //         ),
+              //         Expanded(
+              //           child: Column(
+              //             children: [
+              //               Row(
+              //                 children: [
+              //                   SvgPicture.asset(Images.hot),
+              //                   SizedBox(
+              //                     width: 5.0,
+              //                   ),
+              //                   Text('569 cal/serving',
+              //                       style: rubikRegular.copyWith(
+              //                           color: ColorResources.getAccentColor(
+              //                               context))),
+              //                 ],
+              //               ),
+              //             ],
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
+
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE + 10),
 
-              Container(
-                padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(10)),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 2,
-                      blurRadius: 5,
-                      offset: Offset(0, 3), // changes position of shadow
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      children: [
-                        Text(
-                          'Nutritional Score',
-                          style: rubikMedium,
-                        ),
-                        SizedBox(
-                          height: 15,
-                        ),
-                        Row(
-                          children: [
-                            Text('Glycemic Index'),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 7, right: 7),
-                              decoration: BoxDecoration(
-                                color: ColorResources.getPrimaryColor(context),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
+              Card(
+                elevation: 3,
+                child: Container(
+                  padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    // boxShadow: [
+                    //   BoxShadow(
+                    //     color: Colors.grey.withOpacity(0.5),
+                    //     spreadRadius: 2,
+                    //     blurRadius: 5,
+                    //     offset: Offset(0, 3), // changes position of shadow
+                    //   ),
+                    // ],
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Nutritional Value',
+                            style: rubikMedium,
+                          ),
+                          SizedBox(
+                            height: 15,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Glycemic Index',
+                                style: TextStyle(fontSize: 10),
                               ),
-                              child: Text('9'),
-                            )
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 7, right: 7),
+                                decoration: BoxDecoration(
+                                  color:
+                                      ColorResources.getPrimaryColor(context),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Text(
+                                  '9',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 5,
+                              ),
+                              Text(
+                                'Glycemic Index',
+                                style: TextStyle(fontSize: 10),
+                              ),
+                              SizedBox(
+                                width: 3,
+                              ),
+                              Container(
+                                padding: EdgeInsets.only(left: 7, right: 7),
+                                decoration: BoxDecoration(
+                                  color:
+                                      ColorResources.getPrimaryColor(context),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(10)),
+                                ),
+                                child: Text(
+                                  '3',
+                                  style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          //   SizedBox(
+                          //     height: 10,
+                          //   ),
+                          //   Row(
+                          //     children: [
+                          //       Text('Glycemic Index'),
+                          //       SizedBox(
+                          //         width: 7,
+                          //       ),
+                          //       Container(
+                          //         padding: EdgeInsets.only(left: 7, right: 7),
+                          //         decoration: BoxDecoration(
+                          //           color:
+                          //               ColorResources.getPrimaryColor(context),
+                          //           borderRadius:
+                          //               BorderRadius.all(Radius.circular(10)),
+                          //         ),
+                          //         child: Text(
+                          //           '3',
+                          //           style: TextStyle(
+                          //             color: Colors.white,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                        ],
+                      ),
+
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            CircularPercentIndicator(
+                              lineWidth: 6,
+                              radius: 50,
+                              backgroundColor: ColorResources.COLOR_WHITE,
+                              percent: 0.74,
+                              circularStrokeCap: CircularStrokeCap.round,
+                              progressColor:
+                                  ColorResources.getPrimaryColor(context),
+                              center: Text(
+                                '7.4',
+                                style: rubikMedium.copyWith(
+                                    color:
+                                        ColorResources.getPrimaryColor(context),
+                                    fontSize: 15),
+                              ),
+                            ),
+                            // VerticalDivider(
+                            //   color: Colors.black,
+                            //   thickness: 2.0,
+                            //   width: 3.0,
+                            // ),
+                            SizedBox(
+                              width: 6,
+                            ),
+                            GestureDetector(
+                              child: Icon(
+                                Icons.info,
+                                color: ColorResources.getPrimaryColor(context),
+                              ),
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            NutrientValues()));
+                              },
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            Text('Glycemic Index'),
-                            SizedBox(
-                              width: 7,
-                            ),
-                            Container(
-                              padding: EdgeInsets.only(left: 7, right: 7),
-                              decoration: BoxDecoration(
-                                color: ColorResources.getPrimaryColor(context),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(10)),
-                              ),
-                              child: Text('3'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    Spacer(),
-                    CircularPercentIndicator(
-                      lineWidth: 6,
-                      radius: 60,
-                      backgroundColor: ColorResources.COLOR_WHITE,
-                      percent: 0.74,
-                      circularStrokeCap: CircularStrokeCap.round,
-                      progressColor: ColorResources.getPrimaryColor(context),
-                      center: Text(
-                        '7.4',
-                        style: rubikMedium.copyWith(
-                            color: ColorResources.getPrimaryColor(context),
-                            fontSize: 20),
                       ),
-                    ),
-                    VerticalDivider(
-                      color: ColorResources.COLOR_BLACK,
-                      width: 5,
-                      thickness: 2,
-                      indent: 0,
-                      endIndent: 0,
-                    ),
-                    IconButton(
-                      icon: Icon(
-                        Icons.info,
-                        color: ColorResources.getPrimaryColor(context),
-                      ),
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => NutrientValues()));
-                      },
-                    ),
-                  ],
+                      // CircularPercentIndicator(
+                      //   lineWidth: 6,
+                      //   radius: 50,
+                      //   backgroundColor: ColorResources.COLOR_WHITE,
+                      //   percent: 0.74,
+                      //   circularStrokeCap: CircularStrokeCap.round,
+                      //   progressColor: ColorResources.getPrimaryColor(context),
+                      //   center: Text(
+                      //     '7.4',
+                      //     style: rubikMedium.copyWith(
+                      //         color: ColorResources.getPrimaryColor(context),
+                      //         fontSize: 15),
+                      //   ),
+                      // ),
+                      // VerticalDivider(
+                      //   color: ColorResources.COLOR_BLACK,
+                      //   thickness: 2,
+                      // ),
+                      // IconButton(
+                      //   icon: Icon(
+                      //     Icons.info,
+                      //     color: ColorResources.getPrimaryColor(context),
+                      //   ),
+                      //   onPressed: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => NutrientValues()));
+                      //   },
+                      // ),
+                    ],
+                  ),
                 ),
               ),
 

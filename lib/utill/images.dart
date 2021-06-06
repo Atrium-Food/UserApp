@@ -43,6 +43,9 @@ class Images {
   static const String chat_support = 'assets/image/chat_support.png';
 
   // for Icon
+  static const String hot = 'assets/icon/hotIcon.svg';
+  static const String serving = 'assets/icon/servingIcon.svg';
+  static const String cuisine = 'assets/icon/worldMapIcon.svg';
   static const String efood = 'assets/icon/efood.png';
   static const String efood_bike = 'assets/icon/efood_bike.png';
   static const String marker = 'assets/icon/marker.png';

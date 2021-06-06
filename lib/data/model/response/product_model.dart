@@ -65,15 +65,22 @@ class Product {
   String _discountType;
   String _taxType;
   int _setMenu;
-
+  double _calories_per_serving;
   Rating _rating;
   List<Ingredients> _ingredients;
   Recipe _recipe;
   Nutrients _nutrients;
   List<ReviewBody> _reviews;
+  int _serves;
+  String _cuisine;
+  String _time;
 
   Product({
     int id,
+    String time,
+    int serves,
+    String cuisine,
+    double calories_per_serving,
     String name,
     String description,
     String image,
@@ -107,6 +114,10 @@ class Product {
     this._variations = variations;
     this._addOns = addOns;
     this._tax = tax;
+    this._time = time;
+    this._serves = serves;
+    this._cuisine = cuisine;
+    this._calories_per_serving = calories_per_serving;
     this._availableTimeStarts = availableTimeStarts;
     this._availableTimeEnds = availableTimeEnds;
     this._status = status;
@@ -151,11 +162,18 @@ class Product {
   Recipe get recipe => _recipe;
   Nutrients get nutrients => _nutrients;
   List<ReviewBody> get reviews => _reviews;
+  double get calories_per_serving => _calories_per_serving;
+  String get time => _time;
+  int get serves => _serves;
+  String get cuisine => _cuisine;
 
   Product.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
     _description = json['description'];
+    _time = json['time'];
+    _cuisine = json['cuisine'];
+    _serves = json['serves'];
     _image = json['image'];
     _price = json['price'].toDouble();
     if (json['variations'] != null) {
@@ -198,6 +216,7 @@ class Product {
       });
     }
     _discount = json['discount'].toDouble();
+    _calories_per_serving = json['calories_per_serving'];
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
@@ -206,11 +225,11 @@ class Product {
       // json['rating'].forEach((v) {
       //   _rating.add(new Rating.fromJson(v));
       // });
-      if(json['rating'].length>0)
-        _rating=json['rating'][0]!=null?Rating.fromJson(json['rating'][0]):null;
+      if (json['rating'].length > 0)
+        _rating = json['rating'][0] != null
+            ? Rating.fromJson(json['rating'][0])
+            : null;
     }
-
-
 
     if (json['recipe'] != null) {
       _recipe = Recipe.fromJson(json['recipe']);
@@ -233,6 +252,10 @@ class Product {
     data['name'] = this._name;
     data['description'] = this._description;
     data['image'] = this._image;
+    data['calories_per_serving'] = this._calories_per_serving;
+    data['time'] = this._time;
+    data['serves'] = this._serves;
+    data['cuisine'] = this._cuisine;
     data['price'] = this._price;
     if (this._variations != null) {
       data['variations'] = this._variations.map((v) => v.toJson()).toList();
@@ -261,8 +284,7 @@ class Product {
     // if (this._rating != null) {
     //   data['rating'] = this._rating.map((v) => v.toJson()).toList();
     // }
-    if(this._rating!=null)
-    data['rating']=this._rating.toJson();
+    if (this._rating != null) data['rating'] = this._rating.toJson();
 
     if (this._ingredients != null) {
       data['ingredients'] = this._ingredients.map((v) => v.toJson()).toList();
@@ -577,11 +599,11 @@ class Rating {
   List<int> _countRating;
   int _countTotalRating;
 
-  Rating({String average,List<int> countRating, int productId}) {
-    this._countRating=countRating;
-    this._countTotalRating=countRating.reduce((a, b) => a+b);
+  Rating({String average, List<int> countRating, int productId}) {
+    this._countRating = countRating;
+    this._countTotalRating = countRating.reduce((a, b) => a + b);
     this._productId = productId;
-    this._average= average;
+    this._average = average;
   }
 
   String get average => _average;
@@ -590,7 +612,7 @@ class Rating {
   int get countTotalRating => _countTotalRating;
 
   Rating.fromJson(Map<String, dynamic> json) {
-    _average=json['average'];
+    _average = json['average'];
     _productId = json['product_id'];
   }
 
