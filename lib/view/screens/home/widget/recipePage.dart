@@ -102,7 +102,7 @@ class RecipePage extends StatelessWidget {
               Text(
                 'Directions',
                 style: rubikMedium.copyWith(
-                  color: Colors.black,
+                  color: ColorResources.getAccentColor(context),
                   fontSize: 24.0,
                   fontWeight: FontWeight.w600,
                 ),
@@ -112,7 +112,9 @@ class RecipePage extends StatelessWidget {
               ),
               Text(
                 'Follow these instructions carefully to get the best taste of your own hands. Feel free to contact us if you have any doubt regarding the recipe.',
-                style: TextStyle(fontSize: 13),
+                style: TextStyle(
+                    fontSize: 13,
+                    color: ColorResources.getAccentColor(context)),
               ),
               SizedBox(
                 height: 15,
@@ -130,7 +132,7 @@ class RecipePage extends StatelessWidget {
                       bottom: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                     ),
                     decoration: BoxDecoration(
-                        color: ColorResources.COLOR_WHITE,
+                        color: ColorResources.getBackgroundColor(context),
                         borderRadius: BorderRadius.all(Radius.circular(8)),
                         boxShadow: [
                           BoxShadow(
@@ -148,7 +150,8 @@ class RecipePage extends StatelessWidget {
                           child: Text(
                             '${index + 1}',
                             style: rubikRegular.copyWith(
-                                color: Colors.black, fontSize: 13),
+                                color: ColorResources.getAccentColor(context),
+                                fontSize: 13),
                           ),
                         ),
                         SizedBox(

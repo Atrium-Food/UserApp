@@ -60,7 +60,7 @@ class NutrientValues extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: ColorResources.getBackgroundColor(context),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     boxShadow: [
                       BoxShadow(
@@ -86,7 +86,9 @@ class NutrientValues extends StatelessWidget {
                           ),
                           Row(
                             children: [
-                              Text('Glycemic Index'),
+                              Text(
+                                'Glycemic Index',
+                              ),
                               SizedBox(
                                 width: 7,
                               ),
@@ -213,7 +215,7 @@ class NutrientValues extends StatelessWidget {
                     padding:
                         EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorResources.getBackgroundColor(context),
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       boxShadow: [
                         BoxShadow(
@@ -250,7 +252,7 @@ class NutrientValues extends StatelessWidget {
         children: [
           Text(
             nutrient,
-            style: rubikMedium,
+            style: rubikMedium.copyWith(color: ColorResources.COLOR_BLACK),
           ),
           Expanded(
             child: Row(

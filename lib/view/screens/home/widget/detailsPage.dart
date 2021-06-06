@@ -175,7 +175,9 @@ class DetailsPage extends StatelessWidget {
 
               Text(
                 'From Atrium',
-                style: rubikMedium.copyWith(fontSize: 20),
+                style: rubikMedium.copyWith(
+                    fontSize: 20,
+                    color: ColorResources.getAccentColor(context)),
               ),
 
               SizedBox(
@@ -189,6 +191,7 @@ class DetailsPage extends StatelessWidget {
                   fontSize: 12.5,
                   height: 1.5,
                   fontWeight: FontWeight.w500,
+                  color: ColorResources.getAccentColor(context),
                 ),
               ),
 
@@ -202,16 +205,23 @@ class DetailsPage extends StatelessWidget {
                       Text(
                         'Cuisine',
                         style: rubikRegular.copyWith(
-                            fontSize: 11, color: Colors.grey),
+                            fontSize: 11,
+                            color: ColorResources.getGreyColor(context)),
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      SvgPicture.asset(Images.cuisine),
+                      SvgPicture.asset(
+                        Images.cuisine,
+                        color: ColorResources.getAccentColor(context),
+                      ),
                       SizedBox(
                         height: 5,
                       ),
-                      Text('Thai Cuisine', style: TextStyle(fontSize: 11)),
+                      Text('Thai',
+                          style: TextStyle(
+                              fontSize: 11,
+                              color: ColorResources.getAccentColor(context))),
                     ],
                   ),
                   Column(
@@ -219,7 +229,8 @@ class DetailsPage extends StatelessWidget {
                       Text(
                         'Time',
                         style: rubikRegular.copyWith(
-                            fontSize: 11, color: Colors.grey),
+                            fontSize: 11,
+                            color: ColorResources.getGreyColor(context)),
                       ),
                       SizedBox(
                         height: 5,
@@ -228,7 +239,10 @@ class DetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('1 hr 45 min', style: TextStyle(fontSize: 11)),
+                      Text('1 hr 45 min',
+                          style: TextStyle(
+                              fontSize: 11,
+                              color: ColorResources.getAccentColor(context))),
                     ],
                   ),
                   Column(
@@ -236,16 +250,23 @@ class DetailsPage extends StatelessWidget {
                       Text(
                         'Serves',
                         style: rubikRegular.copyWith(
-                            fontSize: 11, color: Colors.grey),
+                            fontSize: 11,
+                            color: ColorResources.getGreyColor(context)),
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      SvgPicture.asset(Images.serving),
+                      SvgPicture.asset(
+                        Images.serving,
+                        color: ColorResources.getAccentColor(context),
+                      ),
                       SizedBox(
                         height: 5,
                       ),
-                      Text('2', style: TextStyle(fontSize: 11)),
+                      Text('2',
+                          style: TextStyle(
+                              fontSize: 11,
+                              color: ColorResources.getAccentColor(context))),
                     ],
                   ),
                   Column(
@@ -253,16 +274,23 @@ class DetailsPage extends StatelessWidget {
                       Text(
                         'Per Serving',
                         style: rubikRegular.copyWith(
-                            fontSize: 11, color: Colors.grey),
+                            fontSize: 11,
+                            color: ColorResources.getGreyColor(context)),
                       ),
                       SizedBox(
                         height: 5,
                       ),
-                      SvgPicture.asset(Images.hot),
+                      SvgPicture.asset(
+                        Images.hot,
+                        color: ColorResources.getAccentColor(context),
+                      ),
                       SizedBox(
                         height: 5,
                       ),
-                      Text('590 cal', style: TextStyle(fontSize: 11)),
+                      Text('590 cal',
+                          style: TextStyle(
+                              fontSize: 11,
+                              color: ColorResources.getAccentColor(context))),
                     ],
                   ),
                 ],
@@ -362,7 +390,7 @@ class DetailsPage extends StatelessWidget {
                 child: Container(
                   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: ColorResources.getBackgroundColor(context),
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     // boxShadow: [
                     //   BoxShadow(
@@ -390,7 +418,10 @@ class DetailsPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Glycemic Index',
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    color:
+                                        ColorResources.getAccentColor(context)),
                               ),
                               SizedBox(
                                 width: 3,
@@ -407,7 +438,8 @@ class DetailsPage extends StatelessWidget {
                                   '9',
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: Colors.white,
+                                    color: ColorResources.getBackgroundColor(
+                                        context),
                                   ),
                                 ),
                               ),
@@ -416,7 +448,10 @@ class DetailsPage extends StatelessWidget {
                               ),
                               Text(
                                 'Glycemic Index',
-                                style: TextStyle(fontSize: 10),
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    color:
+                                        ColorResources.getAccentColor(context)),
                               ),
                               SizedBox(
                                 width: 3,
@@ -433,7 +468,8 @@ class DetailsPage extends StatelessWidget {
                                   '3',
                                   style: TextStyle(
                                     fontSize: 10,
-                                    color: Colors.white,
+                                    color: ColorResources.getBackgroundColor(
+                                        context),
                                   ),
                                 ),
                               ),

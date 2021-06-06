@@ -26,7 +26,7 @@ import 'package:intl/intl.dart';
 import 'detailsPage.dart';
 import 'recipePage.dart';
 
-class CartBottomSheetScreen extends StatelessWidget {
+class CartBottomSheetScreen extends StatefulWidget {
   final Product product;
   final bool fromSetMenu;
   final Function callback;
@@ -40,9 +40,31 @@ class CartBottomSheetScreen extends StatelessWidget {
       this.cartIndex});
 
   @override
-  Widget build(BuildContext context) {
-    final ScrollController _scrollController = ScrollController();
+  _CartBottomSheetScreenState createState() => _CartBottomSheetScreenState();
+}
 
+class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
+    with SingleTickerProviderStateMixin {
+  ScrollController _scrollController;
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(length: 3, vsync: this);
+    _scrollController = ScrollController(keepScrollOffset: false);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final List<Map> myProducts =
         List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
             .toList();
@@ -155,9 +177,9 @@ class CartBottomSheetScreen extends StatelessWidget {
       ]),
     ];
 
-    bool fromCart = cart != null;
+    bool fromCart = widget.cart != null;
     Provider.of<ProductProvider>(context, listen: false)
-        .initData(product, cart);
+        .initData(widget.product, widget.cart);
     Variation _variation = Variation();
 
     return Scaffold(
@@ -168,6 +190,7 @@ class CartBottomSheetScreen extends StatelessWidget {
           headerSliverBuilder: (context, value) {
             return [
               SliverAppBar(
+                forceElevated: value,
                 backgroundColor: ColorResources.getPrimaryColor(context),
                 toolbarHeight: MediaQuery.of(context).size.height * 0.065,
                 collapsedHeight: MediaQuery.of(context).size.height * 0.065,
@@ -190,7 +213,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              product.name,
+                              widget.product.name,
                               maxLines: 1,
                               overflow: TextOverflow.visible,
                               style: rubikMedium.copyWith(
@@ -198,8 +221,9 @@ class CartBottomSheetScreen extends StatelessWidget {
                                   fontSize: 25),
                             ),
                             RatingBar(
-                                rating: product.rating != null
-                                    ? double.parse(product.rating.average)
+                                rating: widget.product.rating != null
+                                    ? double.parse(
+                                        widget.product.rating.average)
                                     : 0.0,
                                 size: 10),
                           ],
@@ -209,17 +233,18 @@ class CartBottomSheetScreen extends StatelessWidget {
                             builder: (context, wishList, child) {
                           return IconButton(
                             onPressed: () {
-                              wishList.wishIdList.contains(product.id)
+                              wishList.wishIdList.contains(widget.product.id)
                                   ? wishList.removeFromWishList(
-                                      product, (message) {})
+                                      widget.product, (message) {})
                                   : wishList.addToWishList(
-                                      product, (message) {});
+                                      widget.product, (message) {});
                             },
                             icon: Icon(
-                              wishList.wishIdList.contains(product.id)
+                              wishList.wishIdList.contains(widget.product.id)
                                   ? Icons.favorite
                                   : Icons.favorite_border,
-                              color: wishList.wishIdList.contains(product.id)
+                              color: wishList.wishIdList
+                                      .contains(widget.product.id)
                                   ? ColorResources.getAccentColor(context)
                                   : ColorResources.getAccentColor(context),
                               size: 20,
@@ -251,9 +276,10 @@ class CartBottomSheetScreen extends StatelessWidget {
                       ),
                     ),
                     child: TabBar(
+                      controller: _tabController,
                       unselectedLabelColor:
                           ColorResources.getGrayColor(context),
-                      labelColor: Colors.white,
+                      labelColor: ColorResources.getThemeColor(context),
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
@@ -264,8 +290,12 @@ class CartBottomSheetScreen extends StatelessWidget {
                       tabs: [
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
-                          child: Text('DETAILS',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                          child: Text(
+                            'DETAILS',
+                            style: rubikRegular.copyWith(
+                              fontSize: 13,
+                            ),
+                          ),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
@@ -285,15 +315,16 @@ class CartBottomSheetScreen extends StatelessWidget {
             ];
           },
           body: TabBarView(
+            controller: _tabController,
             children: [
               DetailsPage(
-                product: product,
-                callback: callback,
-                cart: cart,
-                cartIndex: cartIndex,
+                product: widget.product,
+                callback: widget.callback,
+                cart: widget.cart,
+                cartIndex: widget.cartIndex,
               ),
-              RecipePage(product: product),
-              ReviewPage(product: product),
+              RecipePage(product: widget.product),
+              ReviewPage(product: widget.product),
             ],
           ),
         ),

@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/onboarding_provider.dart';
@@ -23,6 +24,7 @@ class OnBoardingScreen extends StatelessWidget {
                 0
             ? SafeArea(
                 child: ListView(
+                  dragStartBehavior: DragStartBehavior.down,
                   children: [
                     onBoardingList.selectedIndex !=
                             onBoardingList.onBoardingList.length - 1
@@ -50,6 +52,7 @@ class OnBoardingScreen extends StatelessWidget {
                     SizedBox(
                       height: 400,
                       child: PageView.builder(
+                        dragStartBehavior: DragStartBehavior.down,
                         itemCount: onBoardingList.onBoardingList.length,
                         controller: _pageController,
                         physics: BouncingScrollPhysics(),
