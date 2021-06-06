@@ -76,11 +76,11 @@ class HomeScreen extends StatelessWidget {
                       return (locationProvider.address==null || locationProvider.address.locality != null)
                           ? Text(
                               locationProvider.address.locality,
-                              style: rubikMedium.copyWith(fontSize: 20),
+                              style: robotoMedium.copyWith(fontSize: 20),
                             )
                           : Text(
                               "City Name",
-                              style: rubikMedium.copyWith(fontSize: 20),
+                              style: robotoMedium.copyWith(fontSize: 20),
                             );
                     }),
 
@@ -128,7 +128,7 @@ class HomeScreen extends StatelessWidget {
                             )),
                         Expanded(
                             child: Text("Search cuisine or ingredients",
-                                style: rubikRegular.copyWith(
+                                style: ralewayRegular.copyWith(
                                     fontSize: 15, color: Colors.black54))),
                         // getTranslated('search_cuisine_ingredients', context)
                       ]),

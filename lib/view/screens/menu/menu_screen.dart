@@ -103,7 +103,7 @@ class MenuScreen extends StatelessWidget {
                                     ? profileProvider.userInfoModel != null
                                         ? Text(
                                             '${profileProvider.userInfoModel.fName ?? ''} ${profileProvider.userInfoModel.lName ?? ''}',
-                                            style: rubikRegular.copyWith(
+                                            style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
                                                 color:
@@ -115,7 +115,7 @@ class MenuScreen extends StatelessWidget {
                                             color: Colors.white)
                                     : Text(
                                         getTranslated('guest', context),
-                                        style: rubikRegular.copyWith(
+                                        style: robotoRegular.copyWith(
                                             fontSize:
                                                 Dimensions.FONT_SIZE_DEFAULT,
                                             color: ColorResources.COLOR_WHITE),
@@ -125,7 +125,7 @@ class MenuScreen extends StatelessWidget {
                                     ? profileProvider.userInfoModel != null
                                         ? Text(
                                             '${profileProvider.userInfoModel.email ?? ''}',
-                                            style: rubikRegular.copyWith(
+                                            style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
                                                 color: ColorResources
@@ -137,7 +137,7 @@ class MenuScreen extends StatelessWidget {
                                             color: Colors.white)
                                     : Text(
                                         'demo@demo.com',
-                                        style: rubikRegular.copyWith(
+                                        style: robotoRegular.copyWith(
                                             fontSize:
                                                 Dimensions.FONT_SIZE_DEFAULT,
                                             color: ColorResources.COLOR_WHITE),
@@ -160,15 +160,15 @@ class MenuScreen extends StatelessWidget {
                         top: 20, bottom: 20.0, left: 20, right: 20),
                     // padding: EdgeInsets.only(top: 5, bottom: 5),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorResources.getThemeColor(context),
                       borderRadius: BorderRadius.all(
                         Radius.circular(10.0),
                       ),
                     ),
                     child: TabBar(
                       unselectedLabelColor:
-                          ColorResources.getGrayColor(context),
-                      labelColor: Colors.white,
+                          ColorResources.getGreyBunkerColor(context),
+                      labelColor: ColorResources.getThemeColor(context),
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
@@ -180,21 +180,21 @@ class MenuScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PROFILE',
-                              style: rubikRegular.copyWith(
+                              style: robotoRegular.copyWith(
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.035)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PAYMENT',
-                              style: rubikRegular.copyWith(
+                              style: robotoRegular.copyWith(
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.035)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REFER',
-                              style: rubikRegular.copyWith(
+                              style: robotoRegular.copyWith(
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.035)),
                         ),
@@ -248,18 +248,18 @@ class MenuScreen extends StatelessWidget {
       //             SizedBox(height: 20),
       //             _isLoggedIn ? profileProvider.userInfoModel != null ? Text(
       //               '${profileProvider.userInfoModel.fName ?? ''} ${profileProvider.userInfoModel.lName ?? ''}',
-      //               style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: ColorResources.COLOR_WHITE),
+      //               style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: ColorResources.COLOR_WHITE),
       //             ) : Container(height: 15, width: 150, color: Colors.white) : Text(
       //               getTranslated('guest', context),
-      //               style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: ColorResources.COLOR_WHITE),
+      //               style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: ColorResources.COLOR_WHITE),
       //             ),
       //             SizedBox(height: 10),
       //             _isLoggedIn ? profileProvider.userInfoModel != null ? Text(
       //               '${profileProvider.userInfoModel.email ?? ''}',
-      //               style: rubikRegular.copyWith(color: ColorResources.BACKGROUND_COLOR),
+      //               style: robotoRegular.copyWith(color: ColorResources.BACKGROUND_COLOR),
       //             ) : Container(height: 15, width: 100, color: Colors.white) : Text(
       //               'demo@demo.com',
-      //               style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: ColorResources.COLOR_WHITE),
+      //               style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE, color: ColorResources.COLOR_WHITE),
       //             ),
       //           ]),
       //         )

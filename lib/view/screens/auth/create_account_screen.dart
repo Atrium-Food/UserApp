@@ -93,7 +93,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 PreferredSize(
                   preferredSize: Size.fromWidth(10.0),
                   child: Text(
-                    'Would love to have to on board!',
+                    'Would love to have you on board!',
                     maxLines: 20,
                     textAlign: TextAlign.start,
                     style: TextStyle(

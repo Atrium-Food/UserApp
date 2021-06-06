@@ -7,6 +7,7 @@ import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
@@ -18,6 +19,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/ReviewPage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -51,7 +53,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       Row(children: [
         Text(
           'Ingredient1',
-          style: rubikRegular,
+          style: robotoRegular,
         ),
         Expanded(child: SizedBox()),
         Container(
@@ -69,7 +71,7 @@ class CartBottomSheetScreen extends StatelessWidget {
               ),
             ),
             Text('1',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
             InkWell(
               onTap: () {},
@@ -86,7 +88,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       Row(children: [
         Text(
           'Ingredient2',
-          style: rubikRegular,
+          style: robotoRegular,
         ),
         Expanded(child: SizedBox()),
         Container(
@@ -104,7 +106,7 @@ class CartBottomSheetScreen extends StatelessWidget {
               ),
             ),
             Text('1',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
             InkWell(
               onTap: () {},
@@ -121,7 +123,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       Row(children: [
         Text(
           'Ingredient3',
-          style: rubikRegular,
+          style: robotoRegular,
         ),
         Expanded(child: SizedBox()),
         Container(
@@ -139,7 +141,7 @@ class CartBottomSheetScreen extends StatelessWidget {
               ),
             ),
             Text('1',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
             InkWell(
               onTap: () {},
@@ -179,7 +181,9 @@ class CartBottomSheetScreen extends StatelessWidget {
                 ),
                 floating: true,
                 pinned: true,
+                stretch: true,
                 flexibleSpace: FlexibleSpaceBar(
+                  stretchModes: [StretchMode.fadeTitle],
                   background: Container(
                     padding: EdgeInsets.only(top: 0.0, right: 8, left: 20),
                     alignment: Alignment.bottomLeft,
@@ -193,7 +197,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                               product.name,
                               maxLines: 1,
                               overflow: TextOverflow.visible,
-                              style: rubikMedium.copyWith(
+                              style: robotoMedium.copyWith(
                                   color: ColorResources.getAccentColor(context),
                                   fontSize: 25),
                             ),
@@ -209,11 +213,15 @@ class CartBottomSheetScreen extends StatelessWidget {
                             builder: (context, wishList, child) {
                           return IconButton(
                             onPressed: () {
-                              wishList.wishIdList.contains(product.id)
-                                  ? wishList.removeFromWishList(
-                                      product, (message) {})
-                                  : wishList.addToWishList(
-                                      product, (message) {});
+                              Provider.of<AuthProvider>(context, listen: false)
+                                      .isLoggedIn()
+                                  ? wishList.wishIdList.contains(product.id)
+                                      ? wishList.removeFromWishList(
+                                          product, (message) {})
+                                      : wishList.addToWishList(
+                                          product, (message) {})
+                                  : showCustomSnackBar(
+                                      'Login to add favorites', context);
                             },
                             icon: Icon(
                               wishList.wishIdList.contains(product.id)
@@ -245,15 +253,15 @@ class CartBottomSheetScreen extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 20.0, left: 15, right: 15),
                     // padding: EdgeInsets.only(top: 5, bottom: 5),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorResources.getThemeColor(context),
                       borderRadius: BorderRadius.all(
                         Radius.circular(10.0),
                       ),
                     ),
                     child: TabBar(
                       unselectedLabelColor:
-                          ColorResources.getGrayColor(context),
-                      labelColor: Colors.white,
+                      ColorResources.getGreyBunkerColor(context),
+                      labelColor: ColorResources.getThemeColor(context),
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
@@ -265,17 +273,17 @@ class CartBottomSheetScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('DETAILS',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: robotoRegular.copyWith(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('RECIPE',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: robotoRegular.copyWith(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REVIEW',
-                              style: rubikRegular.copyWith(fontSize: 13)),
+                              style: robotoRegular.copyWith(fontSize: 13)),
                         ),
                       ],
                     ),

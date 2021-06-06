@@ -67,7 +67,7 @@ class CategoryView extends StatelessWidget {
                                   ),
                                   Text(
                                     category.categoryList[index].name,
-                                    style: rubikMedium.copyWith(
+                                    style: robotoMedium.copyWith(
                                         fontSize: Dimensions.FONT_SIZE_DEFAULT),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,

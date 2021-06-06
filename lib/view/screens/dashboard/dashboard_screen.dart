@@ -83,7 +83,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
         //     Text(
         //       '${getTranslated('restaurant_is_close_now', context)} '
         //           '${DateConverter.convertTimeToTime('${Provider.of<SplashProvider>(context, listen: false).configModel.restaurantOpenTime}:00')}',
-        //       style: rubikRegular.copyWith(fontSize: 12, color: Colors.black),
+        //       style: robotoRegular.copyWith(fontSize: 12, color: Colors.black),
         //     ),
         //   ]),
         // ) : null,
@@ -112,7 +112,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
               child: Text(
                 Provider.of<CartProvider>(context).cartList.length.toString(),
-                style: rubikMedium.copyWith(color: ColorResources.COLOR_WHITE, fontSize: 8),
+                style: robotoMedium.copyWith(color: ColorResources.COLOR_WHITE, fontSize: 8),
               ),
             ),
           ) : SizedBox(),

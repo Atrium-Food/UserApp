@@ -13,7 +13,6 @@ class NotLoggedInScreen extends StatelessWidget {
       child: Padding(
         padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-
           Image.asset(
             Images.guest_login,
             width: MediaQuery.of(context).size.height*0.25,
@@ -23,14 +22,14 @@ class NotLoggedInScreen extends StatelessWidget {
 
           Text(
             getTranslated('guest_mode', context),
-            style: rubikBold.copyWith(fontSize: MediaQuery.of(context).size.height*0.023),
+            style: robotoBold.copyWith(fontSize: MediaQuery.of(context).size.height*0.023),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: MediaQuery.of(context).size.height*0.02),
 
           Text(
             getTranslated('now_you_are_in_guest_mode', context),
-            style: rubikRegular.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175),
+            style: robotoRegular.copyWith(fontSize: MediaQuery.of(context).size.height*0.0175),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: MediaQuery.of(context).size.height*0.03),

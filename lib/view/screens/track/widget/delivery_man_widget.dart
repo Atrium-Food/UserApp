@@ -28,7 +28,7 @@ class DeliveryManWidget extends StatelessWidget {
         )],
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(getTranslated('delivery_man', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
+        Text(getTranslated('delivery_man', context), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
         ListTile(
           leading: ClipOval(
             child: FadeInImage.assetNetwork(
@@ -42,7 +42,7 @@ class DeliveryManWidget extends StatelessWidget {
           ),
           title: Text(
             '${deliveryMan.fName} ${deliveryMan.lName}',
-            style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+            style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
           subtitle: RatingBar(rating: deliveryMan.rating.length > 0 ? double.parse(deliveryMan.rating[0].average) : 0, size: 15),
           trailing: InkWell(

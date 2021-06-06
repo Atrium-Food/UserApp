@@ -40,7 +40,7 @@ class CouponScreen extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.only(left: Dimensions.FONT_SIZE_LARGE,top: Dimensions.PADDING_SIZE_LARGE),
-                  child: Text(getTranslated('coupon', context),style: rubikRegular.copyWith(fontSize: 22),),
+                  child: Text(getTranslated('coupon', context),style: robotoRegular.copyWith(fontSize: 22),),
                 ),
                 Expanded(
                   child: ListView.builder(
@@ -71,7 +71,7 @@ class CouponScreen extends StatelessWidget {
                                     children: [
                                   // SelectableText(
                                   //   coupon.couponList[index].code,
-                                  //   style: rubikRegular.copyWith(color: ColorResources.COLOR_WHITE),
+                                  //   style: robotoRegular.copyWith(color: ColorResources.COLOR_WHITE),
                                   // ),
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
@@ -81,19 +81,19 @@ class CouponScreen extends StatelessWidget {
                                           Text(
                                             '${coupon.couponList[index].discount}${coupon.couponList[index].discountType == 'percent' ? '%'
                                                 : Provider.of<SplashProvider>(context, listen: false).configModel.currencySymbol}',
-                                            style: rubikMedium.copyWith(color: ColorResources.COLOR_WHITE, fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
+                                            style: robotoMedium.copyWith(color: ColorResources.COLOR_WHITE, fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE),
                                           ),
                                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                                           OutlinedButton(
                                               style: ButtonStyle(
                                                 backgroundColor: MaterialStateProperty.all(ColorResources.getBackgroundColor(context)),
-                                                textStyle: MaterialStateProperty.all(rubikRegular.copyWith(color: ColorResources.getPrimaryColor(context))),
+                                                textStyle: MaterialStateProperty.all(robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context))),
                                               ),
                                               onPressed: (){
                                                 Clipboard.setData(ClipboardData(text: coupon.couponList[index].code));
                                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('coupon_code_copied', context)), backgroundColor: Colors.green));
                                               },
-                                              child: Text("Redeem",style: rubikMedium.copyWith(color: ColorResources.getPrimaryColor(context)),)
+                                              child: Text("Redeem",style: robotoMedium.copyWith(color: ColorResources.getPrimaryColor(context)),)
                                           ),
                                         ],
                                       ),
@@ -101,15 +101,15 @@ class CouponScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             '${getTranslated('valid_until', context)} ${DateConverter.isoStringToLocalDateOnly(coupon.couponList[index].expireDate)}',
-                                            style: rubikRegular.copyWith(color: ColorResources.COLOR_WHITE, fontSize: Dimensions.FONT_SIZE_SMALL),
+                                            style: robotoRegular.copyWith(color: ColorResources.COLOR_WHITE, fontSize: Dimensions.FONT_SIZE_SMALL),
                                           ),
                                           SelectableText(
                                               'Code: ${coupon.couponList[index].code}',
-                                              style: rubikRegular.copyWith(fontSize:Dimensions.FONT_SIZE_SMALL,color: ColorResources.COLOR_WHITE),
+                                              style: robotoRegular.copyWith(fontSize:Dimensions.FONT_SIZE_SMALL,color: ColorResources.COLOR_WHITE),
                                             ),
                                           Text(
                                             'Min Purchase: ${coupon.couponList[index].minPurchase}',
-                                            style: rubikRegular.copyWith(color: ColorResources.COLOR_WHITE, fontSize: Dimensions.FONT_SIZE_SMALL),
+                                            style: robotoRegular.copyWith(color: ColorResources.COLOR_WHITE, fontSize: Dimensions.FONT_SIZE_SMALL),
                                           ),
                                           SizedBox(width: 10),
                                         ],

@@ -23,7 +23,7 @@ class TermsScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 20,),
-              Text(getTranslated('terms_and_condition', context),style: rubikRegular.copyWith(fontSize: 25),),
+              Text(getTranslated('terms_and_condition', context),style: robotoRegular.copyWith(fontSize: 25),),
               SizedBox(height: 20,),
               Center(
                 child: Container(
@@ -53,7 +53,7 @@ class TermsScreen extends StatelessWidget {
                           "\nIt is your responsibility to periodically review these Terms and Conditions to stay informed of updates. You will be subject to, and will be deemed to have been made aware of and to have accepted, the changes in any revised Terms and Conditions by your continued use of the Site after the date such revised Terms and Conditions are posted."
 
                           "\nThe information provided on the Site is not intended for distribution to or use by any person or entity in any jurisdiction or country where such distribution or use would be contrary to law."
-                          ,style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
+                          ,style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
                     ),
                   ),
                 ),

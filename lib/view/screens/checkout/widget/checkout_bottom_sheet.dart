@@ -49,7 +49,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
   GoogleMapController _mapController;
   bool _isCashOnDeliveryActive;
   bool _isDigitalPaymentActive;
-  List<Branches> _branches = [];
+  // List<Branches> _branches = [];
   bool _loading = true;
   Set<Marker> _markers = HashSet<Marker>();
   bool _isLoggedIn;
@@ -62,9 +62,9 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
     _isLoggedIn =
         Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
     if (_isLoggedIn) {
-      _branches = Provider.of<SplashProvider>(context, listen: false)
-          .configModel
-          .branches;
+      // _branches = Provider.of<SplashProvider>(context, listen: false)
+      //     .configModel
+      //     .branches;
       Provider.of<LocationProvider>(context, listen: false)
           .initAddressList(context);
       Provider.of<OrderProvider>(context, listen: false).clearPrevData();
@@ -101,7 +101,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                     ? ExpansionTile(
                         title: Text(
                           "Select Delivery Address",
-                          style: rubikRegular.copyWith(
+                          style: robotoRegular.copyWith(
                               color: ColorResources.getAccentColor(context)),
                         ),
                         subtitle: Text("Home"),
@@ -143,46 +143,46 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                   itemCount:
                                                       address.addressList.length,
                                                   itemBuilder: (context, index) {
-                                                    bool _isAvailable = _branches
-                                                                .length ==
-                                                            1 &&
-                                                        (_branches[0].latitude ==
-                                                                null ||
-                                                            _branches[0]
-                                                                .latitude
-                                                                .isEmpty);
-                                                    if (!_isAvailable) {
-                                                      double _distance = Geolocator
-                                                              .distanceBetween(
-                                                            double.parse(
-                                                                _branches[order
-                                                                        .branchIndex]
-                                                                    .latitude),
-                                                            double.parse(
-                                                                _branches[order
-                                                                        .branchIndex]
-                                                                    .longitude),
-                                                            double.parse(address
-                                                                .addressList[
-                                                                    index]
-                                                                .latitude),
-                                                            double.parse(address
-                                                                .addressList[
-                                                                    index]
-                                                                .longitude),
-                                                          ) /
-                                                          1000;
-                                                      _isAvailable = _distance <
-                                                          _branches[order
-                                                                  .branchIndex]
-                                                              .coverage;
-                                                    }
+                                                    // bool _isAvailable = _branches
+                                                    //             .length ==
+                                                    //         1 &&
+                                                    //     (_branches[0].latitude ==
+                                                    //             null ||
+                                                    //         _branches[0]
+                                                    //             .latitude
+                                                    //             .isEmpty);
+                                                    // if (!_isAvailable) {
+                                                    //   double _distance = Geolocator
+                                                    //           .distanceBetween(
+                                                    //         double.parse(
+                                                    //             _branches[order
+                                                    //                     .branchIndex]
+                                                    //                 .latitude),
+                                                    //         double.parse(
+                                                    //             _branches[order
+                                                    //                     .branchIndex]
+                                                    //                 .longitude),
+                                                    //         double.parse(address
+                                                    //             .addressList[
+                                                    //                 index]
+                                                    //             .latitude),
+                                                    //         double.parse(address
+                                                    //             .addressList[
+                                                    //                 index]
+                                                    //             .longitude),
+                                                    //       ) /
+                                                    //       1000;
+                                                    //   _isAvailable = _distance <
+                                                    //       _branches[order
+                                                    //               .branchIndex]
+                                                    //           .coverage;
+                                                    // }
                                                     return InkWell(
                                                       onTap: () {
-                                                        if (_isAvailable) {
+                                                        // if (_isAvailable) {
                                                           order.setAddressIndex(
                                                               index);
-                                                        }
+                                                        // }
                                                       },
                                                       child: Stack(children: [
                                                         Container(
@@ -256,7 +256,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                                           .addressList[
                                                                               index]
                                                                           .addressType,
-                                                                      style: rubikRegular
+                                                                      style: robotoRegular
                                                                           .copyWith(
                                                                         fontSize:
                                                                             Dimensions
@@ -279,7 +279,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                                           index]
                                                                       .address,
                                                                   style:
-                                                                      rubikRegular,
+                                                                      robotoRegular,
                                                                 softWrap: true,
                                                                 overflow: TextOverflow.fade,
                                                                   ),
@@ -319,44 +319,44 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                             //     icon: Icon(Icons.more_vert_rounded))
                                                           ]),
                                                         ),
-                                                        !_isAvailable
-                                                            ? Positioned(
-                                                                top: 0,
-                                                                left: 0,
-                                                                bottom: 0,
-                                                                right: 20,
-                                                                child: Container(
-                                                                  alignment:
-                                                                      Alignment
-                                                                          .center,
-                                                                  decoration: BoxDecoration(
-                                                                      borderRadius:
-                                                                          BorderRadius.circular(
-                                                                              10),
-                                                                      color: Colors
-                                                                          .black
-                                                                          .withOpacity(
-                                                                              0.6)),
-                                                                  child: Text(
-                                                                    getTranslated(
-                                                                        'out_of_coverage_for_this_branch',
-                                                                        context),
-                                                                    textAlign:
-                                                                        TextAlign
-                                                                            .center,
-                                                                    maxLines: 2,
-                                                                    overflow:
-                                                                        TextOverflow
-                                                                            .ellipsis,
-                                                                    style: rubikRegular.copyWith(
-                                                                        color: Colors
-                                                                            .white,
-                                                                        fontSize:
-                                                                            10),
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            : SizedBox(),
+                                                        // !_isAvailable?
+                                                        // Positioned(
+                                                        //         top: 0,
+                                                        //         left: 0,
+                                                        //         bottom: 0,
+                                                        //         right: 20,
+                                                        //         child: Container(
+                                                        //           alignment:
+                                                        //               Alignment
+                                                        //                   .center,
+                                                        //           decoration: BoxDecoration(
+                                                        //               borderRadius:
+                                                        //                   BorderRadius.circular(
+                                                        //                       10),
+                                                        //               color: Colors
+                                                        //                   .black
+                                                        //                   .withOpacity(
+                                                        //                       0.6)),
+                                                        //           child: Text(
+                                                        //             getTranslated(
+                                                        //                 'out_of_coverage_for_this_branch',
+                                                        //                 context),
+                                                        //             textAlign:
+                                                        //                 TextAlign
+                                                        //                     .center,
+                                                        //             maxLines: 2,
+                                                        //             overflow:
+                                                        //                 TextOverflow
+                                                        //                     .ellipsis,
+                                                        //             style: robotoRegular.copyWith(
+                                                        //                 color: Colors
+                                                        //                     .white,
+                                                        //                 fontSize:
+                                                        //                     10),
+                                                        //           ),
+                                                        //         ),
+                                                        //       )
+                                                            // : SizedBox(),
                                                       ]),
                                                     );
                                                   },
@@ -388,7 +388,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                         fromCheckout: true))),
                                         icon: Icon(Icons.add),
                                         label: Text('Add address',
-                                            style: rubikRegular),
+                                            style: robotoRegular),
                                       ),
                                     ]),
                                   ),
@@ -406,12 +406,12 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                 //     text: TextSpan(children: [
                 //   TextSpan(
                 //       text: "Expected Delivery Time: ",
-                //       style: rubikRegular.copyWith(
+                //       style: robotoRegular.copyWith(
                 //           fontSize: Dimensions.FONT_SIZE_LARGE,
                 //           color: ColorResources.getAccentColor(context))),
                 //   TextSpan(
                 //       text: "25 minutes",
-                //       style: rubikMedium.copyWith(
+                //       style: robotoMedium.copyWith(
                 //           fontSize: Dimensions.FONT_SIZE_LARGE,
                 //           color: ColorResources.getAccentColor(context)))
                 // ])),
@@ -430,7 +430,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                           children: [
                             Text(
                               'Details',
-                              style: rubikRegular.copyWith(
+                              style: robotoRegular.copyWith(
                                   fontWeight: FontWeight.w100,
                                   fontSize: Dimensions.FONT_SIZE_LARGE),
                             ),
@@ -443,7 +443,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                     .trim() +
                                                 " " +
                                                 profile.userInfoModel.lName,
-                                            style: rubikRegular.copyWith(
+                                            style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
                                                 color: ColorResources
@@ -451,7 +451,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                         TextSpan(
                                             text: ", " +
                                                 profile.userInfoModel.phone,
-                                            style: rubikRegular.copyWith(
+                                            style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
                                                 color: ColorResources
@@ -569,7 +569,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                               .coupon
                                               .code
                                           : null,
-                                      branchId: _branches[order.branchIndex].id,
+                                      // branchId: _branches[order.branchIndex].id,
                                     ),
                                     _callback,
                                   );

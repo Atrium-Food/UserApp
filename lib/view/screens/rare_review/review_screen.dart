@@ -81,9 +81,9 @@ class _ProductReviewScreenState extends State<ProductReviewScreen> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Text(product.name, style: rubikMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                                Text(product.name, style: robotoMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                                 SizedBox(height: 10),
-                                Text(PriceConverter.convertPrice(context, product.price), style: rubikBold),
+                                Text(PriceConverter.convertPrice(context, product.price), style: robotoBold),
                               ],
                             )),
                           ],
@@ -93,7 +93,7 @@ class _ProductReviewScreenState extends State<ProductReviewScreen> {
                         // Rate
                         Text(
                           getTranslated('rate_the_food', context),
-                          style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                          style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                         SizedBox(
@@ -124,7 +124,7 @@ class _ProductReviewScreenState extends State<ProductReviewScreen> {
                         SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                         Text(
                           getTranslated('share_your_opinion', context),
-                          style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                          style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
                         ),
                         SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                         CustomTextField(

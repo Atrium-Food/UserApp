@@ -81,7 +81,7 @@ class CartProductWidget extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black.withOpacity(0.6)),
-                            child: Text(getTranslated('not_available_now_break', context), textAlign: TextAlign.center, style: rubikRegular.copyWith(
+                            child: Text(getTranslated('not_available_now_break', context), textAlign: TextAlign.center, style: robotoRegular.copyWith(
                               color: Colors.white, fontSize: 8,
                             )),
                           ),
@@ -92,7 +92,7 @@ class CartProductWidget extends StatelessWidget {
 
                     Expanded(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                        Text(cart.product.name, style: rubikMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                        Text(cart.product.name, style: robotoMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                         SizedBox(height: 2),
                         RatingBar(rating: cart.product.rating!=null ? double.parse(cart.product.rating.average) : 0.0, size: 12),
                         SizedBox(height: 5),
@@ -100,12 +100,12 @@ class CartProductWidget extends StatelessWidget {
                           Flexible(
                             child: Text(
                               PriceConverter.convertPrice(context, cart.discountedPrice),
-                              style: rubikBold,
+                              style: robotoBold,
                             ),
                           ),
                           SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           cart.discountAmount > 0 ? Flexible(
-                            child: Text(PriceConverter.convertPrice(context, cart.discountedPrice+cart.discountAmount), style: rubikBold.copyWith(
+                            child: Text(PriceConverter.convertPrice(context, cart.discountedPrice+cart.discountAmount), style: robotoBold.copyWith(
                               color: ColorResources.COLOR_GREY,
                               fontSize: Dimensions.FONT_SIZE_SMALL,
                               decoration: TextDecoration.lineThrough,
@@ -136,7 +136,7 @@ class CartProductWidget extends StatelessWidget {
                             child: Icon(Icons.remove, size: 20),
                           ),
                         ),
-                        Text(cart.quantity.toString(), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+                        Text(cart.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
                         InkWell(
                           // onTap: () => print("${cart.toJson()}"),
                           onTap: () => Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart),
@@ -170,11 +170,11 @@ class CartProductWidget extends StatelessWidget {
                                 child: Icon(Icons.remove_circle, color: Theme.of(context).primaryColor, size: 18),
                               ),
                             ),
-                            Text(addOns[index].name, style: rubikRegular),
+                            Text(addOns[index].name, style: robotoRegular),
                             SizedBox(width: 2),
-                            Text(PriceConverter.convertPrice(context, addOns[index].price), style: rubikMedium),
+                            Text(PriceConverter.convertPrice(context, addOns[index].price), style: robotoMedium),
                             SizedBox(width: 2),
-                            Text('(${cart.addOnIds[index].quantity})', style: rubikRegular),
+                            Text('(${cart.addOnIds[index].quantity})', style: robotoRegular),
                           ]),
                         );
                       },

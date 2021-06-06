@@ -46,8 +46,8 @@ class _OrderScreenState extends State<OrderScreen> with TickerProviderStateMixin
                 labelColor: Theme.of(context).textTheme.bodyText1.color,
                 indicatorColor: ColorResources.COLOR_PRIMARY,
                 indicatorWeight: 3,
-                unselectedLabelStyle: rubikRegular.copyWith(color: ColorResources.COLOR_HINT, fontSize: Dimensions.FONT_SIZE_SMALL),
-                labelStyle: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+                unselectedLabelStyle: robotoRegular.copyWith(color: ColorResources.COLOR_HINT, fontSize: Dimensions.FONT_SIZE_SMALL),
+                labelStyle: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                 tabs: [
                   Tab(text: getTranslated('running', context)),
                   Tab(text: getTranslated('history', context)),

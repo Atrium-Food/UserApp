@@ -163,7 +163,14 @@ class DetailsPage extends StatelessWidget {
                         image:
                             '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
                         height: 170,
-                        fit: BoxFit.fill,
+                        width: MediaQuery.of(context).size.width*0.9,
+                        fit: BoxFit.cover,
+                        imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
+                          return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                            height: 170,
+                            width: 85,
+                          );
+                        },
                       ),
                     ),
                     flex: 1,
@@ -175,7 +182,7 @@ class DetailsPage extends StatelessWidget {
 
               Text(
                 'From Atrium',
-                style: rubikMedium.copyWith(fontSize: 20),
+                style: robotoMedium.copyWith(fontSize: 20),
               ),
 
               SizedBox(
@@ -185,7 +192,7 @@ class DetailsPage extends StatelessWidget {
               Text(
                 '“The Ultimate Thai Platter comes with a bunch of fresh meats and all the herbs and spices that you’ll ever need to cook your very own thai dish in your own kitchen.”',
                 maxLines: 20,
-                style: rubikRegular.copyWith(
+                style: robotoRegular.copyWith(
                   fontSize: 12.5,
                   height: 1.5,
                   fontWeight: FontWeight.w500,
@@ -201,7 +208,7 @@ class DetailsPage extends StatelessWidget {
                     children: [
                       Text(
                         'Cuisine',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: 11, color: Colors.grey),
                       ),
                       SizedBox(
@@ -218,7 +225,7 @@ class DetailsPage extends StatelessWidget {
                     children: [
                       Text(
                         'Time',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: 11, color: Colors.grey),
                       ),
                       SizedBox(
@@ -235,7 +242,7 @@ class DetailsPage extends StatelessWidget {
                     children: [
                       Text(
                         'Serves',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: 11, color: Colors.grey),
                       ),
                       SizedBox(
@@ -252,7 +259,7 @@ class DetailsPage extends StatelessWidget {
                     children: [
                       Text(
                         'Per Serving',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: 11, color: Colors.grey),
                       ),
                       SizedBox(
@@ -284,7 +291,7 @@ class DetailsPage extends StatelessWidget {
               //                 width: 5.0,
               //               ),
               //               Text('1 hour 45 mins',
-              //                   style: rubikRegular.copyWith(
+              //                   style: robotoRegular.copyWith(
               //                       color: ColorResources.getAccentColor(
               //                           context))),
               //             ],
@@ -301,7 +308,7 @@ class DetailsPage extends StatelessWidget {
               //                 width: 5.0,
               //               ),
               //               Text('Server 2',
-              //                   style: rubikRegular.copyWith(
+              //                   style: robotoRegular.copyWith(
               //                       color:
               //                           ColorResources.getAccentColor(context)))
               //             ],
@@ -323,7 +330,7 @@ class DetailsPage extends StatelessWidget {
               //                 width: 5.0,
               //               ),
               //               Text('Thai Cuisine',
-              //                   style: rubikRegular.copyWith(
+              //                   style: robotoRegular.copyWith(
               //                       color: ColorResources.getAccentColor(
               //                           context))),
               //             ],
@@ -342,7 +349,7 @@ class DetailsPage extends StatelessWidget {
               //                     width: 5.0,
               //                   ),
               //                   Text('569 cal/serving',
-              //                       style: rubikRegular.copyWith(
+              //                       style: robotoRegular.copyWith(
               //                           color: ColorResources.getAccentColor(
               //                               context))),
               //                 ],
@@ -381,7 +388,7 @@ class DetailsPage extends StatelessWidget {
                         children: [
                           Text(
                             'Nutritional Value',
-                            style: rubikMedium,
+                            style: robotoMedium,
                           ),
                           SizedBox(
                             height: 15,
@@ -482,7 +489,7 @@ class DetailsPage extends StatelessWidget {
                                   ColorResources.getPrimaryColor(context),
                               center: Text(
                                 '7.4',
-                                style: rubikMedium.copyWith(
+                                style: robotoMedium.copyWith(
                                     color:
                                         ColorResources.getPrimaryColor(context),
                                     fontSize: 15),
@@ -521,7 +528,7 @@ class DetailsPage extends StatelessWidget {
                       //   progressColor: ColorResources.getPrimaryColor(context),
                       //   center: Text(
                       //     '7.4',
-                      //     style: rubikMedium.copyWith(
+                      //     style: robotoMedium.copyWith(
                       //         color: ColorResources.getPrimaryColor(context),
                       //         fontSize: 15),
                       //   ),
@@ -552,7 +559,7 @@ class DetailsPage extends StatelessWidget {
               // Quantity
               Row(children: [
                 Text(getTranslated('quantity', context),
-                    style: rubikMedium.copyWith(
+                    style: robotoMedium.copyWith(
                         fontSize: Dimensions.FONT_SIZE_LARGE)),
                 Expanded(child: SizedBox()),
                 Container(
@@ -593,7 +600,7 @@ class DetailsPage extends StatelessWidget {
                         color: Color(0xffDEDEDE),
                       ),
                       child: Text(productProvider.quantity.toString(),
-                          style: rubikMedium.copyWith(
+                          style: robotoMedium.copyWith(
                               fontSize: Dimensions.FONT_SIZE_DEFAULT)),
                     ),
                     InkWell(
@@ -631,7 +638,7 @@ class DetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(product.choiceOptions[index].title,
-                            style: rubikMedium.copyWith(
+                            style: robotoMedium.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_LARGE)),
                         SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         GridView.builder(
@@ -675,7 +682,7 @@ class DetailsPage extends StatelessWidget {
                                       .trim(),
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
-                                  style: rubikRegular.copyWith(
+                                  style: robotoRegular.copyWith(
                                     color:
                                         productProvider.variationIndex[index] !=
                                                 i
@@ -703,12 +710,12 @@ class DetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                           Text(getTranslated('description', context),
-                              style: rubikMedium.copyWith(
+                              style: robotoMedium.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_LARGE)),
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
                           /// split description by a comma, display items in a list
-                          Text(product.description ?? '', style: rubikRegular),
+                          Text(product.description ?? '', style: robotoRegular),
                           SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                         ])
                   : SizedBox(),
@@ -717,7 +724,7 @@ class DetailsPage extends StatelessWidget {
               //Ingredients
 
               Text('Ingredients',
-                  style: rubikMedium.copyWith(
+                  style: robotoMedium.copyWith(
                       fontSize: Dimensions.FONT_SIZE_LARGE)),
 
               SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -742,7 +749,7 @@ class DetailsPage extends StatelessWidget {
                             radius: 28.0,
                             child: Text(
                               'IN',
-                              style: rubikRegular.copyWith(
+                              style: robotoRegular.copyWith(
                                   color:
                                       ColorResources.getAccentColor(context)),
                             ),
@@ -754,7 +761,7 @@ class DetailsPage extends StatelessWidget {
                           ),
                           Text(
                             myProducts[index]["name"],
-                            style: rubikRegular.copyWith(
+                            style: robotoRegular.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_SMALL),
                           ),
                           SizedBox(
@@ -797,7 +804,7 @@ class DetailsPage extends StatelessWidget {
                           //       color: Color(0xffDEDEDE),
                           //     ),
                           //     child: Text(productProvider.quantity.toString(),
-                          //         style: rubikMedium.copyWith(
+                          //         style: robotoMedium.copyWith(
                           //             fontSize: Dimensions.FONT_SIZE_DEFAULT)),
                           //   ),
                           //   InkWell(
@@ -836,7 +843,7 @@ class DetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                           Text(getTranslated('addons', context),
-                              style: rubikMedium.copyWith(
+                              style: robotoMedium.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_LARGE)),
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           GridView.builder(
@@ -905,7 +912,7 @@ class DetailsPage extends StatelessWidget {
                                               maxLines: 2,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
-                                              style: rubikMedium.copyWith(
+                                              style: robotoMedium.copyWith(
                                                 color: productProvider
                                                         .addOnActiveList[index]
                                                     ? ColorResources.COLOR_WHITE
@@ -920,7 +927,7 @@ class DetailsPage extends StatelessWidget {
                                                 product.addOns[index].price),
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
-                                            style: rubikRegular.copyWith(
+                                            style: robotoRegular.copyWith(
                                                 color: productProvider
                                                         .addOnActiveList[index]
                                                     ? ColorResources.COLOR_WHITE
@@ -968,7 +975,7 @@ class DetailsPage extends StatelessWidget {
                                                       productProvider
                                                           .addOnQtyList[index]
                                                           .toString(),
-                                                      style: rubikMedium.copyWith(
+                                                      style: robotoMedium.copyWith(
                                                           fontSize: Dimensions
                                                               .FONT_SIZE_SMALL)),
                                                   Expanded(
@@ -996,11 +1003,11 @@ class DetailsPage extends StatelessWidget {
 
               Row(children: [
                 Text('${getTranslated('total_amount', context)}:',
-                    style: rubikMedium.copyWith(
+                    style: robotoMedium.copyWith(
                         fontSize: Dimensions.FONT_SIZE_LARGE)),
                 SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                 Text(PriceConverter.convertPrice(context, priceWithAddons),
-                    style: rubikBold.copyWith(
+                    style: robotoBold.copyWith(
                       color: ColorResources.COLOR_PRIMARY,
                       fontSize: Dimensions.FONT_SIZE_LARGE,
                     )),
@@ -1038,14 +1045,14 @@ class DetailsPage extends StatelessWidget {
                       ),
                       child: Column(children: [
                         Text(getTranslated('not_available_now', context),
-                            style: rubikMedium.copyWith(
+                            style: robotoMedium.copyWith(
                               color: Theme.of(context).primaryColor,
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                             )),
                         Text(
                           '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
                           '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
-                          style: rubikRegular,
+                          style: robotoRegular,
                         ),
                       ]),
                     ),

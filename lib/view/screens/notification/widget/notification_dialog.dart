@@ -47,7 +47,7 @@ class NotificationDialog extends StatelessWidget {
             child: Text(
               notificationModel.title,
               textAlign: TextAlign.center,
-              style: rubikMedium.copyWith(
+              style: robotoMedium.copyWith(
                 color: Theme.of(context).primaryColor,
                 fontSize: Dimensions.FONT_SIZE_LARGE,
               ),
@@ -59,7 +59,7 @@ class NotificationDialog extends StatelessWidget {
             child: Text(
               notificationModel.description,
               textAlign: TextAlign.center,
-              style: rubikRegular.copyWith(
+              style: robotoRegular.copyWith(
                 color: ColorResources.getGreyBunkerColor(context).withOpacity(.75),
               ),
             ),

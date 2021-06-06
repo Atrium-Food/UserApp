@@ -33,14 +33,14 @@ class OrderSuccessfulScreen extends StatelessWidget {
 
         Text(
           getTranslated(status == 0 ? 'order_placed_successfully' : status == 1 ? 'payment_failed' : 'payment_cancelled', context),
-          style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+          style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
         ),
         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
 
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-          Text('${getTranslated('order_id', context)}:', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+          Text('${getTranslated('order_id', context)}:', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
           SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-          Text(orderID, style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+          Text(orderID, style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
         ]),
         SizedBox(height: 30),
 

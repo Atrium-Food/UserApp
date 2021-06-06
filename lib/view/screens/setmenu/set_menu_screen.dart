@@ -98,7 +98,7 @@ class SetMenuScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                                 color: Colors.black.withOpacity(0.6),
                               ),
-                              child: Text(getTranslated('not_available_now', context), textAlign: TextAlign.center, style: rubikRegular.copyWith(
+                              child: Text(getTranslated('not_available_now', context), textAlign: TextAlign.center, style: robotoRegular.copyWith(
                                 color: Colors.white, fontSize: Dimensions.FONT_SIZE_SMALL,
                               )),
                             ),
@@ -112,7 +112,7 @@ class SetMenuScreen extends StatelessWidget {
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                             Text(
                               setMenu.setMenuList[index].name,
-                              style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+                              style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                               maxLines: 2, overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -131,7 +131,7 @@ class SetMenuScreen extends StatelessWidget {
                                       discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}''${_endingPrice!= null
                                       ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: setMenu.setMenuList[index].discount,
                                       discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}' : ''}',
-                                  style: rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+                                  style: robotoBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                                 ),
                                 _discount > 0 ? SizedBox() : Icon(Icons.add, color: Theme.of(context).textTheme.bodyText1.color),
                               ],
@@ -140,7 +140,7 @@ class SetMenuScreen extends StatelessWidget {
                               Text(
                                 '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
                                     '${_endingPrice!= null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                                style: rubikBold.copyWith(
+                                style: robotoBold.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
                                   color: ColorResources.getGreyColor(context),
                                   decoration: TextDecoration.lineThrough,

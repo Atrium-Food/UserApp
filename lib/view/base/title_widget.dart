@@ -13,14 +13,14 @@ class TitleWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-      Text(title, style: rubikMedium),
+      Text(title, style: robotoMedium),
       onTap != null ? InkWell(
         onTap: onTap,
         child: Padding(
           padding: EdgeInsets.fromLTRB(10, 5, 0, 5),
           child: Text(
             getTranslated('view_all', context),
-            style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL, color: ColorResources.getHintColor(context)),
+            style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL, color: ColorResources.getHintColor(context)),
           ),
         ),
       ) : SizedBox(),

@@ -67,7 +67,7 @@ class MyNotification {
       importance: Importance.max, priority: Priority.high,
     );
     const NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "${_orderID}");
+    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "$_orderID");
   }
 
   static Future<void> showBigTextNotification(Map<String, dynamic> message, FlutterLocalNotificationsPlugin fln) async {
@@ -83,7 +83,7 @@ class MyNotification {
       styleInformation: bigTextStyleInformation, priority: Priority.high, sound: RawResourceAndroidNotificationSound('notification'),
     );
     NotificationDetails platformChannelSpecifics = NotificationDetails(android: androidPlatformChannelSpecifics);
-    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "${_orderID}");
+    await fln.show(0, _title, _body, platformChannelSpecifics, payload: "$_orderID");
   }
 
   static Future<void> showBigPictureNotificationHiddenLargeIcon(Map<String, dynamic> message, FlutterLocalNotificationsPlugin fln) async {
@@ -143,7 +143,7 @@ class MyNotification {
     await fln.zonedSchedule(0, "Rating", "We'd appreciate your feedback",
         time, platformChannelSpecifics,androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      payload: "${productID}",
+      payload: "$productID",
     );
   }
 

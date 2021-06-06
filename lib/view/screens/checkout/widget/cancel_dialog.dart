@@ -36,14 +36,14 @@ class CancelDialog extends StatelessWidget {
 
           fromCheckout ? Text(
             getTranslated('order_placed_successfully', context),
-            style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE, color: Theme.of(context).primaryColor),
+            style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE, color: Theme.of(context).primaryColor),
           ) : SizedBox(),
           SizedBox(height: fromCheckout ? Dimensions.PADDING_SIZE_SMALL : 0),
 
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text('${getTranslated('order_id', context)}:', style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+            Text('${getTranslated('order_id', context)}:', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
             SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-            Text(orderModel.id.toString(), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
+            Text(orderModel.id.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
           ]),
           SizedBox(height: 30),
 
@@ -51,14 +51,14 @@ class CancelDialog extends StatelessWidget {
             Icon(Icons.info, color: Theme.of(context).primaryColor),
             Text(
               getTranslated('payment_failed', context),
-              style: rubikMedium.copyWith(color: Theme.of(context).primaryColor),
+              style: robotoMedium.copyWith(color: Theme.of(context).primaryColor),
             ),
           ]),
           SizedBox(height: 10),
 
           Text(
             getTranslated('payment_process_is_interrupted', context),
-            style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+            style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 30),
@@ -73,7 +73,7 @@ class CancelDialog extends StatelessWidget {
                 style: TextButton.styleFrom(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10), side: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
                 ),
-                child: Text(getTranslated('maybe_later', context), style: rubikBold.copyWith(color: Theme.of(context).primaryColor)),
+                child: Text(getTranslated('maybe_later', context), style: robotoBold.copyWith(color: Theme.of(context).primaryColor)),
               ),
             )),
             SizedBox(width: 10),

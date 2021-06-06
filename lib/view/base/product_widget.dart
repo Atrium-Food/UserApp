@@ -71,10 +71,10 @@ class ProductWidget extends StatelessWidget {
             ));
       },
       child: Container(
-        height: 85,
+        height: 105,
         padding: EdgeInsets.symmetric(
             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-            horizontal: Dimensions.PADDING_SIZE_SMALL),
+            horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
         margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
@@ -98,58 +98,133 @@ class ProductWidget extends StatelessWidget {
                   image:
                       '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
                   imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                      height: 100,
+                      width: 95,
+                    );
                   },
-                  height: 70,
-                  width: 85,
+                  height: 100,
+                  width: 95,
                   fit: BoxFit.cover,
                 ),
               ),
-              _isAvailable
-                  ? SizedBox()
-                  : Positioned(
-                      top: 0,
-                      left: 0,
-                      bottom: 0,
-                      right: 0,
-                      child: Container(
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.black.withOpacity(0.6)),
-                        child: Text(
-                            getTranslated('not_available_now_break', context),
-                            textAlign: TextAlign.center,
-                            style: rubikRegular.copyWith(
-                              color: Colors.white,
-                              fontSize: 8,
-                            )),
-                      ),
-                    ),
+              // _isAvailable
+              //     ? SizedBox()
+              //     : Positioned(
+              //         top: 0,
+              //         left: 0,
+              //         bottom: 0,
+              //         right: 0,
+              //         child: Container(
+              //           alignment: Alignment.center,
+              //           decoration: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(10),
+              //               color: Colors.black.withOpacity(0.6)),
+              //           child: Text(
+              //               getTranslated('not_available_now_break', context),
+              //               textAlign: TextAlign.center,
+              //               style: robotoRegular.copyWith(
+              //                 color: Colors.white,
+              //                 fontSize: 8,
+              //               )),
+              //         ),
+              //       ),
             ],
           ),
           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
           Expanded(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(product.name,
-                      style: rubikMedium,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(product.name,
+                            style: robotoMedium.copyWith(fontSize: 15),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                      InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (con) => CartBottomSheet(
+                                product: product,
+                                callback: (CartModel cartModel) {
+                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                      content:
+                                      Text(getTranslated('added_to_cart', context)),
+                                      backgroundColor: Colors.green));
+                                },
+                              ),
+                            );
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape
+                                    .circle,
+                                // boxShadow: [
+                                //   BoxShadow(
+                                //     color: ColorResources.getGrayColor(context),
+                                //     blurRadius: 10.0,
+                                //   ),
+                                // ]
+                                border: Border.all(color: ColorResources.getGrayColor(context))
+                              ),
+                              child: Icon(
+                                Icons.add,
+                                color: ColorResources
+                                    .getAccentColor(
+                                    context),
+                                size: 20,
+                              ))
+                      ),
+                    ],
+                  ),
                   SizedBox(height: 5.0),
                   Text(
-                    '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
-                    '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
-                    style: rubikMedium.copyWith(
-                        fontSize: Dimensions.FONT_SIZE_SMALL),
+                    product.description ?? '',
+                    style: robotoMedium.copyWith(
+                        fontSize: Dimensions
+                            .FONT_SIZE_SMALL,
+                        fontWeight:
+                        FontWeight.w300,
+                        color: ColorResources
+                            .getGrayColor(
+                            context)),
+                    maxLines: 2,
+                    overflow:
+                    TextOverflow.ellipsis,
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
+                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
+                        style: robotoMedium.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT,fontWeight: FontWeight.w600),
+                      ),
+                      RatingBar(
+                          rating: product.rating!=null
+                          // product.rating.length > 0
+                              ? double.parse(product.rating.average)
+                              : 0.0,
+                          size: 10,
+                        color: ColorResources.getGrayColor(context),
+                      ),
+                    ],
                   ),
                   product.price > _discountedPrice
                       ? Text(
                           '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
                           '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                          style: rubikMedium.copyWith(
+                          style: robotoMedium.copyWith(
                             color: ColorResources.COLOR_GREY,
                             decoration: TextDecoration.lineThrough,
                             fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
@@ -157,33 +232,6 @@ class ProductWidget extends StatelessWidget {
                       : SizedBox(),
                 ]),
           ),
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (con) => CartBottomSheet(
-                      product: product,
-                      callback: (CartModel cartModel) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text(getTranslated('added_to_cart', context)),
-                            backgroundColor: Colors.green));
-                      },
-                    ),
-                  );
-                },
-                child: Icon(Icons.add)),
-            Expanded(child: SizedBox()),
-            RatingBar(
-                rating: product.rating!=null
-                // product.rating.length > 0
-                    ? double.parse(product.rating.average)
-                    : 0.0,
-                size: 10),
-          ]),
         ]),
       ),
     );
