@@ -43,7 +43,6 @@ class ProductView extends StatelessWidget {
           if(productType == ProductType.POPULAR_PRODUCT) {
             productList = prodProvider.popularProductList;
           }
-
           return Column(children: [
             productList != null ? productList.length > 0 ? ListView.builder(
               itemCount: productList.length,

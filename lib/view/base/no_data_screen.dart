@@ -17,10 +17,12 @@ class NoDataScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Spacer(
-          flex: 1,
-        ),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        // Spacer(
+        //   flex: 1,
+        // ),
         Image.asset(
           isWishList?  Images.add_favorite: isOrder ? Images.clock : isCart ? Images.shopping_cart : Images.binoculars,
           width: MediaQuery.of(context).size.height*0.22, height: MediaQuery.of(context).size.height*0.22,
@@ -39,9 +41,9 @@ class NoDataScreen extends StatelessWidget {
           isWishList? 'Start wishlisting your favorite dishes now' :isOrder ? 'Click below to start ordering' : isCart ? 'Click below and start ordering': '',
           style: robotoMedium.copyWith(fontSize: MediaQuery.of(context).size.height*0.0185), textAlign: TextAlign.center,
         ),
-        Spacer(
-          flex: 2,
-        ),
+        // Spacer(
+        //   flex: 2,
+        // ),
         if(isOrder || isCart)CustomButton(
           btnTxt: isWishList? 'Start Browsing' :'Start Ordering',onTap: (){
           Navigator.push(context, MaterialPageRoute(builder: (context)=> DashboardScreen()));

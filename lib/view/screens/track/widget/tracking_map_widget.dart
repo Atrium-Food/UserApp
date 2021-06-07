@@ -10,7 +10,6 @@ import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -53,7 +52,6 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
     _restaurantLatLng = LatLng(double.parse(coverage.latitude), double.parse(coverage.longitude));
     setPolylines();
   }
-  Future<void> requestPermission() async { await Permission.location.request(); }
 
   @override
   void dispose() {

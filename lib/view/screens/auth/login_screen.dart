@@ -441,6 +441,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 10,
                         ),
                         CustomButton(
+                          onTap: (){
+                            authProvider.googleSignIn();
+                          },
                           inactiveColor: ColorResources.COLOR_WHITE,
                           btnTxt: 'NA',
                           child: Container(
@@ -456,7 +459,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   'Sign in with Google',
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: ColorResources.getThemeColor(context),
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),

@@ -105,27 +105,27 @@ class ProductDescriptionWidget extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              _isAvailable
-                  ? SizedBox()
-                  : Positioned(
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black.withOpacity(0.6)),
-                  child: Text(
-                      getTranslated('not_available_now_break', context),
-                      textAlign: TextAlign.center,
-                      style: robotoRegular.copyWith(
-                        color: Colors.white,
-                        fontSize: 8,
-                      )),
-                ),
-              ),
+              // _isAvailable
+              //     ? SizedBox()
+              //     : Positioned(
+              //   top: 0,
+              //   left: 0,
+              //   bottom: 0,
+              //   right: 0,
+              //   child: Container(
+              //     alignment: Alignment.center,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10),
+              //         color: Colors.black.withOpacity(0.6)),
+              //     child: Text(
+              //         getTranslated('not_available_now_break', context),
+              //         textAlign: TextAlign.center,
+              //         style: robotoRegular.copyWith(
+              //           color: Colors.white,
+              //           fontSize: 8,
+              //         )),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),

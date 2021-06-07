@@ -26,9 +26,8 @@ class ProductModel {
     _offset = json['offset'];
     if (json['products'] != null) {
       _products = [];
-      json['products'].forEach((v) {
-        _products.add(new Product.fromJson(v));
-      });
+      print(Product.fromJson(json['products'][0]));
+
     }
   }
 
@@ -202,7 +201,7 @@ class Product {
     _status = json['status'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
-    _attributes = json['attributes'].cast<String>();
+    _attributes = json['attributes']?.cast<String>();
     if (json['category_ids'] != null) {
       _categoryIds = [];
       json['category_ids'].forEach((v) {

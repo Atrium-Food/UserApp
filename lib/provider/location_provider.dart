@@ -49,7 +49,7 @@ class LocationProvider with ChangeNotifier {
 
   // for get current location
   void getCurrentLocation({GoogleMapController mapController}) async {
-    _loading = true;
+    // _loading = true;
     notifyListeners();
     try {
       Position newLocalData;
@@ -78,7 +78,7 @@ class LocationProvider with ChangeNotifier {
         debugPrint("Permission Denied");
       }
     }
-    _loading = false;
+    // _loading = false;
     notifyListeners();
   }
 
@@ -209,9 +209,19 @@ class LocationProvider with ChangeNotifier {
 
   void setAddress(int index) async{
     try {
-      var currentAddresses = await placemarkFromCoordinates(
-          double.parse(_addressList[index].latitude),double.parse(_addressList[index].longitude));
-      _address = currentAddresses.first;
+      if(_addressList[index].latitude!=null) {
+        var currentAddresses = await placemarkFromCoordinates(
+            double.parse(_addressList[index].latitude),
+            double.parse(_addressList[index].longitude));
+        _address = currentAddresses.first;
+      } else {
+        var addresses=await locationFromAddress(_addressList[index].address);
+        var currentAddresses = await placemarkFromCoordinates(
+            addresses.first.latitude,
+            addresses.first.longitude
+        );
+        _address=currentAddresses.first;
+      }
     } on Exception catch (e) {
       print("$e Address can't be found");
       _address = null;

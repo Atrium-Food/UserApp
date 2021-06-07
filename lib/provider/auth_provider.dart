@@ -89,6 +89,7 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
+
   //for otpLogin
   bool _isOtpLoginLoading = false;
 
@@ -264,6 +265,10 @@ class AuthProvider with ChangeNotifier {
     }
     notifyListeners();
     return responseModel;
+  }
+
+  googleSignIn(){
+    authRepo.googleSignIn();
   }
 
   Future<ResponseModel> verifyEmail(String email) async {

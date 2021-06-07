@@ -40,6 +40,7 @@ class ProductProvider extends ChangeNotifier {
         if (offset == '1') {
           _popularProductList = [];
         }
+
         _popularProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
         // for (Product p in _popularProductList){
         //   p.rating.length>1 ?? print("Ratingss"+p.rating.toString());

@@ -3,6 +3,8 @@ import 'package:flutter_restaurant/utill/images.dart';
 
 class AppConstants {
   static const String BASE_URL = 'http://demo.6amtech.com/restaurant/';
+  // static const String BASE_URL = 'http://13.233.136.170/';
+  // static const String BASE_URL = 'http://13.233.136.170/';
 
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
@@ -64,6 +66,7 @@ class AppConstants {
   static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
   static const String ADD_CARD_URI = '/api/v1/customer/add-card';
   static const String CARDS_URI = '/api/v1/customer/cards/';
+  static const String GET_GOOGLE_ACCOUNT= '';
 
   // Shared Key
   static const String THEME = 'theme';

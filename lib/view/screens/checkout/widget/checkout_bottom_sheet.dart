@@ -49,11 +49,12 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
   GoogleMapController _mapController;
   bool _isCashOnDeliveryActive;
   bool _isDigitalPaymentActive;
-  // List<Branches> _branches = [];
+  List<Branches> _branches = [];
   bool _loading = true;
   Set<Marker> _markers = HashSet<Marker>();
   bool _isLoggedIn;
   bool _isAddressExpanded = false;
+  String _errorMessage = '';
 
   @override
   void initState() {
@@ -62,12 +63,12 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
     _isLoggedIn =
         Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
     if (_isLoggedIn) {
-      // _branches = Provider.of<SplashProvider>(context, listen: false)
-      //     .configModel
-      //     .branches;
-      Provider.of<LocationProvider>(context, listen: false)
-          .initAddressList(context);
-      Provider.of<OrderProvider>(context, listen: false).clearPrevData();
+      _branches = Provider.of<SplashProvider>(context, listen: false)
+          .configModel
+          .branches;
+      // Provider.of<LocationProvider>(context, listen: false)
+      //     .initAddressList(context);
+      // Provider.of<OrderProvider>(context, listen: false).clearPrevData();
       _isCashOnDeliveryActive =
           Provider.of<SplashProvider>(context, listen: false)
                   .configModel
@@ -97,14 +98,14 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
             return ListView(
               shrinkWrap: true,
               children: [
-                widget.orderType != 'take_away'
-                    ? ExpansionTile(
+                // widget.orderType != 'take_away' ?
+                ExpansionTile(
                         title: Text(
                           "Select Delivery Address",
                           style: robotoRegular.copyWith(
                               color: ColorResources.getAccentColor(context)),
                         ),
-                        subtitle: Text("Home"),
+                        subtitle: Text(address.addressList[order.addressIndex].address,style: robotoRegular.copyWith(fontWeight: FontWeight.w400),),
                         onExpansionChanged: (value) {
                           setState(() {
                             _isAddressExpanded = value;
@@ -180,6 +181,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                     return InkWell(
                                                       onTap: () {
                                                         // if (_isAvailable) {
+                                                        print(order.addressIndex);
                                                           order.setAddressIndex(
                                                               index);
                                                         // }
@@ -294,7 +296,9 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                                   } else if(val=='delete'){
                                                                     Provider.of<LocationProvider>(context, listen: false).deleteUserAddressByID(address.addressList[index].id, index, (bool isSuccessful, String message) {
                                                                       // showCustomSnackBar(message, context, isError: !isSuccessful);
-
+                                                                      setState(() {
+                                                                        _errorMessage=message;
+                                                                      });
                                                                     });
                                                                   }
                                                                 },
@@ -396,12 +400,12 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                 ])
                               : SizedBox(),
                         ],
-                      )
-                    : Text("Take Away"),
-                Divider(
-                  color: ColorResources.getAccentColor(context),
-                  thickness: 0.3,
-                ),
+                      ),
+                    // : Text("Take Away"),
+                // Divider(
+                //   color: ColorResources.getAccentColor(context),
+                //   thickness: 0.3,
+                // ),
                 // RichText(
                 //     text: TextSpan(children: [
                 //   TextSpan(
@@ -439,10 +443,8 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                            text: profile.userInfoModel.fName
-                                                    .trim() +
-                                                " " +
-                                                profile.userInfoModel.lName,
+                                            text: address.addressList[order.addressIndex].contactPersonName
+                                                    .trim(),
                                             style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
@@ -450,7 +452,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                                     .getAccentColor(context))),
                                         TextSpan(
                                             text: ", " +
-                                                profile.userInfoModel.phone,
+                                                address.addressList[order.addressIndex].contactPersonNumber,
                                             style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
                                                     .FONT_SIZE_DEFAULT,
@@ -469,7 +471,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                 ),
                 Divider(
                   color: ColorResources.getAccentColor(context),
-                  thickness: 0.3,
+                  thickness: 0.5,
                 ),
                 _isCashOnDeliveryActive
                     ? CustomCheckBox(
@@ -481,6 +483,24 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                         title: getTranslated('digital_payment', context),
                         index: _isCashOnDeliveryActive ? 1 : 0)
                     : SizedBox(),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _errorMessage.length > 0
+                        ? CircleAvatar(backgroundColor: ColorResources.getPrimaryColor(context), radius: 5)
+                        : SizedBox.shrink(),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: Text(
+                        _errorMessage ?? "",
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline2
+                            .copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT, color: ColorResources.getPrimaryColor(context), height: 1),
+                      ),
+                    )
+                  ],
+                ),
                 Padding(
                   padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                   child: !order.isLoading
@@ -494,23 +514,29 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                             listen: false)
                                         .configModel
                                         .minimumOrderValue) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                          content: Text(
-                                            'Minimum order amount is ${Provider.of<SplashProvider>(context, listen: false).configModel.minimumOrderValue}',
-                                          ),
-                                          backgroundColor: Colors.red));
+                                  setState(() {
+                                    _errorMessage='Minimum order amount is ${Provider.of<SplashProvider>(context, listen: false).configModel.minimumOrderValue}';
+                                  });
+                                  // ScaffoldMessenger.of(context)
+                                  //     .showSnackBar(SnackBar(
+                                  //         content: Text(
+                                  //           'Minimum order amount is ${Provider.of<SplashProvider>(context, listen: false).configModel.minimumOrderValue}',
+                                  //         ),
+                                  //         backgroundColor: Colors.red));
                                 } else if (widget.orderType != 'take_away' &&
                                     (address.addressList == null ||
                                         address.addressList.length == 0 ||
                                         order.addressIndex < 0)) {
-                                  ScaffoldMessenger.of(context)
-                                      .showSnackBar(SnackBar(
-                                    content: Text(getTranslated(
-                                        'select_an_address', context)),
-                                    backgroundColor: Colors.red,
-                                    behavior: SnackBarBehavior.floating,
-                                  ));
+                                  // ScaffoldMessenger.of(context)
+                                  //     .showSnackBar(SnackBar(
+                                  //   content: Text(getTranslated(
+                                  //       'select_an_address', context)),
+                                  //   backgroundColor: Colors.red,
+                                  //   behavior: SnackBarBehavior.floating,
+                                  // ));
+                                  setState(() {
+                                    _errorMessage='Select an address';
+                                  });
                                 } else {
                                   List<Cart> carts = [];
                                   for (int index = 0;
@@ -569,7 +595,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                               .coupon
                                               .code
                                           : null,
-                                      // branchId: _branches[order.branchIndex].id,
+                                      branchId: _branches[order.branchIndex].id,
                                     ),
                                     _callback,
                                   );
@@ -625,8 +651,11 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                     orderModel: _orderModel, fromCheckout: true)));
       }
     } else {
-      _scaffoldKey.currentState.showSnackBar(
-          SnackBar(content: Text(message), backgroundColor: Colors.red));
+      // _scaffoldKey.currentState.showSnackBar(
+      //     SnackBar(content: Text(message), backgroundColor: Colors.red));
+      setState(() {
+        _errorMessage=message;
+      });
     }
   }
 }

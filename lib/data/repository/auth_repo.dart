@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_restaurant/data/datasource/remote/dio/dio_client.dart';
@@ -9,11 +10,13 @@ import 'package:flutter_restaurant/data/datasource/remote/exception/api_error_ha
 import 'package:flutter_restaurant/data/model/response/base/api_response.dart';
 import 'package:flutter_restaurant/data/model/response/signup_model.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepo {
   final DioClient dioClient;
   final SharedPreferences sharedPreferences;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
   AuthRepo({@required this.dioClient, @required this.sharedPreferences});
 
@@ -34,6 +37,35 @@ class AuthRepo {
       Response response = await dioClient.post(
         AppConstants.LOGIN_URI,
         data: {"email": email, "password": password},
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      print(e.toString());
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  Future<String> googleSignIn() async {
+    User _user;
+    final GoogleSignIn _googleSignIn = GoogleSignIn();
+    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+    AuthCredential credential = GoogleAuthProvider.credential(
+        idToken: googleSignInAuthentication.idToken,
+        accessToken: googleSignInAuthentication.accessToken
+    );
+    UserCredential authResult = await _auth.signInWithCredential(credential);
+    _user = authResult.user;
+    User currentUser = await _auth.currentUser;
+    print("Google Token: ${googleSignInAuthentication.accessToken}");
+  }
+
+  Future<ApiResponse> loginGoogle() async {
+    String _token = await googleSignIn();
+    try {
+      Response response = await dioClient.post(
+        AppConstants.GET_GOOGLE_ACCOUNT,
+        data: {"token": _token},
       );
       return ApiResponse.withSuccess(response);
     } catch (e) {
