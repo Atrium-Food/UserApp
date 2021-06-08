@@ -33,21 +33,24 @@ class ProductProvider extends ChangeNotifier {
 
   void getPopularProductList(BuildContext context, String offset) async {
     if (!_offsetList.contains(offset)) {
+      print("Offset: $offset");
       _offsetList.add(offset);
       ApiResponse apiResponse = await productRepo.getPopularProductList(offset);
       if (apiResponse.response != null &&
           apiResponse.response.statusCode == 200) {
         if (offset == '1') {
+          print(1);
           _popularProductList = [];
         }
-
+        print("Hey");
+        // ProductModel _temp = ProductModel.fromJson(apiResponse.response.data);
+        // print(ProductModel.fromJson(apiResponse.response.data));
         _popularProductList
             .addAll(ProductModel.fromJson(apiResponse.response.data).products);
-        // for (Product p in _popularProductList){
-        //   p.rating.length>1 ?? print("Ratingss"+p.rating.toString());
-        // }
-        _popularPageSize =
-            ProductModel.fromJson(apiResponse.response.data).totalSize;
+        // _popularPageSize =
+        //     ProductModel.fromJson(apiResponse.response.data).totalSize;
+
+        _popularPageSize=10;
         _isLoading = false;
         notifyListeners();
       } else {
@@ -113,11 +116,13 @@ class ProductProvider extends ChangeNotifier {
       });
     } else {
       _quantity = 1;
-      product.choiceOptions.forEach((element) => _variationIndex.add(0));
-      product.addOns.forEach((addOn) {
-        _addOnActiveList.add(false);
-        _addOnQtyList.add(1);
-      });
+      if(product.choiceOptions!=null) {
+        product.choiceOptions.forEach((element) => _variationIndex.add(0));
+        product.addOns.forEach((addOn) {
+          _addOnActiveList.add(false);
+          _addOnQtyList.add(1);
+        });
+      }
     }
   }
 

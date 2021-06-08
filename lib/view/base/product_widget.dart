@@ -25,7 +25,7 @@ class ProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double _startingPrice;
     double _endingPrice;
-    if (product.choiceOptions.length != 0) {
+    if (product.choiceOptions!=null && product.choiceOptions.length != 0) {
       List<double> _priceList = [];
       product.variations
           .forEach((variation) => _priceList.add(variation.price));

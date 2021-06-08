@@ -24,10 +24,12 @@ class ProductModel {
     _totalSize = json['total_size'];
     _limit = json['limit'];
     _offset = json['offset'];
+    print("Hey");
     if (json['products'] != null) {
       _products = [];
-      print(Product.fromJson(json['products'][0]));
-
+      json['products'].forEach((v) {
+        _products.add(new Product.fromJson(v));
+      });
     }
   }
 
@@ -167,6 +169,7 @@ class Product {
   String get cuisine => _cuisine;
 
   Product.fromJson(Map<String, dynamic> json) {
+    print(json);
     _id = json['id'];
     _name = json['name'];
     _description = json['description'];
@@ -174,7 +177,7 @@ class Product {
     _cuisine = json['cuisine'];
     _serves = json['serves'];
     _image = json['image'];
-    _price = json['price'].toDouble();
+    _price = json['price']?.toDouble();
     if (json['variations'] != null) {
       _variations = [];
       json['variations'].forEach((v) {
@@ -187,7 +190,7 @@ class Product {
         _addOns.add(new AddOns.fromJson(v));
       });
     }
-
+    //
     if (json['ingredients'] != null) {
       _ingredients = [];
       json['ingredients'].forEach((v) {
@@ -195,27 +198,27 @@ class Product {
       });
     }
 
-    _tax = json['tax'].toDouble();
+    _tax = json['tax']?.toDouble();
     _availableTimeStarts = json['available_time_starts'];
     _availableTimeEnds = json['available_time_ends'];
     _status = json['status'];
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _attributes = json['attributes']?.cast<String>();
-    if (json['category_ids'] != null) {
-      _categoryIds = [];
-      json['category_ids'].forEach((v) {
-        _categoryIds.add(new CategoryId.fromJson(v));
-      });
-    }
+    // if (json['category_ids'] != null) {
+    //   _categoryIds = [];
+    //   json['category_ids'].forEach((v) {
+    //     _categoryIds.add(new CategoryId.fromJson(v));
+    //   });
+    // }
     if (json['choice_options'] != null) {
       _choiceOptions = [];
       json['choice_options'].forEach((v) {
         _choiceOptions.add(new ChoiceOption.fromJson(v));
       });
     }
-    _discount = json['discount'].toDouble();
-    _calories_per_serving = json['calories_per_serving'].toDouble();
+    _discount = json['discount']?.toDouble();
+    _calories_per_serving = json['calories_per_serving']?.toDouble();
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
@@ -233,11 +236,11 @@ class Product {
     if (json['recipe'] != null) {
       _recipe = Recipe.fromJson(json['recipe']);
     }
-
+    //
     if (json['nutrients'] != null) {
       _nutrients = Nutrients.fromJson(json['nutrients']);
     }
-
+    //
     if (json['reviews'] != null) {
       json['reviews'].forEach((v) {
         _reviews.add(new ReviewBody.fromJson(v));
@@ -319,7 +322,7 @@ class Variation {
   Variation.fromJson(Map<String, dynamic> json) {
     _type = json['type'];
     if (json['price'] != null) {
-      _price = json['price'].toDouble();
+      _price = json['price']?.toDouble();
     }
   }
 
@@ -344,7 +347,11 @@ class Recipe {
   String get description => _description;
 
   Recipe.fromJson(Map<String, dynamic> json) {
-    _procedure = json['procedure'];
+    if(json['procedure']!=null){
+      _procedure=[];
+      for(String i in json['procedure'])
+        _procedure.add(i);
+    }
     _description = json['description'];
   }
 
@@ -410,14 +417,14 @@ class Nutrients {
   Nutrients.fromJson(Map<String, dynamic> json) {
     _glycemicIndex = json['glycemic_index'];
     _glycemicLoad = json['glycemic_load'];
-    _score = json['score'].toDouble();
-    _protein = json['protein'].toDouble();
-    _calories = json['calories'].toDouble();
-    _carbs = json['carbs'].toDouble();
-    _energy = json['energy'].toDouble();
-    _fats = json['fats'].toDouble();
-    _fiber = json['fiber'].toDouble();
-    _sugar = json['sugar'].toDouble();
+    _score = json['score']?.toDouble();
+    _protein = json['protein']?.toDouble();
+    _calories = json['calories']?.toDouble();
+    _carbs = json['carbs']?.toDouble();
+    _energy = json['energy']?.toDouble();
+    _fats = json['fats']?.toDouble();
+    _fiber = json['fiber']?.toDouble();
+    _sugar = json['sugar']?.toDouble();
     _suggestion = json['suggestion'];
   }
 
@@ -465,7 +472,7 @@ class AddOns {
   AddOns.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
-    _price = json['price'].toDouble();
+    _price = json['price']?.toDouble();
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }
@@ -518,7 +525,7 @@ class Ingredients {
   Ingredients.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
-    _price = json['price'].toDouble();
+    _price = json['price']?.toDouble();
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
     _quantity = json['quantity'];

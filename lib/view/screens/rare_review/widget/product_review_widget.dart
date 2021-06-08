@@ -3,7 +3,9 @@ import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/data/model/response/order_details_model.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
+import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
@@ -152,6 +154,9 @@ class ProductReviewWidget extends StatelessWidget {
                                   rating: productProvider.ratingList[index].toString(),
                                   comment: productProvider.reviewList[index],
                                   orderId: orderDetailsList[index].orderId.toString(),
+                                  userId: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.id.toString(),
+                                  userImage: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.image,
+                                  userName: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.fName,
                                 );
                                 productProvider.submitReview(index, reviewBody).then((value) {
                                   if (value.isSuccess) {
