@@ -28,7 +28,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   @override
   void initState() {
     super.initState();
-    selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
+    // selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
+    selectedUrl = 'http://13.233.136.170/razor-payment';
 
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
@@ -75,6 +76,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 setState(() {
                   _isLoading = false;
                 });
+
               },
             ),
 

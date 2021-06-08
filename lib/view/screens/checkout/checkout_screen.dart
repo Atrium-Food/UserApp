@@ -305,7 +305,7 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
                               paymentMethod: _isCashOnDeliveryActive ? order.paymentMethodIndex == 0 ? 'cash_on_delivery' : null : null,
                               couponCode: Provider.of<CouponProvider>(context, listen: false).coupon != null
                                   ? Provider.of<CouponProvider>(context, listen: false).coupon.code : null,
-                              // branchId: _branches[order.branchIndex].id,
+                              branchId: _branches[order.branchIndex].id,
                             ), _callback,
                           );
                         }

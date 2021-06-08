@@ -48,6 +48,7 @@ class AddressBottomSheet extends StatelessWidget {
                                 itemBuilder: (context, index) {
                                   return InkWell(
                                     onTap: () {
+                                      print(index);
                                       order.setAddressIndex(index);
                                       address.setAddress(index);
                                       print(address.addressList[index].address);

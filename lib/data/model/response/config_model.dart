@@ -15,7 +15,7 @@ class ConfigModel {
   String _termsAndConditions;
   RestaurantLocationCoverage _restaurantLocationCoverage;
   double _minimumOrderValue;
-  // List<Branches> _branches;
+  List<Branches> _branches;
 
   ConfigModel(
       {String restaurantName,
@@ -34,7 +34,7 @@ class ConfigModel {
       String termsAndConditions,
       RestaurantLocationCoverage restaurantLocationCoverage,
       double minimumOrderValue,
-      // List<Branches> branches
+      List<Branches> branches
       }) {
     this._restaurantName = restaurantName;
     this._restaurantOpenTime = restaurantOpenTime;
@@ -52,7 +52,7 @@ class ConfigModel {
     this._termsAndConditions = termsAndConditions;
     this._restaurantLocationCoverage = restaurantLocationCoverage;
     this._minimumOrderValue = minimumOrderValue;
-    // this._branches = branches;
+    this._branches = branches;
   }
 
   String get restaurantName => _restaurantName;
@@ -72,7 +72,7 @@ class ConfigModel {
   RestaurantLocationCoverage get restaurantLocationCoverage =>
       _restaurantLocationCoverage;
   double get minimumOrderValue => _minimumOrderValue;
-  // List<Branches> get branches => _branches;
+  List<Branches> get branches => _branches;
 
   ConfigModel.fromJson(Map<String, dynamic> json) {
     _restaurantName = json['restaurant_name'];
@@ -98,12 +98,12 @@ class ConfigModel {
     _minimumOrderValue = json['minimum_order_value'] != null
         ? json['minimum_order_value'].toDouble()
         : 0;
-    // if (json['branches'] != null) {
-    //   // _branches = [];
-    //   json['branches'].forEach((v) {
-    //     _branches.add(new Branches.fromJson(v));
-    //   });
-    // }
+    if (json['branches'] != null) {
+      _branches = [];
+      json['branches'].forEach((v) {
+        _branches.add(new Branches.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
