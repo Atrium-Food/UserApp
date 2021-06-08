@@ -5,6 +5,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/screens/auth/create_account_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/signup_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
@@ -60,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
               btnTxt: getTranslated('signup', context),
               onTap: () {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (_) => SignUpScreen()));
+                    MaterialPageRoute(builder: (_) => CreateAccountScreen()));
               },
               backgroundColor: Colors.black,
             ),

@@ -366,29 +366,29 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // for create an account
                         SizedBox(height: 30),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MobileOTP()));
-                            },
-                            child: Text(
-                              'Login using OTP',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3
-                                  .copyWith(
-                                      fontSize: Dimensions.FONT_SIZE_SMALL,
-                                      color: ColorResources.getGreyBunkerColor(
-                                          context)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
+                        // Center(
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => MobileOTP()));
+                        //     },
+                        //     child: Text(
+                        //       'Login using OTP',
+                        //       style: Theme.of(context)
+                        //           .textTheme
+                        //           .headline3
+                        //           .copyWith(
+                        //               fontSize: Dimensions.FONT_SIZE_SMALL,
+                        //               color: ColorResources.getGreyBunkerColor(
+                        //                   context)),
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
