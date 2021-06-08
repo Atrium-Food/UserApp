@@ -3,6 +3,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 
 class AppConstants {
   static const String BASE_URL = 'http://demo.6amtech.com/restaurant/';
+  // static const String BASE_URL = 'http://3.108.112.158/';
   // static const String BASE_URL = 'http://13.233.136.170/';
   // static const String BASE_URL = 'http://13.233.136.170/';
 

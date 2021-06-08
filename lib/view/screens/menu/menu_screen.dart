@@ -75,7 +75,7 @@ class MenuScreen extends StatelessWidget {
                                             '${profileProvider.userInfoModel != null ? profileProvider.userInfoModel.image : ''}',
                                         height: 40,
                                         width: 40,
-                                        fit: BoxFit.cover,
+                                        fit: BoxFit.contain,
                                         imageErrorBuilder:
                                             (BuildContext context,
                                                 Object exception,
@@ -90,7 +90,7 @@ class MenuScreen extends StatelessWidget {
                                     : Image.asset(Images.placeholder_user,
                                         height: 40,
                                         width: 40,
-                                        fit: BoxFit.cover),
+                                        fit: BoxFit.contain),
                               ),
                             ),
                             Shimmer.fromColors(
@@ -182,21 +182,21 @@ class MenuScreen extends StatelessWidget {
                           child: Text('PROFILE',
                               style: robotoRegular.copyWith(
                                   fontSize: MediaQuery.of(context).size.width *
-                                      0.035)),
+                                      0.032)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('PAYMENT',
                               style: robotoRegular.copyWith(
                                   fontSize: MediaQuery.of(context).size.width *
-                                      0.035)),
+                                      0.032)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REFER',
                               style: robotoRegular.copyWith(
                                   fontSize: MediaQuery.of(context).size.width *
-                                      0.035)),
+                                      0.032)),
                         ),
                       ],
                     ),

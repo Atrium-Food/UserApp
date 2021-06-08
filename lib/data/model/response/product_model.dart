@@ -27,7 +27,6 @@ class ProductModel {
     if (json['products'] != null) {
       _products = [];
       print(Product.fromJson(json['products'][0]));
-
     }
   }
 
@@ -215,7 +214,7 @@ class Product {
       });
     }
     _discount = json['discount'].toDouble();
-    _calories_per_serving = json['calories_per_serving'].toDouble();
+    // _calories_per_serving = json['calories_per_serving'].toDouble();
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
@@ -344,7 +343,7 @@ class Recipe {
   String get description => _description;
 
   Recipe.fromJson(Map<String, dynamic> json) {
-    _procedure = json['procedure'];
+    _procedure = json['procedure']?.cast<String>();
     _description = json['description'];
   }
 
@@ -465,7 +464,7 @@ class AddOns {
   AddOns.fromJson(Map<String, dynamic> json) {
     _id = json['id'];
     _name = json['name'];
-    _price = json['price'].toDouble();
+    // _price = json['price'].toDouble();
     _createdAt = json['created_at'];
     _updatedAt = json['updated_at'];
   }

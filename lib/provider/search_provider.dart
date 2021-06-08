@@ -33,12 +33,13 @@ class SearchProvider with ChangeNotifier {
   }
 
   void sortSearchList(int categoryIndex, List<CategoryModel> categoryList) {
-    _searchProductList= [];
+    _searchProductList = [];
     _searchProductList.addAll(_filterProductList);
-    if(_upperValue > 0) {
-      _searchProductList.removeWhere((product) => (product.price) <= _lowerValue || (product.price) >= _upperValue);
+    if (_upperValue > 0) {
+      _searchProductList.removeWhere((product) =>
+          (product.price) <= _lowerValue || (product.price) >= _upperValue);
     }
-    if(categoryIndex != -1) {
+    if (categoryIndex != -1) {
       int categoryID = categoryList[categoryIndex].id;
       _searchProductList.removeWhere((product) {
         List<String> _ids = [];
@@ -46,9 +47,11 @@ class SearchProvider with ChangeNotifier {
         return !_ids.contains(categoryID.toString());
       });
     }
-    if(_rating != -1) {
-      _searchProductList.removeWhere((product) => product.rating == null || double.parse(product.rating.average)<_rating);
-          // product.rating.length == 0 || double.parse(product.rating[0].average) < _rating);
+    if (_rating != -1) {
+      _searchProductList.removeWhere((product) =>
+          product.rating == null ||
+          double.parse(product.rating.average) < _rating);
+      // product.rating.length == 0 || double.parse(product.rating[0].average) < _rating);
     }
     notifyListeners();
   }
@@ -89,14 +92,17 @@ class SearchProvider with ChangeNotifier {
     notifyListeners();
 
     ApiResponse apiResponse = await searchRepo.getSearchProductList(query);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       if (query.isEmpty) {
         _searchProductList = [];
       } else {
         _searchProductList = [];
-        _searchProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
+        _searchProductList
+            .addAll(ProductModel.fromJson(apiResponse.response.data).products);
         _filterProductList = [];
-        _filterProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
+        _filterProductList
+            .addAll(ProductModel.fromJson(apiResponse.response.data).products);
       }
       notifyListeners();
     } else {
