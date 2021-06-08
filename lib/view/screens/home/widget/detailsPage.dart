@@ -60,7 +60,7 @@ class DetailsPage extends StatelessWidget {
         builder: (context, productProvider, child) {
           double _startingPrice;
           double _endingPrice;
-          if (product.choiceOptions.length != 0) {
+          if(product.choiceOptions!=null && product.choiceOptions.length != 0) {
             List<double> _priceList = [];
             product.variations
                 .forEach((variation) => _priceList.add(variation.price));
@@ -74,21 +74,26 @@ class DetailsPage extends StatelessWidget {
           }
 
           List<String> _variationList = [];
-          for (int index = 0; index < product.choiceOptions.length; index++) {
-            _variationList.add(product.choiceOptions[index]
-                .options[productProvider.variationIndex[index]]
-                .replaceAll(' ', ''));
+          if(product.choiceOptions!=null) {
+            for (int index = 0; index < product.choiceOptions.length; index++) {
+              _variationList.add(product.choiceOptions[index]
+                  .options[productProvider.variationIndex[index]]
+                  .replaceAll(' ', ''));
+            }
           }
           String variationType = '';
           bool isFirst = true;
-          _variationList.forEach((variation) {
-            if (isFirst) {
-              variationType = '$variationType$variation';
-              isFirst = false;
-            } else {
-              variationType = '$variationType-$variation';
-            }
-          });
+          if(_variationList!=null) {
+            _variationList.forEach((variation) {
+              if (isFirst) {
+                variationType = '$variationType$variation';
+                isFirst = false;
+              } else {
+                variationType = '$variationType-$variation';
+              }
+            });
+
+          }
 
           double price = product.price;
           for (Variation variation in product.variations) {
@@ -669,7 +674,7 @@ class DetailsPage extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Variation
-              ListView.builder(
+              if(product.choiceOptions!=null)ListView.builder(
                 shrinkWrap: true,
                 itemCount: product.choiceOptions.length,
                 physics: NeverScrollableScrollPhysics(),
@@ -741,7 +746,7 @@ class DetailsPage extends StatelessWidget {
                       ]);
                 },
               ),
-              product.choiceOptions.length > 0
+              if(product.choiceOptions!=null)product.choiceOptions.length > 0
                   ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
                   : SizedBox(),
 

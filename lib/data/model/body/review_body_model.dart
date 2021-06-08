@@ -5,6 +5,9 @@ class ReviewBody {
   String _rating;
   List<String> _fileUpload;
   String _orderId;
+  String _userId;
+  String _userName;
+  String _userImage;
 
   ReviewBody(
       {String productId,
@@ -12,13 +15,20 @@ class ReviewBody {
         String comment,
         String rating,
         String orderId,
-        List<String> fileUpload}) {
+        List<String> fileUpload,
+        String userId,
+        String userName,
+        String userImage
+      }) {
     this._productId = productId;
     this._deliveryManId = deliveryManId;
     this._comment = comment;
     this._rating = rating;
     this._orderId = orderId;
     this._fileUpload = fileUpload;
+    this._userId=userId;
+    this._userImage=userImage;
+    this._userName=userName;
   }
 
   String get productId => _productId;
@@ -34,6 +44,9 @@ class ReviewBody {
     _comment = json['comment'];
     _orderId = json['order_id'];
     _rating = json['rating'];
+    _userId = json['user_id'];
+    _userName=json['user_name'];
+    _userImage=json['user_image'];
     _fileUpload = json['attachment']!=null? json['attachment'].cast<String>():null;
   }
 
@@ -45,6 +58,9 @@ class ReviewBody {
     data['order_id'] = this._orderId;
     data['rating'] = this._rating;
     data['attachment'] = this._fileUpload;
+    data['user_id']=this._userId;
+    data['user_image']=this._userImage;
+    data['user_name'] = this._userName;
     return data;
   }
 }
