@@ -2,7 +2,7 @@ import 'package:flutter_restaurant/data/model/response/language_model.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 
 class AppConstants {
-  static const String BASE_URL = 'http://demo.6amtech.com/restaurant/';
+  static const String BASE_URL = 'https://demo.6amtech.com/restaurant/';
 
   static const String CATEGORY_URI = '/api/v1/categories';
   static const String BANNER_URI = '/api/v1/banners';
@@ -30,7 +30,6 @@ class AppConstants {
       '/api/v1/customer/address/delete?address_id=';
   static const String ADD_ADDRESS_URI = '/api/v1/customer/address/add';
   static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';
-
 
   // static const String SET_MENU_URI = '/api/v1/products/set-menu';
   static const String CUSTOMER_INFO_URI = '/api/v1/customer/info';
@@ -61,7 +60,7 @@ class AppConstants {
 
   /// New and Modified URIs
   static const String SET_MENU_URI = '/api/v1/products/set-menu';
-  static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
+  static const String POPULAR_PRODUCT_URI = 'api/v1/products/latest';
   static const String ADD_CARD_URI = '/api/v1/customer/add-card';
   static const String CARDS_URI = '/api/v1/customer/cards/';
 

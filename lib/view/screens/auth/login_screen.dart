@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     maxLines: 2,
                     style: robotoBold.copyWith(
                         fontSize: 35,
-                        color: Colors.white,
+                        color: ColorResources.getBackgroundColor(context),
                         fontWeight: FontWeight.w600),
                   ),
                   Text(
@@ -89,14 +89,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     maxLines: 2,
                     style: robotoBold.copyWith(
                         fontSize: 35,
-                        color: Colors.white,
+                        color: ColorResources.getBackgroundColor(context),
                         fontWeight: FontWeight.w600),
                   ),
 
                   Text(
                     'Hey, we are happy to have you.',
                     style: TextStyle(
-                      color: ColorResources.COLOR_WHITE,
+                      color: ColorResources.getBackgroundColor(context),
                     ),
                   ),
                   SizedBox(
@@ -110,7 +110,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     getTranslated('login', context),
                     style: robotoBold.copyWith(
                         fontSize: 25,
-                        color: Colors.white,
+                        color: ColorResources.getBackgroundColor(context),
                         fontWeight: FontWeight.w600),
                   ),
 
@@ -118,7 +118,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorResources.getBackgroundColor(context),
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       boxShadow: [
                         BoxShadow(
@@ -441,7 +441,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 10,
                         ),
                         CustomButton(
-                          inactiveColor: ColorResources.COLOR_WHITE,
+                          inactiveColor:
+                              ColorResources.getBackgroundColor(context),
                           btnTxt: 'NA',
                           child: Container(
                             padding:
@@ -456,7 +457,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 Text(
                                   'Sign in with Google',
                                   style: TextStyle(
-                                    color: Colors.grey,
+                                    color: ColorResources.getGreyColor(context),
                                     fontSize: 16,
                                     fontWeight: FontWeight.w500,
                                   ),
@@ -464,7 +465,39 @@ class _LoginScreenState extends State<LoginScreen> {
                               ],
                             ),
                           ),
-                        )
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                          child: TextButton(
+                            style: TextButton.styleFrom(
+                              minimumSize: Size(1, 40),
+                            ),
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (_) => DashboardScreen()));
+                            },
+                            child: RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                  text:
+                                      '${getTranslated('login_as_a', context)} ',
+                                  style: robotoRegular.copyWith(
+                                      color: ColorResources.getGreyColor(
+                                          context))),
+                              TextSpan(
+                                  text: getTranslated('guest', context),
+                                  style: robotoMedium.copyWith(
+                                      color: Theme.of(context)
+                                          .textTheme
+                                          .bodyText1
+                                          .color)),
+                            ])),
+                          ),
+                        ),
                       ],
                     ),
                   ),

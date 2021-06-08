@@ -8,6 +8,7 @@ import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/custom_text_field.dart';
+import 'package:flutter_restaurant/view/screens/auth/otp_verification.dart';
 import 'package:flutter_restaurant/view/screens/forgot_password/verification_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -89,16 +90,15 @@ class _MobileOTPState extends State<MobileOTP> {
                                   _numberError = '';
                                   Provider.of<AuthProvider>(context,
                                           listen: false)
-                                      .forgetPassword(_numberController.text)
+                                      .otpLogin(_numberController.text)
                                       .then((value) {
                                     if (value.isSuccess) {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
-                                              builder: (_) =>
-                                                  VerificationScreen(
-                                                      forLogin: true,
-                                                      contact: _numberController
-                                                          .text)));
+                                              builder: (_) => OtpVerification(
+                                                  forLogin: true,
+                                                  contact:
+                                                      _numberController.text)));
                                     } else {
                                       showCustomSnackBar(
                                           value.message, context);

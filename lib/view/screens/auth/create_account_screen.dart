@@ -83,7 +83,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     },
                     child: Icon(
                       CupertinoIcons.back,
-                      color: ColorResources.COLOR_WHITE,
+                      color: ColorResources.getBackgroundColor(context),
                     ),
                   ),
                 ),
@@ -98,7 +98,7 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                     textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 22,
-                      color: Colors.white,
+                      color: ColorResources.getBackgroundColor(context),
                     ),
                   ),
                 ),
@@ -110,13 +110,14 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                 Text(
                   getTranslated('signup', context),
                   style: Theme.of(context).textTheme.headline3.copyWith(
-                      fontSize: 24, color: ColorResources.COLOR_WHITE),
+                      fontSize: 24,
+                      color: ColorResources.getBackgroundColor(context)),
                 ),
                 SizedBox(height: 50),
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: ColorResources.getBackgroundColor(context),
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     boxShadow: [
                       BoxShadow(

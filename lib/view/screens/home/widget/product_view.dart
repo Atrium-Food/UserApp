@@ -11,28 +11,37 @@ import 'package:provider/provider.dart';
 class ProductView extends StatelessWidget {
   final ProductType productType;
   final ScrollController scrollController;
-  ProductView({@required this.productType,this.scrollController});
+  ProductView({@required this.productType, this.scrollController});
 
   @override
   Widget build(BuildContext context) {
-    if(productType == ProductType.POPULAR_PRODUCT) {
-      Provider.of<ProductProvider>(context, listen: false).getPopularProductList(context, '1');
+    if (productType == ProductType.POPULAR_PRODUCT) {
+      Provider.of<ProductProvider>(context, listen: false)
+          .getPopularProductList(context, '1');
     }
 
     int offset = 1;
     scrollController?.addListener(() {
-      if(scrollController.position.pixels == scrollController.position.maxScrollExtent
-          && Provider.of<ProductProvider>(context, listen: false).popularProductList != null
-          && !Provider.of<ProductProvider>(context, listen: false).isLoading) {
+      if (scrollController.position.pixels ==
+              scrollController.position.maxScrollExtent &&
+          Provider.of<ProductProvider>(context, listen: false)
+                  .popularProductList !=
+              null &&
+          !Provider.of<ProductProvider>(context, listen: false).isLoading) {
         int pageSize;
-        if(productType == ProductType.POPULAR_PRODUCT) {
-          pageSize = (Provider.of<ProductProvider>(context, listen: false).popularPageSize / 10).ceil();
+        if (productType == ProductType.POPULAR_PRODUCT) {
+          pageSize = (Provider.of<ProductProvider>(context, listen: false)
+                      .popularPageSize /
+                  10)
+              .ceil();
         }
-        if(offset < pageSize) {
+        if (offset < pageSize) {
           offset++;
           print('end of the page');
-          Provider.of<ProductProvider>(context, listen: false).showBottomLoader();
-          Provider.of<ProductProvider>(context, listen: false).getPopularProductList(context, offset.toString());
+          Provider.of<ProductProvider>(context, listen: false)
+              .showBottomLoader();
+          Provider.of<ProductProvider>(context, listen: false)
+              .getPopularProductList(context, offset.toString());
         }
       }
     });
@@ -40,34 +49,43 @@ class ProductView extends StatelessWidget {
       child: Consumer<ProductProvider>(
         builder: (context, prodProvider, child) {
           List<Product> productList;
-          if(productType == ProductType.POPULAR_PRODUCT) {
+          if (productType == ProductType.POPULAR_PRODUCT) {
             productList = prodProvider.popularProductList;
           }
 
           return Column(children: [
-            productList != null ? productList.length > 0 ? ListView.builder(
-              itemCount: productList.length,
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ProductWidget(product: productList[index]);
-              },
-            ) : NoDataScreen() : ListView.builder(
-              itemCount: 10,
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL),
-              physics: NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              itemBuilder: (BuildContext context, int index) {
-                return ProductShimmer(isEnabled: productList == null);
-              },
-            ),
-
-            prodProvider.isLoading ? Center(child: Padding(
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-              child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Theme.of(context).primaryColor)),
-            )) : SizedBox.shrink(),
-
+            productList != null
+                ? productList.length > 0
+                    ? ListView.builder(
+                        itemCount: productList.length,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: Dimensions.PADDING_SIZE_SMALL),
+                        physics: NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProductWidget(product: productList[index]);
+                        },
+                      )
+                    : NoDataScreen()
+                : ListView.builder(
+                    itemCount: 10,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (BuildContext context, int index) {
+                      return ProductShimmer(isEnabled: productList == null);
+                    },
+                  ),
+            prodProvider.isLoading
+                ? Center(
+                    child: Padding(
+                    padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor)),
+                  ))
+                : SizedBox.shrink(),
           ]);
         },
       ),

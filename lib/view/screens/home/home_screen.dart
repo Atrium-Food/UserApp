@@ -21,10 +21,15 @@ import 'package:flutter_restaurant/view/screens/search/search_screen.dart';
 import 'package:flutter_restaurant/view/screens/setmenu/set_menu_screen.dart';
 import 'package:provider/provider.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadData(BuildContext context, bool reload) async {
     Provider.of<LocationProvider>(context, listen: false)
-        .getUserLocation(context,false);
+        .getUserLocation(context, false);
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
@@ -37,7 +42,20 @@ class HomeScreen extends StatelessWidget {
         .getBannerList(context, reload);
   }
 
-  final ScrollController _scrollController = ScrollController();
+  ScrollController _scrollController;
+
+  @override
+  void initState() {
+    super.initState();
+    _scrollController = ScrollController();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     _loadData(context, false);
@@ -63,17 +81,18 @@ class HomeScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     InkWell(
-                      onTap: (){
+                      onTap: () {
                         Provider.of<LocationProvider>(context, listen: false)
-                            .getUserLocation(context,true);
-          },
+                            .getUserLocation(context, true);
+                      },
                       child: Image.asset(Images.home_location_icon,
                           width: 50, height: 50),
                     ),
                     SizedBox(width: 10),
                     Consumer<LocationProvider>(
                         builder: (context, locationProvider, child) {
-                      return (locationProvider.address==null || locationProvider.address.locality != null)
+                      return (locationProvider.address == null ||
+                              locationProvider.address.locality != null)
                           ? Text(
                               locationProvider.address.locality,
                               style: robotoMedium.copyWith(fontSize: 20),

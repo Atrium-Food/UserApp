@@ -26,29 +26,30 @@ class OnBoardingScreen extends StatelessWidget {
                 child: ListView(
                   dragStartBehavior: DragStartBehavior.down,
                   children: [
-                    onBoardingList.selectedIndex !=
-                            onBoardingList.onBoardingList.length - 1
-                        ? Align(
-                            alignment: Alignment.topRight,
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (_) => WelcomeScreen()));
-                                },
-                                child: Text(
-                                  getTranslated('skip', context),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3
-                                      .copyWith(
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .color),
-                                )),
-                          )
-                        : SizedBox(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (_) => WelcomeScreen()));
+                          },
+                          child: Text(
+                            getTranslated('skip', context),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: onBoardingList.selectedIndex !=
+                                            onBoardingList
+                                                    .onBoardingList.length -
+                                                1
+                                        ? ColorResources.getAccentColor(context)
+                                        : ColorResources.getBackgroundColor(
+                                            context)),
+                          )),
+                    ),
                     SizedBox(
                       height: 400,
                       child: PageView.builder(

@@ -35,7 +35,7 @@ class Images {
   static const String unselected_restaurant_marker =
       'assets/image/unselected_restaurant_marker.png';
   static const String wallet = 'assets/image/wallet.png';
-  static const String guest_login = 'assets/image/guest_login.png';
+  static const String guest_login = 'assets/image/guest_login.svg';
   static const String add_favorite = 'assets/image/add_favorite.png';
   static const String customer_support = 'assets/image/customer_support.png';
   static const String no_ongoing_orders = 'assets/image/no_ongoing_orders.png';

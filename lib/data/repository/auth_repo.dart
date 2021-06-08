@@ -81,6 +81,7 @@ class AuthRepo {
     return _deviceToken;
   }
 
+  //otp login
   Future<ApiResponse> otpLogin(String number) async {
     try {
       Response response =

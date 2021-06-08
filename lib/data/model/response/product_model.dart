@@ -216,7 +216,7 @@ class Product {
       });
     }
     _discount = json['discount'].toDouble();
-    _calories_per_serving = json['calories_per_serving'];
+    _calories_per_serving = json['calories_per_serving'].toDouble();
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
@@ -411,14 +411,14 @@ class Nutrients {
   Nutrients.fromJson(Map<String, dynamic> json) {
     _glycemicIndex = json['glycemic_index'];
     _glycemicLoad = json['glycemic_load'];
-    _score = json['score'];
-    _protein = json['protein'];
-    _calories = json['calories'];
-    _carbs = json['carbs'];
-    _energy = json['energy'];
-    _fats = json['fats'];
-    _fiber = json['fiber'];
-    _sugar = json['sugar'];
+    _score = json['score'].toDouble();
+    _protein = json['protein'].toDouble();
+    _calories = json['calories'].toDouble();
+    _carbs = json['carbs'].toDouble();
+    _energy = json['energy'].toDouble();
+    _fats = json['fats'].toDouble();
+    _fiber = json['fiber'].toDouble();
+    _sugar = json['sugar'].toDouble();
     _suggestion = json['suggestion'];
   }
 

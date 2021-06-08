@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/datasource/remote/dio/dio_client.dart';
 import 'package:flutter_restaurant/data/datasource/remote/exception/api_error_handler.dart';
@@ -13,7 +12,8 @@ class ProductRepo {
 
   Future<ApiResponse> getPopularProductList(String offset) async {
     try {
-      final response = await dioClient.get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset');
+      final response = await dioClient
+          .get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -22,7 +22,8 @@ class ProductRepo {
 
   Future<ApiResponse> searchProduct(String productId) async {
     try {
-      final response = await dioClient.get('${AppConstants.SEARCH_PRODUCT_URI}$productId');
+      final response =
+          await dioClient.get('${AppConstants.SEARCH_PRODUCT_URI}$productId');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -31,7 +32,8 @@ class ProductRepo {
 
   Future<ApiResponse> submitReview(ReviewBody reviewBody) async {
     try {
-      final response = await dioClient.post(AppConstants.REVIEW_URI, data: reviewBody);
+      final response =
+          await dioClient.post(AppConstants.REVIEW_URI, data: reviewBody);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -40,7 +42,8 @@ class ProductRepo {
 
   Future<ApiResponse> submitDeliveryManReview(ReviewBody reviewBody) async {
     try {
-      final response = await dioClient.post(AppConstants.DELIVER_MAN_REVIEW_URI, data: reviewBody);
+      final response = await dioClient.post(AppConstants.DELIVER_MAN_REVIEW_URI,
+          data: reviewBody);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));

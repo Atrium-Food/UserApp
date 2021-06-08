@@ -640,7 +640,8 @@ class DetailsPage extends StatelessWidget {
                       ),
                       child: Text(productProvider.quantity.toString(),
                           style: robotoMedium.copyWith(
-                              fontSize: Dimensions.FONT_SIZE_DEFAULT)),
+                              fontSize: Dimensions.FONT_SIZE_DEFAULT,
+                              color: ColorResources.COLOR_BLACK)),
                     ),
                     InkWell(
                       onTap: () => productProvider.setQuantity(true),

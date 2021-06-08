@@ -31,27 +31,30 @@ class ProductProvider extends ChangeNotifier {
   List<bool> get addOnActiveList => _addOnActiveList;
   List<int> get addOnQtyList => _addOnQtyList;
 
-
   void getPopularProductList(BuildContext context, String offset) async {
     if (!_offsetList.contains(offset)) {
       _offsetList.add(offset);
       ApiResponse apiResponse = await productRepo.getPopularProductList(offset);
-      if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+      if (apiResponse.response != null &&
+          apiResponse.response.statusCode == 200) {
         if (offset == '1') {
           _popularProductList = [];
         }
-        _popularProductList.addAll(ProductModel.fromJson(apiResponse.response.data).products);
+        _popularProductList
+            .addAll(ProductModel.fromJson(apiResponse.response.data).products);
         // for (Product p in _popularProductList){
         //   p.rating.length>1 ?? print("Ratingss"+p.rating.toString());
         // }
-        _popularPageSize = ProductModel.fromJson(apiResponse.response.data).totalSize;
+        _popularPageSize =
+            ProductModel.fromJson(apiResponse.response.data).totalSize;
         _isLoading = false;
         notifyListeners();
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(apiResponse.error.toString())));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(apiResponse.error.toString())));
       }
     } else {
-      if(isLoading) {
+      if (isLoading) {
         _isLoading = false;
         notifyListeners();
       }
@@ -60,13 +63,15 @@ class ProductProvider extends ChangeNotifier {
 
   Future<Product> getProductDetails(String productID) async {
     ApiResponse apiResponse = await productRepo.searchProduct(productID);
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200){
-      Product product=Product.fromJson(apiResponse.response.data);
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      Product product = Product.fromJson(apiResponse.response.data);
       return product;
     } else {
       return null;
     }
   }
+
   void showBottomLoader() {
     _isLoading = true;
     notifyListeners();
@@ -76,16 +81,17 @@ class ProductProvider extends ChangeNotifier {
     _variationIndex = [];
     _addOnQtyList = [];
     _addOnActiveList = [];
-    if(cart != null) {
+    if (cart != null) {
       _quantity = cart.quantity;
       List<String> _variationTypes = [];
-      if(cart.variation[0].type != null) {
+      if (cart.variation[0].type != null) {
         _variationTypes.addAll(cart.variation[0].type.split('-'));
       }
       int _varIndex = 0;
       product.choiceOptions.forEach((choiceOption) {
-        for(int index=0; index<choiceOption.options.length; index++) {
-          if(choiceOption.options[index].trim().replaceAll(' ', '') == _variationTypes[_varIndex].trim()) {
+        for (int index = 0; index < choiceOption.options.length; index++) {
+          if (choiceOption.options[index].trim().replaceAll(' ', '') ==
+              _variationTypes[_varIndex].trim()) {
             _variationIndex.add(index);
             break;
           }
@@ -95,15 +101,16 @@ class ProductProvider extends ChangeNotifier {
       List<int> _addOnIdList = [];
       cart.addOnIds.forEach((addOnId) => _addOnIdList.add(addOnId.id));
       product.addOns.forEach((addOn) {
-        if(_addOnIdList.contains(addOn.id)) {
+        if (_addOnIdList.contains(addOn.id)) {
           _addOnActiveList.add(true);
-          _addOnQtyList.add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
-        }else {
+          _addOnQtyList
+              .add(cart.addOnIds[_addOnIdList.indexOf(addOn.id)].quantity);
+        } else {
           _addOnActiveList.add(false);
           _addOnQtyList.add(1);
         }
       });
-    }else {
+    } else {
       _quantity = 1;
       product.choiceOptions.forEach((element) => _variationIndex.add(0));
       product.addOns.forEach((addOn) {
@@ -193,9 +200,9 @@ class ProductProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       String errorMessage;
-      if(response.error is String) {
+      if (response.error is String) {
         errorMessage = response.error.toString();
-      }else {
+      } else {
         errorMessage = response.error.errors[0].message;
       }
       responseModel = ResponseModel(false, errorMessage);
@@ -216,9 +223,9 @@ class ProductProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       String errorMessage;
-      if(response.error is String) {
+      if (response.error is String) {
         errorMessage = response.error.toString();
-      }else {
+      } else {
         errorMessage = response.error.errors[0].message;
       }
       responseModel = ResponseModel(false, errorMessage);
@@ -231,7 +238,8 @@ class ProductProvider extends ChangeNotifier {
   Future<ResponseModel> submitDeliveryManReview(ReviewBody reviewBody) async {
     _isLoading = true;
     notifyListeners();
-    ApiResponse response = await productRepo.submitDeliveryManReview(reviewBody);
+    ApiResponse response =
+        await productRepo.submitDeliveryManReview(reviewBody);
     ResponseModel responseModel;
     if (response.response != null && response.response.statusCode == 200) {
       _deliveryManRating = 0;
@@ -239,9 +247,9 @@ class ProductProvider extends ChangeNotifier {
       notifyListeners();
     } else {
       String errorMessage;
-      if(response.error is String) {
+      if (response.error is String) {
         errorMessage = response.error.toString();
-      }else {
+      } else {
         errorMessage = response.error.errors[0].message;
       }
       responseModel = ResponseModel(false, errorMessage);
@@ -250,5 +258,4 @@ class ProductProvider extends ChangeNotifier {
     notifyListeners();
     return responseModel;
   }
-
 }
