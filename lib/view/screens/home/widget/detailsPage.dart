@@ -42,9 +42,9 @@ class DetailsPage extends StatelessWidget {
     Color link = Colors.greenAccent;
     bool isPressed = false;
 
-    final List<Map> myProducts =
-        List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
-            .toList();
+    // final List<Map> myProducts =
+    //     List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
+    //         .toList();
 
     bool fromCart = cart != null;
     Provider.of<ProductProvider>(context, listen: false)
@@ -60,7 +60,8 @@ class DetailsPage extends StatelessWidget {
         builder: (context, productProvider, child) {
           double _startingPrice;
           double _endingPrice;
-          if(product.choiceOptions!=null && product.choiceOptions.length != 0) {
+          if (product.choiceOptions != null &&
+              product.choiceOptions.length != 0) {
             List<double> _priceList = [];
             product.variations
                 .forEach((variation) => _priceList.add(variation.price));
@@ -74,7 +75,7 @@ class DetailsPage extends StatelessWidget {
           }
 
           List<String> _variationList = [];
-          if(product.choiceOptions!=null) {
+          if (product.choiceOptions != null) {
             for (int index = 0; index < product.choiceOptions.length; index++) {
               _variationList.add(product.choiceOptions[index]
                   .options[productProvider.variationIndex[index]]
@@ -83,7 +84,7 @@ class DetailsPage extends StatelessWidget {
           }
           String variationType = '';
           bool isFirst = true;
-          if(_variationList!=null) {
+          if (_variationList != null) {
             _variationList.forEach((variation) {
               if (isFirst) {
                 variationType = '$variationType$variation';
@@ -92,7 +93,6 @@ class DetailsPage extends StatelessWidget {
                 variationType = '$variationType-$variation';
               }
             });
-
           }
 
           double price = product.price;
@@ -450,7 +450,7 @@ class DetailsPage extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Text(
-                                  '9',
+                                  product.nutrient.glycemicIndex.toString(),
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: ColorResources.getBackgroundColor(
@@ -480,7 +480,7 @@ class DetailsPage extends StatelessWidget {
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
                                 child: Text(
-                                  '3',
+                                  product.nutrient.glycemicLoad.toString(),
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: ColorResources.getBackgroundColor(
@@ -532,7 +532,7 @@ class DetailsPage extends StatelessWidget {
                               progressColor:
                                   ColorResources.getPrimaryColor(context),
                               center: Text(
-                                '7.4',
+                                product.nutrient.score.toStringAsFixed(1),
                                 style: robotoMedium.copyWith(
                                     color:
                                         ColorResources.getPrimaryColor(context),
@@ -556,8 +556,9 @@ class DetailsPage extends StatelessWidget {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            NutrientValues()));
+                                        builder: (context) => NutrientValues(
+                                              product: product,
+                                            )));
                               },
                             ),
                           ],
@@ -674,81 +675,85 @@ class DetailsPage extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Variation
-              if(product.choiceOptions!=null)ListView.builder(
-                shrinkWrap: true,
-                itemCount: product.choiceOptions.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(product.choiceOptions[index].title,
-                            style: robotoMedium.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_LARGE)),
-                        SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: (1 / 0.25),
-                          ),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount:
-                              product.choiceOptions[index].options.length,
-                          itemBuilder: (context, i) {
-                            return InkWell(
-                              onTap: () {
-                                productProvider.setCartVariationIndex(index, i);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                decoration: BoxDecoration(
-                                  color:
-                                      productProvider.variationIndex[index] != i
-                                          ? ColorResources.BACKGROUND_COLOR
-                                          : ColorResources.COLOR_PRIMARY,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border:
-                                      productProvider.variationIndex[index] != i
-                                          ? Border.all(
-                                              color:
-                                                  ColorResources.BORDER_COLOR,
-                                              width: 2)
-                                          : null,
-                                ),
-                                child: Text(
-                                  product.choiceOptions[index].options[i]
-                                      .trim(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: robotoRegular.copyWith(
+              if (product.choiceOptions != null)
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: product.choiceOptions.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(product.choiceOptions[index].title,
+                              style: robotoMedium.copyWith(
+                                  fontSize: Dimensions.FONT_SIZE_LARGE)),
+                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: (1 / 0.25),
+                            ),
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount:
+                                product.choiceOptions[index].options.length,
+                            itemBuilder: (context, i) {
+                              return InkWell(
+                                onTap: () {
+                                  productProvider.setCartVariationIndex(
+                                      index, i);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                  decoration: BoxDecoration(
                                     color:
                                         productProvider.variationIndex[index] !=
                                                 i
-                                            ? ColorResources.COLOR_BLACK
-                                            : ColorResources.COLOR_WHITE,
+                                            ? ColorResources.BACKGROUND_COLOR
+                                            : ColorResources.COLOR_PRIMARY,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: productProvider
+                                                .variationIndex[index] !=
+                                            i
+                                        ? Border.all(
+                                            color: ColorResources.BORDER_COLOR,
+                                            width: 2)
+                                        : null,
+                                  ),
+                                  child: Text(
+                                    product.choiceOptions[index].options[i]
+                                        .trim(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: robotoRegular.copyWith(
+                                      color: productProvider
+                                                  .variationIndex[index] !=
+                                              i
+                                          ? ColorResources.COLOR_BLACK
+                                          : ColorResources.COLOR_WHITE,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                            height: index != product.choiceOptions.length - 1
-                                ? Dimensions.PADDING_SIZE_LARGE
-                                : 0),
-                      ]);
-                },
-              ),
-              if(product.choiceOptions!=null)product.choiceOptions.length > 0
-                  ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
-                  : SizedBox(),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                              height: index != product.choiceOptions.length - 1
+                                  ? Dimensions.PADDING_SIZE_LARGE
+                                  : 0),
+                        ]);
+                  },
+                ),
+              if (product.choiceOptions != null)
+                product.choiceOptions.length > 0
+                    ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
+                    : SizedBox(),
 
               fromSetMenu
                   ? Column(
@@ -784,7 +789,7 @@ class DetailsPage extends StatelessWidget {
                   ),
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: myProducts.length,
+                  itemCount: product.ingredients.length,
                   itemBuilder: (BuildContext ctx, index) {
                     return Container(
                       child: Column(
@@ -793,7 +798,9 @@ class DetailsPage extends StatelessWidget {
                           CircleAvatar(
                             radius: 28.0,
                             child: Text(
-                              'IN',
+                              product.ingredients[index].name
+                                  .substring(0, 2)
+                                  .toUpperCase(),
                               style: robotoRegular.copyWith(
                                   color:
                                       ColorResources.getAccentColor(context)),
@@ -805,7 +812,7 @@ class DetailsPage extends StatelessWidget {
                             height: 10.0,
                           ),
                           Text(
-                            myProducts[index]["name"],
+                            product.ingredients[index].name,
                             style: robotoRegular.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_SMALL),
                           ),

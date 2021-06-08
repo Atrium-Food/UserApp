@@ -1,17 +1,21 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/pie_chart_indicator.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/gestures.dart';
 
 /// Icons by svgrepo.com (https://www.svgrepo.com/collection/job-and-professions-3/)
 class PieChartSample3 extends StatefulWidget {
+  final Product product;
+
+  PieChartSample3({this.product});
+
   @override
   State<StatefulWidget> createState() => PieChartSample3State();
 }
 
-class PieChartSample3State extends State {
+class PieChartSample3State extends State<PieChartSample3> {
   int touchedIndex = -1;
 
   @override
@@ -53,7 +57,7 @@ class PieChartSample3State extends State {
                           ),
                           sectionsSpace: 5,
                           centerSpaceRadius: 0,
-                          sections: showingSections()),
+                          sections: showingSections(widget.product.nutrient)),
                     ),
                   ),
                 ),
@@ -75,13 +79,13 @@ class PieChartSample3State extends State {
             Indicator(
               textColor: touchedIndex == 0 ? Colors.black : Colors.grey,
               color: Colors.red,
-              text: 'Meat',
+              text: 'Fats',
               isSquare: false,
             ),
             Indicator(
               textColor: touchedIndex == 1 ? Colors.black : Colors.grey,
               color: Color(0xfff8b250),
-              text: 'Energy',
+              text: 'Carbs',
               isSquare: false,
             ),
             Indicator(
@@ -93,7 +97,13 @@ class PieChartSample3State extends State {
             Indicator(
               textColor: touchedIndex == 3 ? Colors.black : Colors.grey,
               color: Color(0xff13d38e),
-              text: 'Veges',
+              text: 'Fiber',
+              isSquare: false,
+            ),
+            Indicator(
+              textColor: touchedIndex == 4 ? Colors.black : Colors.grey,
+              color: Colors.grey,
+              text: 'Sugar',
               isSquare: false,
             ),
           ],
@@ -102,8 +112,14 @@ class PieChartSample3State extends State {
     );
   }
 
-  List<PieChartSectionData> showingSections() {
-    return List.generate(4, (i) {
+  List<PieChartSectionData> showingSections(Nutrient nutrient) {
+    double total = nutrient.sugar +
+        nutrient.protein +
+        nutrient.fiber +
+        nutrient.fats +
+        nutrient.energy;
+
+    return List.generate(5, (i) {
       final isTouched = i == touchedIndex;
       final radius = isTouched ? 110.0 : 100.0;
       final widgetSize = isTouched ? 55.0 : 40.0;
@@ -112,13 +128,13 @@ class PieChartSample3State extends State {
         case 0:
           return PieChartSectionData(
             color: Colors.red,
-            value: 40,
+            value: (nutrient.fats / total) * 100,
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
-              40,
+              (nutrient.fats / total) * 100,
               size: widgetSize,
-              borderColor: const Color(0xff0293ee),
+              borderColor: Colors.red,
             ),
             badgePositionPercentageOffset: .98,
           );
@@ -126,10 +142,10 @@ class PieChartSample3State extends State {
           return PieChartSectionData(
             color: const Color(0xfff8b250),
             showTitle: false,
-            value: 30,
+            value: (nutrient.carbs / total) * 100,
             radius: radius,
             badgeWidget: _Badge(
-              30,
+              (nutrient.carbs / total) * 100,
               size: widgetSize,
               borderColor: const Color(0xfff8b250),
             ),
@@ -139,10 +155,10 @@ class PieChartSample3State extends State {
           return PieChartSectionData(
             color: const Color(0xff845bef),
             showTitle: false,
-            value: 10,
+            value: (nutrient.protein / total) * 100,
             radius: radius,
             badgeWidget: _Badge(
-              1,
+              (nutrient.protein / total) * 100,
               size: widgetSize,
               borderColor: const Color(0xff845bef),
             ),
@@ -151,16 +167,31 @@ class PieChartSample3State extends State {
         case 3:
           return PieChartSectionData(
             color: const Color(0xff13d38e),
-            value: 15,
+            value: (nutrient.fiber / total) * 100,
             showTitle: false,
             radius: radius,
             badgeWidget: _Badge(
-              15,
+              (nutrient.fiber / total) * 100,
               size: widgetSize,
               borderColor: const Color(0xff13d38e),
             ),
             badgePositionPercentageOffset: .98,
           );
+
+        case 4:
+          return PieChartSectionData(
+            color: Colors.grey,
+            value: (nutrient.sugar / total) * 100,
+            showTitle: false,
+            radius: radius,
+            badgeWidget: _Badge(
+              (nutrient.sugar / total) * 100,
+              size: widgetSize,
+              borderColor: Colors.grey,
+            ),
+            badgePositionPercentageOffset: .98,
+          );
+
         default:
           throw 'Oh no';
       }

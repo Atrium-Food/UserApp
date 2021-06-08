@@ -72,7 +72,7 @@ class Product {
   Rating _rating;
   List<Ingredients> _ingredients;
   Recipe _recipe;
-  Nutrients _nutrients;
+  Nutrient _nutrient;
   List<ReviewBody> _reviews;
   int _serves;
   String _cuisine;
@@ -106,7 +106,7 @@ class Product {
     Rating rating,
     List<Ingredients> ingredients,
     Recipe recipe,
-    Nutrients nutrients,
+    Nutrient nutrient,
     List<ReviewBody> reviews,
   }) {
     this._id = id;
@@ -136,7 +136,7 @@ class Product {
     this._rating = rating;
     this._ingredients = ingredients;
     this._recipe = recipe;
-    this._nutrients = nutrients;
+    this._nutrient = nutrient;
     this._reviews = reviews;
   }
 
@@ -163,7 +163,7 @@ class Product {
   Rating get rating => _rating;
   List<Ingredients> get ingredients => _ingredients;
   Recipe get recipe => _recipe;
-  Nutrients get nutrients => _nutrients;
+  Nutrient get nutrient => _nutrient;
   List<ReviewBody> get reviews => _reviews;
   double get calories_per_serving => _calories_per_serving;
   String get time => _time;
@@ -240,8 +240,8 @@ class Product {
       _recipe = Recipe.fromJson(json['recipe']);
     }
     //
-    if (json['nutrients'] != null) {
-      _nutrients = Nutrients.fromJson(json['nutrients']);
+    if (json['nutrient'] != null) {
+      _nutrient = Nutrient.fromJson(json['nutrient']);
     }
     //
     if (json['reviews'] != null) {
@@ -299,8 +299,8 @@ class Product {
       data['recipe'] = this._recipe.toJson();
     }
 
-    if (this._nutrients != null) {
-      data['nutrients'] = this._nutrients.toJson();
+    if (this._nutrient != null) {
+      data['nutrient'] = this._nutrient.toJson();
     }
     if (this._reviews != null) {
       data['reviews'] = this._reviews.map((v) => v.toJson()).toList();
@@ -367,7 +367,7 @@ class Recipe {
   }
 }
 
-class Nutrients {
+class Nutrient {
   int _glycemicIndex;
   int _glycemicLoad;
   double _score;
@@ -380,7 +380,7 @@ class Nutrients {
   double _sugar;
   String _suggestion;
 
-  Nutrients(
+  Nutrient(
       {int glycemicIndex,
       int glycemicLoad,
       double score,
@@ -416,7 +416,7 @@ class Nutrients {
   double get sugar => _sugar;
   String get suggestion => _suggestion;
 
-  Nutrients.fromJson(Map<String, dynamic> json) {
+  Nutrient.fromJson(Map<String, dynamic> json) {
     _glycemicIndex = json['glycemic_index'];
     _glycemicLoad = json['glycemic_load'];
     _score = json['score']?.toDouble();
@@ -433,8 +433,8 @@ class Nutrients {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
 
-    data['glycemicIndex'] = _glycemicIndex;
-    data['glycemicLoad'] = _glycemicLoad;
+    data['glycemic_index'] = _glycemicIndex;
+    data['glycemic_load'] = _glycemicLoad;
     data['score'] = _score;
     data['protein'] = _protein;
     data['calories'] = _calories;

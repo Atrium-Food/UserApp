@@ -100,7 +100,8 @@ class NutrientValues extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child: Text('9'),
+                                child: Text(
+                                    product.nutrient.glycemicIndex.toString()),
                               )
                             ],
                           ),
@@ -121,7 +122,8 @@ class NutrientValues extends StatelessWidget {
                                   borderRadius:
                                       BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child: Text('3'),
+                                child: Text(
+                                    product.nutrient.glycemicLoad.toString()),
                               )
                             ],
                           ),
@@ -135,7 +137,7 @@ class NutrientValues extends StatelessWidget {
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: ColorResources.getPrimaryColor(context),
                         center: Text(
-                          '7.4',
+                          product.nutrient.score.toStringAsFixed(1),
                           style: robotoMedium.copyWith(
                               color: ColorResources.getPrimaryColor(context),
                               fontSize: 30),
@@ -152,7 +154,9 @@ class NutrientValues extends StatelessWidget {
                   style: robotoMedium.copyWith(fontSize: 20),
                 ),
                 Center(
-                  child: PieChartSample3(),
+                  child: PieChartSample3(
+                    product: product,
+                  ),
                 ),
                 SizedBox(
                   height: 20,
@@ -189,13 +193,14 @@ class NutrientValues extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        _nutrientWidget('Calories', 10.0, 0),
-                        _nutrientWidget('Carbs', 10.0, 1),
-                        _nutrientWidget('Energy', 10.0, 2),
-                        _nutrientWidget('Fat', 10.0, 3),
-                        _nutrientWidget('Fiber', 10.0, 4),
-                        _nutrientWidget('Protein', 10.0, 5),
-                        _nutrientWidget('Sugar', 10.0, 6),
+                        _nutrientWidget(
+                            'Calories', product.nutrient.calories, 0),
+                        _nutrientWidget('Carbs', product.nutrient.carbs, 1),
+                        _nutrientWidget('Energy', product.nutrient.energy, 2),
+                        _nutrientWidget('Fat', product.nutrient.fats, 3),
+                        _nutrientWidget('Fiber', product.nutrient.fiber, 4),
+                        _nutrientWidget('Protein', product.nutrient.protein, 5),
+                        _nutrientWidget('Sugar', product.nutrient.sugar, 6),
                       ],
                     ),
                   ),
@@ -227,7 +232,7 @@ class NutrientValues extends StatelessWidget {
                       ],
                     ),
                     child: Text(
-                      'Pair this dish with a vegetable gourmet filled with fibers and low carbohydrates inorder to make a perfect meal good enough for your tummy and full of protein.',
+                      product.nutrient.suggestion,
                       maxLines: 20,
                       style: robotoRegular,
                     ),

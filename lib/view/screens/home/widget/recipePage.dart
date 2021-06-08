@@ -34,14 +34,14 @@ class RecipePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<String> _recipe = [
-      'Place the meat in the freezer for 20 minutes.',
-      'Whisk coriander, brown sugar, soy sauce, lime juice, garlic, and ground ginger together in a bowl until marinade is well combined.',
-      'Remove meat from freezer and slice thinly across the grain. Place steak in a large bowl, pour marinade over steak, and toss to coat. Cover bowl and marinate at room temperature for 1 hour.',
-      "Set oven rack about 6 inches from the heat source and preheat the oven's broiler. Line bottom of a broiler pan with foil.",
-      "Lay meat slices in a single layer on the rack of the prepared broiler pan.",
-      "Cook in the preheated broiler, brushing occasionally with marinade, until steak reaches desired doneness, 1 to 2 minutes for medium rare."
-    ];
+    // List<String> _recipe = [
+    //   'Place the meat in the freezer for 20 minutes.',
+    //   'Whisk coriander, brown sugar, soy sauce, lime juice, garlic, and ground ginger together in a bowl until marinade is well combined.',
+    //   'Remove meat from freezer and slice thinly across the grain. Place steak in a large bowl, pour marinade over steak, and toss to coat. Cover bowl and marinate at room temperature for 1 hour.',
+    //   "Set oven rack about 6 inches from the heat source and preheat the oven's broiler. Line bottom of a broiler pan with foil.",
+    //   "Lay meat slices in a single layer on the rack of the prepared broiler pan.",
+    //   "Cook in the preheated broiler, brushing occasionally with marinade, until steak reaches desired doneness, 1 to 2 minutes for medium rare."
+    // ];
 
     return Consumer<ProductProvider>(
       builder: (context, productProvider, child) => SingleChildScrollView(
@@ -122,7 +122,7 @@ class RecipePage extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                'Follow these instructions carefully to get the best taste of your own hands. Feel free to contact us if you have any doubt regarding the recipe.',
+                product.recipe.description,
                 style: TextStyle(
                     fontSize: 13,
                     color: ColorResources.getAccentColor(context)),
@@ -135,7 +135,7 @@ class RecipePage extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
-                  itemCount: _recipe.length,
+                  itemCount: product.recipe.procedure.length,
                   itemBuilder: (context, index) => Container(
                     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                     margin: EdgeInsets.only(
@@ -169,7 +169,7 @@ class RecipePage extends StatelessWidget {
                         ),
                         Expanded(
                           child: Text(
-                            _recipe[index],
+                            product.recipe.procedure[index],
                           ),
                         )
                       ],
