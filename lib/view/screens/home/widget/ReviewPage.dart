@@ -41,7 +41,7 @@ class ReviewPage extends StatelessWidget {
           ),
           Center(
               child: product.rating != null
-                  ? Text('Based on ${product.rating.countTotalRating} ratings')
+                  ? Text('Based on ${product.reviews.length} ratings')
                   : null),
           SizedBox(
             height: 15.0,

@@ -234,7 +234,7 @@ class DetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('Thai',
+                      Text(product.cuisine != null ? product.cuisine : 'Indian',
                           style: TextStyle(
                               fontSize: 11,
                               color: ColorResources.getAccentColor(context))),
@@ -255,7 +255,7 @@ class DetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('1 hr 45 min',
+                      Text(product.time != null ? product.time : '1 hr 45 min',
                           style: TextStyle(
                               fontSize: 11,
                               color: ColorResources.getAccentColor(context))),
@@ -279,7 +279,10 @@ class DetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('2',
+                      Text(
+                          product.serves != null
+                              ? product.serves.toString()
+                              : '2',
                           style: TextStyle(
                               fontSize: 11,
                               color: ColorResources.getAccentColor(context))),
@@ -303,7 +306,10 @@ class DetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 5,
                       ),
-                      Text('590 cal',
+                      Text(
+                          product.calories_per_serving != null
+                              ? product.calories_per_serving.toStringAsFixed(1)
+                              : '590 cal',
                           style: TextStyle(
                               fontSize: 11,
                               color: ColorResources.getAccentColor(context))),
@@ -401,201 +407,213 @@ class DetailsPage extends StatelessWidget {
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE + 10),
 
-              Card(
-                elevation: 3,
-                child: Container(
-                  padding: EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                  decoration: BoxDecoration(
-                    color: ColorResources.getBackgroundColor(context),
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
-                    // boxShadow: [
-                    //   BoxShadow(
-                    //     color: Colors.grey.withOpacity(0.5),
-                    //     spreadRadius: 2,
-                    //     blurRadius: 5,
-                    //     offset: Offset(0, 3), // changes position of shadow
-                    //   ),
-                    // ],
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Nutritional Value',
-                            style: robotoMedium,
-                          ),
-                          SizedBox(
-                            height: 15,
-                          ),
-                          Row(
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => NutrientValues(
+                                product: product,
+                              )));
+                },
+                child: Card(
+                  elevation: 3,
+                  child: Container(
+                    padding:
+                        EdgeInsets.all(Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                    decoration: BoxDecoration(
+                      color: ColorResources.getBackgroundColor(context),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                      // boxShadow: [
+                      //   BoxShadow(
+                      //     color: Colors.grey.withOpacity(0.5),
+                      //     spreadRadius: 2,
+                      //     blurRadius: 5,
+                      //     offset: Offset(0, 3), // changes position of shadow
+                      //   ),
+                      // ],
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Nutritional Value',
+                              style: robotoMedium,
+                            ),
+                            SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              children: [
+                                Text(
+                                  'Glycemic Index',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: ColorResources.getAccentColor(
+                                          context)),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 7, right: 7),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        ColorResources.getPrimaryColor(context),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Text(
+                                    product.nutrient.glycemicIndex.toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: ColorResources.getBackgroundColor(
+                                          context),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  'Glycemic Index',
+                                  style: TextStyle(
+                                      fontSize: 10,
+                                      color: ColorResources.getAccentColor(
+                                          context)),
+                                ),
+                                SizedBox(
+                                  width: 3,
+                                ),
+                                Container(
+                                  padding: EdgeInsets.only(left: 7, right: 7),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        ColorResources.getPrimaryColor(context),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  child: Text(
+                                    product.nutrient.glycemicLoad.toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: ColorResources.getBackgroundColor(
+                                          context),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            //   SizedBox(
+                            //     height: 10,
+                            //   ),
+                            //   Row(
+                            //     children: [
+                            //       Text('Glycemic Index'),
+                            //       SizedBox(
+                            //         width: 7,
+                            //       ),
+                            //       Container(
+                            //         padding: EdgeInsets.only(left: 7, right: 7),
+                            //         decoration: BoxDecoration(
+                            //           color:
+                            //               ColorResources.getPrimaryColor(context),
+                            //           borderRadius:
+                            //               BorderRadius.all(Radius.circular(10)),
+                            //         ),
+                            //         child: Text(
+                            //           '3',
+                            //           style: TextStyle(
+                            //             color: Colors.white,
+                            //           ),
+                            //         ),
+                            //       ),
+                            //     ],
+                            //   ),
+                          ],
+                        ),
+
+                        Expanded(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              Text(
-                                'Glycemic Index',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color:
-                                        ColorResources.getAccentColor(context)),
+                              CircularPercentIndicator(
+                                lineWidth: 6,
+                                radius: 50,
+                                backgroundColor: ColorResources.COLOR_WHITE,
+                                percent: 0.74,
+                                circularStrokeCap: CircularStrokeCap.round,
+                                progressColor:
+                                    ColorResources.getPrimaryColor(context),
+                                center: Text(
+                                  product.nutrient.score.toStringAsFixed(1),
+                                  style: robotoMedium.copyWith(
+                                      color: ColorResources.getPrimaryColor(
+                                          context),
+                                      fontSize: 15),
+                                ),
                               ),
+                              // VerticalDivider(
+                              //   color: Colors.black,
+                              //   thickness: 2.0,
+                              //   width: 3.0,
+                              // ),
                               SizedBox(
-                                width: 3,
+                                width: 6,
                               ),
-                              Container(
-                                padding: EdgeInsets.only(left: 7, right: 7),
-                                decoration: BoxDecoration(
+                              GestureDetector(
+                                child: Icon(
+                                  Icons.info,
                                   color:
                                       ColorResources.getPrimaryColor(context),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
                                 ),
-                                child: Text(
-                                  product.nutrient.glycemicIndex.toString(),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: ColorResources.getBackgroundColor(
-                                        context),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: 5,
-                              ),
-                              Text(
-                                'Glycemic Index',
-                                style: TextStyle(
-                                    fontSize: 10,
-                                    color:
-                                        ColorResources.getAccentColor(context)),
-                              ),
-                              SizedBox(
-                                width: 3,
-                              ),
-                              Container(
-                                padding: EdgeInsets.only(left: 7, right: 7),
-                                decoration: BoxDecoration(
-                                  color:
-                                      ColorResources.getPrimaryColor(context),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(10)),
-                                ),
-                                child: Text(
-                                  product.nutrient.glycemicLoad.toString(),
-                                  style: TextStyle(
-                                    fontSize: 10,
-                                    color: ColorResources.getBackgroundColor(
-                                        context),
-                                  ),
-                                ),
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => NutrientValues(
+                                                product: product,
+                                              )));
+                                },
                               ),
                             ],
                           ),
-                          //   SizedBox(
-                          //     height: 10,
-                          //   ),
-                          //   Row(
-                          //     children: [
-                          //       Text('Glycemic Index'),
-                          //       SizedBox(
-                          //         width: 7,
-                          //       ),
-                          //       Container(
-                          //         padding: EdgeInsets.only(left: 7, right: 7),
-                          //         decoration: BoxDecoration(
-                          //           color:
-                          //               ColorResources.getPrimaryColor(context),
-                          //           borderRadius:
-                          //               BorderRadius.all(Radius.circular(10)),
-                          //         ),
-                          //         child: Text(
-                          //           '3',
-                          //           style: TextStyle(
-                          //             color: Colors.white,
-                          //           ),
-                          //         ),
-                          //       ),
-                          //     ],
-                          //   ),
-                        ],
-                      ),
-
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CircularPercentIndicator(
-                              lineWidth: 6,
-                              radius: 50,
-                              backgroundColor: ColorResources.COLOR_WHITE,
-                              percent: 0.74,
-                              circularStrokeCap: CircularStrokeCap.round,
-                              progressColor:
-                                  ColorResources.getPrimaryColor(context),
-                              center: Text(
-                                product.nutrient.score.toStringAsFixed(1),
-                                style: robotoMedium.copyWith(
-                                    color:
-                                        ColorResources.getPrimaryColor(context),
-                                    fontSize: 15),
-                              ),
-                            ),
-                            // VerticalDivider(
-                            //   color: Colors.black,
-                            //   thickness: 2.0,
-                            //   width: 3.0,
-                            // ),
-                            SizedBox(
-                              width: 6,
-                            ),
-                            GestureDetector(
-                              child: Icon(
-                                Icons.info,
-                                color: ColorResources.getPrimaryColor(context),
-                              ),
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => NutrientValues(
-                                              product: product,
-                                            )));
-                              },
-                            ),
-                          ],
                         ),
-                      ),
-                      // CircularPercentIndicator(
-                      //   lineWidth: 6,
-                      //   radius: 50,
-                      //   backgroundColor: ColorResources.COLOR_WHITE,
-                      //   percent: 0.74,
-                      //   circularStrokeCap: CircularStrokeCap.round,
-                      //   progressColor: ColorResources.getPrimaryColor(context),
-                      //   center: Text(
-                      //     '7.4',
-                      //     style: robotoMedium.copyWith(
-                      //         color: ColorResources.getPrimaryColor(context),
-                      //         fontSize: 15),
-                      //   ),
-                      // ),
-                      // VerticalDivider(
-                      //   color: ColorResources.COLOR_BLACK,
-                      //   thickness: 2,
-                      // ),
-                      // IconButton(
-                      //   icon: Icon(
-                      //     Icons.info,
-                      //     color: ColorResources.getPrimaryColor(context),
-                      //   ),
-                      //   onPressed: () {
-                      //     Navigator.push(
-                      //         context,
-                      //         MaterialPageRoute(
-                      //             builder: (context) => NutrientValues()));
-                      //   },
-                      // ),
-                    ],
+                        // CircularPercentIndicator(
+                        //   lineWidth: 6,
+                        //   radius: 50,
+                        //   backgroundColor: ColorResources.COLOR_WHITE,
+                        //   percent: 0.74,
+                        //   circularStrokeCap: CircularStrokeCap.round,
+                        //   progressColor: ColorResources.getPrimaryColor(context),
+                        //   center: Text(
+                        //     '7.4',
+                        //     style: robotoMedium.copyWith(
+                        //         color: ColorResources.getPrimaryColor(context),
+                        //         fontSize: 15),
+                        //   ),
+                        // ),
+                        // VerticalDivider(
+                        //   color: ColorResources.COLOR_BLACK,
+                        //   thickness: 2,
+                        // ),
+                        // IconButton(
+                        //   icon: Icon(
+                        //     Icons.info,
+                        //     color: ColorResources.getPrimaryColor(context),
+                        //   ),
+                        //   onPressed: () {
+                        //     Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //             builder: (context) => NutrientValues()));
+                        //   },
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               ),
