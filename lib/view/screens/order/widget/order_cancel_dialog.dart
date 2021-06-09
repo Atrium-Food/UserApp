@@ -17,18 +17,19 @@ class OrderCancelDialog extends StatelessWidget {
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Column(mainAxisSize: MainAxisSize.min, children: [
-
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: 50),
-          child: Text(getTranslated('are_you_sure_to_cancel', context), style: robotoBold, textAlign: TextAlign.center),
+          padding: EdgeInsets.symmetric(
+              horizontal: Dimensions.PADDING_SIZE_LARGE, vertical: 50),
+          child: Text(getTranslated('are_you_sure_to_cancel', context),
+              style: robotoBold, textAlign: TextAlign.center),
         ),
-
         Divider(height: 0, color: ColorResources.getHintColor(context)),
         Row(children: [
-
-          Expanded(child: InkWell(
+          Expanded(
+              child: InkWell(
             onTap: () {
-              Provider.of<OrderProvider>(context, listen: false).cancelOrder(orderID, (String message, bool isSuccess, String orderID) {
+              Provider.of<OrderProvider>(context, listen: false).cancelOrder(
+                  orderID, (String message, bool isSuccess, String orderID) {
                 Navigator.pop(context);
                 callback(message, isSuccess, orderID);
               });
@@ -36,21 +37,28 @@ class OrderCancelDialog extends StatelessWidget {
             child: Container(
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               alignment: Alignment.center,
-              decoration: BoxDecoration(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(10))),
-              child: Text(getTranslated('yes', context), style: robotoBold.copyWith(color: ColorResources.COLOR_PRIMARY)),
+              decoration: BoxDecoration(
+                  borderRadius:
+                      BorderRadius.only(bottomLeft: Radius.circular(10))),
+              child: Text(getTranslated('yes', context),
+                  style:
+                      robotoBold.copyWith(color: ColorResources.COLOR_PRIMARY)),
             ),
           )),
-
-          Expanded(child: InkWell(
+          Expanded(
+              child: InkWell(
             onTap: () => Navigator.pop(context),
             child: Container(
               padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
               alignment: Alignment.center,
-              decoration: BoxDecoration(color: ColorResources.getPrimaryColor(context), borderRadius: BorderRadius.only(bottomRight: Radius.circular(10))),
-              child: Text(getTranslated('no', context), style: robotoBold.copyWith(color: Colors.white)),
+              decoration: BoxDecoration(
+                  color: ColorResources.getPrimaryColor(context),
+                  borderRadius:
+                      BorderRadius.only(bottomRight: Radius.circular(10))),
+              child: Text(getTranslated('no', context),
+                  style: robotoBold.copyWith(color: Colors.white)),
             ),
           )),
-
         ]),
       ]),
     );

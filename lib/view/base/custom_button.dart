@@ -35,10 +35,13 @@ class CustomButton extends StatelessWidget {
       onPressed: onTap,
       style: flatButtonStyle,
       child: child == null
-          ? Text(btnTxt ?? "",
+          ? Text(
+              btnTxt ?? "",
               style: Theme.of(context).textTheme.headline3.copyWith(
-                  color: ColorResources.COLOR_WHITE,
-                  fontSize: Dimensions.FONT_SIZE_LARGE))
+                  color: ColorResources.getAccentColor(context),
+                  fontSize: Dimensions.FONT_SIZE_LARGE),
+              textAlign: TextAlign.center,
+            )
           : child,
     );
   }

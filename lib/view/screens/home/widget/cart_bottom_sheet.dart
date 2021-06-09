@@ -35,109 +35,109 @@ class CartBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final List<Widget> ingredients = [
       // Row(children: [
-        Text(
-          'Ingredient1',
-          style: robotoRegular,
-        ),
-        // Expanded(child: SizedBox()),
-        // Container(
-        //   decoration: BoxDecoration(
-        //       color: ColorResources.getBackgroundColor(context),
-        //       borderRadius: BorderRadius.circular(5)),
-        //   child: Row(children: [
-        //     InkWell(
-        //       onTap: () {},
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(
-        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        //         child: Icon(Icons.remove, size: 20),
-        //       ),
-        //     ),
-        //     Text('1',
-        //         style: robotoMedium.copyWith(
-        //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-        //     InkWell(
-        //       onTap: () {},
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(
-        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        //         child: Icon(Icons.add, size: 20),
-        //       ),
-        //     ),
-        //   ]),
-        // ),
+      Text(
+        'Ingredient1',
+        style: robotoRegular,
+      ),
+      // Expanded(child: SizedBox()),
+      // Container(
+      //   decoration: BoxDecoration(
+      //       color: ColorResources.getBackgroundColor(context),
+      //       borderRadius: BorderRadius.circular(5)),
+      //   child: Row(children: [
+      //     InkWell(
+      //       onTap: () {},
+      //       child: Padding(
+      //         padding: EdgeInsets.symmetric(
+      //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+      //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      //         child: Icon(Icons.remove, size: 20),
+      //       ),
+      //     ),
+      //     Text('1',
+      //         style: robotoMedium.copyWith(
+      //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+      //     InkWell(
+      //       onTap: () {},
+      //       child: Padding(
+      //         padding: EdgeInsets.symmetric(
+      //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+      //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      //         child: Icon(Icons.add, size: 20),
+      //       ),
+      //     ),
+      //   ]),
+      // ),
       // ]),
       // Row(children: [
-        Text(
-          'Ingredient2',
-          style: robotoRegular,
-        ),
-        // Expanded(child: SizedBox()),
-        // Container(
-        //   decoration: BoxDecoration(
-        //       color: ColorResources.getBackgroundColor(context),
-        //       borderRadius: BorderRadius.circular(5)),
-        //   child: Row(children: [
-        //     InkWell(
-        //       onTap: () {},
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(
-        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        //         child: Icon(Icons.remove, size: 20),
-        //       ),
-        //     ),
-        //     Text('1',
-        //         style: robotoMedium.copyWith(
-        //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-        //     InkWell(
-        //       onTap: () {},
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(
-        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        //         child: Icon(Icons.add, size: 20),
-        //       ),
-        //     ),
-        //   ]),
-        // ),
+      Text(
+        'Ingredient2',
+        style: robotoRegular,
+      ),
+      // Expanded(child: SizedBox()),
+      // Container(
+      //   decoration: BoxDecoration(
+      //       color: ColorResources.getBackgroundColor(context),
+      //       borderRadius: BorderRadius.circular(5)),
+      //   child: Row(children: [
+      //     InkWell(
+      //       onTap: () {},
+      //       child: Padding(
+      //         padding: EdgeInsets.symmetric(
+      //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+      //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      //         child: Icon(Icons.remove, size: 20),
+      //       ),
+      //     ),
+      //     Text('1',
+      //         style: robotoMedium.copyWith(
+      //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+      //     InkWell(
+      //       onTap: () {},
+      //       child: Padding(
+      //         padding: EdgeInsets.symmetric(
+      //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+      //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      //         child: Icon(Icons.add, size: 20),
+      //       ),
+      //     ),
+      //   ]),
+      // ),
       // ]),
       // Row(children: [
-        Text(
-          'Ingredient3',
-          style: robotoRegular,
-        ),
-        // Expanded(child: SizedBox()),
-        // Container(
-        //   decoration: BoxDecoration(
-        //       color: ColorResources.getBackgroundColor(context),
-        //       borderRadius: BorderRadius.circular(5)),
-        //   child: Row(children: [
-        //     InkWell(
-        //       onTap: () {},
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(
-        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        //         child: Icon(Icons.remove, size: 20),
-        //       ),
-        //     ),
-        //     Text('1',
-        //         style: robotoMedium.copyWith(
-        //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-        //     InkWell(
-        //       onTap: () {},
-        //       child: Padding(
-        //         padding: EdgeInsets.symmetric(
-        //             horizontal: Dimensions.PADDING_SIZE_SMALL,
-        //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-        //         child: Icon(Icons.add, size: 20),
-        //       ),
-        //     ),
-        //   ]),
-        // ),
+      //   Text(
+      //     'Ingredient3',
+      //     style: robotoRegular,
+      //   ),
+      // Expanded(child: SizedBox()),
+      // Container(
+      //   decoration: BoxDecoration(
+      //       color: ColorResources.getBackgroundColor(context),
+      //       borderRadius: BorderRadius.circular(5)),
+      //   child: Row(children: [
+      //     InkWell(
+      //       onTap: () {},
+      //       child: Padding(
+      //         padding: EdgeInsets.symmetric(
+      //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+      //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      //         child: Icon(Icons.remove, size: 20),
+      //       ),
+      //     ),
+      //     Text('1',
+      //         style: robotoMedium.copyWith(
+      //             fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+      //     InkWell(
+      //       onTap: () {},
+      //       child: Padding(
+      //         padding: EdgeInsets.symmetric(
+      //             horizontal: Dimensions.PADDING_SIZE_SMALL,
+      //             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+      //         child: Icon(Icons.add, size: 20),
+      //       ),
+      //     ),
+      //   ]),
+      // ),
       // ]),
     ];
 
@@ -157,7 +157,8 @@ class CartBottomSheet extends StatelessWidget {
         builder: (context, productProvider, child) {
           double _startingPrice;
           double _endingPrice;
-          if (product.choiceOptions!=null && product.choiceOptions.length != 0) {
+          if (product.choiceOptions != null &&
+              product.choiceOptions.length != 0) {
             List<double> _priceList = [];
             product.variations
                 .forEach((variation) => _priceList.add(variation.price));
@@ -171,12 +172,12 @@ class CartBottomSheet extends StatelessWidget {
           }
 
           List<String> _variationList = [];
-          if(product.choiceOptions!=null)
-          for (int index = 0; index < product.choiceOptions.length; index++) {
-            _variationList.add(product.choiceOptions[index]
-                .options[productProvider.variationIndex[index]]
-                .replaceAll(' ', ''));
-          }
+          if (product.choiceOptions != null)
+            for (int index = 0; index < product.choiceOptions.length; index++) {
+              _variationList.add(product.choiceOptions[index]
+                  .options[productProvider.variationIndex[index]]
+                  .replaceAll(' ', ''));
+            }
           String variationType = '';
           bool isFirst = true;
           _variationList.forEach((variation) {
@@ -189,14 +190,14 @@ class CartBottomSheet extends StatelessWidget {
           });
 
           double price = product.price;
-          if(product.variations!=null)
-          for (Variation variation in product.variations) {
-            if (variation.type == variationType) {
-              price = variation.price;
-              _variation = variation;
-              break;
+          if (product.variations != null)
+            for (Variation variation in product.variations) {
+              if (variation.type == variationType) {
+                price = variation.price;
+                _variation = variation;
+                break;
+              }
             }
-          }
           double priceWithDiscount = PriceConverter.convertWithDiscount(
               context, price, product.discount, product.discountType);
           double priceWithQuantity =
@@ -264,7 +265,8 @@ class CartBottomSheet extends StatelessWidget {
                     fit: BoxFit.cover,
                     imageErrorBuilder: (BuildContext context, Object exception,
                         StackTrace stackTrace) {
-                      return Image.asset(Images.placeholder_image,
+                      return Image.asset(
+                        Images.placeholder_image,
                         width: 180,
                         height: 100,
                         fit: BoxFit.cover,
@@ -285,7 +287,7 @@ class CartBottomSheet extends StatelessWidget {
                               fontSize: Dimensions.FONT_SIZE_LARGE),
                         ),
                         RatingBar(
-                            rating: product.rating !=null
+                            rating: product.rating != null
                                 ? double.parse(product.rating.average)
                                 : 0.0,
                             size: 15),
@@ -389,8 +391,9 @@ class CartBottomSheet extends StatelessWidget {
                   child: Row(children: [
                     InkWell(
                       onTap: () {
-                        if(productProvider.quantity==1){
-                          Provider.of<CartProvider>(context, listen: false).removeFromCart(cart);
+                        if (productProvider.quantity == 1) {
+                          Provider.of<CartProvider>(context, listen: false)
+                              .removeFromCart(cart);
                         }
                         if (productProvider.quantity > 1) {
                           productProvider.setQuantity(false);
@@ -421,83 +424,85 @@ class CartBottomSheet extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Variation
-                  if(product.choiceOptions!=null)
-              ListView.builder(
-                shrinkWrap: true,
-                itemCount: product.choiceOptions.length,
-                physics: NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(product.choiceOptions[index].title,
-                            style: robotoMedium.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_LARGE)),
-                        SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                        GridView.builder(
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: (1 / 0.25),
-                          ),
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount:
-                              product.choiceOptions[index].options.length,
-                          itemBuilder: (context, i) {
-                            return InkWell(
-                              onTap: () {
-                                productProvider.setCartVariationIndex(index, i);
-                              },
-                              child: Container(
-                                alignment: Alignment.center,
-                                padding: EdgeInsets.symmetric(
-                                    horizontal:
-                                        Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                                decoration: BoxDecoration(
-                                  color:
-                                      productProvider.variationIndex[index] != i
-                                          ? ColorResources.BACKGROUND_COLOR
-                                          : ColorResources.COLOR_PRIMARY,
-                                  borderRadius: BorderRadius.circular(5),
-                                  border:
-                                      productProvider.variationIndex[index] != i
-                                          ? Border.all(
-                                              color:
-                                                  ColorResources.BORDER_COLOR,
-                                              width: 2)
-                                          : null,
-                                ),
-                                child: Text(
-                                  product.choiceOptions[index].options[i]
-                                      .trim(),
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: robotoRegular.copyWith(
+              if (product.choiceOptions != null)
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: product.choiceOptions.length,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(product.choiceOptions[index].title,
+                              style: robotoMedium.copyWith(
+                                  fontSize: Dimensions.FONT_SIZE_LARGE)),
+                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: (1 / 0.25),
+                            ),
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount:
+                                product.choiceOptions[index].options.length,
+                            itemBuilder: (context, i) {
+                              return InkWell(
+                                onTap: () {
+                                  productProvider.setCartVariationIndex(
+                                      index, i);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal:
+                                          Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                                  decoration: BoxDecoration(
                                     color:
                                         productProvider.variationIndex[index] !=
                                                 i
-                                            ? ColorResources.COLOR_BLACK
-                                            : ColorResources.COLOR_WHITE,
+                                            ? ColorResources.BACKGROUND_COLOR
+                                            : ColorResources.COLOR_PRIMARY,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: productProvider
+                                                .variationIndex[index] !=
+                                            i
+                                        ? Border.all(
+                                            color: ColorResources.BORDER_COLOR,
+                                            width: 2)
+                                        : null,
+                                  ),
+                                  child: Text(
+                                    product.choiceOptions[index].options[i]
+                                        .trim(),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: robotoRegular.copyWith(
+                                      color: productProvider
+                                                  .variationIndex[index] !=
+                                              i
+                                          ? ColorResources.COLOR_BLACK
+                                          : ColorResources.COLOR_WHITE,
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                            height: index != product.choiceOptions.length - 1
-                                ? Dimensions.PADDING_SIZE_LARGE
-                                : 0),
-                      ]);
-                },
-              ),
-              if(product.choiceOptions!=null)
-                  product.choiceOptions.length > 0
-                  ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
-                  : SizedBox(),
+                              );
+                            },
+                          ),
+                          SizedBox(
+                              height: index != product.choiceOptions.length - 1
+                                  ? Dimensions.PADDING_SIZE_LARGE
+                                  : 0),
+                        ]);
+                  },
+                ),
+              if (product.choiceOptions != null)
+                product.choiceOptions.length > 0
+                    ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
+                    : SizedBox(),
 
               fromSetMenu
                   ? Column(
@@ -523,16 +528,19 @@ class CartBottomSheet extends StatelessWidget {
                 // Let the ListView know how many items it needs to build.
                 shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
-                itemCount: 3,
+                itemCount: product.ingredients.length,
                 // Provide a builder function. This is where the magic happens.
                 // Convert each item into a widget based on the type of item it is.
                 itemBuilder: (context, index) {
-                  final ingredient = ingredients[index];
+                  final ingredient = product.ingredients[index];
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ingredient,
+                      Text(
+                        ingredient.name,
+                        style: robotoRegular,
+                      ),
                     ],
                   );
                 },
@@ -718,47 +726,46 @@ class CartBottomSheet extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // _isAvailable?
-          CustomButton(
-                      btnTxt: getTranslated(
-                          isExistInCart
-                              ? 'already_added_in_cart'
-                              : fromCart
-                                  ? 'update_in_cart'
-                                  : 'add_to_cart',
-                          context),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onTap: (!isExistInCart)
-                          ? () {
-                              if (!isExistInCart) {
-                                Navigator.pop(context);
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .addToCart(_cartModel, cartIndex);
-                                callback(_cartModel);
-                              }
-                            }
-                          : null,
-                    )
-                  // : Container(
-                  //     alignment: Alignment.center,
-                  //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                  //     decoration: BoxDecoration(
-                  //       borderRadius: BorderRadius.circular(10),
-                  //       color: Theme.of(context).primaryColor.withOpacity(0.1),
-                  //     ),
-                  //     child: Column(children: [
-                  //       Text(getTranslated('not_available_now', context),
-                  //           style: robotoMedium.copyWith(
-                  //             color: Theme.of(context).primaryColor,
-                  //             fontSize: Dimensions.FONT_SIZE_LARGE,
-                  //           )),
-                  //       Text(
-                  //         '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
-                  //         '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
-                  //         style: robotoRegular,
-                  //       ),
-                  //     ]),
-                  //   ),
+              CustomButton(
+                btnTxt: getTranslated(
+                    isExistInCart
+                        ? 'already_added_in_cart'
+                        : fromCart
+                            ? 'update_in_cart'
+                            : 'add_to_cart',
+                    context),
+                backgroundColor: Theme.of(context).primaryColor,
+                onTap: (!isExistInCart)
+                    ? () {
+                        if (!isExistInCart) {
+                          Navigator.pop(context);
+                          Provider.of<CartProvider>(context, listen: false)
+                              .addToCart(_cartModel, cartIndex);
+                          callback(_cartModel);
+                        }
+                      }
+                    : null,
+              )
+              // : Container(
+              //     alignment: Alignment.center,
+              //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+              //     decoration: BoxDecoration(
+              //       borderRadius: BorderRadius.circular(10),
+              //       color: Theme.of(context).primaryColor.withOpacity(0.1),
+              //     ),
+              //     child: Column(children: [
+              //       Text(getTranslated('not_available_now', context),
+              //           style: robotoMedium.copyWith(
+              //             color: Theme.of(context).primaryColor,
+              //             fontSize: Dimensions.FONT_SIZE_LARGE,
+              //           )),
+              //       Text(
+              //         '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
+              //         '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
+              //         style: robotoRegular,
+              //       ),
+              //     ]),
+              //   ),
             ]),
           );
         },

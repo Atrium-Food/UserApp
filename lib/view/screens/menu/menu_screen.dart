@@ -48,10 +48,9 @@ class MenuScreen extends StatelessWidget {
                       bottomRight: Radius.circular(15)),
                 ),
                 floating: true,
-                pinned: true,
+                pinned: false,
                 flexibleSpace: FlexibleSpaceBar(
                   background: Container(
-                    padding: EdgeInsets.only(bottom: 35.0),
                     child: Consumer<ProfileProvider>(
                         builder: (context, profileProvider, child) {
                       return Column(
@@ -106,7 +105,8 @@ class MenuScreen extends StatelessWidget {
                                             '${profileProvider.userInfoModel.fName ?? ''} ${profileProvider.userInfoModel.lName ?? ''}',
                                             style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
-                                                    .FONT_SIZE_DEFAULT,
+                                                        .FONT_SIZE_DEFAULT +
+                                                    2,
                                                 color:
                                                     ColorResources.COLOR_WHITE),
                                           )
@@ -118,7 +118,8 @@ class MenuScreen extends StatelessWidget {
                                         getTranslated('guest', context),
                                         style: robotoRegular.copyWith(
                                             fontSize:
-                                                Dimensions.FONT_SIZE_DEFAULT,
+                                                Dimensions.FONT_SIZE_DEFAULT +
+                                                    2,
                                             color: ColorResources.COLOR_WHITE),
                                       ),
                                 // SizedBox(height: 10),
@@ -128,7 +129,8 @@ class MenuScreen extends StatelessWidget {
                                             '${profileProvider.userInfoModel.email ?? ''}',
                                             style: robotoRegular.copyWith(
                                                 fontSize: Dimensions
-                                                    .FONT_SIZE_DEFAULT,
+                                                        .FONT_SIZE_DEFAULT +
+                                                    2,
                                                 color: ColorResources
                                                     .BACKGROUND_COLOR),
                                           )
@@ -140,7 +142,8 @@ class MenuScreen extends StatelessWidget {
                                         'demo@demo.com',
                                         style: robotoRegular.copyWith(
                                             fontSize:
-                                                Dimensions.FONT_SIZE_DEFAULT,
+                                                Dimensions.FONT_SIZE_DEFAULT +
+                                                    2,
                                             color: ColorResources.COLOR_WHITE),
                                       ),
                               ]),
@@ -153,56 +156,56 @@ class MenuScreen extends StatelessWidget {
                   // title: ,
                 ),
                 //title: Text('My App Bar'),
-                bottom: PreferredSize(
-                  preferredSize: Size.fromHeight(40.0),
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: EdgeInsets.only(
-                        top: 20, bottom: 20.0, left: 20, right: 20),
-                    // padding: EdgeInsets.only(top: 5, bottom: 5),
-                    decoration: BoxDecoration(
-                      color: ColorResources.getThemeColor(context),
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10.0),
-                      ),
-                    ),
-                    child: TabBar(
-                      unselectedLabelColor:
-                          ColorResources.getGreyBunkerColor(context),
-                      labelColor: ColorResources.getThemeColor(context),
-                      indicator: BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0),
-                        ),
-                        shape: BoxShape.rectangle,
-                        color: ColorResources.getIndicatorPrimaryColor(context),
-                      ),
-                      tabs: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
-                          child: Text('PROFILE',
-                              style: robotoRegular.copyWith(
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      0.032)),
-                        ),
-                        // Padding(
-                        //   padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
-                        //   child: Text('PAYMENT',
-                        //       style: robotoRegular.copyWith(
-                        //           fontSize: MediaQuery.of(context).size.width *
-                        //               0.032)),
-                        // ),
-                        // Padding(
-                        //   padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
-                        //   child: Text('REFER',
-                        //       style: robotoRegular.copyWith(
-                        //           fontSize: MediaQuery.of(context).size.width *
-                        //               0.032)),
-                        // ),
-                      ],
-                    ),
-                  ),
-                ),
+                // bottom: PreferredSize(
+                //   preferredSize: Size.fromHeight(40.0),
+                //   child: Container(
+                //     alignment: Alignment.center,
+                //     margin: EdgeInsets.only(
+                //         top: 20, bottom: 20.0, left: 20, right: 20),
+                //     // padding: EdgeInsets.only(top: 5, bottom: 5),
+                //     decoration: BoxDecoration(
+                //       color: ColorResources.getThemeColor(context),
+                //       borderRadius: BorderRadius.all(
+                //         Radius.circular(10.0),
+                //       ),
+                //     ),
+                //     child: TabBar(
+                //       unselectedLabelColor:
+                //           ColorResources.getGreyBunkerColor(context),
+                //       labelColor: ColorResources.getThemeColor(context),
+                //       indicator: BoxDecoration(
+                //         borderRadius: BorderRadius.all(
+                //           Radius.circular(10.0),
+                //         ),
+                //         shape: BoxShape.rectangle,
+                //         color: ColorResources.getIndicatorPrimaryColor(context),
+                //       ),
+                //       tabs: [
+                //         Padding(
+                //           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                //           child: Text('PROFILE',
+                //               style: robotoRegular.copyWith(
+                //                   fontSize: MediaQuery.of(context).size.width *
+                //                       0.032)),
+                //         ),
+                //         // Padding(
+                //         //   padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                //         //   child: Text('PAYMENT',
+                //         //       style: robotoRegular.copyWith(
+                //         //           fontSize: MediaQuery.of(context).size.width *
+                //         //               0.032)),
+                //         // ),
+                //         // Padding(
+                //         //   padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                //         //   child: Text('REFER',
+                //         //       style: robotoRegular.copyWith(
+                //         //           fontSize: MediaQuery.of(context).size.width *
+                //         //               0.032)),
+                //         // ),
+                //       ],
+                //     ),
+                //   ),
+                // ),
               ),
             ];
           },
