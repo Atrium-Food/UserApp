@@ -991,7 +991,7 @@ class DetailsPage extends StatelessWidget {
                                                 fontSize:
                                                     Dimensions.FONT_SIZE_SMALL,
                                               )),
-                                          SizedBox(height: 5),
+                                          SizedBox(height: 3),
                                           Text(
                                             PriceConverter.convertPrice(context,
                                                 product.addOns[index].price),
@@ -1004,7 +1004,8 @@ class DetailsPage extends StatelessWidget {
                                                     : ColorResources
                                                         .COLOR_BLACK,
                                                 fontSize: Dimensions
-                                                    .FONT_SIZE_EXTRA_SMALL),
+                                                        .FONT_SIZE_EXTRA_SMALL -
+                                                    1),
                                           ),
                                         ])),
                                     productProvider.addOnActiveList[index]
@@ -1038,7 +1039,7 @@ class DetailsPage extends StatelessWidget {
                                                       child: Center(
                                                           child: Icon(
                                                               Icons.remove,
-                                                              size: 15)),
+                                                              size: 14)),
                                                     ),
                                                   ),
                                                   Text(
@@ -1047,7 +1048,8 @@ class DetailsPage extends StatelessWidget {
                                                           .toString(),
                                                       style: robotoMedium.copyWith(
                                                           fontSize: Dimensions
-                                                              .FONT_SIZE_SMALL)),
+                                                                  .FONT_SIZE_SMALL -
+                                                              1)),
                                                   Expanded(
                                                     child: InkWell(
                                                       onTap: () =>
@@ -1056,7 +1058,7 @@ class DetailsPage extends StatelessWidget {
                                                                   true, index),
                                                       child: Center(
                                                           child: Icon(Icons.add,
-                                                              size: 15)),
+                                                              size: 14)),
                                                     ),
                                                   ),
                                                 ]),
