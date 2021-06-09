@@ -109,17 +109,16 @@ class DetailsPage extends StatelessWidget {
               priceWithDiscount * productProvider.quantity;
           double addonsCost = 0;
           List<AddOn> _addOnIdList = [];
-          print(product.addOns.length);
-          // for (int index = 0; index < product.addOns.length; index++) {
-          //   if (productProvider.addOnActiveList[index]) {
-          //     addonsCost = addonsCost +
-          //         (product.addOns[index].price *
-          //             productProvider.addOnQtyList[index]);
-          //     _addOnIdList.add(AddOn(
-          //         id: product.addOns[index].id,
-          //         quantity: productProvider.addOnQtyList[index]));
-          //   }
-          // }
+          for (int index = 0; index < product.addOns.length; index++) {
+            if (productProvider.addOnActiveList[index]) {
+              addonsCost = addonsCost +
+                  (product.addOns[index].price *
+                      productProvider.addOnQtyList[index]);
+              _addOnIdList.add(AddOn(
+                  id: product.addOns[index].id,
+                  quantity: productProvider.addOnQtyList[index]));
+            }
+          }
           double priceWithAddons = priceWithQuantity + addonsCost;
 
           DateTime _currentTime =

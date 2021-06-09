@@ -159,7 +159,7 @@ class ReviewPage extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          ListView.builder(
+          if(product.reviews!=null)ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
               itemCount: product.reviews.length,

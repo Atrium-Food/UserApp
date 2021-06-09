@@ -7,6 +7,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter_restaurant/main.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
+import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter_restaurant/view/screens/order/order_details_screen.dart';
 import 'package:flutter_restaurant/view/screens/rare_review/review_screen.dart';
 import 'package:geocoding/geocoding.dart';
@@ -25,6 +26,9 @@ class MyNotification {
         if(payload != null && payload.isNotEmpty) {
           MyApp.navigatorKey.currentState.push(
               MaterialPageRoute(builder: (context) => OrderDetailsScreen(orderModel: null, orderId: int.parse(payload))));
+        } else {
+          MyApp.navigatorKey.currentState.push(
+              MaterialPageRoute(builder: (context) => DashboardScreen()));
         }
         // else if(payload != null && payload.isNotEmpty && payload.startsWith('P')){
         //   MyApp.navigatorKey.currentState.push(
