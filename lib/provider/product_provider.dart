@@ -116,6 +116,7 @@ class ProductProvider extends ChangeNotifier {
       });
     } else {
       _quantity = 1;
+
       if (product.choiceOptions != null)
         product.choiceOptions.forEach((element) => _variationIndex.add(0));
       product.addOns.forEach((addOn) {

@@ -222,7 +222,7 @@ class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
                               overflow: TextOverflow.ellipsis,
                               style: robotoMedium.copyWith(
                                   color: ColorResources.getAccentColor(context),
-                                  fontSize: 25),
+                                  fontSize: 21),
                             ),
                             RatingBar(
                                 rating: widget.product.rating != null

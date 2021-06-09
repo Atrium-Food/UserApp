@@ -15,6 +15,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
 
 class LocationProvider with ChangeNotifier {
   final SharedPreferences sharedPreferences;
@@ -184,7 +185,36 @@ class LocationProvider with ChangeNotifier {
   }
 
   void getUserLocation(BuildContext context,bool isReset) async {
-    if(isReset || _address==null || _address.locality==null) {
+    if (isReset || _address == null || _address.locality == null) {
+      // showDialog(context: context,
+      //     builder: (context){
+      //       return AlertDialog(
+      //         title: Text('Location'),
+      //         actions: [
+      //           TextButton(
+      //               onPressed: () async {
+      //
+      //                 Navigator.pop(context);
+      //                 Navigator.pop(context);
+      //               },
+      //               child: Text("Use GPS Location")
+      //           ),
+      //           TextButton(
+      //             onPressed: () {
+      //
+      //               Navigator.pop(context);
+      //               showModalBottomSheet(
+      //                   context: context,
+      //                   builder: (context) {
+      //                     return AddressBottomSheet();
+      //                   });
+      //             },
+      //             child: Text("Add an address")
+      //           )
+      //         ],
+      //       );
+      //     }
+      // );
       _currentLocation = await locateUser();
       if (_currentLocation == null) {
         showModalBottomSheet(
@@ -197,6 +227,7 @@ class LocationProvider with ChangeNotifier {
           var currentAddresses = await placemarkFromCoordinates(
               _currentLocation.latitude, _currentLocation.longitude);
           _address = currentAddresses.first;
+          print(_address.locality);
         } on Exception catch (e) {
           print("$e Address can't be found");
           _address = null;

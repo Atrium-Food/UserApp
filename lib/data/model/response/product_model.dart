@@ -245,6 +245,7 @@ class Product {
     }
     //
     if (json['reviews'] != null) {
+      _reviews=[];
       json['reviews'].forEach((v) {
         _reviews.add(new ReviewBody.fromJson(v));
       });

@@ -73,7 +73,11 @@ class _ProductReviewScreenState extends State<ProductReviewScreen> {
                                 width: 85,
                                 fit: BoxFit.cover,
                                 imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                  return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                  return Image.asset(Images.placeholder_image,
+                                    height: 70,
+                                    width: 85,
+                                    fit: BoxFit.cover,
+                                  );
                                 },
                               ),
                             ),
@@ -154,13 +158,13 @@ class _ProductReviewScreenState extends State<ProductReviewScreen> {
                                     } else {
                                       ReviewBody reviewBody = ReviewBody(
                                         productId: product.id.toString(),
-                                        rating: _rating
-                                            .toString(),
+                                        rating: _rating.toInt(),
                                         comment: _textEditingController.text,
                                         userId: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.id.toString(),
                                         userImage: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.image,
-                                        userName: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.fName,
+                                        userName: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.fName + " " + Provider.of<ProfileProvider>(context,listen: false).userInfoModel.lName,
                                       );
+                                      print(reviewBody.toJson());
                                       productProvider.submitProductReview(reviewBody)
                                           .then((value) {
                                         if (value.isSuccess) {

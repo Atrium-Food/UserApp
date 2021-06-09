@@ -8,6 +8,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/screens/address/add_location_screen.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 
 class AddressBottomSheet extends StatelessWidget {
@@ -26,14 +27,28 @@ class AddressBottomSheet extends StatelessWidget {
                   Column(
                     mainAxisSize: MainAxisSize.min,
                       children: [
-                  ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: MediaQuery.of(context).size.height*0.4,
-                      minHeight: MediaQuery.of(context).size.height*0.1
-                    ),
-                    child: address.addressList != null
-                        ? address.addressList.length > 0
-                            ? ListView.separated(
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: Dimensions.PADDING_SIZE_SMALL),
+                          child: Row(children: [
+                            TextButton.icon(
+                              onPressed: () async{
+                Position _position = await Provider.of<LocationProvider>(context,listen: false).locateUser();
+                // Provider.of<LocationProvider>(context,listen: false).setPosition(_position);
+                },
+                icon: Icon(Icons.gps_fixed),
+                label: Text('Use current location', style: robotoRegular),
+                ),
+                ]),
+                ),
+                ConstrainedBox(
+                constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height*0.4,
+                minHeight: MediaQuery.of(context).size.height*0.05
+                ),
+                child: address.addressList != null
+                ? address.addressList.length > 0
+                ? ListView.separated(
                                 // physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 separatorBuilder: (context, index) {
@@ -192,10 +207,7 @@ class AddressBottomSheet extends StatelessWidget {
                             : Center(
                                 child: Text(getTranslated(
                                     'no_address_available', context)))
-                        : Center(
-                            child: CircularProgressIndicator(
-                                valueColor: AlwaysStoppedAnimation<Color>(
-                                    Theme.of(context).primaryColor))),
+                        : SizedBox(),
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(

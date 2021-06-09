@@ -68,6 +68,7 @@ class OrderRepo {
       final response = await dioClient.post(AppConstants.PLACE_ORDER_URI, data: orderBody.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
+      print(e);
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }

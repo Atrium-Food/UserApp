@@ -25,7 +25,7 @@ class ProductWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double _startingPrice;
     double _endingPrice;
-    if (product.choiceOptions!=null && product.choiceOptions.length != 0) {
+    if (product.choiceOptions != null && product.choiceOptions.length != 0) {
       List<double> _priceList = [];
       product.variations
           .forEach((variation) => _priceList.add(variation.price));
@@ -97,8 +97,11 @@ class ProductWidget extends StatelessWidget {
                   placeholder: Images.placeholder_image,
                   image:
                       '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                      StackTrace stackTrace) {
+                    return Image.asset(
+                      Images.placeholder_image,
+                      fit: BoxFit.cover,
                       height: 100,
                       width: 95,
                     );
@@ -155,50 +158,43 @@ class ProductWidget extends StatelessWidget {
                               builder: (con) => CartBottomSheet(
                                 product: product,
                                 callback: (CartModel cartModel) {
-                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                      content:
-                                      Text(getTranslated('added_to_cart', context)),
-                                      backgroundColor: Colors.green));
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(getTranslated(
+                                              'added_to_cart', context)),
+                                          backgroundColor: Colors.green));
                                 },
                               ),
                             );
                           },
                           child: Container(
                               decoration: BoxDecoration(
-                                shape: BoxShape
-                                    .circle,
-                                // boxShadow: [
-                                //   BoxShadow(
-                                //     color: ColorResources.getGrayColor(context),
-                                //     blurRadius: 10.0,
-                                //   ),
-                                // ]
-                                border: Border.all(color: ColorResources.getGrayColor(context))
-                              ),
+                                  shape: BoxShape.circle,
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: ColorResources.getGrayColor(context),
+                                  //     blurRadius: 10.0,
+                                  //   ),
+                                  // ]
+                                  border: Border.all(
+                                      color: ColorResources.getGrayColor(
+                                          context))),
                               child: Icon(
                                 Icons.add,
-                                color: ColorResources
-                                    .getAccentColor(
-                                    context),
+                                color: ColorResources.getAccentColor(context),
                                 size: 20,
-                              ))
-                      ),
+                              ))),
                     ],
                   ),
                   SizedBox(height: 5.0),
                   Text(
                     product.description ?? '',
                     style: robotoMedium.copyWith(
-                        fontSize: Dimensions
-                            .FONT_SIZE_SMALL,
-                        fontWeight:
-                        FontWeight.w300,
-                        color: ColorResources
-                            .getGrayColor(
-                            context)),
+                        fontSize: Dimensions.FONT_SIZE_SMALL,
+                        fontWeight: FontWeight.w300,
+                        color: ColorResources.getGrayColor(context)),
                     maxLines: 2,
-                    overflow:
-                    TextOverflow.ellipsis,
+                    overflow: TextOverflow.ellipsis,
                   ),
                   Spacer(),
                   Row(
@@ -206,16 +202,17 @@ class ProductWidget extends StatelessWidget {
                     children: [
                       Text(
                         '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
-                            '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
+                        '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
                         style: robotoMedium.copyWith(
-                            fontSize: Dimensions.FONT_SIZE_DEFAULT,fontWeight: FontWeight.w600),
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT - 1,
+                            fontWeight: FontWeight.w600),
                       ),
                       RatingBar(
-                          rating: product.rating!=null
-                          // product.rating.length > 0
-                              ? double.parse(product.rating.average)
-                              : 0.0,
-                          size: 10,
+                        rating: product.rating != null
+                            // product.rating.length > 0
+                            ? double.parse(product.rating.average)
+                            : 0.0,
+                        size: 10,
                         color: ColorResources.getGrayColor(context),
                       ),
                     ],
@@ -227,7 +224,7 @@ class ProductWidget extends StatelessWidget {
                           style: robotoMedium.copyWith(
                             color: ColorResources.COLOR_GREY,
                             decoration: TextDecoration.lineThrough,
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL - 1,
                           ))
                       : SizedBox(),
                 ]),

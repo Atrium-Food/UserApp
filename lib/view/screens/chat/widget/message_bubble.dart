@@ -67,7 +67,9 @@ class MessageBubble extends StatelessWidget {
                                 width: MediaQuery.of(context).size.width,
                                 fit: BoxFit.fitWidth,
                                 imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                  return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                  return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                                    width: MediaQuery.of(context).size.width,
+                                  );
                                 },
                               ),
                             ) : SizedBox(),

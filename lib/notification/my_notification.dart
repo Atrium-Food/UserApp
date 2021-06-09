@@ -31,7 +31,7 @@ class MyNotification {
         //       MaterialPageRoute(builder: (context) => ProductReviewScreen(productID: int.parse(payload.substring(1)))));
         // }
       }catch (e) {
-        
+        print(e.toString());
       }
       
       return;

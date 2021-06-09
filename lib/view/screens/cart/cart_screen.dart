@@ -59,17 +59,17 @@ class CartScreen extends StatelessWidget {
               });
               _addOnsList.add(_addOnList);
 
-              DateTime _currentTime = Provider.of<SplashProvider>(context, listen: false).currentTime;
-              DateTime _start = DateFormat('hh:mm:ss').parse(cartModel.product.availableTimeStarts);
-              DateTime _end = DateFormat('hh:mm:ss').parse(cartModel.product.availableTimeEnds);
-              DateTime _startTime = DateTime(_currentTime.year, _currentTime.month, _currentTime.day, _start.hour, _start.minute, _start.second);
-              DateTime _endTime = DateTime(_currentTime.year, _currentTime.month, _currentTime.day, _end.hour, _end.minute, _end.second);
-              if(_endTime.isBefore(_startTime)) {
-                _endTime = _endTime.add(Duration(days: 1));
-              }
-              bool _isAvailable = _currentTime.isAfter(_startTime) && _currentTime.isBefore(_endTime);
-              _availableList.add(_isAvailable);
-
+              // DateTime _currentTime = Provider.of<SplashProvider>(context, listen: false).currentTime;
+              // DateTime _start = DateFormat('hh:mm:ss').parse(cartModel.product.availableTimeStarts);
+              // DateTime _end = DateFormat('hh:mm:ss').parse(cartModel.product.availableTimeEnds);
+              // DateTime _startTime = DateTime(_currentTime.year, _currentTime.month, _currentTime.day, _start.hour, _start.minute, _start.second);
+              // DateTime _endTime = DateTime(_currentTime.year, _currentTime.month, _currentTime.day, _end.hour, _end.minute, _end.second);
+              // if(_endTime.isBefore(_startTime)) {
+              //   _endTime = _endTime.add(Duration(days: 1));
+              // }
+              // bool _isAvailable = _currentTime.isAfter(_startTime) && _currentTime.isBefore(_endTime);
+              // _availableList.add(_isAvailable);
+              _availableList.add(true);
               for(int index=0; index<_addOnList.length; index++) {
                 _addOns = _addOns + (_addOnList[index].price * cartModel.addOnIds[index].quantity);
               }

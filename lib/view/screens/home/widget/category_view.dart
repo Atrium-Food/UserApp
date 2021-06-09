@@ -16,6 +16,7 @@ class CategoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CategoryProvider>(
       builder: (context, category, child) {
+        // print(category.categoryList.length);
         return Column(
           children: [
             Padding(
@@ -58,7 +59,10 @@ class CategoryView extends StatelessWidget {
                                       height: 180,
                                       fit: BoxFit.cover,
                                       imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                        return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                        return Image.asset(Images.placeholder_image, fit: BoxFit.cover,
+                                          width: 120,
+                                          height: 180,
+                                        );
                                       },
                                     ),
                                   ),

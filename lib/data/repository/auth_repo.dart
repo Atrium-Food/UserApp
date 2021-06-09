@@ -74,6 +74,10 @@ class AuthRepo {
     }
   }
 
+  Future otpAuth() async {
+    
+  }
+
   Future<ApiResponse> updateToken() async {
     try {
       String _deviceToken;

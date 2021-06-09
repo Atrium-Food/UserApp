@@ -180,6 +180,11 @@ class SetMenuView extends StatelessWidget {
                                                     Images.placeholder_banner,
                                                     fit: BoxFit.cover,
                                                     height: 155,
+                                                      width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                          Dimensions
+                                                              .PADDING_SIZE_LARGE
                                                   );
                                                 },
                                                 height: 155,

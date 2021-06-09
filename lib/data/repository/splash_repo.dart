@@ -21,7 +21,7 @@ class SplashRepo {
 
   Future<bool> initSharedData() {
     if(!sharedPreferences.containsKey(AppConstants.THEME)) {
-      return sharedPreferences.setBool(AppConstants.THEME, false);
+      return sharedPreferences.setBool(AppConstants.THEME, true);
     }
     if(!sharedPreferences.containsKey(AppConstants.COUNTRY_CODE)) {
       return sharedPreferences.setString(AppConstants.COUNTRY_CODE, 'US');

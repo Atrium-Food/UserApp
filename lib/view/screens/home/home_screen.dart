@@ -86,20 +86,20 @@ class _HomeScreenState extends State<HomeScreen> {
                             .getUserLocation(context, true);
                       },
                       child: Image.asset(Images.home_location_icon,
-                          width: 50, height: 50),
+                          width: 50, height: 50,color: ColorResources.getThemeColor(context),),
                     ),
                     SizedBox(width: 10),
                     Consumer<LocationProvider>(
                         builder: (context, locationProvider, child) {
-                      return (locationProvider.address == null ||
+                      return (locationProvider.address != null &&
                               locationProvider.address.locality != null)
                           ? Text(
-                              locationProvider.address.locality,
-                              style: robotoMedium.copyWith(fontSize: 20),
+                              locationProvider.address.locality ?? '',
+                              style: robotoMedium.copyWith(fontSize: 20,color: ColorResources.getThemeColor(context),),
                             )
                           : Text(
                               "City Name",
-                              style: robotoMedium.copyWith(fontSize: 20),
+                              style: robotoMedium.copyWith(fontSize: 20, color:ColorResources.getThemeColor(context),),
                             );
                     }),
 

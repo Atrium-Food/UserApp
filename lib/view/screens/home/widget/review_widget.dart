@@ -36,7 +36,8 @@ class ReviewWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Icon(Icons.account_circle,size: 50,),
-              RatingBar(rating: double.parse(review.rating)),
+              Text(review.userName?? '',style: robotoRegular.copyWith(fontSize: 20,color: ColorResources.getAccentColor(context)),),
+              RatingBar(rating: review.rating.toDouble()),
               ],
           ),
           SizedBox(
