@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/order_model.dart';
 import 'package:flutter_restaurant/data/model/response/userinfo_model.dart';
+import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../order_successful_screen.dart';
@@ -48,7 +49,7 @@ class _RazorPaymentState extends State<RazorPayment> {
 
   void openCheckout() {
     var options = {
-      'key': 'rzp_test_LV6iHIkUp074R2',
+      'key': AppConstants.RAZORPAY_TEST_KEY,
       'amount': widget.amount * 100,
       'name': '${widget.userInfoModel.fName} ${widget.userInfoModel.lName}',
       'description': 'Deposit',

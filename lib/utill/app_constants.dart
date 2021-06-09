@@ -79,6 +79,10 @@ class AppConstants {
   static const String SEARCH_ADDRESS = 'search_address';
   static const String TOPIC = 'notify';
 
+  //Razorpay API Key
+  static const String RAZORPAY_TEST_KEY = 'rzp_test_LV6iHIkUp074R2';
+  static const String RAZORPAY_LIVE_KEY = 'rzp_live_cOeiHxMt0M01OQ';
+
   static List<LanguageModel> languages = [
     LanguageModel(
         imageUrl: Images.united_kindom,

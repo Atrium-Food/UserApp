@@ -67,7 +67,7 @@ class WelcomeScreen extends StatelessWidget {
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (_) => CreateAccountScreen()));
                 },
-                backgroundColor: Colors.black,
+                // backgroundColor: ColorResources.getBackgroundColor(context),
               ),
             ),
             Padding(
