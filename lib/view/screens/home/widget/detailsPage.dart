@@ -201,7 +201,7 @@ class DetailsPage extends StatelessWidget {
               ),
 
               Text(
-                '“The Ultimate Thai Platter comes with a bunch of fresh meats and all the herbs and spices that you’ll ever need to cook your very own thai dish in your own kitchen.”',
+                '"${product.description}"',
                 maxLines: 20,
                 style: robotoRegular.copyWith(
                   fontSize: 12.5,
