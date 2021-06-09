@@ -105,7 +105,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                           style: robotoRegular.copyWith(
                               color: ColorResources.getAccentColor(context)),
                         ),
-                        subtitle: Text(address.addressList[order.addressIndex].address,style: robotoRegular.copyWith(fontWeight: FontWeight.w400),),
+                        subtitle: order.addressIndex!=-1?Text(address.addressList[order.addressIndex].address,style: robotoRegular.copyWith(fontWeight: FontWeight.w400),): Text(""),
                         onExpansionChanged: (value) {
                           setState(() {
                             _isAddressExpanded = value;
@@ -438,7 +438,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                   fontWeight: FontWeight.w100,
                                   fontSize: Dimensions.FONT_SIZE_LARGE),
                             ),
-                            profile != null
+                            order.addressIndex!=-1
                                 ? RichText(
                                     text: TextSpan(
                                       children: [
@@ -461,7 +461,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                       ],
                                     ),
                                   )
-                                : null,
+                                : SizedBox(),
                           ],
                         ),
                         IconButton(onPressed: () {}, icon: Icon(Icons.edit)),

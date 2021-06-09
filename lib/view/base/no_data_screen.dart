@@ -24,10 +24,11 @@ class NoDataScreen extends StatelessWidget {
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Spacer(
-            //   flex: 1,
-            // ),
+            Spacer(
+              flex: 1,
+            ),
             Image.asset(
               isWishList
                   ? Images.add_favorite
@@ -55,7 +56,6 @@ class NoDataScreen extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 10),
-
             Text(
               isWishList
                   ? 'Start wishlisting your favorite dishes now'
@@ -68,9 +68,9 @@ class NoDataScreen extends StatelessWidget {
                   fontSize: MediaQuery.of(context).size.height * 0.0185),
               textAlign: TextAlign.center,
             ),
-            // Spacer(
-            //   flex: 2,
-            // ),
+            Spacer(
+              flex: 2,
+            ),
             if (isOrder || isCart)
               CustomButton(
                 btnTxt: isWishList ? 'Start Browsing' : 'Start Ordering',

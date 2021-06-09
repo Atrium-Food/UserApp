@@ -102,7 +102,7 @@ class DeliveryManReviewWidget extends StatelessWidget {
                           }
                           ReviewBody reviewBody = ReviewBody(
                             deliveryManId: deliveryMan.id.toString(),
-                            rating: productProvider.deliveryManRating.toString(),
+                            rating: productProvider.deliveryManRating,
                             comment: _controller.text,
                             orderId: orderID,
                           );

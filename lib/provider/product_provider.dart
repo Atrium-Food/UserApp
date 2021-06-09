@@ -116,14 +116,14 @@ class ProductProvider extends ChangeNotifier {
       });
     } else {
       _quantity = 1;
-      if(product.choiceOptions!=null) {
+      if(product.choiceOptions!=null)
         product.choiceOptions.forEach((element) => _variationIndex.add(0));
         product.addOns.forEach((addOn) {
           _addOnActiveList.add(false);
           _addOnQtyList.add(1);
         });
-      }
     }
+    print(_addOnActiveList.length);
   }
 
   void setAddOnQuantity(bool isIncrement, int index) {

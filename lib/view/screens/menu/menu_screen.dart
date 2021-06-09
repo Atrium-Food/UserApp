@@ -33,7 +33,7 @@ class MenuScreen extends StatelessWidget {
 
     return Scaffold(
       body: DefaultTabController(
-        length: 3,
+        length: 1,
         child: NestedScrollView(
           headerSliverBuilder: (context, value) {
             return [
@@ -84,6 +84,7 @@ class MenuScreen extends StatelessWidget {
                                             Images.placeholder_user,
                                             fit: BoxFit.contain,
                                             width: 40,
+                                            height: 40,
                                           );
                                         },
                                       )
@@ -184,20 +185,20 @@ class MenuScreen extends StatelessWidget {
                                   fontSize: MediaQuery.of(context).size.width *
                                       0.032)),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
-                          child: Text('PAYMENT',
-                              style: robotoRegular.copyWith(
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      0.032)),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
-                          child: Text('REFER',
-                              style: robotoRegular.copyWith(
-                                  fontSize: MediaQuery.of(context).size.width *
-                                      0.032)),
-                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                        //   child: Text('PAYMENT',
+                        //       style: robotoRegular.copyWith(
+                        //           fontSize: MediaQuery.of(context).size.width *
+                        //               0.032)),
+                        // ),
+                        // Padding(
+                        //   padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
+                        //   child: Text('REFER',
+                        //       style: robotoRegular.copyWith(
+                        //           fontSize: MediaQuery.of(context).size.width *
+                        //               0.032)),
+                        // ),
                       ],
                     ),
                   ),
@@ -208,10 +209,10 @@ class MenuScreen extends StatelessWidget {
           body: TabBarView(
             children: [
               MenuProfileTab(onTap: onTap),
-              MenuPaymentTab(
-                isCardsExist: false,
-              ),
-              Container(),
+              // MenuPaymentTab(
+              //   isCardsExist: false,
+              // ),
+              // Container(),
             ],
           ),
         ),

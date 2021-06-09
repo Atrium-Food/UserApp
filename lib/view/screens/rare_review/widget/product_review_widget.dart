@@ -52,7 +52,10 @@ class ProductReviewWidget extends StatelessWidget {
                           width: 85,
                           fit: BoxFit.cover,
                           imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                            return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                            return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                              height: 70,
+                              width: 85,
+                            );
                           },
                         ),
                       ),
@@ -151,7 +154,7 @@ class ProductReviewWidget extends StatelessWidget {
                                 }
                                 ReviewBody reviewBody = ReviewBody(
                                   productId: orderDetailsList[index].productId.toString(),
-                                  rating: productProvider.ratingList[index].toString(),
+                                  rating: productProvider.ratingList[index],
                                   comment: productProvider.reviewList[index],
                                   orderId: orderDetailsList[index].orderId.toString(),
                                   userId: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.id.toString(),

@@ -157,7 +157,7 @@ class CartBottomSheet extends StatelessWidget {
         builder: (context, productProvider, child) {
           double _startingPrice;
           double _endingPrice;
-          if (product.choiceOptions.length != 0) {
+          if (product.choiceOptions!=null && product.choiceOptions.length != 0) {
             List<double> _priceList = [];
             product.variations
                 .forEach((variation) => _priceList.add(variation.price));
@@ -171,6 +171,7 @@ class CartBottomSheet extends StatelessWidget {
           }
 
           List<String> _variationList = [];
+          if(product.choiceOptions!=null)
           for (int index = 0; index < product.choiceOptions.length; index++) {
             _variationList.add(product.choiceOptions[index]
                 .options[productProvider.variationIndex[index]]
@@ -188,6 +189,7 @@ class CartBottomSheet extends StatelessWidget {
           });
 
           double price = product.price;
+          if(product.variations!=null)
           for (Variation variation in product.variations) {
             if (variation.type == variationType) {
               price = variation.price;
@@ -213,21 +215,21 @@ class CartBottomSheet extends StatelessWidget {
           }
           double priceWithAddons = priceWithQuantity + addonsCost;
 
-          DateTime _currentTime =
-              Provider.of<SplashProvider>(context, listen: false).currentTime;
-          DateTime _start =
-              DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
-          DateTime _end =
-              DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
-          DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
-              _currentTime.day, _start.hour, _start.minute, _start.second);
-          DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
-              _currentTime.day, _end.hour, _end.minute, _end.second);
-          if (_endTime.isBefore(_startTime)) {
-            _endTime = _endTime.add(Duration(days: 1));
-          }
-          bool _isAvailable = _currentTime.isAfter(_startTime) &&
-              _currentTime.isBefore(_endTime);
+          // DateTime _currentTime =
+          //     Provider.of<SplashProvider>(context, listen: false).currentTime;
+          // DateTime _start =
+          //     DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
+          // DateTime _end =
+          //     DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
+          // DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
+          //     _currentTime.day, _start.hour, _start.minute, _start.second);
+          // DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
+          //     _currentTime.day, _end.hour, _end.minute, _end.second);
+          // if (_endTime.isBefore(_startTime)) {
+          //   _endTime = _endTime.add(Duration(days: 1));
+          // }
+          // bool _isAvailable = _currentTime.isAfter(_startTime) &&
+          //     _currentTime.isBefore(_endTime);
 
           CartModel _cartModel = CartModel(
             price,
@@ -263,7 +265,10 @@ class CartBottomSheet extends StatelessWidget {
                     imageErrorBuilder: (BuildContext context, Object exception,
                         StackTrace stackTrace) {
                       return Image.asset(Images.placeholder_image,
-                          fit: BoxFit.contain);
+                        width: 180,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      );
                     },
                   ),
                 ),
@@ -416,6 +421,7 @@ class CartBottomSheet extends StatelessWidget {
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Variation
+                  if(product.choiceOptions!=null)
               ListView.builder(
                 shrinkWrap: true,
                 itemCount: product.choiceOptions.length,
@@ -488,7 +494,8 @@ class CartBottomSheet extends StatelessWidget {
                       ]);
                 },
               ),
-              product.choiceOptions.length > 0
+              if(product.choiceOptions!=null)
+                  product.choiceOptions.length > 0
                   ? SizedBox(height: Dimensions.PADDING_SIZE_LARGE)
                   : SizedBox(),
 
@@ -710,8 +717,8 @@ class CartBottomSheet extends StatelessWidget {
               ]),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-              _isAvailable
-                  ? CustomButton(
+              // _isAvailable?
+          CustomButton(
                       btnTxt: getTranslated(
                           isExistInCart
                               ? 'already_added_in_cart'
@@ -732,26 +739,26 @@ class CartBottomSheet extends StatelessWidget {
                             }
                           : null,
                     )
-                  : Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
-                      ),
-                      child: Column(children: [
-                        Text(getTranslated('not_available_now', context),
-                            style: robotoMedium.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                            )),
-                        Text(
-                          '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
-                          '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
-                          style: robotoRegular,
-                        ),
-                      ]),
-                    ),
+                  // : Container(
+                  //     alignment: Alignment.center,
+                  //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  //     ),
+                  //     child: Column(children: [
+                  //       Text(getTranslated('not_available_now', context),
+                  //           style: robotoMedium.copyWith(
+                  //             color: Theme.of(context).primaryColor,
+                  //             fontSize: Dimensions.FONT_SIZE_LARGE,
+                  //           )),
+                  //       Text(
+                  //         '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
+                  //         '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
+                  //         style: robotoRegular,
+                  //       ),
+                  //     ]),
+                  //   ),
             ]),
           );
         },

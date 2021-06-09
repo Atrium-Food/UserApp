@@ -162,15 +162,15 @@ class ReviewPage extends StatelessWidget {
           ListView.builder(
               shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              itemCount: 2,
+              itemCount: product.reviews.length,
               itemBuilder: (context, index) {
-                Map<String, dynamic> json = {
-                  'product_id': '1',
-                  'comment':
-                      'Lovely lunch today. Ordered the food without much expectations from myself as in the end I was the one who had to cook, but in the end everything turned out to be great. The chef who was guiding me through the whole session was so calm and he motivated me to cook. Giving a four so that I can improve myself and cook better next time. Hoping to update the review soon.',
-                  'rating': '3',
-                };
-                return ReviewWidget(review: ReviewBody.fromJson(json));
+                // Map<String, dynamic> json = {
+                //   'product_id': 1,
+                //   'comment':
+                //       'Lovely lunch today. Ordered the food without much expectations from myself as in the end I was the one who had to cook, but in the end everything turned out to be great. The chef who was guiding me through the whole session was so calm and he motivated me to cook. Giving a four so that I can improve myself and cook better next time. Hoping to update the review soon.',
+                //   'rating': 3,
+                // };
+                return ReviewWidget(review: product.reviews[index]);
               })
         ],
       ),

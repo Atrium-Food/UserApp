@@ -47,7 +47,7 @@ class Errors {
 }
 
   Errors.fromJson(dynamic json) {
-    _code = json["code"];
+    _code = json["code"].toString();
     _message = json["message"];
   }
 

@@ -109,16 +109,17 @@ class DetailsPage extends StatelessWidget {
               priceWithDiscount * productProvider.quantity;
           double addonsCost = 0;
           List<AddOn> _addOnIdList = [];
-          for (int index = 0; index < product.addOns.length; index++) {
-            if (productProvider.addOnActiveList[index]) {
-              addonsCost = addonsCost +
-                  (product.addOns[index].price *
-                      productProvider.addOnQtyList[index]);
-              _addOnIdList.add(AddOn(
-                  id: product.addOns[index].id,
-                  quantity: productProvider.addOnQtyList[index]));
-            }
-          }
+          print(product.addOns.length);
+          // for (int index = 0; index < product.addOns.length; index++) {
+          //   if (productProvider.addOnActiveList[index]) {
+          //     addonsCost = addonsCost +
+          //         (product.addOns[index].price *
+          //             productProvider.addOnQtyList[index]);
+          //     _addOnIdList.add(AddOn(
+          //         id: product.addOns[index].id,
+          //         quantity: productProvider.addOnQtyList[index]));
+          //   }
+          // }
           double priceWithAddons = priceWithQuantity + addonsCost;
 
           DateTime _currentTime =
@@ -176,7 +177,7 @@ class DetailsPage extends StatelessWidget {
                             Images.placeholder_image,
                             fit: BoxFit.contain,
                             height: 170,
-                            width: 85,
+                            width: MediaQuery.of(context).size.width * 0.9,
                           );
                         },
                       ),

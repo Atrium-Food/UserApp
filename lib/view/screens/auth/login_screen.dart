@@ -472,35 +472,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           height: 10,
                         ),
-                        Center(
-                          child: TextButton(
-                            style: TextButton.styleFrom(
-                              minimumSize: Size(1, 40),
-                            ),
-                            onPressed: () {
-                              Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (_) => DashboardScreen()));
-                            },
-                            child: RichText(
-                                text: TextSpan(children: [
-                              TextSpan(
-                                  text:
-                                      '${getTranslated('login_as_a', context)} ',
-                                  style: robotoRegular.copyWith(
-                                      color: ColorResources.getGreyColor(
-                                          context))),
-                              TextSpan(
-                                  text: getTranslated('guest', context),
-                                  style: robotoMedium.copyWith(
-                                      color: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1
-                                          .color)),
-                            ])),
-                          ),
-                        ),
+                        // Center(
+                        //   child: TextButton(
+                        //     style: TextButton.styleFrom(
+                        //       minimumSize: Size(1, 40),
+                        //     ),
+                        //     onPressed: () {
+                        //       Navigator.pushReplacement(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (_) => DashboardScreen()));
+                        //     },
+                        //     child: RichText(
+                        //         text: TextSpan(children: [
+                        //       TextSpan(
+                        //           text:
+                        //               '${getTranslated('login_as_a', context)} ',
+                        //           style: robotoRegular.copyWith(
+                        //               color: ColorResources.getGreyColor(
+                        //                   context))),
+                        //       TextSpan(
+                        //           text: getTranslated('guest', context),
+                        //           style: robotoMedium.copyWith(
+                        //               color: Theme.of(context)
+                        //                   .textTheme
+                        //                   .bodyText1
+                        //                   .color)),
+                        //     ])),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

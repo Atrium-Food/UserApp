@@ -190,7 +190,10 @@ class OrderDetailsScreen extends StatelessWidget {
                                       width: 80,
                                       fit: BoxFit.cover,
                                       imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                        return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                        return Image.asset(Images.placeholder_image, height: 70,
+                                          width: 80,
+                                          fit: BoxFit.cover,
+                                        );
                                       },
                                     ),
                                   ),
