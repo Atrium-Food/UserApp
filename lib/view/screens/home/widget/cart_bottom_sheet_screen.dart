@@ -71,113 +71,113 @@ class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
         List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
             .toList();
 
-    final List<Widget> ingredients = [
-      Row(children: [
-        Text(
-          'Ingredient1',
-          style: robotoRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: robotoMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Text(
-          'Ingredient2',
-          style: robotoRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: robotoMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Text(
-          'Ingredient3',
-          style: robotoRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: robotoMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-    ];
+    // final List<Widget> ingredients = [
+    //   Row(children: [
+    //     Text(
+    //       'Ingredient1',
+    //       style: robotoRegular,
+    //     ),
+    //     Expanded(child: SizedBox()),
+    //     Container(
+    //       decoration: BoxDecoration(
+    //           color: ColorResources.getBackgroundColor(context),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       child: Row(children: [
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.remove, size: 20),
+    //           ),
+    //         ),
+    //         Text('1',
+    //             style: robotoMedium.copyWith(
+    //                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.add, size: 20),
+    //           ),
+    //         ),
+    //       ]),
+    //     ),
+    //   ]),
+    //   Row(children: [
+    //     Text(
+    //       'Ingredient2',
+    //       style: robotoRegular,
+    //     ),
+    //     Expanded(child: SizedBox()),
+    //     Container(
+    //       decoration: BoxDecoration(
+    //           color: ColorResources.getBackgroundColor(context),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       child: Row(children: [
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.remove, size: 20),
+    //           ),
+    //         ),
+    //         Text('1',
+    //             style: robotoMedium.copyWith(
+    //                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.add, size: 20),
+    //           ),
+    //         ),
+    //       ]),
+    //     ),
+    //   ]),
+    //   Row(children: [
+    //     Text(
+    //       'Ingredient3',
+    //       style: robotoRegular,
+    //     ),
+    //     Expanded(child: SizedBox()),
+    //     Container(
+    //       decoration: BoxDecoration(
+    //           color: ColorResources.getBackgroundColor(context),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       child: Row(children: [
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.remove, size: 20),
+    //           ),
+    //         ),
+    //         Text('1',
+    //             style: robotoMedium.copyWith(
+    //                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.add, size: 20),
+    //           ),
+    //         ),
+    //       ]),
+    //     ),
+    //   ]),
+    // ];
 
     bool fromCart = widget.cart != null;
     Provider.of<ProductProvider>(context, listen: false)
@@ -218,8 +218,8 @@ class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
                           children: [
                             Text(
                               widget.product.name,
-                              maxLines: 1,
-                              overflow: TextOverflow.visible,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                               style: robotoMedium.copyWith(
                                   color: ColorResources.getAccentColor(context),
                                   fontSize: 25),
