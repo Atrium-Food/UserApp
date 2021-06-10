@@ -320,7 +320,7 @@ class CartBottomSheet extends StatelessWidget {
                         ),
                         RatingBar(
                             rating: product.rating != null
-                                ? product.rating.average
+                                ? product.rating.average ?? 0
                                 : 0.0,
                             size: 15),
                         SizedBox(height: 10),
@@ -757,7 +757,7 @@ class CartBottomSheet extends StatelessWidget {
               ]),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-              // isAvailable?
+              isAvailable?
               CustomButton(
                 btnTxt: getTranslated(
                     isExistInCart
@@ -778,62 +778,63 @@ class CartBottomSheet extends StatelessWidget {
                       }
                     : null,
               )
-              //     :
-              // CustomButton(
-              //   btnTxt: 'Request in your area',
-              //   backgroundColor: Theme.of(context).primaryColor,
-              //   onTap: () {
-              //     TextEditingController _pinCodeController = TextEditingController();
-              //     String errorMessage = '';
-              //     showDialog(
-              //         context: context,
-              //         builder: (context){
-              //           return AlertDialog(
-              //             title: Text('Request for a pantry in your area',style: robotoRegular.copyWith(fontSize: 15),),
-              //             content:
-              //               Consumer<LocationProvider>(
-              //                 builder: (context, locationProvider,child) {
-              //                   return Column(
-              //                     mainAxisSize: MainAxisSize.min,
-              //                     children: [
-              //                       SizedBox(
-              //                         width: MediaQuery.of(context).size.width*0.7,
-              //                         child: CustomTextField(
-              //                           controller: _pinCodeController,
-              //                           hintText: 'Enter pincode',
-              //                           inputType: TextInputType.number,
-              //                         ),
-              //                       ),
-              //                       SizedBox(height: 10,),
-              //                       locationProvider.isLoading?Center(child: CircularProgressIndicator(color: ColorResources.getPrimaryColor(context),)):SizedBox(),
-              //                       // Text(locationProvider.errorMessage?? '',style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
-              //                     ],
-              //                   );
-              //                 }
-              //               ),
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(10)
-              //             ),
-              //             actions: [
-              //               TextButton(
-              //                   onPressed: () async {
-              //                       ResponseModel responseModel = await Provider.of<LocationProvider>(context,listen: false).submitRequestInArea(pincode: _pinCodeController.text,);
-              //                       Navigator.pop(context);
-              //                   },
-              //                   child: Text('Request')
-              //               ),
-              //               TextButton(
-              //                   onPressed: (){
-              //                     Navigator.pop(context);
-              //                   },
-              //                   child: Text('Cancel')
-              //               )
-              //             ],
-              //           );
-              //         }
-              //     );
-              //   }
-              // ),
+                  : CustomButton(
+                btnTxt: 'Request in your area',
+                backgroundColor: Theme.of(context).primaryColor,
+                onTap: () {
+                  TextEditingController _pinCodeController = TextEditingController();
+                  String errorMessage = '';
+                  showDialog(
+                      context: context,
+                      builder: (context){
+                        return AlertDialog(
+                          title: Text('Request for a pantry in your area',style: robotoRegular.copyWith(fontSize: 15),),
+                          content:
+                            Consumer<LocationProvider>(
+                              builder: (context, locationProvider,child) {
+                                return Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    SizedBox(
+                                      width: MediaQuery.of(context).size.width*0.7,
+                                      child: CustomTextField(
+                                        controller: _pinCodeController,
+                                        hintText: 'Enter pincode',
+                                        inputType: TextInputType.number,
+                                      ),
+                                    ),
+                                    SizedBox(height: 10,),
+                                    locationProvider.isLoading?Center(child: CircularProgressIndicator(color: ColorResources.getPrimaryColor(context),)):SizedBox(),
+                                    // Text(locationProvider.errorMessage?? '',style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
+                                  ],
+                                );
+                              }
+                            ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)
+                          ),
+                          actions: [
+                            TextButton(
+                                onPressed: () async {
+                                    ResponseModel responseModel = await Provider.of<LocationProvider>(context,listen: false).submitRequestInArea(pincode: _pinCodeController.text,);
+                                    // if(responseModel.isSuccess)
+                                    Navigator.pop(context);
+                                },
+                                child: Text('Request')
+                            ),
+                            TextButton(
+                                onPressed: (){
+                                  Provider.of<LocationProvider>(context,listen: false).setLoadingFalse();
+                                  Navigator.pop(context);
+                                },
+                                child: Text('Cancel')
+                            )
+                          ],
+                        );
+                      }
+                  );
+                }
+              ),
               // : Container(
               //     alignment: Alignment.center,
               //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

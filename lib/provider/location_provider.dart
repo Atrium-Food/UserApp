@@ -331,6 +331,11 @@ class LocationProvider with ChangeNotifier {
     return responseModel;
   }
 
+  setLoadingFalse(){
+    _isLoading=false;
+    notifyListeners();
+  }
+
   // for address update screen
   Future<ResponseModel> updateAddress(BuildContext context,
       {AddressModel addressModel, int addressId}) async {
@@ -407,12 +412,13 @@ class LocationProvider with ChangeNotifier {
 
     Position position = await locateUser();
     print(pincode);
-    print(position.latitude);
-    print(position.longitude);
-    ApiResponse response = await locationRepo.requestInArea(pincode, position.latitude, position.longitude);
+    print(position?.latitude);
+    print(position?.longitude);
+    ApiResponse response = await locationRepo.requestInArea(pincode, position?.latitude ??0, position?.longitude ?? 0);
     ResponseModel responseModel;
     if (response.response != null && response.response.statusCode == 200) {
       responseModel = ResponseModel(true, 'Requested in your area');
+      _isLoading = false;
       notifyListeners();
     } else {
       String errorMessage;
@@ -423,6 +429,8 @@ class LocationProvider with ChangeNotifier {
         errorMessage = response.error.errors[0].message;
       }
       responseModel = ResponseModel(false, errorMessage);
+      _isLoading = false;
+      notifyListeners();
     }
     _isLoading = false;
     notifyListeners();

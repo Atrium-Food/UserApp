@@ -34,9 +34,10 @@ class ProductProvider extends ChangeNotifier {
   bool get isDefault => _isDefault;
 
   void getPopularProductList({BuildContext context, String offset, double lat, double long}) async {
-    if (!_offsetList.contains(offset)) {
+    if (!_offsetList.contains(offset) || (_offsetList.contains(offset) && lat!=null)) {
       print("Offset: $offset");
       _offsetList.add(offset);
+      print(lat.toString()+long.toString());
       ApiResponse apiResponse = await productRepo.getPopularProductList(offset,lat,long);
       if (apiResponse.response != null &&
           apiResponse.response.statusCode == 200) {

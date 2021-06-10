@@ -1163,6 +1163,7 @@ class DetailsPage extends StatelessWidget {
                                   ),
                                   TextButton(
                                       onPressed: (){
+                                        Provider.of<LocationProvider>(context,listen: false).setLoadingFalse();
                                         Navigator.pop(context);
                                       },
                                       child: Text('Cancel')

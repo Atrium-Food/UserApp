@@ -181,6 +181,8 @@ class AddressBottomSheet extends StatelessWidget {
                                                               String message) {
                                                     // showCustomSnackBar(message, context, isError: !isSuccessful);
                                                   });
+                                                  if(Provider.of<OrderProvider>(context,listen: false).addressIndex == index)
+                                                    Provider.of<OrderProvider>(context,listen: false).resetAddressIndex(index);
                                                 }
                                               },
                                               itemBuilder: (context) {
