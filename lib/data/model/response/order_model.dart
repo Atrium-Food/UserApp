@@ -25,27 +25,27 @@ class OrderModel {
 
   OrderModel(
       {int id,
-        int userId,
-        double orderAmount,
-        double couponDiscountAmount,
-        String couponDiscountTitle,
-        String paymentStatus,
-        String orderStatus,
-        double totalTaxAmount,
-        String paymentMethod,
-        String transactionReference,
-        int deliveryAddressId,
-        String createdAt,
-        String updatedAt,
-        String checked,
-        int deliveryManId,
-        double deliveryCharge,
-        String orderNote,
-        List<int> addOnIds,
-        List<Details> details,
-        DeliveryMan deliveryMan,
-        int detailsCount,
-        String orderType}) {
+      int userId,
+      double orderAmount,
+      double couponDiscountAmount,
+      String couponDiscountTitle,
+      String paymentStatus,
+      String orderStatus,
+      double totalTaxAmount,
+      String paymentMethod,
+      String transactionReference,
+      int deliveryAddressId,
+      String createdAt,
+      String updatedAt,
+      String checked,
+      int deliveryManId,
+      double deliveryCharge,
+      String orderNote,
+      List<int> addOnIds,
+      List<Details> details,
+      DeliveryMan deliveryMan,
+      int detailsCount,
+      String orderType}) {
     this._id = id;
     this._userId = userId;
     this._orderAmount = orderAmount;
@@ -112,7 +112,7 @@ class OrderModel {
     _deliveryCharge = json['delivery_charge'].toDouble();
     _orderNote = json['order_note'];
     _detailsCount = json['details_count'];
-    if(json['add_on_ids'] != null) {
+    if (json['add_on_ids'] != null) {
       _addOnIds = json['add_on_ids'].cast<int>();
     }
     if (json['details'] != null) {
@@ -176,19 +176,19 @@ class Details {
 
   Details(
       {int id,
-        int productId,
-        int orderId,
-        double price,
-        String productDetails,
-        String variation,
-        double discountOnProduct,
-        String discountType,
-        int quantity,
-        double taxAmount,
-        String createdAt,
-        String updatedAt,
-        String addOnIds,
-        String variant}) {
+      int productId,
+      int orderId,
+      double price,
+      String productDetails,
+      String variation,
+      double discountOnProduct,
+      String discountType,
+      int quantity,
+      double taxAmount,
+      String createdAt,
+      String updatedAt,
+      String addOnIds,
+      String variant}) {
     this._id = id;
     this._productId = productId;
     this._orderId = orderId;
@@ -275,19 +275,19 @@ class DeliveryMan {
 
   DeliveryMan(
       {int id,
-        String fName,
-        String lName,
-        String phone,
-        String email,
-        String identityNumber,
-        String identityType,
-        String identityImage,
-        String image,
-        String password,
-        String createdAt,
-        String updatedAt,
-        String authToken,
-        List<Rating> rating}) {
+      String fName,
+      String lName,
+      String phone,
+      String email,
+      String identityNumber,
+      String identityType,
+      String identityImage,
+      String image,
+      String password,
+      String createdAt,
+      String updatedAt,
+      String authToken,
+      List<Rating> rating}) {
     this._id = id;
     this._fName = fName;
     this._lName = lName;

@@ -41,6 +41,7 @@ class AppConstants {
   static const String ORDER_CANCEL_URI = '/api/v1/customer/order/cancel';
   static const String UPDATE_METHOD_URI =
       '/api/v1/customer/order/payment-method';
+  static const String UPDATE_PAYMENT_STATUS = '/api/v1/customer/order/track';
   static const String ORDER_DETAILS_URI =
       '/api/v1/customer/order/details?order_id=';
   static const String WISH_LIST_GET_URI = '/api/v1/customer/wish-list';

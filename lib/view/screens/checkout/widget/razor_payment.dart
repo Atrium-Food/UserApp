@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/order_model.dart';
 import 'package:flutter_restaurant/data/model/response/userinfo_model.dart';
+import 'package:flutter_restaurant/provider/order_provider.dart';
 import 'package:flutter_restaurant/utill/app_constants.dart';
+import 'package:provider/provider.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import '../order_successful_screen.dart';
@@ -36,8 +38,6 @@ class _RazorPaymentState extends State<RazorPayment> {
     _razorpay.on(Razorpay.PAYMENT_CANCELLED.toString(), handelPaymentCancelled);
 
     openCheckout();
-
-    Navigator.pop(context);
   }
 
   @override
@@ -69,7 +69,15 @@ class _RazorPaymentState extends State<RazorPayment> {
     }
   }
 
-  void handelPaymentSuccess() {
+  void handelPaymentSuccess(PaymentSuccessResponse response) {
+    print('-------Payment Successful----------------- ${response.paymentId}');
+
+    Provider.of<OrderProvider>(context, listen: false).updatePaymentStatus(
+        widget.orderModel.toString(), 'Paid', response.paymentId);
+
+    // Provider.of<OrderProvider>(context, listen: false)
+    //     .updatePaymentDemo(widget.orderModel.id.toString(), response.paymentId);
+
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(
@@ -80,7 +88,10 @@ class _RazorPaymentState extends State<RazorPayment> {
                 )));
   }
 
-  void handelPaymentError() {
+  void handelPaymentError(PaymentFailureResponse response) {
+    Provider.of<OrderProvider>(context, listen: false)
+        .updatePaymentStatus(widget.orderModel.toString(), 'Unpaid', '');
+
     Navigator.pushReplacement(
         context,
         MaterialPageRoute(

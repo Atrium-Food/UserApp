@@ -22,7 +22,8 @@ class OrderRepo {
 
   Future<ApiResponse> getOrderDetails(String orderID) async {
     try {
-      final response = await dioClient.get('${AppConstants.ORDER_DETAILS_URI}$orderID');
+      final response =
+          await dioClient.get('${AppConstants.ORDER_DETAILS_URI}$orderID');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -34,7 +35,37 @@ class OrderRepo {
       Map<String, dynamic> data = Map<String, dynamic>();
       data['order_id'] = orderID;
       data['_method'] = 'put';
-      final response = await dioClient.post(AppConstants.ORDER_CANCEL_URI, data: data);
+      final response =
+          await dioClient.post(AppConstants.ORDER_CANCEL_URI, data: data);
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
+  // Future<ApiResponse> updatePaymentDemo(
+  //     String orderId, String reference) async {
+  //   try {
+  //     Map<String, dynamic> data = Map<String, dynamic>();
+  //     data['order_id'] = orderId;
+  //     data['transaction_reference'] = reference;
+  //     final response =
+  //         await dioClient.post(AppConstants.UPDATE_PAYMENT_STATUS, data: data);
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
+
+  Future<ApiResponse> updatePaymentStatus(
+      String orderId, String status, String reference) async {
+    try {
+      Map<String, dynamic> data = Map<String, dynamic>();
+      data['order_id'] = orderId;
+      data['payment_status'] = status;
+      data['transaction_reference'] = reference;
+      final response =
+          await dioClient.post(AppConstants.UPDATE_PAYMENT_STATUS, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -47,7 +78,8 @@ class OrderRepo {
       data['order_id'] = orderID;
       data['_method'] = 'put';
       data['payment_method'] = 'cash_on_delivery';
-      final response = await dioClient.post(AppConstants.UPDATE_METHOD_URI, data: data);
+      final response =
+          await dioClient.post(AppConstants.UPDATE_METHOD_URI, data: data);
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
@@ -65,7 +97,8 @@ class OrderRepo {
 
   Future<ApiResponse> placeOrder(PlaceOrderBody orderBody) async {
     try {
-      final response = await dioClient.post(AppConstants.PLACE_ORDER_URI, data: orderBody.toJson());
+      final response = await dioClient.post(AppConstants.PLACE_ORDER_URI,
+          data: orderBody.toJson());
       return ApiResponse.withSuccess(response);
     } catch (e) {
       print(e);
@@ -75,11 +108,11 @@ class OrderRepo {
 
   Future<ApiResponse> getDeliveryManData(String orderID) async {
     try {
-      final response = await dioClient.get('${AppConstants.LAST_LOCATION_URI}$orderID');
+      final response =
+          await dioClient.get('${AppConstants.LAST_LOCATION_URI}$orderID');
       return ApiResponse.withSuccess(response);
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
   }
-
 }
