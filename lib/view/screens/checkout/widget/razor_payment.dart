@@ -73,7 +73,7 @@ class _RazorPaymentState extends State<RazorPayment> {
     print('-------Payment Successful----------------- ${response.paymentId}');
 
     Provider.of<OrderProvider>(context, listen: false).updatePaymentStatus(
-        widget.orderModel.toString(), 'Paid', response.paymentId);
+        widget.orderModel.id.toString(), 'paid', response.paymentId);
 
     // Provider.of<OrderProvider>(context, listen: false)
     //     .updatePaymentDemo(widget.orderModel.id.toString(), response.paymentId);
@@ -90,7 +90,7 @@ class _RazorPaymentState extends State<RazorPayment> {
 
   void handelPaymentError(PaymentFailureResponse response) {
     Provider.of<OrderProvider>(context, listen: false)
-        .updatePaymentStatus(widget.orderModel.toString(), 'Unpaid', '');
+        .updatePaymentStatus(widget.orderModel.toString(), 'unpaid', '00000');
 
     Navigator.pushReplacement(
         context,
