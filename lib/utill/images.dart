@@ -41,6 +41,8 @@ class Images {
   static const String no_ongoing_orders = 'assets/image/no_ongoing_orders.png';
   static const String call_support = 'assets/image/call_support.png';
   static const String chat_support = 'assets/image/chat_support.png';
+  static const String kiwis='assets/image/kiwis.png';
+  static const String kiwis_logo = 'assets/image/kiwis_icon.png';
 
   // for Icon
   static const String hot = 'assets/icon/hotIcon.svg';

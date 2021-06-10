@@ -22,6 +22,7 @@ class ProductProvider extends ChangeNotifier {
   int _quantity = 1;
   List<bool> _addOnActiveList = [];
   List<int> _addOnQtyList = [];
+  bool _isDefault=false;
 
   List<Product> get popularProductList => _popularProductList;
   bool get isLoading => _isLoading;
@@ -30,27 +31,27 @@ class ProductProvider extends ChangeNotifier {
   int get quantity => _quantity;
   List<bool> get addOnActiveList => _addOnActiveList;
   List<int> get addOnQtyList => _addOnQtyList;
+  bool get isDefault => _isDefault;
 
-  void getPopularProductList(BuildContext context, String offset) async {
+  void getPopularProductList({BuildContext context, String offset, double lat, double long}) async {
     if (!_offsetList.contains(offset)) {
       print("Offset: $offset");
       _offsetList.add(offset);
-      ApiResponse apiResponse = await productRepo.getPopularProductList(offset);
+      ApiResponse apiResponse = await productRepo.getPopularProductList(offset,lat,long);
       if (apiResponse.response != null &&
           apiResponse.response.statusCode == 200) {
         if (offset == '1') {
-          print(1);
+          print("Offset 1");
           _popularProductList = [];
         }
         print("Hey");
         // ProductModel _temp = ProductModel.fromJson(apiResponse.response.data);
         // print(ProductModel.fromJson(apiResponse.response.data));
+        ProductModel _productModel = ProductModel.fromJson(apiResponse.response.data);
         _popularProductList
-            .addAll(ProductModel.fromJson(apiResponse.response.data).products);
-        // _popularPageSize =
-        //     ProductModel.fromJson(apiResponse.response.data).totalSize;
-
-        _popularPageSize = 10;
+            .addAll(_productModel.products);
+        _popularPageSize =_productModel.totalSize;
+        _isDefault= _productModel.isDefault;
         _isLoading = false;
         notifyListeners();
       } else {

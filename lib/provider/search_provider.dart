@@ -50,7 +50,7 @@ class SearchProvider with ChangeNotifier {
     if (_rating != -1) {
       _searchProductList.removeWhere((product) =>
           product.rating == null ||
-          double.parse(product.rating.average) < _rating);
+          product.rating.average < _rating);
       // product.rating.length == 0 || double.parse(product.rating[0].average) < _rating);
     }
     notifyListeners();

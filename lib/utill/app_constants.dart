@@ -68,6 +68,8 @@ class AppConstants {
   static const String CARDS_URI = '/api/v1/customer/cards/';
   static const String GET_GOOGLE_ACCOUNT = '/api/v1/auth/user-google';
 
+  static const String REQUEST_PANTRY_URI = 'api/v1/request-pantry';
+
   // Shared Key
   static const String THEME = 'theme';
   static const String TOKEN = 'token';

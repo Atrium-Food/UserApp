@@ -10,11 +10,19 @@ class ProductRepo {
 
   ProductRepo({@required this.dioClient});
 
-  Future<ApiResponse> getPopularProductList(String offset) async {
+  Future<ApiResponse> getPopularProductList(String offset,double lat, double long) async {
     try {
+      if(lat!=null && long!=null){
       final response = await dioClient
-          .get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset');
+          .get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset&&latitude=$lat&&longitude=$long');
       return ApiResponse.withSuccess(response);
+      }
+      else {
+        final response = await dioClient
+            .get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset');
+        return ApiResponse.withSuccess(response);
+      }
+
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }

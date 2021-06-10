@@ -222,7 +222,7 @@ class OrderProvider extends ChangeNotifier {
         apiResponse.response.statusCode == 200) {
       print(apiResponse.response.statusMessage);
     } else {
-      print(apiResponse.response.statusMessage);
+      print(apiResponse.response?.statusMessage);
     }
     notifyListeners();
   }

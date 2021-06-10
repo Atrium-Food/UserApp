@@ -333,11 +333,11 @@ class SetMenuView extends StatelessWidget {
                                                                             index]
                                                                         .rating !=
                                                                     null
-                                                                ? double.parse(setMenu
+                                                                ? setMenu
                                                                     .setMenuList[
                                                                         index]
                                                                     .rating
-                                                                    .average)
+                                                                    .average
                                                                 : 0.0,
                                                             size: 12,
                                                             color: ColorResources.getGrayColor(context),

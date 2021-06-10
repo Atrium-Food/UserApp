@@ -46,7 +46,7 @@ class DeliveryManWidget extends StatelessWidget {
             '${deliveryMan.fName} ${deliveryMan.lName}',
             style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
-          subtitle: RatingBar(rating: deliveryMan.rating.length > 0 ? double.parse(deliveryMan.rating[0].average) : 0, size: 15),
+          subtitle: RatingBar(rating: deliveryMan.rating.length > 0 ? deliveryMan.rating[0].average: 0, size: 15),
           trailing: InkWell(
             onTap: () => launch('tel:${deliveryMan.phone}'),
             child: Container(

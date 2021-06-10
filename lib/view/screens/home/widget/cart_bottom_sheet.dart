@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
+import 'package:flutter_restaurant/data/model/response/response_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
+import 'package:flutter_restaurant/provider/location_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
@@ -14,7 +16,9 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
 
@@ -24,12 +28,15 @@ class CartBottomSheet extends StatelessWidget {
   final Function callback;
   final CartModel cart;
   final int cartIndex;
+  final bool isAvailable;
   CartBottomSheet(
       {@required this.product,
       this.fromSetMenu = false,
       this.callback,
       this.cart,
-      this.cartIndex});
+      this.cartIndex,
+        this.isAvailable=false,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -254,25 +261,50 @@ class CartBottomSheet extends StatelessWidget {
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               //Product
               Row(children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: FadeInImage.assetNetwork(
-                    placeholder: Images.placeholder_rectangle,
-                    image:
-                        '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                    width: 180,
-                    height: 100,
-                    fit: BoxFit.cover,
-                    imageErrorBuilder: (BuildContext context, Object exception,
-                        StackTrace stackTrace) {
-                      return Image.asset(
-                        Images.placeholder_image,
+                Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: FadeInImage.assetNetwork(
+                        placeholder: Images.placeholder_rectangle,
+                        image:
+                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
                         width: 180,
                         height: 100,
                         fit: BoxFit.cover,
-                      );
-                    },
-                  ),
+                        imageErrorBuilder: (BuildContext context, Object exception,
+                            StackTrace stackTrace) {
+                          return Image.asset(
+                            Images.placeholder_rectangle,
+                            width: 180,
+                            height: 100,
+                            fit: BoxFit.cover,
+                          );
+                        },
+                      ),
+                    ),
+                    isAvailable
+                        ? SizedBox()
+                        : Positioned(
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black.withOpacity(0.6)),
+                        child: Text(
+                            'Not available\n in your area',
+                            textAlign: TextAlign.center,
+                            style: robotoRegular.copyWith(
+                              color: Colors.white,
+                              fontSize: 12,
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(width: 10),
                 Expanded(
@@ -288,7 +320,7 @@ class CartBottomSheet extends StatelessWidget {
                         ),
                         RatingBar(
                             rating: product.rating != null
-                                ? double.parse(product.rating.average)
+                                ? product.rating.average
                                 : 0.0,
                             size: 15),
                         SizedBox(height: 10),
@@ -725,7 +757,7 @@ class CartBottomSheet extends StatelessWidget {
               ]),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-              // _isAvailable?
+              // isAvailable?
               CustomButton(
                 btnTxt: getTranslated(
                     isExistInCart
@@ -746,6 +778,62 @@ class CartBottomSheet extends StatelessWidget {
                       }
                     : null,
               )
+              //     :
+              // CustomButton(
+              //   btnTxt: 'Request in your area',
+              //   backgroundColor: Theme.of(context).primaryColor,
+              //   onTap: () {
+              //     TextEditingController _pinCodeController = TextEditingController();
+              //     String errorMessage = '';
+              //     showDialog(
+              //         context: context,
+              //         builder: (context){
+              //           return AlertDialog(
+              //             title: Text('Request for a pantry in your area',style: robotoRegular.copyWith(fontSize: 15),),
+              //             content:
+              //               Consumer<LocationProvider>(
+              //                 builder: (context, locationProvider,child) {
+              //                   return Column(
+              //                     mainAxisSize: MainAxisSize.min,
+              //                     children: [
+              //                       SizedBox(
+              //                         width: MediaQuery.of(context).size.width*0.7,
+              //                         child: CustomTextField(
+              //                           controller: _pinCodeController,
+              //                           hintText: 'Enter pincode',
+              //                           inputType: TextInputType.number,
+              //                         ),
+              //                       ),
+              //                       SizedBox(height: 10,),
+              //                       locationProvider.isLoading?Center(child: CircularProgressIndicator(color: ColorResources.getPrimaryColor(context),)):SizedBox(),
+              //                       // Text(locationProvider.errorMessage?? '',style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
+              //                     ],
+              //                   );
+              //                 }
+              //               ),
+              //             shape: RoundedRectangleBorder(
+              //               borderRadius: BorderRadius.circular(10)
+              //             ),
+              //             actions: [
+              //               TextButton(
+              //                   onPressed: () async {
+              //                       ResponseModel responseModel = await Provider.of<LocationProvider>(context,listen: false).submitRequestInArea(pincode: _pinCodeController.text,);
+              //                       Navigator.pop(context);
+              //                   },
+              //                   child: Text('Request')
+              //               ),
+              //               TextButton(
+              //                   onPressed: (){
+              //                     Navigator.pop(context);
+              //                   },
+              //                   child: Text('Cancel')
+              //               )
+              //             ],
+              //           );
+              //         }
+              //     );
+              //   }
+              // ),
               // : Container(
               //     alignment: Alignment.center,
               //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),

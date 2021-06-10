@@ -34,12 +34,14 @@ class _HomeScreenState extends State<HomeScreen> {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
     }
+
     await Provider.of<CategoryProvider>(context, listen: false)
         .getCategoryList(context, reload);
     await Provider.of<SetMenuProvider>(context, listen: false)
         .getSetMenuList(context, reload);
     await Provider.of<BannerProvider>(context, listen: false)
         .getBannerList(context, reload);
+
   }
 
   ScrollController _scrollController;

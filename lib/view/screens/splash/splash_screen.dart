@@ -82,14 +82,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Color(0xfff8f6df),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(Images.efood_bike, height: 165),
+            Image.asset(Images.kiwis_logo, height: 165),
             SizedBox(height: 45),
-            Image.asset(Images.efood, height: 33),
+            Image.asset(Images.kiwis, height: 33),
           ],
         ),
       ),
