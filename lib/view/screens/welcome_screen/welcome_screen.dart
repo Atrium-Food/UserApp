@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
+import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/screens/auth/create_account_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/google_auth_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
@@ -80,7 +82,32 @@ class WelcomeScreen extends StatelessWidget {
               ),
               child: CustomButton(
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => GoogleAuthScreen()));
+                  authProvider.signinGoogle()
+                      .then((status) async {
+                    if (status.isSuccess) {
+                      // if (authProvider.isActiveRememberMe) {
+                      //   authProvider
+                      //       .saveUserNumberAndPassword(
+                      //       _email, _password);
+                      // } else {
+                      //   authProvider
+                      //       .clearUserNumberAndPassword();
+                      // }
+
+                      await Provider.of<WishListProvider>(
+                          context,
+                          listen: false)
+                          .initWishList(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  DashboardScreen()),
+                              (route) => false);
+                    } else {
+                      showCustomSnackBar("Google authentication failed", context, isError: true);
+                    }
+                  });
                 },
                 inactiveColor: ColorResources.COLOR_WHITE,
                 btnTxt: 'NA',

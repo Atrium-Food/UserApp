@@ -89,6 +89,40 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
+  Future<ResponseModel> signinGoogle() async {
+    _isLoading = true;
+    _loginErrorMessage = '';
+    notifyListeners();
+    ApiResponse apiResponse = await authRepo.googleSignIn();
+    // ApiResponse apiResponse =
+    // await authRepo.login(email: email, password: password);
+    ResponseModel responseModel;
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      Map map = apiResponse.response.data;
+      String token = map["access_token"];
+      if(token!=null) {
+        authRepo.saveUserToken(token);
+        await authRepo.updateToken();
+        responseModel = ResponseModel(true, 'successful');
+      } else {
+        responseModel = ResponseModel(false, 'Null token received');
+      }
+    } else {
+      String errorMessage;
+      if (apiResponse.error is String) {
+        errorMessage = apiResponse.error.toString();
+      } else {
+        errorMessage = apiResponse.error.errors[0].message;
+      }
+      print(errorMessage);
+      _loginErrorMessage = errorMessage;
+      responseModel = ResponseModel(false, errorMessage);
+    }
+    _isLoading = false;
+    notifyListeners();
+    return responseModel;
+  }
 
   //for otpLogin
   bool _isOtpLoginLoading = false;
@@ -267,9 +301,7 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
-  googleSignIn(){
-    authRepo.googleSignIn();
-  }
+
 
   Future<ResponseModel> verifyEmail(String email) async {
     _isPhoneNumberVerificationButtonLoading = true;

@@ -45,34 +45,60 @@ class AuthRepo {
     }
   }
 
-  Future<String> googleSignIn() async {
-    User _user;
-    final GoogleSignIn _googleSignIn = GoogleSignIn();
-    GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
-    GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
-    AuthCredential credential = GoogleAuthProvider.credential(
-        idToken: googleSignInAuthentication.idToken,
-        accessToken: googleSignInAuthentication.accessToken
-    );
-    UserCredential authResult = await _auth.signInWithCredential(credential);
-    _user = authResult.user;
-    User currentUser = await _auth.currentUser;
-    print("Google Token: ${googleSignInAuthentication.accessToken}");
-  }
-
-  Future<ApiResponse> loginGoogle() async {
-    String _token = await googleSignIn();
+  Future<ApiResponse> googleSignIn() async {
     try {
+      User _user;
+      final GoogleSignIn _googleSignIn = GoogleSignIn();
+      GoogleSignInAccount googleSignInAccount = await _googleSignIn.signIn();
+      GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount
+          .authentication;
+      AuthCredential credential = GoogleAuthProvider.credential(
+          idToken: googleSignInAuthentication.idToken,
+          accessToken: googleSignInAuthentication.accessToken
+      );
+      UserCredential authResult = await _auth.signInWithCredential(credential);
+      _user = authResult.user;
+      User currentUser = await _auth.currentUser;
+
+      // String _token = googleSignInAuthentication.accessToken;
+
+      String _token = await currentUser.getIdToken(true);
+      print("Google Token: $_token");
+      // while (_token.length > 0) {
+      //   int startTokenLength =
+      //   (_token.length >= 500 ? 500 : _token.length);
+      //   print("TokenPart: " + _token.substring(0, startTokenLength));
+      //   int lastTokenLength = _token.length;
+      //   _token =
+      //       _token.substring(startTokenLength, lastTokenLength);
+      // }
+
       Response response = await dioClient.post(
-        AppConstants.GET_GOOGLE_ACCOUNT,
-        data: {"token": _token},
+        AppConstants.GOOGLE_AUTH_URI,
+        data: {"firebase_token": _token},
       );
       return ApiResponse.withSuccess(response);
+
     } catch (e) {
       print(e.toString());
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
+
   }
+
+  // Future<ApiResponse> loginGoogle() async {
+  //   String _token = await googleSignIn();
+  //   try {
+  //     Response response = await dioClient.post(
+  //       AppConstants.GET_GOOGLE_ACCOUNT,
+  //       data: {"token": _token},
+  //     );
+  //     return ApiResponse.withSuccess(response);
+  //   } catch (e) {
+  //     print(e.toString());
+  //     return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+  //   }
+  // }
 
   Future otpAuth() async {
     
@@ -195,11 +221,10 @@ class AuthRepo {
       'Content-Type': 'application/json; charset=UTF-8',
       'Authorization': 'Bearer $token'
     };
-
     try {
       await sharedPreferences.setString(AppConstants.TOKEN, token);
     } catch (e) {
-      throw e;
+      print(e.toString());
     }
   }
 

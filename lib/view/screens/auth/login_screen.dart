@@ -442,7 +442,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         CustomButton(
                           onTap: () {
-                            authProvider.googleSignIn();
+
                           },
                           inactiveColor: ColorResources.COLOR_WHITE,
                           btnTxt: 'NA',
