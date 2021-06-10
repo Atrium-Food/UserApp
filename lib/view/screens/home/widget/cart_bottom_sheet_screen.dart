@@ -34,12 +34,15 @@ class CartBottomSheetScreen extends StatefulWidget {
   final Function callback;
   final CartModel cart;
   final int cartIndex;
+  final bool isAvailable;
   CartBottomSheetScreen(
       {@required this.product,
       this.fromSetMenu = false,
       this.callback,
       this.cart,
-      this.cartIndex});
+      this.cartIndex,
+        this.isAvailable=true,
+      });
 
   @override
   _CartBottomSheetScreenState createState() => _CartBottomSheetScreenState();
@@ -226,8 +229,8 @@ class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
                             ),
                             RatingBar(
                                 rating: widget.product.rating != null
-                                    ? double.parse(
-                                        widget.product.rating.average)
+                                    ?
+                                        widget.product.rating.average ?? 0
                                     : 0.0,
                                 size: 10),
                           ],
@@ -327,6 +330,7 @@ class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
                 callback: widget.callback,
                 cart: widget.cart,
                 cartIndex: widget.cartIndex,
+                isAvailable: widget.isAvailable,
               ),
               RecipePage(product: widget.product),
               ReviewPage(product: widget.product),

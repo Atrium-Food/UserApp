@@ -216,6 +216,7 @@ class LocationProvider with ChangeNotifier {
       //     }
       // );
       _currentLocation = await locateUser();
+      notifyListeners();
       if (_currentLocation == null) {
         showModalBottomSheet(
             context: context,
@@ -245,6 +246,9 @@ class LocationProvider with ChangeNotifier {
             double.parse(_addressList[index].latitude),
             double.parse(_addressList[index].longitude));
         _address = currentAddresses.first;
+        _currentLocation=Position(latitude: double.parse(_addressList[index].latitude),longitude:double.parse(_addressList[index].longitude));
+        print('${_currentLocation.longitude},${_currentLocation.latitude}');
+        notifyListeners();
       } else {
         var addresses=await locationFromAddress(_addressList[index].address);
         var currentAddresses = await placemarkFromCoordinates(
@@ -252,6 +256,8 @@ class LocationProvider with ChangeNotifier {
             addresses.first.longitude
         );
         _address=currentAddresses.first;
+        _currentLocation=Position(latitude: addresses.first.latitude,longitude: addresses.first.longitude );
+        notifyListeners();
       }
     } on Exception catch (e) {
       print("$e Address can't be found");
@@ -393,4 +399,34 @@ class LocationProvider with ChangeNotifier {
       _getAllAddressType = locationRepo.getAllAddressType(context: context);
     }
   }
+
+
+  Future<ResponseModel> submitRequestInArea({String pincode}) async {
+    _isLoading = true;
+    notifyListeners();
+
+    Position position = await locateUser();
+    print(pincode);
+    print(position.latitude);
+    print(position.longitude);
+    ApiResponse response = await locationRepo.requestInArea(pincode, position.latitude, position.longitude);
+    ResponseModel responseModel;
+    if (response.response != null && response.response.statusCode == 200) {
+      responseModel = ResponseModel(true, 'Requested in your area');
+      notifyListeners();
+    } else {
+      String errorMessage;
+      if (response.error is String) {
+        errorMessage = response.error.toString();
+        _errorMessage=response.error.toString();
+      } else {
+        errorMessage = response.error.errors[0].message;
+      }
+      responseModel = ResponseModel(false, errorMessage);
+    }
+    _isLoading = false;
+    notifyListeners();
+    return responseModel;
+  }
+
 }

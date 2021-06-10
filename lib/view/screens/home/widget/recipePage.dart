@@ -62,8 +62,8 @@ class RecipePage extends StatelessWidget {
                         imageErrorBuilder: (BuildContext context,
                             Object exception, StackTrace stackTrace) {
                           return Image.asset(
-                            Images.placeholder_image,
-                            fit: BoxFit.contain,
+                            Images.placeholder_rectangle,
+                            fit: BoxFit.cover,
                             height: 180,
                             width: MediaQuery.of(context).size.width * 0.9,
                           );

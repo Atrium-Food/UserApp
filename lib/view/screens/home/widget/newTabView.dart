@@ -294,8 +294,8 @@ class CartBottomSheetScreen extends StatelessWidget {
                                 ),
                                 RatingBar(
                                     rating: product.rating != null
-                                        ? double.parse(
-                                            product.rating.average)
+                                        ?
+                                            product.rating.average
                                         : 0.0,
                                     size: 15),
                                 SizedBox(height: 10),

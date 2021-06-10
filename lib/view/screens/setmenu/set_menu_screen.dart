@@ -120,7 +120,7 @@ class SetMenuScreen extends StatelessWidget {
                             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
                             RatingBar(
-                              rating: setMenu.setMenuList[index].rating!=null ? double.parse(setMenu.setMenuList[index].rating.average) : 0.0,
+                              rating: setMenu.setMenuList[index].rating!=null ? setMenu.setMenuList[index].rating.average : 0.0,
                               size: 12,
                             ),
                             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),

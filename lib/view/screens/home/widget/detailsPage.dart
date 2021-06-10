@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
+import 'package:flutter_restaurant/data/model/response/response_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
+import 'package:flutter_restaurant/provider/location_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/nutrient_values.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -30,12 +33,15 @@ class DetailsPage extends StatelessWidget {
   final Function callback;
   final CartModel cart;
   final int cartIndex;
+  final bool isAvailable;
   DetailsPage(
       {@required this.product,
       this.fromSetMenu = false,
       this.callback,
       this.cart,
-      this.cartIndex});
+      this.cartIndex,
+        this.isAvailable=false
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -121,21 +127,21 @@ class DetailsPage extends StatelessWidget {
           }
           double priceWithAddons = priceWithQuantity + addonsCost;
 
-          DateTime _currentTime =
-              Provider.of<SplashProvider>(context, listen: false).currentTime;
-          DateTime _start =
-              DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
-          DateTime _end =
-              DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
-          DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
-              _currentTime.day, _start.hour, _start.minute, _start.second);
-          DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
-              _currentTime.day, _end.hour, _end.minute, _end.second);
-          if (_endTime.isBefore(_startTime)) {
-            _endTime = _endTime.add(Duration(days: 1));
-          }
-          bool _isAvailable = _currentTime.isAfter(_startTime) &&
-              _currentTime.isBefore(_endTime);
+          // DateTime _currentTime =
+          //     Provider.of<SplashProvider>(context, listen: false).currentTime;
+          // DateTime _start =
+          //     DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
+          // DateTime _end =
+          //     DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
+          // DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
+          //     _currentTime.day, _start.hour, _start.minute, _start.second);
+          // DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
+          //     _currentTime.day, _end.hour, _end.minute, _end.second);
+          // if (_endTime.isBefore(_startTime)) {
+          //   _endTime = _endTime.add(Duration(days: 1));
+          // }
+          // bool _isAvailable = _currentTime.isAfter(_startTime) &&
+          //     _currentTime.isBefore(_endTime);
 
           CartModel _cartModel = CartModel(
             price,
@@ -161,25 +167,50 @@ class DetailsPage extends StatelessWidget {
               Row(
                 children: [
                   Expanded(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(10),
-                      child: FadeInImage.assetNetwork(
-                        placeholder: Images.placeholder_rectangle,
-                        image:
-                            '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                        height: 170,
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        fit: BoxFit.cover,
-                        imageErrorBuilder: (BuildContext context,
-                            Object exception, StackTrace stackTrace) {
-                          return Image.asset(
-                            Images.placeholder_image,
-                            fit: BoxFit.contain,
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: FadeInImage.assetNetwork(
+                            placeholder: Images.placeholder_rectangle,
+                            image:
+                                '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
                             height: 170,
-                            width: MediaQuery.of(context).size.width * 0.9,
-                          );
-                        },
-                      ),
+                            width: MediaQuery.of(context).size.width ,
+                            fit: BoxFit.cover,
+                            imageErrorBuilder: (BuildContext context,
+                                Object exception, StackTrace stackTrace) {
+                              return Image.asset(
+                                Images.placeholder_rectangle,
+                                fit: BoxFit.cover,
+                                height: 170,
+                                width: MediaQuery.of(context).size.width,
+                              );
+                            },
+                          ),
+                        ),
+                        isAvailable
+                            ? SizedBox()
+                            : Positioned(
+                          top: 0,
+                          left: 0,
+                          bottom: 0,
+                          right: 0,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.black.withOpacity(0.6)),
+                            child: Text(
+                                'Not available\n in your area',
+                                textAlign: TextAlign.center,
+                                style: robotoRegular.copyWith(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                )),
+                          ),
+                        ),
+                      ],
                     ),
                     flex: 1,
                   ),
@@ -782,7 +813,6 @@ class DetailsPage extends StatelessWidget {
                                   fontSize: Dimensions.FONT_SIZE_LARGE)),
                           SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
-                          /// split description by a comma, display items in a list
                           Text(product.description ?? '', style: robotoRegular),
                           SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                         ])
@@ -1086,48 +1116,105 @@ class DetailsPage extends StatelessWidget {
               ]),
               SizedBox(height: 18.0),
 
-              _isAvailable
+              !isAvailable
                   ? CustomButton(
-                      btnTxt: getTranslated(
-                          isExistInCart
-                              ? 'already_added_in_cart'
-                              : fromCart
-                                  ? 'update_in_cart'
-                                  : 'add_to_cart',
-                          context),
+                      btnTxt: 'Request in your area',
                       backgroundColor: Theme.of(context).primaryColor,
                       onTap: (!isExistInCart)
                           ? () {
-                              if (!isExistInCart) {
-                                Navigator.pop(context);
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .addToCart(_cartModel, cartIndex);
-                                callback(_cartModel);
-                              }
+                        TextEditingController _pinCodeController = TextEditingController();
+                        String errorMessage = '';
+                        showDialog(
+                            context: context,
+                            builder: (context){
+                              return AlertDialog(
+                                title: Text('Request for a pantry in your area',style: robotoRegular.copyWith(fontSize: 15),),
+                                content:
+                                Consumer<LocationProvider>(
+                                    builder: (context, locationProvider,child) {
+                                      return Column(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          SizedBox(
+                                            width: MediaQuery.of(context).size.width*0.7,
+                                            child: CustomTextField(
+                                              controller: _pinCodeController,
+                                              hintText: 'Enter pincode',
+                                              inputType: TextInputType.number,
+                                            ),
+                                          ),
+                                          SizedBox(height: 10,),
+                                          locationProvider.isLoading?Center(child: CircularProgressIndicator(color: ColorResources.getPrimaryColor(context),)):SizedBox(),
+                                          // Text(locationProvider.errorMessage?? '',style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
+                                        ],
+                                      );
+                                    }
+                                ),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)
+                                ),
+                                actions: [
+                                  TextButton(
+                                      onPressed: () async {
+                                        ResponseModel responseModel = await Provider.of<LocationProvider>(context,listen: false).submitRequestInArea(pincode: _pinCodeController.text,);
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Request')
+                                  ),
+                                  TextButton(
+                                      onPressed: (){
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text('Cancel')
+                                  )
+                                ],
+                              );
+                            }
+                        );
                             }
                           : null,
                     )
-                  : Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).primaryColor.withOpacity(0.1),
-                      ),
-                      child: Column(children: [
-                        Text(getTranslated('not_available_now', context),
-                            style: robotoMedium.copyWith(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: Dimensions.FONT_SIZE_LARGE,
-                            )),
-                        Text(
-                          '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
-                          '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
-                          style: robotoRegular,
-                        ),
-                      ]),
-                    ),
+                  : CustomButton(
+                btnTxt: getTranslated(
+                    isExistInCart
+                        ? 'already_added_in_cart'
+                        : fromCart
+                        ? 'update_in_cart'
+                        : 'add_to_cart',
+                    context),
+                backgroundColor: Theme.of(context).primaryColor,
+                onTap: (!isExistInCart)
+                    ? () {
+                  if (!isExistInCart) {
+                    Navigator.pop(context);
+                    Provider.of<CartProvider>(context,
+                        listen: false)
+                        .addToCart(_cartModel, cartIndex);
+                    callback(_cartModel);
+                  }
+                }
+                    : null,
+              ),
+                  // : Container(
+                  //     alignment: Alignment.center,
+                  //     padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: BorderRadius.circular(10),
+                  //       color: Theme.of(context).primaryColor.withOpacity(0.1),
+                  //     ),
+                  //     child: Column(children: [
+                  //       Text(getTranslated('not_available_now', context),
+                  //           style: robotoMedium.copyWith(
+                  //             color: Theme.of(context).primaryColor,
+                  //             fontSize: Dimensions.FONT_SIZE_LARGE,
+                  //           )),
+                  //       Text(
+                  //         '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
+                  //         '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
+                  //         style: robotoRegular,
+                  //       ),
+                  //     ]),
+                  //   ),
             ]),
           );
         },

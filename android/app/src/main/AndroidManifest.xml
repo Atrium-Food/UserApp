@@ -14,7 +14,7 @@
     <!--        tools:replace="android:label"-->
     <application
         android:name=".Application"
-        android:label="eFood"
+        android:label="Kiwis"
         android:requestLegacyExternalStorage="true"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"

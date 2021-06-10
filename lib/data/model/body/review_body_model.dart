@@ -47,9 +47,9 @@ class ReviewBody {
     _comment = json['comment'];
     _orderId = json['order_id'].toString();
     _rating = json['rating'];
-    _userId = json['user_id'].toString();
-    _userName=json['user_name'];
-    _userImage=json['user_image'];
+    _userId = json['user_id']['id'].toString();
+    _userName=json['user_id']['f_name']+" "+json['user_id']['l_name'];
+    _userImage=json['user_id']['image'];
     // _fileUpload = json['attachment']!=null? json['attachment']?.cast<String>():null;
   }
 

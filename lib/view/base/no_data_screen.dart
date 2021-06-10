@@ -19,7 +19,8 @@ class NoDataScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return Container(
+      height: MediaQuery.of(context).size.height*0.8,
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
       child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

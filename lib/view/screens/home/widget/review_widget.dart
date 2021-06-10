@@ -31,20 +31,22 @@ class ReviewWidget extends StatelessWidget {
       padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       margin: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Icon(Icons.account_circle,size: 50,),
-              Text(review.userName?? '',style: robotoRegular.copyWith(fontSize: 20,color: ColorResources.getAccentColor(context)),),
+              Icon(Icons.account_circle,size: 25,),
+              SizedBox(width: 7,),
+              Text(review.userName?? '',style: robotoRegular.copyWith(fontSize: 18,color: ColorResources.getAccentColor(context)),),
+              Spacer(),
               RatingBar(rating: review.rating.toDouble()),
               ],
           ),
           SizedBox(
-            height: 5,
+            height: 10,
           ),
           Text(review.comment,
-              style: robotoRegular.copyWith(color: ColorResources.getGrayColor(context))),
+              style: robotoRegular.copyWith(fontSize: 15,color: ColorResources.getGrayColor(context))),
         ],
       ),
     );

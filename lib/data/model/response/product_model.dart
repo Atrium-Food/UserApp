@@ -3,32 +3,35 @@ import 'package:flutter_restaurant/utill/strings.dart';
 
 class ProductModel {
   int _totalSize;
-  String _limit;
-  String _offset;
+  int _limit;
+  int _offset;
   List<Product> _products;
+  bool _isDefault = false;
 
   ProductModel(
-      {int totalSize, String limit, String offset, List<Product> products}) {
+      {int totalSize, int limit, int offset, List<Product> products, bool isDefault}) {
     this._totalSize = totalSize;
     this._limit = limit;
     this._offset = offset;
     this._products = products;
+    this._isDefault = isDefault;
   }
 
   int get totalSize => _totalSize;
-  String get limit => _limit;
-  String get offset => _offset;
+  int get limit => _limit;
+  int get offset => _offset;
   List<Product> get products => _products;
+  bool get isDefault => _isDefault;
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     _totalSize = json['total_size'];
     _limit = json['limit'];
     _offset = json['offset'];
+    _isDefault=json['default'];
     print("Hey");
     if (json['products'] != null) {
       _products = [];
 
-      print(Product.fromJson(json['products'][0]));
       json['products'].forEach((v) {
         _products.add(new Product.fromJson(v));
       });
@@ -40,6 +43,7 @@ class ProductModel {
     data['total_size'] = this._totalSize;
     data['limit'] = this._limit;
     data['offset'] = this._offset;
+    data['default'] = this._isDefault;
     if (this._products != null) {
       data['products'] = this._products.map((v) => v.toJson()).toList();
     }
@@ -226,14 +230,15 @@ class Product {
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
     if (json['rating'] != null) {
+      _rating=Rating.fromJson(json['rating']);
       // _rating = [];
       // json['rating'].forEach((v) {
       //   _rating.add(new Rating.fromJson(v));
       // });
-      if (json['rating'].length > 0)
-        _rating = json['rating'][0] != null
-            ? Rating.fromJson(json['rating'][0])
-            : null;
+      // if (json['rating'].length > 0)
+      //   _rating = json['rating'][0] != null
+      //       ? Rating.fromJson(json['rating'][0])
+      //       : null;
     }
 
     if (json['recipe'] != null) {
@@ -605,30 +610,32 @@ class ChoiceOption {
 
 class Rating {
   int _productId;
-  String _average;
+  double _average;
   List<int> _countRating;
   int _countTotalRating;
 
-  Rating({String average, List<int> countRating, int productId}) {
+  Rating({double average, List<int> countRating, int productId}) {
     this._countRating = countRating;
     this._countTotalRating = countRating.reduce((a, b) => a + b);
     this._productId = productId;
     this._average = average;
   }
 
-  String get average => _average;
+  double get average => _average;
   int get productId => _productId;
   List<int> get countRating => _countRating;
   int get countTotalRating => _countTotalRating;
 
   Rating.fromJson(Map<String, dynamic> json) {
-    _average = json['average'];
+    _average = json['average']?.toDouble();
     _productId = json['product_id'];
+    _countTotalRating=json['total_rating'];
+    _countRating=json['count_rating'].cast<int>();
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['average'] = this._average;
+    data['average'] = this._average.toDouble();
     data['product_id'] = this._productId;
     return data;
   }

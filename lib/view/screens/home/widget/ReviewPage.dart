@@ -20,7 +20,7 @@ class ReviewPage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-                '${product.rating != null ? double.parse(product.rating.average).toStringAsFixed(1) : 0.0}',
+                '${product.rating != null ? product.rating.average!=null ? product.rating.average.toStringAsFixed(1):0.0 : 0.0}',
                 style: robotoRegular.copyWith(
                     color: ColorResources.getAccentColor(context),
                     fontSize: 70)),
@@ -31,7 +31,7 @@ class ReviewPage extends StatelessWidget {
           Center(
             child: RatingBar(
               rating: product.rating != null
-                  ? double.parse(product.rating.average)
+                  ? product.rating.average ?? 0
                   : 0.0,
               size: 20,
             ),
@@ -40,9 +40,7 @@ class ReviewPage extends StatelessWidget {
             height: 5,
           ),
           Center(
-              child: product.rating != null
-                  ? Text('Based on ${product.reviews.length} ratings')
-                  : null),
+              child:  Text('Based on ${product.rating.countTotalRating ?? 0} ratings',style: robotoRegular.copyWith(color: Colors.white),)),
           SizedBox(
             height: 15.0,
           ),
@@ -60,7 +58,7 @@ class ReviewPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
                 animationDuration: 2500,
-                percent: 0.8,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[4]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
@@ -83,7 +81,7 @@ class ReviewPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
                 animationDuration: 2500,
-                percent: 0.4,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[3]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
@@ -105,7 +103,7 @@ class ReviewPage extends StatelessWidget {
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
-                percent: 0.8,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[2]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.yellow,
               ),
@@ -127,7 +125,7 @@ class ReviewPage extends StatelessWidget {
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
-                percent: 0.6,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[1]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.orange,
               ),
@@ -150,7 +148,7 @@ class ReviewPage extends StatelessWidget {
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
                 animationDuration: 2500,
-                percent: 0.7,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[0]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.red,
               ),

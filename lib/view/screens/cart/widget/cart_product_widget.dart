@@ -96,7 +96,7 @@ class CartProductWidget extends StatelessWidget {
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                         Text(cart.product.name, style: robotoMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                         SizedBox(height: 2),
-                        RatingBar(rating: cart.product.rating!=null ? double.parse(cart.product.rating.average) : 0.0, size: 12),
+                        RatingBar(rating: cart.product.rating!=null ? cart.product.rating.average : 0.0, size: 12),
                         SizedBox(height: 5),
                         Row(children: [
                           Flexible(

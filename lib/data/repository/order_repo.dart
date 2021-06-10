@@ -64,6 +64,7 @@ class OrderRepo {
       data['order_id'] = orderId;
       data['payment_status'] = status;
       data['transaction_reference'] = reference;
+      print(data);
       final response =
           await dioClient.post(AppConstants.UPDATE_PAYMENT_STATUS, data: data);
       return ApiResponse.withSuccess(response);

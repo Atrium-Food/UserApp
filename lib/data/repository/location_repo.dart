@@ -56,6 +56,22 @@ class LocationRepo {
     }
   }
 
+  Future<ApiResponse> requestInArea(String pincode, double lat, double long) async {
+    try {
+      Response response = await dioClient.post(
+        '${AppConstants.REQUEST_PANTRY_URI}',
+        data: {
+          'pincode': pincode,
+          'latitude': lat,
+          'longitude': long
+        },
+      );
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
+
   List<String> getAllAddressType({BuildContext context}) {
     return [
       getTranslated('home', context),

@@ -19,7 +19,8 @@ import 'package:intl/intl.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product product;
-  ProductWidget({@required this.product});
+  final bool isAvailable;
+  ProductWidget({@required this.product,this.isAvailable=true});
 
   @override
   Widget build(BuildContext context) {
@@ -41,22 +42,23 @@ class ProductWidget extends StatelessWidget {
     double _discountedPrice = PriceConverter.convertWithDiscount(
         context, product.price, product.discount, product.discountType);
 
-    DateTime _currentTime =
-        Provider.of<SplashProvider>(context, listen: false).currentTime;
-    DateTime _start = DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
-    DateTime _end = DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
-    DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
-        _currentTime.day, _start.hour, _start.minute, _start.second);
-    DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
-        _currentTime.day, _end.hour, _end.minute, _end.second);
-    if (_endTime.isBefore(_startTime)) {
-      _endTime = _endTime.add(Duration(days: 1));
-    }
-    bool _isAvailable =
-        _currentTime.isAfter(_startTime) && _currentTime.isBefore(_endTime);
+    // DateTime _currentTime =
+    //     Provider.of<SplashProvider>(context, listen: false).currentTime;
+    // DateTime _start = DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
+    // DateTime _end = DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
+    // DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
+    //     _currentTime.day, _start.hour, _start.minute, _start.second);
+    // DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
+    //     _currentTime.day, _end.hour, _end.minute, _end.second);
+    // if (_endTime.isBefore(_startTime)) {
+    //   _endTime = _endTime.add(Duration(days: 1));
+    // }
+    // bool _isAvailable =
+    //     _currentTime.isAfter(_startTime) && _currentTime.isBefore(_endTime);
 
     return InkWell(
       onTap: () {
+        print(isAvailable);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -67,6 +69,7 @@ class ProductWidget extends StatelessWidget {
                       content: Text(getTranslated('added_to_cart', context)),
                       backgroundColor: Colors.green));
                 },
+                isAvailable: isAvailable
               ),
             ));
       },
@@ -111,27 +114,27 @@ class ProductWidget extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-              // _isAvailable
-              //     ? SizedBox()
-              //     : Positioned(
-              //         top: 0,
-              //         left: 0,
-              //         bottom: 0,
-              //         right: 0,
-              //         child: Container(
-              //           alignment: Alignment.center,
-              //           decoration: BoxDecoration(
-              //               borderRadius: BorderRadius.circular(10),
-              //               color: Colors.black.withOpacity(0.6)),
-              //           child: Text(
-              //               getTranslated('not_available_now_break', context),
-              //               textAlign: TextAlign.center,
-              //               style: robotoRegular.copyWith(
-              //                 color: Colors.white,
-              //                 fontSize: 8,
-              //               )),
-              //         ),
-              //       ),
+              isAvailable
+                  ? SizedBox()
+                  : Positioned(
+                      top: 0,
+                      left: 0,
+                      bottom: 0,
+                      right: 0,
+                      child: Container(
+                        alignment: Alignment.center,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10),
+                            color: Colors.black.withOpacity(0.6)),
+                        child: Text(
+                            'Not available\n in your area',
+                            textAlign: TextAlign.center,
+                            style: robotoRegular.copyWith(
+                              color: Colors.white,
+                              fontSize: 12,
+                            )),
+                      ),
+                    ),
             ],
           ),
           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
@@ -164,6 +167,7 @@ class ProductWidget extends StatelessWidget {
                                               'added_to_cart', context)),
                                           backgroundColor: Colors.green));
                                 },
+                                isAvailable: isAvailable,
                               ),
                             );
                           },
@@ -210,8 +214,8 @@ class ProductWidget extends StatelessWidget {
                       RatingBar(
                         rating: product.rating != null
                             // product.rating.length > 0
-                            ? double.parse(product.rating.average)
-                            : 0.0,
+                            ? product.rating.average ?? 0 :0
+                            ,
                         size: 10,
                         color: ColorResources.getGrayColor(context),
                       ),
