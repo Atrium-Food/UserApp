@@ -23,32 +23,37 @@ class AddressBottomSheet extends StatelessWidget {
             return Container(
               padding: EdgeInsets.all(10),
               child: Consumer<OrderProvider>(builder: (context, order, child) {
-                return
-                  Column(
-                    mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: Dimensions.PADDING_SIZE_SMALL),
-                          child: Row(children: [
-                            TextButton.icon(
-                              onPressed: () async{
-                Position _position = await Provider.of<LocationProvider>(context,listen: false).locateUser();
-                // Provider.of<LocationProvider>(context,listen: false).setPosition(_position);
-                },
-                icon: Icon(Icons.gps_fixed),
-                label: Text('Use current location', style: robotoRegular),
-                ),
-                ]),
-                ),
-                ConstrainedBox(
-                constraints: BoxConstraints(
-                maxHeight: MediaQuery.of(context).size.height*0.4,
-                minHeight: MediaQuery.of(context).size.height*0.05
-                ),
-                child: address.addressList != null
-                ? address.addressList.length > 0
-                ? ListView.separated(
+                return Column(mainAxisSize: MainAxisSize.min, children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: Dimensions.PADDING_SIZE_SMALL),
+                    child: Row(children: [
+                      TextButton.icon(
+                        onPressed: () async {
+
+                          // Position _position =
+                          //     await Provider.of<LocationProvider>(context,
+                          //             listen: false)
+                          //         .locateUser();
+                          Provider.of<LocationProvider>(context,listen: false).getUserLocation(context: context,isReset: true,fromSheet: true);
+                          if(address.addressSheetMessage.isEmpty){
+                            Navigator.pop(context);
+                          }
+                          },
+                        icon: Icon(Icons.gps_fixed),
+                        label:
+                            Text('Use current location', style: robotoRegular),
+                      ),
+                      Text(address.addressSheetMessage,style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
+                    ]),
+                  ),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                        maxHeight: MediaQuery.of(context).size.height * 0.4,
+                        minHeight: MediaQuery.of(context).size.height * 0.05),
+                    child: address.addressList != null
+                        ? address.addressList.length > 0
+                            ? ListView.separated(
                                 // physics: BouncingScrollPhysics(),
                                 scrollDirection: Axis.vertical,
                                 separatorBuilder: (context, index) {
@@ -154,6 +159,8 @@ class AddressBottomSheet extends StatelessWidget {
                                                   Icon(Icons.more_vert_rounded),
                                               onSelected: (val) {
                                                 if (val == 'edit') {
+                                                  print(
+                                                      "Address: ${address.addressList[index].address}");
                                                   Navigator.push(
                                                       context,
                                                       MaterialPageRoute(
@@ -163,7 +170,7 @@ class AddressBottomSheet extends StatelessWidget {
                                                                         .addressList[
                                                                     index],
                                                                 fromCheckout:
-                                                                    true,
+                                                                    false,
                                                                 isEnableUpdate:
                                                                     true,
                                                               )));
@@ -181,8 +188,16 @@ class AddressBottomSheet extends StatelessWidget {
                                                               String message) {
                                                     // showCustomSnackBar(message, context, isError: !isSuccessful);
                                                   });
-                                                  if(Provider.of<OrderProvider>(context,listen: false).addressIndex == index)
-                                                    Provider.of<OrderProvider>(context,listen: false).resetAddressIndex(index);
+                                                  if (Provider.of<OrderProvider>(
+                                                              context,
+                                                              listen: false)
+                                                          .addressIndex ==
+                                                      index)
+                                                    Provider.of<OrderProvider>(
+                                                            context,
+                                                            listen: false)
+                                                        .resetAddressIndex(
+                                                            index);
                                                 }
                                               },
                                               itemBuilder: (context) {

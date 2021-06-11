@@ -8,6 +8,7 @@ import 'package:flutter_restaurant/view/base/no_data_screen.dart';
 import 'package:flutter_restaurant/view/base/product_shimmer.dart';
 import 'package:flutter_restaurant/view/base/product_widget.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class ProductView extends StatelessWidget {
@@ -16,12 +17,12 @@ class ProductView extends StatelessWidget {
   ProductView({@required this.productType, this.scrollController});
 
 
-  _loadData({BuildContext context,Position position}){
+  _loadData({BuildContext context,LatLng latLng}){
     if (productType == ProductType.POPULAR_PRODUCT) {
-      if(position!=null) {
+      if(latLng!=null) {
         print("Getting prod list based on position");
         Provider.of<ProductProvider>(context, listen: false)
-            .getPopularProductList(context: context, offset: '1',lat: position.longitude,long: position.latitude);
+            .getPopularProductList(context: context, offset: '1',lat: latLng.latitude,long: latLng.longitude);
       } else {
         print("Getting prod list");
         Provider.of<ProductProvider>(context, listen: false)
@@ -50,9 +51,9 @@ class ProductView extends StatelessWidget {
           Provider.of<ProductProvider>(context, listen: false)
               .showBottomLoader();
 
-          if(position!=null) {
+          if(latLng!=null) {
             Provider.of<ProductProvider>(context, listen: false)
-                .getPopularProductList(context: context, offset: offset.toString(),lat: position.longitude,long: position.latitude);
+                .getPopularProductList(context: context, offset: offset.toString(),lat: latLng.longitude,long: latLng.latitude);
           } else {
             Provider.of<ProductProvider>(context, listen: false)
                 .getPopularProductList(context: context, offset: offset.toString());
@@ -67,7 +68,8 @@ class ProductView extends StatelessWidget {
     return Container(
       child: Consumer<LocationProvider>(
         builder: (context, locationProvider,child) {
-          _loadData(context: context,position: locationProvider.currentLocation);
+          print("Listen location change: ${locationProvider.filterLatLng}");
+          _loadData(context: context,latLng: locationProvider.filterLatLng);
           return Consumer<ProductProvider>(
             builder: (context, prodProvider, child) {
               List<Product> productList;
