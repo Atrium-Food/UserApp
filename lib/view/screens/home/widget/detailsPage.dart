@@ -1111,7 +1111,6 @@ class DetailsPage extends StatelessWidget {
                     )),
               ]),
               SizedBox(height: 18.0),
-
               !isAvailable
                   ? Consumer<LocationProvider>(
                       builder: (context, locationProvider, child) {
