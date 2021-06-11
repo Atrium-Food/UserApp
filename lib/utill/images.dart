@@ -37,11 +37,11 @@ class Images {
   static const String wallet = 'assets/image/wallet.png';
   static const String guest_login = 'assets/image/guest_login.svg';
   static const String add_favorite = 'assets/image/add_favorite.png';
-  static const String customer_support = 'assets/image/customer_support.png';
+  static const String customer_support = 'assets/image/customer_support.svg';
   static const String no_ongoing_orders = 'assets/image/no_ongoing_orders.png';
   static const String call_support = 'assets/image/call_support.png';
   static const String chat_support = 'assets/image/chat_support.png';
-  static const String kiwis='assets/image/kiwis.png';
+  static const String kiwis = 'assets/image/kiwis.png';
   static const String kiwis_logo = 'assets/image/kiwis_logo.png';
 
   // for Icon

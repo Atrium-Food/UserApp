@@ -8,6 +8,7 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/screens/chat/chat_screen.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,7 +20,7 @@ class SupportScreen extends StatelessWidget {
       body: ListView(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           children: [
-            Image.asset(Images.customer_support),
+            SvgPicture.asset(Images.customer_support),
             SizedBox(height: 20),
 
             // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -90,7 +91,7 @@ class SupportScreen extends StatelessWidget {
                         color: ColorResources.getPrimaryColor(context),
                       ),
                       Text(
-                        'Call us',
+                        'Chat with us',
                         style: robotoRegular.copyWith(
                             fontSize: Dimensions.FONT_SIZE_DEFAULT),
                       ),

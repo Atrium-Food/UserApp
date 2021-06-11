@@ -234,7 +234,6 @@ class DetailsPage extends StatelessWidget {
                 style: robotoRegular.copyWith(
                   fontSize: 12.5,
                   height: 1.5,
-                  fontWeight: FontWeight.w500,
                   color: ColorResources.getAccentColor(context),
                 ),
               ),
@@ -826,10 +825,10 @@ class DetailsPage extends StatelessWidget {
 
               GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 3,
-                    childAspectRatio: 3 / 3,
+                    crossAxisCount: 4,
                     crossAxisSpacing: 20,
-                    mainAxisSpacing: 5,
+                    mainAxisSpacing: 10,
+                    childAspectRatio: (1 / 1.1),
                     // mainAxisExtent: 130,
                   ),
                   shrinkWrap: true,
@@ -841,7 +840,7 @@ class DetailsPage extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
-                            radius: 28.0,
+                            radius: 20.0,
                             child: Text(
                               product.ingredients[index].name
                                   .substring(0, 2)
@@ -854,12 +853,12 @@ class DetailsPage extends StatelessWidget {
                                 ColorResources.getSearchBg(context),
                           ),
                           SizedBox(
-                            height: 10.0,
+                            height: 5.0,
                           ),
                           Text(
                             product.ingredients[index].name,
                             style: robotoRegular.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_SMALL),
+                                fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL - 1),
                           ),
                           // SizedBox(
                           //   height: 7,
@@ -1114,29 +1113,6 @@ class DetailsPage extends StatelessWidget {
               SizedBox(height: 18.0),
 
               !isAvailable
-<<<<<<< HEAD
-                  ? CustomButton(
-                      btnTxt: 'Request in your area',
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onTap: (!isExistInCart)
-                          ? () {
-                              TextEditingController _pinCodeController =
-                                  TextEditingController();
-                              String errorMessage = '';
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text(
-                                        'Request for a pantry in your area',
-                                        style: robotoRegular.copyWith(
-                                            fontSize: 15),
-                                      ),
-                                      content: Consumer<LocationProvider>(
-                                          builder: (context, locationProvider,
-                                              child) {
-                                        return Column(
-=======
                   ? Consumer<LocationProvider>(
                       builder: (context, locationProvider, child) {
                       return Column(
@@ -1166,7 +1142,6 @@ class DetailsPage extends StatelessWidget {
                                               fontSize: 15),
                                         ),
                                         content: Column(
->>>>>>> a75dfc8461879b9e3975d2dc24bf3e49ca051d4d
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
                                             SizedBox(
@@ -1187,75 +1162,13 @@ class DetailsPage extends StatelessWidget {
                                                 ? Center(
                                                     child:
                                                         CircularProgressIndicator(
-<<<<<<< HEAD
-                                                    valueColor:
-                                                        new AlwaysStoppedAnimation<
-                                                                Color>(
-                                                            ColorResources
-                                                                .getPrimaryColor(
-                                                                    context)),
-=======
                                                     color: ColorResources
                                                         .getPrimaryColor(
                                                             context),
->>>>>>> a75dfc8461879b9e3975d2dc24bf3e49ca051d4d
                                                   ))
                                                 : SizedBox(),
                                             // Text(locationProvider.errorMessage?? '',style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
                                           ],
-<<<<<<< HEAD
-                                        );
-                                      }),
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(10)),
-                                      actions: [
-                                        TextButton(
-                                            onPressed: () async {
-                                              ResponseModel responseModel =
-                                                  await Provider.of<
-                                                              LocationProvider>(
-                                                          context,
-                                                          listen: false)
-                                                      .submitRequestInArea(
-                                                pincode:
-                                                    _pinCodeController.text,
-                                              );
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('Request')),
-                                        TextButton(
-                                            onPressed: () {
-                                              Navigator.pop(context);
-                                            },
-                                            child: Text('Cancel'))
-                                      ],
-                                    );
-                                  });
-                            }
-                          : null,
-                    )
-                  : CustomButton(
-                      btnTxt: getTranslated(
-                          isExistInCart
-                              ? 'already_added_in_cart'
-                              : fromCart
-                                  ? 'update_in_cart'
-                                  : 'add_to_cart',
-                          context),
-                      backgroundColor: Theme.of(context).primaryColor,
-                      onTap: (!isExistInCart)
-                          ? () {
-                              if (!isExistInCart) {
-                                Navigator.pop(context);
-                                Provider.of<CartProvider>(context,
-                                        listen: false)
-                                    .addToCart(_cartModel, cartIndex);
-                                callback(_cartModel);
-                              }
-                            }
-                          : null,
-=======
                                         ),
                                         shape: RoundedRectangleBorder(
                                             borderRadius:
@@ -1325,7 +1238,6 @@ class DetailsPage extends StatelessWidget {
                               }
                             }
                           : null,
->>>>>>> a75dfc8461879b9e3975d2dc24bf3e49ca051d4d
                     ),
               // : Container(
               //     alignment: Alignment.center,
