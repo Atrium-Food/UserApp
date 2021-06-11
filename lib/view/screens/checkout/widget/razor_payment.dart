@@ -89,8 +89,8 @@ class _RazorPaymentState extends State<RazorPayment> {
   }
 
   void handelPaymentError(PaymentFailureResponse response) {
-    Provider.of<OrderProvider>(context, listen: false)
-        .updatePaymentStatus(widget.orderModel.toString(), 'unpaid', '00000');
+    // Provider.of<OrderProvider>(context, listen: false)
+    //     .updatePaymentStatus(widget.orderModel.toString(), 'unpaid', '00000');
 
     Navigator.pushReplacement(
         context,
