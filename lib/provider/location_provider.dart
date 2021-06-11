@@ -32,6 +32,8 @@ class LocationProvider with ChangeNotifier {
       heading: 1,
       speed: 1,
       speedAccuracy: 1);
+
+
   bool _loading = false;
   bool get loading => _loading;
 
@@ -43,10 +45,16 @@ class LocationProvider with ChangeNotifier {
 
   List<Marker> get markers => _markers;
 
-  LatLng _latLng;
+  LatLng _latLng = LatLng(0.0, 0.0);
   LatLng get latLng => _latLng;
 
   bool newAddress = false;
+
+
+  String _locality;
+  LatLng _filterLatLng;
+  String get locality => _locality;
+  LatLng get filterLatLng => _filterLatLng;
 
   // for get current location
   void getCurrentLocation({GoogleMapController mapController}) async {
@@ -59,6 +67,7 @@ class LocationProvider with ChangeNotifier {
             desiredAccuracy: LocationAccuracy.high);
       } on Exception catch(e){
         newAddress=false;
+        // _loading=false;
         notifyListeners();
         return;
       }
@@ -72,14 +81,20 @@ class LocationProvider with ChangeNotifier {
         List<Placemark> placemarks = await placemarkFromCoordinates(
             newLocalData.latitude, newLocalData.longitude);
         _address = placemarks.first;
+        print("${newLocalData.latitude}, ${newLocalData.longitude}");
         newAddress=true;
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {
         debugPrint("Permission Denied");
+        // _loading = false;
       }
     }
-    // _loading = false;
+    notifyListeners();
+  }
+
+  void setLoadingFalse(){
+    _loading=false;
     notifyListeners();
   }
 
@@ -88,6 +103,8 @@ class LocationProvider with ChangeNotifier {
       var addresses = await locationFromAddress(query);
       var first = addresses.first;
       _latLng=LatLng(first.latitude,first.longitude);
+      print(_latLng);
+      notifyListeners();
       return _latLng;
       // print("${first.latitude} : ${first.longitude}");
     } on Exception catch(e){
@@ -97,9 +114,9 @@ class LocationProvider with ChangeNotifier {
     }
   }
 
-  void clearLatLng(){
-    _latLng=null;
-  }
+  // void clearLatLng(){
+  //   _latLng=null;
+  // }
   // update Position
   void updatePosition(CameraPosition position) async {
     _position = Position(
@@ -153,12 +170,10 @@ class LocationProvider with ChangeNotifier {
   }
 
   bool _isAvaibleLocation = false;
-
   bool get isAvaibleLocation => _isAvaibleLocation;
 
   // user address
   List<AddressModel> _addressList;
-
   List<AddressModel> get addressList => _addressList;
 
   Position _currentLocation = Position(
@@ -173,6 +188,10 @@ class LocationProvider with ChangeNotifier {
   );
   Position get currentLocation => _currentLocation;
 
+
+
+
+
   Future<Position> locateUser() async {
     try {
       var result = await Geolocator.getCurrentPosition(
@@ -184,56 +203,39 @@ class LocationProvider with ChangeNotifier {
     }
   }
 
-  void getUserLocation(BuildContext context,bool isReset) async {
-    if (isReset || _address == null || _address.locality == null) {
-      // showDialog(context: context,
-      //     builder: (context){
-      //       return AlertDialog(
-      //         title: Text('Location'),
-      //         actions: [
-      //           TextButton(
-      //               onPressed: () async {
-      //
-      //                 Navigator.pop(context);
-      //                 Navigator.pop(context);
-      //               },
-      //               child: Text("Use GPS Location")
-      //           ),
-      //           TextButton(
-      //             onPressed: () {
-      //
-      //               Navigator.pop(context);
-      //               showModalBottomSheet(
-      //                   context: context,
-      //                   builder: (context) {
-      //                     return AddressBottomSheet();
-      //                   });
-      //             },
-      //             child: Text("Add an address")
-      //           )
-      //         ],
-      //       );
-      //     }
-      // );
-      _currentLocation = await locateUser();
-      notifyListeners();
-      if (_currentLocation == null) {
+  String _addressSheetMessage='';
+  String get addressSheetMessage => _addressSheetMessage;
+  void getUserLocation({BuildContext context,bool isReset=false, bool fromSheet=false}) async {
+    if (isReset || _locality == null ) {
+      _addressSheetMessage='';
+      if(!isReset) {
+        _currentLocation = await locateUser();
+        if (_currentLocation != null)
+          _filterLatLng =
+              LatLng(_currentLocation.latitude, _currentLocation.longitude);
+        notifyListeners();
+      }
+      if ( (isReset || _currentLocation == null) && !fromSheet) {
         showModalBottomSheet(
             context: context,
             builder: (context) {
               return AddressBottomSheet();
             });
-      } else {
+      } else if(_currentLocation==null && fromSheet){
+        _addressSheetMessage='Permission Denied';
+        notifyListeners();
+      }
+      else {
+        _filterLatLng=LatLng(_currentLocation.latitude,_currentLocation.longitude);
+        notifyListeners();
         try {
           var currentAddresses = await placemarkFromCoordinates(
               _currentLocation.latitude, _currentLocation.longitude);
-          _address = currentAddresses.first;
-          print(_address.locality);
+          _locality = currentAddresses.first.locality;
+          notifyListeners();
         } on Exception catch (e) {
           print("$e Address can't be found");
-          _address = null;
         }
-        print("longitude" + _currentLocation.longitude.toString());
         notifyListeners();
       }
     }
@@ -245,9 +247,11 @@ class LocationProvider with ChangeNotifier {
         var currentAddresses = await placemarkFromCoordinates(
             double.parse(_addressList[index].latitude),
             double.parse(_addressList[index].longitude));
-        _address = currentAddresses.first;
-        _currentLocation=Position(latitude: double.parse(_addressList[index].latitude),longitude:double.parse(_addressList[index].longitude));
-        print('${_currentLocation.longitude},${_currentLocation.latitude}');
+        // _address = currentAddresses.first;
+        _filterLatLng=LatLng(double.parse(_addressList[index].latitude),double.parse(_addressList[index].longitude));
+        notifyListeners();
+        print('Here: ${_filterLatLng.longitude},${_filterLatLng.latitude}');
+        _locality=currentAddresses.first.locality;
         notifyListeners();
       } else {
         var addresses=await locationFromAddress(_addressList[index].address);
@@ -255,16 +259,18 @@ class LocationProvider with ChangeNotifier {
             addresses.first.latitude,
             addresses.first.longitude
         );
-        _address=currentAddresses.first;
-        _currentLocation=Position(latitude: addresses.first.latitude,longitude: addresses.first.longitude );
+        // _address=currentAddresses.first;
+        _locality=currentAddresses.first.locality;
+        _filterLatLng=LatLng(addresses.first.latitude,addresses.first.longitude);
         notifyListeners();
       }
     } on Exception catch (e) {
       print("$e Address can't be found");
-      _address = null;
+      // _address = null;
     }
     notifyListeners();
   }
+
   Future<ResponseModel> initAddressList(BuildContext context) async {
     ResponseModel _responseModel;
     ApiResponse apiResponse = await locationRepo.getAllAddress();
@@ -331,6 +337,11 @@ class LocationProvider with ChangeNotifier {
     return responseModel;
   }
 
+  setIsLoadingFalse(){
+    _isLoading=false;
+    notifyListeners();
+  }
+
   // for address update screen
   Future<ResponseModel> updateAddress(BuildContext context,
       {AddressModel addressModel, int addressId}) async {
@@ -390,7 +401,7 @@ class LocationProvider with ChangeNotifier {
 
   updateAddressIndex(int index) {
     _selectAddressIndex = index;
-    notifyListeners();
+    // notifyListeners();
   }
 
   initializeAllAddressType({BuildContext context}) {
@@ -407,12 +418,13 @@ class LocationProvider with ChangeNotifier {
 
     Position position = await locateUser();
     print(pincode);
-    print(position.latitude);
-    print(position.longitude);
-    ApiResponse response = await locationRepo.requestInArea(pincode, position.latitude, position.longitude);
+    print(position?.latitude);
+    print(position?.longitude);
+    ApiResponse response = await locationRepo.requestInArea(pincode, position?.latitude ??0, position?.longitude ?? 0);
     ResponseModel responseModel;
     if (response.response != null && response.response.statusCode == 200) {
       responseModel = ResponseModel(true, 'Requested in your area');
+      _isLoading = false;
       notifyListeners();
     } else {
       String errorMessage;
@@ -423,10 +435,21 @@ class LocationProvider with ChangeNotifier {
         errorMessage = response.error.errors[0].message;
       }
       responseModel = ResponseModel(false, errorMessage);
+      _isLoading = false;
+      notifyListeners();
     }
     _isLoading = false;
     notifyListeners();
     return responseModel;
+  }
+
+  String _requestPantryStatus = '';
+
+  String get requestPantryStatus => _requestPantryStatus;
+
+  setRequestStatus(String text){
+    _requestPantryStatus=text;
+    notifyListeners();
   }
 
 }

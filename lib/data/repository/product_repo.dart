@@ -15,11 +15,13 @@ class ProductRepo {
       if(lat!=null && long!=null){
       final response = await dioClient
           .get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset&&latitude=$lat&&longitude=$long');
+      print('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset&&latitude=$lat&&longitude=$long');
       return ApiResponse.withSuccess(response);
       }
       else {
         final response = await dioClient
             .get('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset');
+        print('${AppConstants.POPULAR_PRODUCT_URI}?limit=10&&offset=$offset');
         return ApiResponse.withSuccess(response);
       }
 

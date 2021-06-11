@@ -42,7 +42,7 @@ class Images {
   static const String call_support = 'assets/image/call_support.png';
   static const String chat_support = 'assets/image/chat_support.png';
   static const String kiwis='assets/image/kiwis.png';
-  static const String kiwis_logo = 'assets/image/kiwis_icon.png';
+  static const String kiwis_logo = 'assets/image/kiwis_logo.png';
 
   // for Icon
   static const String hot = 'assets/icon/hotIcon.svg';

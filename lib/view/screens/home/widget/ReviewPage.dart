@@ -40,11 +40,11 @@ class ReviewPage extends StatelessWidget {
             height: 5,
           ),
           Center(
-              child:  Text('Based on ${product.rating.countTotalRating ?? 0} ratings',style: robotoRegular.copyWith(color: Colors.white),)),
+              child:  Text('Based on ${product.rating?.countTotalRating ?? 0} ratings',style: robotoRegular.copyWith(color: Colors.white),)),
           SizedBox(
             height: 15.0,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -64,10 +64,10 @@ class ReviewPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -87,10 +87,10 @@ class ReviewPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -109,10 +109,10 @@ class ReviewPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
@@ -131,10 +131,10 @@ class ReviewPage extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(

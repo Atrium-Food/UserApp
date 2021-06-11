@@ -48,7 +48,7 @@ class MenuProfileTab extends StatelessWidget {
           title: Text(getTranslated('address', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
         ),
         ListTile(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => DialogFlowChatScreen())),
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => ChatScreen())),
           leading: Image.asset(Images.message, width: 20, height: 20, color: Theme.of(context).textTheme.bodyText1.color),
           title: Text(getTranslated('message', context), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE)),
         ),

@@ -260,7 +260,7 @@ class OrderProvider extends ChangeNotifier {
     }
   }
 
-  void setBranchIndex(int index) {
+  void resetAddressIndex(int index) {
     // _branchIndex = index;
     _addressIndex = -1;
     notifyListeners();

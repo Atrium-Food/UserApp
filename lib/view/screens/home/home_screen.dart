@@ -29,7 +29,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   Future<void> _loadData(BuildContext context, bool reload) async {
     Provider.of<LocationProvider>(context, listen: false)
-        .getUserLocation(context, false);
+        .getUserLocation(context: context,isReset: false);
     if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
       await Provider.of<ProfileProvider>(context, listen: false)
           .getUserInfo(context);
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     InkWell(
                       onTap: () {
                         Provider.of<LocationProvider>(context, listen: false)
-                            .getUserLocation(context, true);
+                            .getUserLocation(context: context,isReset: true);
                       },
                       child: Image.asset(Images.home_location_icon,
                           width: 50, height: 50,color: ColorResources.getThemeColor(context),),
@@ -93,15 +93,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     SizedBox(width: 10),
                     Consumer<LocationProvider>(
                         builder: (context, locationProvider, child) {
-                      return (locationProvider.address != null &&
-                              locationProvider.address.locality != null)
-                          ? Text(
-                              locationProvider.address.locality ?? '',
+                      return Text(
+                              locationProvider.locality ?? '',
                               style: robotoMedium.copyWith(fontSize: 20,color: ColorResources.getThemeColor(context),),
-                            )
-                          : Text(
-                              "City Name",
-                              style: robotoMedium.copyWith(fontSize: 20, color:ColorResources.getThemeColor(context),),
                             );
                     }),
 

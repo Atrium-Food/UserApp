@@ -40,7 +40,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   File file;
   final picker = ImagePicker();
-  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+  static final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   bool _isLoggedIn;
 
   void _choose() async {
@@ -275,10 +275,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           profileProvider.userInfoModel.email == _emailController.text && file == null
                           && _password.isEmpty && _confirmPassword.isEmpty) {
 
-                        _scaffoldKey.currentState.showSnackBar(SnackBar(
-                          content: Text(getTranslated('change_something_to_update', context)),
-                          backgroundColor: Colors.red,
-                        ));
+
+                        showCustomSnackBar('Change something to update', context,isError: true);
+                        // _scaffoldKey.currentState.showSnackBar(SnackBar(
+                        //   content: Text(getTranslated('change_something_to_update', context)),
+                        //   backgroundColor: Colors.red,
+                        // ));
                       }else if (_firstName.isEmpty) {
                         showCustomSnackBar(getTranslated('enter_first_name', context), context);
                       }else if (_lastName.isEmpty) {
@@ -297,6 +299,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         updateUserInfoModel.phone = _phoneNumber ?? '';
                         String _pass = _password ?? '';
 
+                        print(file);
+
                         ResponseModel _responseModel = await profileProvider.updateUserInfo(
                           updateUserInfoModel, _pass, file,
                           Provider.of<AuthProvider>(context, listen: false).getUserToken(),
@@ -304,9 +308,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         if(_responseModel.isSuccess) {
                           profileProvider.getUserInfo(context);
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(getTranslated('updated_successfully', context)), backgroundColor: Colors.green));
+                          showCustomSnackBar("Your profile has been updated", context,isError: false);
+                          // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(getTranslated('updated_successfully', context)), backgroundColor: Colors.green));
                         }else {
-                          _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(_responseModel.message), backgroundColor: Colors.red));
+                          showCustomSnackBar(_responseModel.message, context,isError: true);
+                          // _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(_responseModel.message), backgroundColor: Colors.red));
                         }
                         setState(() {});
                       }

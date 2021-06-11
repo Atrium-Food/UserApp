@@ -411,10 +411,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                           child: Text(getTranslated(
                                               'no_address_available', context)))
                                   : Center(
-                                      child: CircularProgressIndicator(
-                                          valueColor: AlwaysStoppedAnimation<
-                                                  Color>(
-                                              Theme.of(context).primaryColor))),
+                                  child: Text("Addresses not initialized")),
                             ),
                             Padding(
                               padding: EdgeInsets.symmetric(

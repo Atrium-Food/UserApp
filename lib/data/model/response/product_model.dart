@@ -29,8 +29,9 @@ class ProductModel {
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     _totalSize = json['total_size'];
-    _limit = json['limit'];
-    _offset = json['offset'];
+
+    _limit = json['limit'] != 'null' ? int.parse(json['limit']) : 10;
+    _offset = json['offset'] != 'null' ? int.parse(json['offset']) : 1;
     _isDefault = json['default'];
     print("Hey");
     if (json['products'] != null) {
@@ -233,7 +234,8 @@ class Product {
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
-    if (json['rating'] != null) {
+
+    if (json['rating'] != null && (json['rating'] is Map)) {
       _rating = Rating.fromJson(json['rating']);
       // _rating = [];
       // json['rating'].forEach((v) {
@@ -633,8 +635,9 @@ class Rating {
   Rating.fromJson(Map<String, dynamic> json) {
     _average = json['average']?.toDouble();
     _productId = json['product_id'];
+
     _countTotalRating = json['total_rating'];
-    _countRating = json['count_rating'].cast<int>();
+    _countRating = json['count_rating']?.cast<int>();
   }
 
   Map<String, dynamic> toJson() {

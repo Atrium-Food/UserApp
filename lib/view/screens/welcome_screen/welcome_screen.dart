@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
+import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/screens/auth/create_account_screen.dart';
+import 'package:flutter_restaurant/view/screens/auth/google_auth_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/signup_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
@@ -24,7 +27,7 @@ class WelcomeScreen extends StatelessWidget {
             Container(
                 alignment: Alignment.bottomCenter,
                 padding: EdgeInsets.all(30),
-                child: Image.asset(Images.efood_bike_with_grasp, height: 200)),
+                child: Image.asset(Images.kiwis_logo, height: 200)),
             SizedBox(height: 30),
             Text(
               getTranslated('welcome', context),
@@ -36,7 +39,7 @@ class WelcomeScreen extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
               child: Text(
-                getTranslated('welcome_to_efood', context),
+                'Kiwis welcomes you!',
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
@@ -44,7 +47,7 @@ class WelcomeScreen extends StatelessWidget {
                     .copyWith(color: ColorResources.getGreyColor(context)),
               ),
             ),
-            SizedBox(height: 50),
+            SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_DEFAULT),
               child: CustomButton(
@@ -79,7 +82,32 @@ class WelcomeScreen extends StatelessWidget {
               ),
               child: CustomButton(
                 onTap: () {
-                  authProvider.googleSignIn();
+                  authProvider.signinGoogle()
+                      .then((status) async {
+                    if (status.isSuccess) {
+                      // if (authProvider.isActiveRememberMe) {
+                      //   authProvider
+                      //       .saveUserNumberAndPassword(
+                      //       _email, _password);
+                      // } else {
+                      //   authProvider
+                      //       .clearUserNumberAndPassword();
+                      // }
+
+                      await Provider.of<WishListProvider>(
+                          context,
+                          listen: false)
+                          .initWishList(context);
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (_) =>
+                                  DashboardScreen()),
+                              (route) => false);
+                    } else {
+                      showCustomSnackBar("Google authentication failed", context, isError: true);
+                    }
+                  });
                 },
                 inactiveColor: ColorResources.COLOR_WHITE,
                 btnTxt: 'NA',

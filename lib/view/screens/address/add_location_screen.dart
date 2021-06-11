@@ -10,6 +10,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/address/select_location_screen.dart';
 import 'package:geolocator/geolocator.dart';
@@ -67,15 +68,21 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     }
 
     return Scaffold(
-      appBar: CustomAppBar(title: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('add_new_address', context)),
+      appBar: CustomAppBar(
+          title: widget.isEnableUpdate ? getTranslated('update_address', context) : getTranslated('add_new_address', context),
+        isBackButtonExist: true,
+        onBackPressed: (){
+            // Provider.of<LocationProvider>(context,listen: false).setLoadingFalse();
+            Navigator.pop(context);
+        },
+      ),
       body: Consumer<LocationProvider>(
         builder: (context, locationProvider, child) {
-          if (widget.isEnableUpdate && locationProvider.address != null) {
-            _locationController.text = '${locationProvider.address.name ?? ''}, '
-                '${locationProvider.address.subAdministrativeArea ?? ''}, '
-                '${locationProvider.address.isoCountryCode ?? ''}';
-          }
-
+          // if (widget.isEnableUpdate && locationProvider.address != null) {
+          //   _locationController.text = '${locationProvider.address.name ?? ''}, '
+          //       '${locationProvider.address.subAdministrativeArea ?? ''}, '
+          //       '${locationProvider.address.isoCountryCode ?? ''}';
+          // }
           return Column(
             children: [
               Expanded(
@@ -157,7 +164,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                       DraggableScrollableSheet(
                         initialChildSize: 0.2,
                         maxChildSize: 0.9,
-                        minChildSize: 0.1,
+                        minChildSize: 0.2,
                         builder: (context,scrollController){
                           return Container(
                             // height: MediaQuery.of(context).size.height*0.2,
@@ -253,6 +260,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                   errorMessage: _addressError,
                                   nextFocus: _nameNode,
                                   controller: _locationController,
+                                  maxLines: 4,
                                 ),
                                 SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
@@ -359,18 +367,19 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                       String _longitude;
                                       print("Add Address");
                                       print(locationProvider.newAddress);
-                                      if(!locationProvider.newAddress && !widget.isEnableUpdate) {
+                                      // if(!locationProvider.newAddress && !widget.isEnableUpdate) {
                                         print("Null latitude");
                                         LatLng latLng= await Provider.of<LocationProvider>(context,listen: false).getLatLongfromAddress(_locationController.text);
                                         _latitude=latLng.latitude.toString();
                                         _longitude=latLng.longitude.toString();
-                                      } else if(newAddress){
-                                        _latitude=locationProvider.position.latitude.toString();
-                                        _longitude=locationProvider.position.longitude.toString();
-                                      } else if(widget.isEnableUpdate){
-                                        _latitude=widget.address.latitude;
-                                        _longitude=widget.address.longitude;
-                                      }
+                                      // } else if(newAddress){
+                                      //   _latitude=locationProvider.position.latitude.toString();
+                                      //   _longitude=locationProvider.position.longitude.toString();
+                                      // } else if(widget.isEnableUpdate){
+                                      //   _latitude=widget.address.latitude;
+                                      //   _longitude=widget.address.longitude;
+                                      // }
+                                      print("$_latitude,$_longitude");
                                       AddressModel addressModel = AddressModel(
                                         addressType: locationProvider.getAllAddressType[locationProvider.selectAddressIndex],
                                         contactPersonName: _contactPersonNameController.text ?? '',
@@ -383,7 +392,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                         // longitude: locationProvider.position.longitude.toString() ?? '',
                                       );
                                       print(addressModel.toJson());
-                                      Provider.of<LocationProvider>(context,listen: false).clearLatLng();
+                                      // Provider.of<LocationProvider>(context,listen: false).clearLatLng();
                                       if (widget.isEnableUpdate) {
                                         addressModel.id = widget.address.id;
                                         addressModel.userId = widget.address.userId;
@@ -392,6 +401,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                       } else {
                                         locationProvider.addAddress(addressModel).then((value) {
                                           if (value.isSuccess) {
+                                            // showCustomSnackBar(locationProvider.addressStatusMessage, context, isError: false);
                                             if (widget.fromCheckout) {
                                               Provider.of<LocationProvider>(context, listen: false).initAddressList(context);
                                               Provider.of<OrderProvider>(context, listen: false).setAddressIndex(-1);
