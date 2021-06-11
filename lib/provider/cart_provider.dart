@@ -41,7 +41,7 @@ class CartProvider extends ChangeNotifier {
       _cartList[index].quantity = _cartList[index].quantity - 1;
       _amount = _amount - _cartList[index].discountedPrice;
     }
-    // cartRepo.addToCartList(_cartList);
+    cartRepo.addToCartList(_cartList);
 
     notifyListeners();
   }

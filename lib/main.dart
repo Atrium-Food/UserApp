@@ -114,7 +114,7 @@ class MyApp extends StatelessWidget {
         statusBarColor: ColorResources.getPrimaryColor(context)
     ));
     return MaterialApp(
-      title: 'eFood',
+      title: 'Kiwis',
       debugShowCheckedModeBanner: false,
       navigatorKey: navigatorKey,
       theme: Provider.of<ThemeProvider>(context).darkTheme ? dark : light,

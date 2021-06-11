@@ -37,11 +37,12 @@ class CouponProvider extends ChangeNotifier {
       _coupon = CouponModel.fromJson(apiResponse.response.data);
       if (_coupon.minPurchase != null && _coupon.minPurchase < order) {
         if(_coupon.discountType == 'percent') {
-          if(_coupon.maxDiscount != null) {
+          if(_coupon.maxDiscount != null && _coupon.maxDiscount!=0) {
             _discount = (_coupon.discount * order / 100) < _coupon.maxDiscount ? (_coupon.discount * order / 100) : _coupon.maxDiscount;
           }else {
             _discount = _coupon.discount * order / 100;
           }
+          print(_discount);
         }else {
           _discount = _coupon.discount;
         }

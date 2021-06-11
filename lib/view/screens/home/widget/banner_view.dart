@@ -92,6 +92,9 @@ class BannerView extends StatelessWidget {
                           placeholder: Images.placeholder_banner,
                           image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.bannerImageUrl}/${banner.bannerList[index].image}',
                           width: 250, height: 85, fit: BoxFit.cover,
+                          imageErrorBuilder: (context, image, StackTrace trace){
+                            return Image.asset(Images.placeholder_banner,width: 250, height: 85, fit: BoxFit.cover,);
+                          },
                         ),
                       ),
                     ),

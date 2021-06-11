@@ -401,7 +401,7 @@ class LocationProvider with ChangeNotifier {
 
   updateAddressIndex(int index) {
     _selectAddressIndex = index;
-    // notifyListeners();
+    notifyListeners();
   }
 
   initializeAllAddressType({BuildContext context}) {

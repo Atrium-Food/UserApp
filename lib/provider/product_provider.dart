@@ -94,7 +94,7 @@ class ProductProvider extends ChangeNotifier {
         _variationTypes.addAll(cart.variation[0].type.split('-'));
       }
       int _varIndex = 0;
-      product.choiceOptions.forEach((choiceOption) {
+      product.choiceOptions?.forEach((choiceOption) {
         for (int index = 0; index < choiceOption.options.length; index++) {
           if (choiceOption.options[index].trim().replaceAll(' ', '') ==
               _variationTypes[_varIndex].trim()) {
