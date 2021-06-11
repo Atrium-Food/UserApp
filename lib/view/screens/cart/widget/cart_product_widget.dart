@@ -140,7 +140,6 @@ class CartProductWidget extends StatelessWidget {
                         ),
                         Text(cart.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
                         InkWell(
-                          // onTap: () => print("${cart.toJson()}"),
                           onTap: () => Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart),
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),

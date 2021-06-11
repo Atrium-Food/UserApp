@@ -9,7 +9,11 @@ class ProductModel {
   bool _isDefault = false;
 
   ProductModel(
-      {int totalSize, int limit, int offset, List<Product> products, bool isDefault}) {
+      {int totalSize,
+      int limit,
+      int offset,
+      List<Product> products,
+      bool isDefault}) {
     this._totalSize = totalSize;
     this._limit = limit;
     this._offset = offset;
@@ -25,9 +29,10 @@ class ProductModel {
 
   ProductModel.fromJson(Map<String, dynamic> json) {
     _totalSize = json['total_size'];
-    _limit = json['limit']!='null'?int.parse(json['limit']):10;
-    _offset = json['offset']!='null'?int.parse(json['offset']):1;
-    _isDefault=json['default'];
+
+    _limit = json['limit'] != 'null' ? int.parse(json['limit']) : 10;
+    _offset = json['offset'] != 'null' ? int.parse(json['offset']) : 1;
+    _isDefault = json['default'];
     print("Hey");
     if (json['products'] != null) {
       _products = [];
@@ -229,8 +234,9 @@ class Product {
     _discountType = json['discount_type'];
     _taxType = json['tax_type'];
     _setMenu = json['set_menu'];
+
     if (json['rating'] != null && (json['rating'] is Map)) {
-      _rating=Rating.fromJson(json['rating']);
+      _rating = Rating.fromJson(json['rating']);
       // _rating = [];
       // json['rating'].forEach((v) {
       //   _rating.add(new Rating.fromJson(v));
@@ -250,7 +256,7 @@ class Product {
     }
     //
     if (json['reviews'] != null) {
-      _reviews=[];
+      _reviews = [];
       json['reviews'].forEach((v) {
         _reviews.add(new ReviewBody.fromJson(v));
       });
@@ -629,8 +635,9 @@ class Rating {
   Rating.fromJson(Map<String, dynamic> json) {
     _average = json['average']?.toDouble();
     _productId = json['product_id'];
-    _countTotalRating=json['total_rating'];
-    _countRating=json['count_rating']?.cast<int>();
+
+    _countTotalRating = json['total_rating'];
+    _countRating = json['count_rating']?.cast<int>();
   }
 
   Map<String, dynamic> toJson() {
