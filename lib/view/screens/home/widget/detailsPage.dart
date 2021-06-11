@@ -855,10 +855,13 @@ class DetailsPage extends StatelessWidget {
                           SizedBox(
                             height: 5.0,
                           ),
-                          Text(
-                            product.ingredients[index].name,
-                            style: robotoRegular.copyWith(
-                                fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL - 1),
+                          Center(
+                            child: Text(
+                              product.ingredients[index].name,
+                              style: robotoRegular.copyWith(
+                                  fontSize:
+                                      Dimensions.FONT_SIZE_EXTRA_SMALL - 1),
+                            ),
                           ),
                           // SizedBox(
                           //   height: 7,
