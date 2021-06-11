@@ -134,18 +134,23 @@ class CartScreen extends StatelessWidget {
 
                             InkWell(
                               onTap: () {
+                                print(coupon.discount);
                                 if(_couponController.text.isNotEmpty && !coupon.isLoading) {
                                   if(coupon.discount < 1) {
                                     coupon.applyCoupon(_couponController.text, _total).then((discount) {
+                                      print(discount);
                                       if (discount > 0) {
-                                        _scaffoldKey.currentState.showSnackBar(
-                                            SnackBar(content: Text('You got ${Provider.of<SplashProvider>(context, listen: false)
-                                                .configModel.currencySymbol}$discount discount'), backgroundColor: Colors.green));
+                                        showCustomSnackBar("You got ${Provider.of<SplashProvider>(context, listen: false)
+                                                .configModel.currencySymbol}$discount discount", context,isError: false);
+                                        // _scaffoldKey.currentState.showSnackBar(
+                                        //     SnackBar(content: Text('You got ${Provider.of<SplashProvider>(context, listen: false)
+                                        //         .configModel.currencySymbol}$discount discount'), backgroundColor: Colors.green));
                                       } else {
-                                        _scaffoldKey.currentState.showSnackBar(SnackBar(
-                                          content: Text(getTranslated('invalid_code_or', context)),
-                                          backgroundColor: Colors.red,
-                                        ));
+                                        showCustomSnackBar('Invalid Promo Offer', context,isError: true);
+                                        // _scaffoldKey.currentState.showSnackBar(SnackBar(
+                                        //   content: Text(getTranslated('invalid_code_or', context)),
+                                        //   backgroundColor: Colors.red,
+                                        // ));
                                       }
                                     });
                                   } else {

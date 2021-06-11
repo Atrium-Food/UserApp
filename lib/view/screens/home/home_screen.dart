@@ -184,11 +184,11 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       SetMenuView(),
 
-                      // Consumer<BannerProvider>(
-                      //   builder: (context, banner, child) {
-                      //     return banner.bannerList == null ? BannerView() : banner.bannerList.length == 0 ? SizedBox() : BannerView();
-                      //   },
-                      // ),
+                      Consumer<BannerProvider>(
+                        builder: (context, banner, child) {
+                          return banner.bannerList == null ? BannerView() : banner.bannerList.length == 0 ? SizedBox() : BannerView();
+                        },
+                      ),
 
                       Padding(
                         padding: EdgeInsets.fromLTRB(10, 20, 10, 10),

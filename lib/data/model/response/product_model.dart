@@ -642,7 +642,7 @@ class Rating {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['average'] = this._average.toDouble();
+    data['average'] = this._average?.toDouble();
     data['product_id'] = this._productId;
     return data;
   }

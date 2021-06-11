@@ -29,15 +29,18 @@ class AddLocationScreen extends StatefulWidget {
 
 class _AddLocationScreenState extends State<AddLocationScreen> {
   final TextEditingController _locationController = TextEditingController();
+  final TextEditingController _localityController = TextEditingController();
+  final TextEditingController _cityController = TextEditingController();
+
 
   final TextEditingController _contactPersonNameController = TextEditingController();
 
   final TextEditingController _contactPersonNumberController = TextEditingController();
 
   final FocusNode _addressNode = FocusNode();
-
+  final FocusNode _localityNode=FocusNode();
+  final FocusNode _cityNode=FocusNode();
   final FocusNode _nameNode = FocusNode();
-
   final FocusNode _numberNode = FocusNode();
 
   String _addressError='';
@@ -53,8 +56,10 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
     Provider.of<LocationProvider>(context, listen: false).updateErrorMessage(message: '');
 
     if (widget.isEnableUpdate && widget.address != null) {
-      Provider.of<LocationProvider>(context, listen: false)
+      if(widget.address.latitude!=null)Provider.of<LocationProvider>(context, listen: false)
           .updatePosition(CameraPosition(target: LatLng(double.parse(widget.address.latitude), double.parse(widget.address.longitude))));
+      List<String> _addressPieces = widget.address.address.split(',');
+
       _locationController.text = '${widget.address.address}';
       _contactPersonNameController.text = '${widget.address.contactPersonName}';
       _contactPersonNumberController.text = '${widget.address.contactPersonNumber}';
@@ -213,7 +218,7 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                     itemCount: locationProvider.getAllAddressType.length,
                                     itemBuilder: (context, index) => InkWell(
                                       onTap: () {
-                                        locationProvider.updateAddressIndex(index);
+                                        Provider.of<LocationProvider>(context,listen: false).updateAddressIndex(index);
                                       },
                                       child: Container(
                                         padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL, horizontal: Dimensions.PADDING_SIZE_SMALL),
@@ -258,13 +263,47 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                   inputAction: TextInputAction.next,
                                   focusNode: _addressNode,
                                   errorMessage: _addressError,
-                                  nextFocus: _nameNode,
+                                  nextFocus: _cityNode,
                                   controller: _locationController,
-                                  maxLines: 4,
+                                  maxLines: 2,
                                 ),
                                 SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
+                                Text(
+                                  'Locality Name',
+                                  style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
+                                ),
+                                SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                                CustomTextField(
+                                  hintText: 'Landmark',
+                                  isShowBorder: true,
+                                  inputType: TextInputType.streetAddress,
+                                  inputAction: TextInputAction.next,
+                                  focusNode: _localityNode,
+                                  errorMessage: _addressError,
+                                  nextFocus: _cityNode,
+                                  controller: _localityController,
+                                ),
+                                SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                                 // for Contact Person Name
+
+                                Text(
+                                  'City Name, State',
+                                  style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
+                                ),
+                                SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                                CustomTextField(
+                                  hintText: 'Bangalore, India',
+                                  isShowBorder: true,
+                                  inputType: TextInputType.streetAddress,
+                                  inputAction: TextInputAction.next,
+                                  focusNode: _cityNode,
+                                  errorMessage: _addressError,
+                                  nextFocus: _nameNode,
+                                  controller: _cityController,
+                                ),
+                                SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+
                                 Text(
                                   getTranslated('contact_person_name', context),
                                   style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
@@ -368,10 +407,19 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                       print("Add Address");
                                       print(locationProvider.newAddress);
                                       // if(!locationProvider.newAddress && !widget.isEnableUpdate) {
+                                      try {
                                         print("Null latitude");
-                                        LatLng latLng= await Provider.of<LocationProvider>(context,listen: false).getLatLongfromAddress(_locationController.text);
-                                        _latitude=latLng.latitude.toString();
-                                        _longitude=latLng.longitude.toString();
+                                        LatLng latLng = await Provider.of<
+                                            LocationProvider>(
+                                            context, listen: false)
+                                            .getLatLongfromAddress(
+                                            _locationController.text);
+                                        _latitude = latLng.latitude.toString();
+                                        _longitude =
+                                            latLng.longitude.toString();
+                                      } on Exception catch(e){
+                                        print(e.toString());
+                                      }
                                       // } else if(newAddress){
                                       //   _latitude=locationProvider.position.latitude.toString();
                                       //   _longitude=locationProvider.position.longitude.toString();
@@ -380,13 +428,14 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                       //   _longitude=widget.address.longitude;
                                       // }
                                       print("$_latitude,$_longitude");
+                                      String _addressStr = "${_locationController.text ?? ''}, ${_localityController.text ?? ''}, ${_cityController.text ?? ''}";
                                       AddressModel addressModel = AddressModel(
                                         addressType: locationProvider.getAllAddressType[locationProvider.selectAddressIndex],
                                         contactPersonName: _contactPersonNameController.text ?? '',
                                         contactPersonNumber: _contactPersonNumberController.text ?? '',
-                                        address: _locationController.text ?? '',
-                                        latitude: _latitude,
-                                        longitude: _longitude,
+                                        address: _addressStr ?? '',
+                                        latitude: _latitude??0.0,
+                                        longitude: _longitude??0.0,
                                         // latitude: isEnableUpdate ? locationProvider.position.latitude.toString() ?? address.latitude
                                         //     : locationProvider.position.latitude.toString() ?? '',
                                         // longitude: locationProvider.position.longitude.toString() ?? '',

@@ -3,7 +3,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 
 class AppConstants {
   // static const String BASE_URL = 'http://demo.6amtech.com/restaurant/';
-  static const String BASE_URL = 'http://3.108.112.158/';
+  static const String BASE_URL = 'http://3.108.112.158';
   // static const String BASE_URL = 'http://13.233.136.170/';
 
   static const String CATEGORY_URI = '/api/v1/categories';
@@ -32,7 +32,7 @@ class AppConstants {
       '/api/v1/customer/address/delete?address_id=';
   static const String ADD_ADDRESS_URI = '/api/v1/customer/address/add';
   static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';
-  static const String GOOGLE_AUTH_URI='api/v1/auth/social';
+  static const String GOOGLE_AUTH_URI='/api/v1/auth/social';
 
   // static const String SET_MENU_URI = '/api/v1/products/set-menu';
   static const String CUSTOMER_INFO_URI = '/api/v1/customer/info';
@@ -51,7 +51,7 @@ class AppConstants {
   static const String REMOVE_WISH_LIST_URI =
       '/api/v1/customer/wish-list/remove?product_id=';
   static const String NOTIFICATION_URI = '/api/v1/notifications';
-  static const String UPDATE_PROFILE_URI = 'api/v1/customer/update-profile';
+  static const String UPDATE_PROFILE_URI = '/api/v1/customer/update-profile';
   static const String SEARCH_URI = '/api/v1/products/search?name=';
 
   static const String REVIEW_URI = '/api/v1/products/reviews/submit';
@@ -64,12 +64,12 @@ class AppConstants {
 
   /// New and Modified URIs
   static const String SET_MENU_URI = '/api/v1/products/set-menu';
-  static const String POPULAR_PRODUCT_URI = 'api/v1/products/latest';
+  static const String POPULAR_PRODUCT_URI = '/api/v1/products/latest';
   static const String ADD_CARD_URI = '/api/v1/customer/add-card';
   static const String CARDS_URI = '/api/v1/customer/cards/';
   static const String GET_GOOGLE_ACCOUNT = '/api/v1/auth/user-google';
 
-  static const String REQUEST_PANTRY_URI = 'api/v1/request-pantry';
+  static const String REQUEST_PANTRY_URI = '/api/v1/request-pantry';
 
   // Shared Key
   static const String THEME = 'theme';
