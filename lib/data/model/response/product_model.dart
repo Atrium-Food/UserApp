@@ -86,6 +86,7 @@ class Product {
   int _serves;
   String _cuisine;
   String _time;
+  List<Tag> _tags;
 
   Product({
     int id,
@@ -117,6 +118,7 @@ class Product {
     Recipe recipe,
     Nutrient nutrient,
     List<ReviewBody> reviews,
+    List<Tag> tags,
   }) {
     this._id = id;
     this._name = name;
@@ -147,6 +149,7 @@ class Product {
     this._recipe = recipe;
     this._nutrient = nutrient;
     this._reviews = reviews;
+    this._tags=tags;
   }
 
   int get id => _id;
@@ -178,6 +181,7 @@ class Product {
   String get time => _time;
   int get serves => _serves;
   String get cuisine => _cuisine;
+  List<Tag> get tags => _tags;
 
   Product.fromJson(Map<String, dynamic> json) {
     print(json);
@@ -226,6 +230,13 @@ class Product {
       _choiceOptions = [];
       json['choice_options'].forEach((v) {
         _choiceOptions.add(new ChoiceOption.fromJson(v));
+      });
+    }
+
+    if (json['tags'] != null) {
+      _tags = [];
+      json['tags'].forEach((v) {
+        _tags.add(new Tag.fromJson(v));
       });
     }
 
@@ -646,4 +657,38 @@ class Rating {
     data['product_id'] = this._productId;
     return data;
   }
+}
+
+class Tag{
+  int _id;
+  String _key;
+  String _createdAt;
+  String _updatedAt;
+
+
+  Tag({int id, String key, String createdAt, String updatedAt}) {
+    this._id=id;
+    this._key=key;
+    this._createdAt=createdAt;
+    this._updatedAt=updatedAt;
+  }
+
+  int get id => _id;
+  String get key => _key;
+
+  Tag.fromJson(Map<String, dynamic> json) {
+    _id = json['id'];
+    _key = json['key'];
+
+    _createdAt = json['created_at'];
+    _updatedAt = json['updated_at'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this._id;
+    data['key'] = this._key;
+    return data;
+  }
+
 }

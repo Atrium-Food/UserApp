@@ -815,6 +815,30 @@ class DetailsPage extends StatelessWidget {
                         ])
                   : SizedBox(),
 
+              SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+              // Tags
+              Text('Tags',
+                  style: robotoMedium.copyWith(
+                      fontSize: Dimensions.FONT_SIZE_LARGE)),
+              SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+              Wrap(
+                children: product.tags
+                    .map((_tag) {
+                      return Container(
+                          padding: EdgeInsets.all(4),
+                          margin: EdgeInsets.all(6),
+                          decoration: BoxDecoration(
+                              color: ColorResources.getSearchBg(context),
+                              borderRadius: BorderRadius.circular(3)),
+                          child: Text(_tag.key,
+                              style: robotoRegular.copyWith(
+                                  color:
+                                      ColorResources.getAccentColor(context))));
+                    })
+                    .toList()
+                    .cast<Widget>(),
+              ),
+
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
               //Ingredients
 
@@ -838,7 +862,7 @@ class DetailsPage extends StatelessWidget {
                   itemBuilder: (BuildContext ctx, index) {
                     return Container(
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           CircleAvatar(
                             radius: 20.0,
@@ -856,13 +880,11 @@ class DetailsPage extends StatelessWidget {
                           SizedBox(
                             height: 5.0,
                           ),
-                          Center(
-                            child: Text(
-                              product.ingredients[index].name,
-                              style: robotoRegular.copyWith(
-                                  fontSize:
-                                      Dimensions.FONT_SIZE_EXTRA_SMALL - 1),
-                            ),
+                          Text(
+                            product.ingredients[index].name,
+                            style: robotoRegular.copyWith(
+                                fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL - 1),
+                            textAlign: TextAlign.center,
                           ),
                           // SizedBox(
                           //   height: 7,

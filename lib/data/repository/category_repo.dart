@@ -26,10 +26,18 @@ class CategoryRepo {
     }
   }
 
-  Future<ApiResponse> getCategoryProductList(String categoryID) async {
+  Future<ApiResponse> getCategoryProductList(String categoryID,{double lat, double long}) async {
     try {
-      final response = await dioClient.get('${AppConstants.CATEGORY_PRODUCT_URI}$categoryID');
-      return ApiResponse.withSuccess(response);
+      if(lat!=null && lat!=0) {
+        print("Lat $lat");
+        final response = await dioClient.get(
+            '${AppConstants.CATEGORY_PRODUCT_URI}$categoryID?latitude=$lat&longitude=$long');
+        return ApiResponse.withSuccess(response);
+      } else {
+        final response = await dioClient.get(
+            '${AppConstants.CATEGORY_PRODUCT_URI}$categoryID');
+        return ApiResponse.withSuccess(response);
+      }
     } catch (e) {
       return ApiResponse.withError(ApiErrorHandler.getMessage(e));
     }
