@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/category_model.dart';
 import 'package:flutter_restaurant/provider/category_provider.dart';
+import 'package:flutter_restaurant/provider/location_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
@@ -74,46 +75,54 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                         topLeft: Radius.circular(20)
                       )
                     ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(10.0,0.0,0.0,0.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text("Veg",style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
-                              Switch(
-                                activeColor: ColorResources.getPrimaryColor(context),
-                                  value: veg,
-                                  onChanged: (val){
-                                    setState(() {
-                                      veg=val;
-                                    });
-                                  }
-                              )
-                            ],
-                          ),
-                        ),
-                        TabBar(
-                          controller: TabController(initialIndex: _tabIndex, length: category.subCategoryList.length+1, vsync: this),
-                          isScrollable: true,
-                          unselectedLabelColor: ColorResources.getGreyColor(context),
-                          indicatorWeight: 3,
-                          indicatorSize: TabBarIndicatorSize.label,
-                          indicatorColor: Theme.of(context).primaryColor,
-                          labelColor: Theme.of(context).textTheme.bodyText1.color,
-                          tabs: _tabs(category),
-                          onTap: (int index) {
-                            _tabIndex = index;
-                            if(index == 0) {
-                              category.getCategoryProductList(context, widget.categoryModel.id.toString());
-                            }else {
-                              category.getCategoryProductList(context, category.subCategoryList[index-1].id.toString());
-                            }
-                          },
-                        ),
-                      ],
+                    child: Consumer<LocationProvider>(
+                      builder: (context, locationProvider, child) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(10.0,0.0,0.0,0.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Text("Veg",style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
+                                  Switch(
+                                    activeColor: ColorResources.getPrimaryColor(context),
+                                      value: veg,
+                                      onChanged: (val){
+                                        setState(() {
+                                          veg=val;
+                                        });
+
+                                      }
+                                  )
+                                ],
+                              ),
+                            ),
+                            TabBar(
+                              controller: TabController(initialIndex: _tabIndex, length: category.subCategoryList.length+1, vsync: this),
+                              isScrollable: true,
+                              unselectedLabelColor: ColorResources.getGreyColor(context),
+                              indicatorWeight: 3,
+                              indicatorSize: TabBarIndicatorSize.label,
+                              indicatorColor: Theme.of(context).primaryColor,
+                              labelColor: Theme.of(context).textTheme.bodyText1.color,
+                              tabs: _tabs(category),
+                              onTap: (int index) {
+                                _tabIndex = index;
+                                if(index == 0) {
+                                  print("Here");
+                                  if(locationProvider.filterLatLng!=null)
+                                  category.getCategoryProductList(context, widget.categoryModel.id.toString(),lat: locationProvider.filterLatLng.latitude,long: locationProvider.filterLatLng.longitude);
+                                  // category.getCategoryProductList(context, widget.categoryModel.id.toString(),lat: 20,long: 20);
+                                }else {
+                                  category.getCategoryProductList(context, category.subCategoryList[index-1].id.toString());
+                                }
+                              },
+                            ),
+                          ],
+                        );
+                      }
                     ),
                   ),
                 ),

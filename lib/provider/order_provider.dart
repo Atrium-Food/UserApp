@@ -88,6 +88,7 @@ class OrderProvider extends ChangeNotifier {
         apiResponse.response.statusCode == 200) {
       _deliveryManModel = DeliveryManModel.fromJson(apiResponse.response.data);
     } else {
+      print("There's an error"+apiResponse.error.toString());
       ApiChecker.checkApi(context, apiResponse);
     }
     notifyListeners();

@@ -4,6 +4,7 @@ import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
+import 'package:flutter_restaurant/provider/coupon_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
@@ -126,11 +127,14 @@ class CartProductWidget extends StatelessWidget {
                               // print("Quantity 1 ");
                               // print("Cart ${cart.toJson()}");
                               Provider.of<CartProvider>(context, listen: false).removeFromCart(cart);
+                              Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);
+
                             }
                             if (cart.quantity > 1) {
                               // print("Quantity > 1 ");
                               // print("${cart.toJson()}");
                               Provider.of<CartProvider>(context, listen: false).setQuantity(false, cart);
+                              Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);
                             }
                           },
                           child: Padding(
@@ -140,7 +144,8 @@ class CartProductWidget extends StatelessWidget {
                         ),
                         Text(cart.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
                         InkWell(
-                          onTap: () => Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart),
+                          onTap: () {Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart);
+                          Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);},
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             child: Icon(Icons.add, size: 20),
@@ -165,6 +170,7 @@ class CartProductWidget extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 Provider.of<CartProvider>(context, listen: false).removeAddOn(cartIndex, index);
+                                Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 2),

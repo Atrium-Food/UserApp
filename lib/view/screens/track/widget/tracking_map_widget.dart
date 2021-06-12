@@ -38,19 +38,19 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
 
   List<LatLng> polylineCoordinates = [];
 
-  String googleAPIkey= "AIzaSyAUAf2I0XHnxZKfXUBQVLbT79mNSksh8zk";
+  String googleAPIkey= "AIzaSyBwWiMORYuexNkxJQfwnaoi95ySlH15qJQ";
   @override
   void initState() {
     super.initState();
     // requestPermission();
-    print("Delivery Man"+widget.deliveryManModel.longitude.toString());
-    print("Delivery Man"+ widget.deliveryManModel.latitude.toString());
+    print("Delivery Man"+widget.deliveryManModel?.longitude.toString());
+    print("Delivery Man"+ widget.deliveryManModel?.latitude.toString());
     RestaurantLocationCoverage coverage = Provider.of<SplashProvider>(context, listen: false).configModel.restaurantLocationCoverage;
     _deliveryBoyLatLng = LatLng(double.parse(widget.deliveryManModel.latitude ?? '0'), double.parse(widget.deliveryManModel.longitude ?? '0'));
     // _deliveryBoyLatLng = LatLng(double.parse('16.9987'), double.parse('81.7845'));
     _addressLatLng = widget.addressModel != null ? LatLng(double.parse(widget.addressModel.latitude), double.parse(widget.addressModel.longitude)) : LatLng(0,0);
     _restaurantLatLng = LatLng(double.parse(coverage.latitude), double.parse(coverage.longitude));
-    setPolylines();
+    // setPolylines();
   }
 
   @override
@@ -162,34 +162,34 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
     setState(() {});
   }
 
-  void setPolylines() async {
-    print("Setting Polylines");
-    PolylinePoints polylinePoints=PolylinePoints();
-    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(googleAPIkey,
-        PointLatLng(_deliveryBoyLatLng.latitude, _deliveryBoyLatLng.longitude),
-        PointLatLng(_addressLatLng.latitude, _addressLatLng.longitude));
-    print("Result ${result.errorMessage}");
-    if (result.points.isNotEmpty) {
-      print("Not Empty Polylines");
-      result.points.forEach((PointLatLng point) {
-        polylineCoordinates.add(
-            LatLng(point.latitude, point.longitude)
-        );
-      });
-      setState(() {
-        _polylines.add(Polyline(
-            width: 5, // set the width of the polylines
-            polylineId: PolylineId("poly"),
-            color: Color.fromARGB(255, 40, 122, 198),
-            points: polylineCoordinates
-        ));
-
-      });
-      print("Polylines"+_polylines.toString());
-    } else {
-      print("Empty Polylines");
-    }
-  }
+  // void setPolylines() async {
+  //   print("Setting Polylines");
+  //   PolylinePoints polylinePoints=PolylinePoints();
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(googleAPIkey,
+  //       PointLatLng(_deliveryBoyLatLng.latitude, _deliveryBoyLatLng.longitude),
+  //       PointLatLng(_addressLatLng.latitude, _addressLatLng.longitude));
+  //   print("Result ${result.errorMessage}");
+  //   if (result.points.isNotEmpty) {
+  //     print("Not Empty Polylines");
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(
+  //           LatLng(point.latitude, point.longitude)
+  //       );
+  //     });
+  //     setState(() {
+  //       _polylines.add(Polyline(
+  //           width: 5, // set the width of the polylines
+  //           polylineId: PolylineId("poly"),
+  //           color: Color.fromARGB(255, 40, 122, 198),
+  //           points: polylineCoordinates
+  //       ));
+  //
+  //     });
+  //     print("Polylines"+_polylines.toString());
+  //   } else {
+  //     print("Empty Polylines");
+  //   }
+  // }
   Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds, LatLng centerBounds) async {
     bool keepZoomingOut = true;
 
