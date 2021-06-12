@@ -8,7 +8,7 @@ import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:provider/provider.dart';
 
 class ReviewWidget extends StatelessWidget {
-  ReviewBody review;
+  final ReviewBody review;
   ReviewWidget({this.review});
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,7 @@ class ReviewWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey[
-              Provider.of<ThemeProvider>(
-                  context)
-                  .darkTheme
-                  ? 700
-                  : 400],
+                  Provider.of<ThemeProvider>(context).darkTheme ? 700 : 400],
               blurRadius: 5,
               spreadRadius: 1,
             )
@@ -35,18 +31,36 @@ class ReviewWidget extends StatelessWidget {
         children: [
           Row(
             children: [
-              Icon(Icons.account_circle,size: 25,),
-              SizedBox(width: 7,),
-              Text(review.userName?? '',style: robotoRegular.copyWith(fontSize: 18,color: ColorResources.getAccentColor(context)),),
-              Spacer(),
-              RatingBar(rating: review.rating.toDouble()),
-              ],
+              Icon(
+                Icons.account_circle,
+                size: 25,
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    review.userName ?? '',
+                    style: robotoRegular.copyWith(
+                        fontSize: 18,
+                        color: ColorResources.getAccentColor(context)),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  RatingBar(rating: review.rating.toDouble()),
+                ],
+              ),
+            ],
           ),
           SizedBox(
             height: 10,
           ),
           Text(review.comment,
-              style: robotoRegular.copyWith(fontSize: 15,color: ColorResources.getGrayColor(context))),
+              style: robotoRegular.copyWith(
+                  fontSize: 15, color: ColorResources.getGrayColor(context))),
         ],
       ),
     );

@@ -133,11 +133,11 @@ class NutrientValues extends StatelessWidget {
                         lineWidth: 8,
                         radius: 80,
                         backgroundColor: ColorResources.COLOR_WHITE,
-                        percent: 0.74,
+                        percent: product.nutrient.score % 10 / 10,
                         circularStrokeCap: CircularStrokeCap.round,
                         progressColor: ColorResources.getPrimaryColor(context),
                         center: Text(
-                          product.nutrient.score.toStringAsFixed(1),
+                          (product.nutrient.score % 10).toStringAsFixed(1),
                           style: robotoMedium.copyWith(
                               color: ColorResources.getPrimaryColor(context),
                               fontSize: 30),
@@ -257,7 +257,7 @@ class NutrientValues extends StatelessWidget {
         children: [
           Text(
             nutrient,
-            style: robotoMedium,
+            style: robotoMedium.copyWith(color: ColorResources.COLOR_BLACK),
           ),
           Expanded(
             child: Row(

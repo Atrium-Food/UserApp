@@ -571,12 +571,13 @@ class DetailsPage extends StatelessWidget {
                                 lineWidth: 6,
                                 radius: 50,
                                 backgroundColor: ColorResources.COLOR_WHITE,
-                                percent: 0.74,
+                                percent: (product.nutrient.score % 10) / 10,
                                 circularStrokeCap: CircularStrokeCap.round,
                                 progressColor:
                                     ColorResources.getPrimaryColor(context),
                                 center: Text(
-                                  product.nutrient.score.toStringAsFixed(1),
+                                  (product.nutrient.score % 10)
+                                      .toStringAsFixed(1),
                                   style: robotoMedium.copyWith(
                                       color: ColorResources.getPrimaryColor(
                                           context),
