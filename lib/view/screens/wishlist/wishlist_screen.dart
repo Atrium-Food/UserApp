@@ -19,29 +19,45 @@ class WishListScreen extends StatefulWidget {
 class _WishListScreenState extends State<WishListScreen> {
   @override
   Widget build(BuildContext context) {
-    final bool _isLoggedIn = Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
+    final bool _isLoggedIn =
+        Provider.of<AuthProvider>(context, listen: false).isLoggedIn();
 
     return Scaffold(
       appBar: CustomAppBar(
-          title: getTranslated('my_favourite', context), isBackButtonExist: false),
-      body: _isLoggedIn ? Consumer<WishListProvider>(
-        builder: (context, wishlistProvider, child) {
-          return wishlistProvider.wishList != null ? wishlistProvider.wishIdList.length > 0 ? RefreshIndicator(
-            onRefresh: () async {
-              await Provider.of<WishListProvider>(context, listen: false).initWishList(context);
-            },
-            backgroundColor: Theme.of(context).primaryColor,
-            child: ListView.builder(
-              itemCount: wishlistProvider.wishList.length,
-              padding: EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
-              itemBuilder: (context, index) {
-                return ProductDescriptionWidget(product: wishlistProvider.wishList[index]);
+          title: getTranslated('my_favourite', context),
+          isBackButtonExist: false),
+      body: _isLoggedIn
+          ? Consumer<WishListProvider>(
+              builder: (context, wishlistProvider, child) {
+                return wishlistProvider.wishList != null
+                    ? wishlistProvider.wishIdList.length > 0
+                        ? RefreshIndicator(
+                            onRefresh: () async {
+                              await Provider.of<WishListProvider>(context,
+                                      listen: false)
+                                  .initWishList(context);
+                            },
+                            backgroundColor: Theme.of(context).primaryColor,
+                            child: ListView.builder(
+                              itemCount: wishlistProvider.wishList.length,
+                              padding:
+                                  EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                              itemBuilder: (context, index) {
+                                return ProductDescriptionWidget(
+                                    product: wishlistProvider.wishList[index]);
+                              },
+                            ),
+                          )
+                        : NoDataScreen(
+                            isWishList: true,
+                          )
+                    : Center(
+                        child: CircularProgressIndicator(
+                            valueColor: new AlwaysStoppedAnimation<Color>(
+                                ColorResources.COLOR_PRIMARY)));
               },
-            ),
-          ): NoDataScreen(isWishList: true,)
-            : Center(child: CircularProgressIndicator(valueColor: new AlwaysStoppedAnimation<Color>(ColorResources.COLOR_PRIMARY)));
-        },
-      ) : NotLoggedInScreen(),
+            )
+          : NotLoggedInScreen(),
     );
   }
 }

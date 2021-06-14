@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/set_menu_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
+import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/base/title_widget.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/cart_bottom_sheet.dart';
@@ -25,11 +28,11 @@ class SetMenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
       child: Consumer<SetMenuProvider>(
         builder: (context, setMenu, child) {
           return Column(
             children: [
-
               setMenu.setMenuList != null
                   ? setMenu.setMenuList.length > 0
                       ? ListView.builder(
@@ -37,19 +40,19 @@ class SetMenuView extends StatelessWidget {
                           // separatorBuilder: (context, index) {
                           //   return Padding(padding: EdgeInsets.all(2));
                           // },
-                        shrinkWrap: true,
+                          shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           // scrollDirection: Axis.vertical,
-                          padding: EdgeInsets.only(
-                              left: Dimensions.PADDING_SIZE_SMALL),
+                          // padding: EdgeInsets.only(
+                          //     left: Dimensions.PADDING_SIZE_SMALL),
                           itemCount: setMenu.setMenuList.length > 5
                               ? 5
                               : setMenu.setMenuList.length,
                           itemBuilder: (context, index) {
                             double _startingPrice;
                             double _endingPrice;
-                            if (setMenu.setMenuList[index].choiceOptions
-                                    .length !=
+                            if (setMenu
+                                    .setMenuList[index].choiceOptions.length !=
                                 0) {
                               List<double> _priceList = [];
                               setMenu.setMenuList[index].variations.forEach(
@@ -63,8 +66,7 @@ class SetMenuView extends StatelessWidget {
                                     _priceList[_priceList.length - 1];
                               }
                             } else {
-                              _startingPrice =
-                                  setMenu.setMenuList[index].price;
+                              _startingPrice = setMenu.setMenuList[index].price;
                             }
 
                             double _discount = setMenu
@@ -75,13 +77,12 @@ class SetMenuView extends StatelessWidget {
                                     setMenu.setMenuList[index].discount,
                                     setMenu.setMenuList[index].discountType);
 
-                            DateTime _currentTime =
-                                Provider.of<SplashProvider>(context,
-                                        listen: false)
-                                    .currentTime;
+                            DateTime _currentTime = Provider.of<SplashProvider>(
+                                    context,
+                                    listen: false)
+                                .currentTime;
                             DateTime _start = DateFormat('hh:mm:ss').parse(
-                                setMenu
-                                    .setMenuList[index].availableTimeStarts);
+                                setMenu.setMenuList[index].availableTimeStarts);
                             DateTime _end = DateFormat('hh:mm:ss').parse(
                                 setMenu.setMenuList[index].availableTimeEnds);
                             DateTime _startTime = DateTime(
@@ -106,7 +107,7 @@ class SetMenuView extends StatelessWidget {
                                     _currentTime.isBefore(_endTime);
 
                             return SizedBox(
-                              height: 220,
+                              height: 270,
                               child: InkWell(
                                 onTap: () {
                                   Navigator.push(
@@ -132,10 +133,11 @@ class SetMenuView extends StatelessWidget {
                                               )));
                                 },
                                 child: Container(
-                                  height: 220,
-                                  width: 300,
+                                  height: 210,
+                                  // width: 300,
                                   margin: EdgeInsets.only(
-                                      right: Dimensions.PADDING_SIZE_LARGE,
+                                      left: Dimensions.PADDING_SIZE_EXTRA_SMALL,
+                                      right: Dimensions.PADDING_SIZE_EXTRA_SMALL,
                                       bottom: Dimensions.PADDING_SIZE_LARGE),
                                   decoration: BoxDecoration(
                                       color: Theme.of(context).accentColor,
@@ -163,9 +165,8 @@ class SetMenuView extends StatelessWidget {
                                           children: [
                                             ClipRRect(
                                               borderRadius: BorderRadius.only(
-                                                topRight: Radius.circular(10),
-                                                topLeft: Radius.circular(10)
-                                              ),
+                                                  topRight: Radius.circular(10),
+                                                  topLeft: Radius.circular(10)),
                                               child: FadeInImage.assetNetwork(
                                                 placeholder: Images
                                                     .placeholder_rectangle,
@@ -178,52 +179,123 @@ class SetMenuView extends StatelessWidget {
                                                   return Image.asset(
                                                     Images.placeholder_banner,
                                                     fit: BoxFit.cover,
-                                                    height: 110,
+                                                    height: 155,
+                                                      width: MediaQuery.of(context)
+                                                          .size
+                                                          .width -
+                                                          Dimensions
+                                                              .PADDING_SIZE_LARGE
                                                   );
                                                 },
-                                                height: 110,
-                                                width: 365,
+                                                height: 155,
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    Dimensions
+                                                        .PADDING_SIZE_LARGE,
                                                 fit: BoxFit.cover,
                                               ),
                                             ),
-                                            _isAvailable
-                                                ? SizedBox()
-                                                : Positioned(
-                                                    top: 0,
-                                                    left: 0,
-                                                    bottom: 0,
-                                                    right: 0,
-                                                    child: Container(
-                                                      alignment:
-                                                          Alignment.center,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.vertical(
-                                                                top: Radius
-                                                                    .circular(
-                                                                        10)),
-                                                        color: Colors.black
-                                                            .withOpacity(0.6),
-                                                      ),
-                                                      child: Text(
-                                                          getTranslated(
-                                                              'not_available_now',
-                                                              context),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          style: rubikRegular
-                                                              .copyWith(
-                                                            color: Colors.white,
-                                                            fontSize: Dimensions
-                                                                .FONT_SIZE_SMALL,
-                                                          )),
+                                            // _isAvailable
+                                            //     ? SizedBox()
+                                            //     : Positioned(
+                                            //         top: 0,
+                                            //         left: 0,
+                                            //         bottom: 0,
+                                            //         right: 0,
+                                            //         child: Container(
+                                            //           alignment:
+                                            //               Alignment.center,
+                                            //           decoration: BoxDecoration(
+                                            //             borderRadius:
+                                            //                 BorderRadius.vertical(
+                                            //                     top: Radius
+                                            //                         .circular(
+                                            //                             10)),
+                                            //             color: Colors.black
+                                            //                 .withOpacity(0.6),
+                                            //           ),
+                                            //           child: Text(
+                                            //               getTranslated(
+                                            //                   'not_available_now',
+                                            //                   context),
+                                            //               textAlign:
+                                            //                   TextAlign.center,
+                                            //               style: robotoRegular
+                                            //                   .copyWith(
+                                            //                 color: Colors.white,
+                                            //                 fontSize: Dimensions
+                                            //                     .FONT_SIZE_SMALL,
+                                            //               )),
+                                            //         ),
+                                            //       ),
+                                            Positioned(
+                                              top: 0,
+                                              right: 0,
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child:
+                                                    Consumer<WishListProvider>(
+                                                        builder: (context,
+                                                            wishList, child) {
+                                                  return InkWell(
+                                                    onTap: () {
+                                                      Provider.of<AuthProvider>(
+                                                                  context,
+                                                                  listen: false)
+                                                              .isLoggedIn()
+                                                          ? wishList.wishIdList
+                                                                  .contains(setMenu
+                                                                      .setMenuList[
+                                                                          index]
+                                                                      .id)
+                                                              ? wishList.removeFromWishList(
+                                                                  setMenu.setMenuList[
+                                                                      index],
+                                                                  (message) {})
+                                                              : wishList.addToWishList(
+                                                                  setMenu.setMenuList[
+                                                                      index],
+                                                                  (message) {})
+                                                          : showCustomSnackBar(
+                                                              'Log in to add your favorites',
+                                                              context);
+                                                    },
+                                                    child: Icon(
+                                                      wishList.wishIdList
+                                                              .contains(setMenu
+                                                                  .setMenuList[
+                                                                      index]
+                                                                  .id)
+                                                          ? Icons.favorite
+                                                          : Icons
+                                                              .favorite_border,
+                                                      color: wishList.wishIdList
+                                                              .contains(setMenu
+                                                                  .setMenuList[
+                                                                      index]
+                                                                  .id)
+                                                          ? Colors.redAccent
+                                                          : Colors.redAccent,
+                                                      size: 30,
                                                     ),
-                                                  ),
+                                                  );
+                                                }),
+                                              ),
+                                            )
                                           ],
                                         ),
                                         Expanded(
                                           child: Container(
-                                            color: ColorResources.getThemeColor(context),
+                                            decoration: BoxDecoration(
+                                                color: ColorResources.getThemeColor(
+                                                    context),
+                                              borderRadius: BorderRadius.only(
+                                                bottomLeft: Radius.circular(10),
+                                                bottomRight: Radius.circular(10),
+                                              )
+                                            ),
                                             padding: EdgeInsets.symmetric(
                                                 horizontal: Dimensions
                                                     .PADDING_SIZE_SMALL),
@@ -232,6 +304,7 @@ class SetMenuView extends StatelessWidget {
                                                     CrossAxisAlignment.start,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
                                                 children: [
                                                   Row(
                                                     mainAxisAlignment:
@@ -242,133 +315,192 @@ class SetMenuView extends StatelessWidget {
                                                         setMenu
                                                             .setMenuList[index]
                                                             .name,
-                                                        style: rubikMedium.copyWith(
+                                                        style: robotoMedium.copyWith(
                                                             fontSize: Dimensions
                                                                 .FONT_SIZE_LARGE),
                                                         maxLines: 2,
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                       ),
-                                                      RatingBar(
-                                                        rating: setMenu
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          RatingBar(
+                                                            rating: setMenu
+                                                                        .setMenuList[
+                                                                            index]
+                                                                        .rating !=
+                                                                    null
+                                                                ? setMenu
                                                                     .setMenuList[
                                                                         index]
                                                                     .rating
-                                                                    .length >
-                                                                0
-                                                            ? double.parse(
-                                                                setMenu
-                                                                    .setMenuList[
-                                                                        index]
-                                                                    .rating[0]
-                                                                    .average)
-                                                            : 0.0,
-                                                        size: 12,
+                                                                    .average
+                                                                : 0.0,
+                                                            size: 12,
+                                                            color: ColorResources.getGrayColor(context),
+                                                          ),
+                                                          // _discount > 0
+                                                          //     ? SizedBox()
+                                                          //     : GestureDetector(
+                                                          //         onTap: () {
+                                                          //           showModalBottomSheet(
+                                                          //               context:
+                                                          //                   context,
+                                                          //               isScrollControlled:
+                                                          //                   true,
+                                                          //               backgroundColor:
+                                                          //                   Colors
+                                                          //                       .transparent,
+                                                          //               builder: (con) =>
+                                                          //                   CartBottomSheet(
+                                                          //                     product: setMenu.setMenuList[index],
+                                                          //                     fromSetMenu: true,
+                                                          //                     callback: (CartModel cartModel) {
+                                                          //                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('added_to_cart', context)), backgroundColor: ColorResources.getPrimaryColor(context)));
+                                                          //                     },
+                                                          //                   ));
+                                                          //         },
+                                                          //         child:
+                                                          //             Container(
+                                                          //           decoration: BoxDecoration(
+                                                          //               borderRadius:
+                                                          //                   BorderRadius.all(Radius.circular(
+                                                          //                       5)),
+                                                          //               border: Border.all(
+                                                          //                   color:
+                                                          //                       ColorResources.getAccentColor(context))),
+                                                          //           padding:
+                                                          //               EdgeInsets
+                                                          //                   .all(3),
+                                                          //           child: Text(
+                                                          //             'Add',
+                                                          //             style: robotoMedium.copyWith(
+                                                          //                 fontSize:
+                                                          //                     Dimensions.FONT_SIZE_SMALL),
+                                                          //           ),
+                                                          //         )),
+                                                        ],
                                                       ),
                                                     ],
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        EdgeInsets.all(1),
+                                                  ),
+                                                  Text(
+                                                    setMenu.setMenuList[index]
+                                                        .description,
+                                                    style: robotoMedium.copyWith(
+                                                        fontSize: Dimensions
+                                                            .FONT_SIZE_SMALL,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                        color: ColorResources
+                                                            .getGrayColor(
+                                                                context)),
+                                                    maxLines: 2,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                   ),
                                                   SizedBox(
-                                                      height: Dimensions
-                                                          .PADDING_SIZE_EXTRA_SMALL),
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    children: [
-                                                      Flexible(
-                                                        child: Text(
-                                                          '${PriceConverter.convertPrice(context, _startingPrice, discount: setMenu.setMenuList[index].discount, discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}'
-                                                          '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: setMenu.setMenuList[index].discount, discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}' : ''}',
-                                                          style: rubikBold.copyWith(
-                                                              fontSize: Dimensions
-                                                                  .FONT_SIZE_DEFAULT),
-                                                        ),
-                                                      ),
-                                                      _discount > 0
-                                                          ? SizedBox()
-                                                          : GestureDetector(
-                                                              onTap: () {
-                                                                showModalBottomSheet(
-                                                                    context:
-                                                                        context,
-                                                                    isScrollControlled:
-                                                                        true,
-                                                                    backgroundColor:
-                                                                        Colors
-                                                                            .transparent,
-                                                                    builder:
-                                                                        (con) =>
-                                                                            CartBottomSheet(
-                                                                              product: setMenu.setMenuList[index],
-                                                                              fromSetMenu: true,
-                                                                              callback: (CartModel cartModel) {
-                                                                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('added_to_cart', context)), backgroundColor: Colors.green));
-                                                                              },
-                                                                            ));
-                                                              },
-                                                              child: Icon(
-                                                                  Icons
-                                                                      .add_circle_outline_sharp,
-                                                                  color: Theme.of(
-                                                                          context)
-                                                                      .textTheme
-                                                                      .bodyText1
-                                                                      .color),
-                                                            ),
-                                                    ],
-                                                  ),
-                                                  _discount > 0
-                                                      ? Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
+                                                      height: 1.5),
+                                                  SizedBox(
+                                                    width: MediaQuery.of(context).size.width*0.9,
+                                                    child: Row(
+                                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                      children: [
+                                                        Row(
+                                                          mainAxisSize: MainAxisSize.min,
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
-                                                              Flexible(
-                                                                child: Text(
-                                                                  '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
-                                                                  '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                                                                  style: rubikBold
-                                                                      .copyWith(
-                                                                    fontSize:
-                                                                        Dimensions
-                                                                            .FONT_SIZE_EXTRA_SMALL,
-                                                                    color: ColorResources
-                                                                        .COLOR_GREY,
-                                                                    decoration:
-                                                                        TextDecoration
-                                                                            .lineThrough,
+                                                            Flexible(
+                                                              child: Text(
+                                                                '${PriceConverter.convertPrice(context, _startingPrice, discount: setMenu.setMenuList[index].discount, discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}'
+                                                                '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: setMenu.setMenuList[index].discount, discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}' : ''}',
+                                                                style: robotoBold.copyWith(
+                                                                    fontSize: Dimensions
+                                                                        .FONT_SIZE_DEFAULT),
+                                                              ),
+                                                            ),
+                                                            SizedBox(width: 5,),
+                                                            _discount > 0
+                                                                ? Flexible(
+                                                                  child: Text(
+                                                                    '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
+                                                                        '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
+                                                                    style: robotoBold
+                                                                        .copyWith(
+                                                                      fontSize:
+                                                                      Dimensions
+                                                                          .FONT_SIZE_EXTRA_SMALL,
+                                                                      color: ColorResources
+                                                                          .COLOR_GREY,
+                                                                      decoration:
+                                                                      TextDecoration
+                                                                          .lineThrough,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ),
-                                                              GestureDetector(
-                                                                onTap: () {
-                                                                  showModalBottomSheet(
-                                                                      context:
-                                                                          context,
-                                                                      backgroundColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      builder:
-                                                                          (con) =>
-                                                                              CartBottomSheet(
-                                                                                product: setMenu.setMenuList[index],
-                                                                                fromSetMenu: true,
-                                                                                callback: (CartModel cartModel) {
-                                                                                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('added_to_cart', context)), backgroundColor: Colors.green));
-                                                                                },
-                                                                              ));
-                                                                },
-                                                                child: Icon(
-                                                                    Icons
-                                                                        .add_circle_outline_sharp,
-                                                                    color: Theme.of(
-                                                                            context)
-                                                                        .textTheme
-                                                                        .bodyText1
-                                                                        .color),
-                                                              ),
-                                                            ])
-                                                      : SizedBox(),
+                                                                )
+                                                                : SizedBox(),
+                                                          ],
+                                                        ),
+                                                        InkWell(
+                                                            onTap: () {
+                                                              showModalBottomSheet(
+                                                                  context:
+                                                                  context,
+                                                                  backgroundColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                                  builder: (con) =>
+                                                                      CartBottomSheet(
+                                                                        product: setMenu
+                                                                            .setMenuList[
+                                                                        index],
+                                                                        fromSetMenu:
+                                                                        true,
+                                                                        callback:
+                                                                            (CartModel
+                                                                        cartModel) {
+                                                                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                                                              content: Text(getTranslated('added_to_cart',
+                                                                                  context)),
+                                                                              backgroundColor:
+                                                                              Colors.green));
+                                                                        },
+                                                                      ));
+                                                            },
+                                                            child: Card(
+                                                              elevation: 3,
+                                                              // shape: Circular,
+                                                              child: Container(
+                                                                  decoration: BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    // boxShadow: [
+                                                                    //   BoxShadow(
+                                                                    //     color: ColorResources.getGrayColor(context),
+                                                                    //     blurRadius: 10.0,
+                                                                    //   ),
+                                                                    // ]
+                                                                    // border: Border.all(color: ColorResources.getGrayColor(context))
+                                                                  ),
+                                                                  child: Icon(
+                                                                    Icons.add,
+                                                                    color: ColorResources
+                                                                        .getAccentColor(
+                                                                        context),
+                                                                    size: 20,
+                                                                  )),
+                                                            )),
+                                                      ],
+                                                    ),
+                                                  ),
+
                                                 ]),
                                           ),
                                         ),
@@ -379,8 +511,8 @@ class SetMenuView extends StatelessWidget {
                           },
                         )
                       : Center(
-                          child: Text(getTranslated(
-                              'no_set_menu_available', context)))
+                          child: Text(
+                              getTranslated('no_set_menu_available', context)))
                   : SetMenuShimmer(),
             ],
           );
@@ -398,14 +530,14 @@ class SetMenuShimmer extends StatelessWidget {
       // primary: false,
       physics: NeverScrollableScrollPhysics(),
       scrollDirection: Axis.vertical,
-      padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
+      padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL,right: Dimensions.PADDING_SIZE_SMALL),
       itemCount: 10,
       itemBuilder: (context, index) {
         return Container(
           height: 200,
           width: 150,
           margin:
-              EdgeInsets.only(right: Dimensions.PADDING_SIZE_SMALL, bottom: 5),
+              EdgeInsets.only(bottom: 5),
           decoration: BoxDecoration(
               color: ColorResources.COLOR_WHITE,
               borderRadius: BorderRadius.circular(10),
@@ -435,12 +567,16 @@ class SetMenuShimmer extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                            height: 15,
+                            height: 10,
                             width: 130,
                             color: ColorResources.COLOR_WHITE),
                         Align(
                             alignment: Alignment.centerRight,
-                            child: RatingBar(rating: 0.0, size: 12)),
+                            child: RatingBar(
+                                rating: 0.0, 
+                                size: 12,
+                              color: ColorResources.getGrayColor(context),
+                            )),
                         SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

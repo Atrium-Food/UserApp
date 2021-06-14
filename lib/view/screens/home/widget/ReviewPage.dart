@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
@@ -7,9 +8,8 @@ import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/review_widget.dart';
 import 'package:percent_indicator/percent_indicator.dart';
 
-
 class ReviewPage extends StatelessWidget {
-  Product product;
+  final Product product;
   ReviewPage({@required this.product});
   @override
   Widget build(BuildContext context) {
@@ -20,122 +20,135 @@ class ReviewPage extends StatelessWidget {
         children: [
           Center(
             child: Text(
-              '${product.rating.length > 0 ? double.parse(product.rating[0].average).toStringAsFixed(1) : 0.0}',
-              style: rubikRegular.copyWith(color: ColorResources.getAccentColor(context),fontSize: 70)
-            ),
+                '${product.rating != null ? product.rating.average!=null ? product.rating.average.toStringAsFixed(1):0.0 : 0.0}',
+                style: robotoRegular.copyWith(
+                    color: ColorResources.getAccentColor(context),
+                    fontSize: 70)),
           ),
           SizedBox(
             height: 5,
           ),
           Center(
             child: RatingBar(
-                rating: product.rating.length > 0
-                    ? double.parse(product.rating[0].average)
-                    : 0.0,
-                size: 20,
+              rating: product.rating != null
+                  ? product.rating.average ?? 0
+                  : 0.0,
+              size: 20,
             ),
           ),
           SizedBox(
             height: 5,
           ),
-          Center(child: Text('Based on ${product.rating.length} ratings')),
+          Center(
+              child:  Text('Based on ${product.rating?.countTotalRating ?? 0} ratings',style: robotoRegular.copyWith(color: Colors.white),)),
           SizedBox(
             height: 15.0,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Excellent',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: robotoRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
                 animationDuration: 2500,
-                percent: 0.8,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[4]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Good',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: robotoRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
                 animationDuration: 2500,
-                percent: 0.4,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[3]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.green,
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Average',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: robotoRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
-                percent: 0.8,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[2]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.yellow,
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Below Average',
-                textAlign: TextAlign.end,style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                textAlign: TextAlign.end,
+                style: robotoRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
-                percent: 0.6,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[1]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.orange,
               ),
             ],
           ),
-          SizedBox(
+          if(product.rating!=null)SizedBox(
             height: 10,
           ),
-          Row(
+          if(product.rating!=null)Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 'Poor',
                 textAlign: TextAlign.end,
-                style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL,color: ColorResources.getGreyBunkerColor(context)),
+                style: robotoRegular.copyWith(
+                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                    color: ColorResources.getGreyBunkerColor(context)),
               ),
               new LinearPercentIndicator(
                 width: MediaQuery.of(context).size.width - 150,
                 lineHeight: 16.0,
                 animationDuration: 2500,
-                percent: 0.7,
+                percent: product.rating.countTotalRating!=0?product.rating.countRating[0]/product.rating.countTotalRating:0,
                 linearStrokeCap: LinearStrokeCap.roundAll,
                 progressColor: Colors.red,
               ),
@@ -144,14 +157,19 @@ class ReviewPage extends StatelessWidget {
           SizedBox(
             height: 30,
           ),
-          ListView.builder(
-            shrinkWrap: true,
+          if(product.reviews!=null)ListView.builder(
+              shrinkWrap: true,
               physics: ClampingScrollPhysics(),
-              itemCount: 2,
-              itemBuilder: (context,index){
-              return ReviewWidget();
-              }
-          )
+              itemCount: product.reviews.length,
+              itemBuilder: (context, index) {
+                // Map<String, dynamic> json = {
+                //   'product_id': 1,
+                //   'comment':
+                //       'Lovely lunch today. Ordered the food without much expectations from myself as in the end I was the one who had to cook, but in the end everything turned out to be great. The chef who was guiding me through the whole session was so calm and he motivated me to cook. Giving a four so that I can improve myself and cook better next time. Hoping to update the review soon.',
+                //   'rating': 3,
+                // };
+                return ReviewWidget(review: product.reviews[index]);
+              })
         ],
       ),
     );

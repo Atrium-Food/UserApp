@@ -25,7 +25,7 @@ class ProductDescriptionWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     double _startingPrice;
     double _endingPrice;
-    if (product.choiceOptions.length != 0) {
+    if (product.choiceOptions != null && product.choiceOptions.length != 0) {
       List<double> _priceList = [];
       product.variations
           .forEach((variation) => _priceList.add(variation.price));
@@ -82,7 +82,7 @@ class ProductDescriptionWidget extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: Colors.grey[
-              Provider.of<ThemeProvider>(context).darkTheme ? 700 : 300],
+                  Provider.of<ThemeProvider>(context).darkTheme ? 700 : 300],
               blurRadius: 5,
               spreadRadius: 1,
             )
@@ -96,36 +96,38 @@ class ProductDescriptionWidget extends StatelessWidget {
                 child: FadeInImage.assetNetwork(
                   placeholder: Images.placeholder_image,
                   image:
-                  '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                      '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                      StackTrace stackTrace) {
+                    return Image.asset(Images.placeholder_image,
+                        fit: BoxFit.contain);
                   },
                   height: 70,
                   width: 85,
                   fit: BoxFit.cover,
                 ),
               ),
-              _isAvailable
-                  ? SizedBox()
-                  : Positioned(
-                top: 0,
-                left: 0,
-                bottom: 0,
-                right: 0,
-                child: Container(
-                  alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Colors.black.withOpacity(0.6)),
-                  child: Text(
-                      getTranslated('not_available_now_break', context),
-                      textAlign: TextAlign.center,
-                      style: rubikRegular.copyWith(
-                        color: Colors.white,
-                        fontSize: 8,
-                      )),
-                ),
-              ),
+              // _isAvailable
+              //     ? SizedBox()
+              //     : Positioned(
+              //   top: 0,
+              //   left: 0,
+              //   bottom: 0,
+              //   right: 0,
+              //   child: Container(
+              //     alignment: Alignment.center,
+              //     decoration: BoxDecoration(
+              //         borderRadius: BorderRadius.circular(10),
+              //         color: Colors.black.withOpacity(0.6)),
+              //     child: Text(
+              //         getTranslated('not_available_now_break', context),
+              //         textAlign: TextAlign.center,
+              //         style: robotoRegular.copyWith(
+              //           color: Colors.white,
+              //           fontSize: 8,
+              //         )),
+              //   ),
+              // ),
             ],
           ),
           SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
@@ -135,14 +137,16 @@ class ProductDescriptionWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(product.name,
-                      style: rubikMedium,
+                      style: robotoMedium,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis),
                   SizedBox(height: 5.0),
-                  product.description!=null ? Text(product.description,
-                      style: rubikRegular.copyWith(fontSize: 12),
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis):Text(''),
+                  product.description != null
+                      ? Text(product.description,
+                          style: robotoRegular.copyWith(fontSize: 12),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis)
+                      : Text(''),
                 ]),
           ),
           Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
@@ -157,7 +161,7 @@ class ProductDescriptionWidget extends StatelessWidget {
                       callback: (CartModel cartModel) {
                         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:
-                            Text(getTranslated('added_to_cart', context)),
+                                Text(getTranslated('added_to_cart', context)),
                             backgroundColor: Colors.green));
                       },
                     ),
@@ -167,19 +171,19 @@ class ProductDescriptionWidget extends StatelessWidget {
             Expanded(child: SizedBox()),
             Text(
               '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
-                  '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
-              style: rubikMedium.copyWith(
-                  fontSize: Dimensions.FONT_SIZE_SMALL),
+              '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
+              style:
+                  robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
             ),
             product.price > _discountedPrice
                 ? Text(
-                '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
+                    '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
                     '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                style: rubikMedium.copyWith(
-                  color: ColorResources.COLOR_GREY,
-                  decoration: TextDecoration.lineThrough,
-                  fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
-                ))
+                    style: robotoMedium.copyWith(
+                      color: ColorResources.COLOR_GREY,
+                      decoration: TextDecoration.lineThrough,
+                      fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                    ))
                 : SizedBox(),
           ]),
         ]),

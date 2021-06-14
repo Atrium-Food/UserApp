@@ -29,7 +29,7 @@ class BannerView extends StatelessWidget {
         ),
 
         SizedBox(
-          height: 85,
+          height: 160,
           child: Consumer<BannerProvider>(
             builder: (context, banner, child) {
               return banner.bannerList != null ? banner.bannerList.length > 0 ? ListView.builder(
@@ -39,6 +39,7 @@ class BannerView extends StatelessWidget {
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) {
                   return InkWell(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                     onTap: () {
                       if(banner.bannerList[index].productId != null) {
                         Product product;
@@ -91,7 +92,10 @@ class BannerView extends StatelessWidget {
                         child: FadeInImage.assetNetwork(
                           placeholder: Images.placeholder_banner,
                           image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.bannerImageUrl}/${banner.bannerList[index].image}',
-                          width: 250, height: 85, fit: BoxFit.cover,
+                          width: 240, height: 160, fit: BoxFit.cover,
+                          imageErrorBuilder: (context, image, StackTrace trace){
+                            return Image.asset(Images.placeholder_banner,width: 250, height: 120, fit: BoxFit.cover,);
+                          },
                         ),
                       ),
                     ),

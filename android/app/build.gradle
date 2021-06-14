@@ -45,8 +45,8 @@ android {
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "com.u6amtech.flutter_restaurant"
-        minSdkVersion 16
+        applicationId "com.atrium.foods"
+        minSdkVersion 21
         targetSdkVersion 29
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -68,6 +68,8 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+            shrinkResources false
+            minifyEnabled false
         }
         debug{
             signingConfig signingConfigs.debug
@@ -81,5 +83,6 @@ flutter {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation 'com.google.firebase:firebase-bom:28.1.0'
     implementation "com.google.firebase:firebase-messaging:21.0.1"
 }

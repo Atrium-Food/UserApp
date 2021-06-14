@@ -86,7 +86,9 @@ class SetMenuScreen extends StatelessWidget {
                               image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${setMenu.setMenuList[index].image}',
                               height: 110, width: MediaQuery.of(context).size.width/2, fit: BoxFit.cover,
                               imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                return Image.asset(Images.placeholder_banner, fit: BoxFit.contain);
+                                return Image.asset(Images.placeholder_banner,
+                                  height: 110, width: MediaQuery.of(context).size.width/2, fit: BoxFit.cover,
+                                );
                               },
                             ),
                           ),
@@ -98,7 +100,7 @@ class SetMenuScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
                                 color: Colors.black.withOpacity(0.6),
                               ),
-                              child: Text(getTranslated('not_available_now', context), textAlign: TextAlign.center, style: rubikRegular.copyWith(
+                              child: Text(getTranslated('not_available_now', context), textAlign: TextAlign.center, style: robotoRegular.copyWith(
                                 color: Colors.white, fontSize: Dimensions.FONT_SIZE_SMALL,
                               )),
                             ),
@@ -112,13 +114,13 @@ class SetMenuScreen extends StatelessWidget {
                           child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
                             Text(
                               setMenu.setMenuList[index].name,
-                              style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+                              style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                               maxLines: 2, overflow: TextOverflow.ellipsis,
                             ),
                             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
                             RatingBar(
-                              rating: setMenu.setMenuList[index].rating.length > 0 ? double.parse(setMenu.setMenuList[index].rating[0].average) : 0.0,
+                              rating: setMenu.setMenuList[index].rating!=null ? setMenu.setMenuList[index].rating.average : 0.0,
                               size: 12,
                             ),
                             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -131,7 +133,7 @@ class SetMenuScreen extends StatelessWidget {
                                       discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}''${_endingPrice!= null
                                       ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: setMenu.setMenuList[index].discount,
                                       discountType: setMenu.setMenuList[index].discountType, asFixed: 1)}' : ''}',
-                                  style: rubikBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
+                                  style: robotoBold.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL),
                                 ),
                                 _discount > 0 ? SizedBox() : Icon(Icons.add, color: Theme.of(context).textTheme.bodyText1.color),
                               ],
@@ -140,7 +142,7 @@ class SetMenuScreen extends StatelessWidget {
                               Text(
                                 '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
                                     '${_endingPrice!= null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                                style: rubikBold.copyWith(
+                                style: robotoBold.copyWith(
                                   fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
                                   color: ColorResources.getGreyColor(context),
                                   decoration: TextDecoration.lineThrough,

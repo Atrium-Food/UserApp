@@ -38,7 +38,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       Row(children: [
         Text(
           'Ingredient1',
-          style: rubikRegular,
+          style: robotoRegular,
         ),
         Expanded(child: SizedBox()),
         Container(
@@ -56,7 +56,7 @@ class CartBottomSheetScreen extends StatelessWidget {
               ),
             ),
             Text('1',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
             InkWell(
               onTap: () {},
@@ -73,7 +73,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       Row(children: [
         Text(
           'Ingredient2',
-          style: rubikRegular,
+          style: robotoRegular,
         ),
         Expanded(child: SizedBox()),
         Container(
@@ -91,7 +91,7 @@ class CartBottomSheetScreen extends StatelessWidget {
               ),
             ),
             Text('1',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
             InkWell(
               onTap: () {},
@@ -108,7 +108,7 @@ class CartBottomSheetScreen extends StatelessWidget {
       Row(children: [
         Text(
           'Ingredient3',
-          style: rubikRegular,
+          style: robotoRegular,
         ),
         Expanded(child: SizedBox()),
         Container(
@@ -126,7 +126,7 @@ class CartBottomSheetScreen extends StatelessWidget {
               ),
             ),
             Text('1',
-                style: rubikMedium.copyWith(
+                style: robotoMedium.copyWith(
                     fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
             InkWell(
               onTap: () {},
@@ -289,13 +289,13 @@ class CartBottomSheetScreen extends StatelessWidget {
                                   product.name,
                                   maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
-                                  style: rubikMedium.copyWith(
+                                  style: robotoMedium.copyWith(
                                       fontSize: Dimensions.FONT_SIZE_LARGE),
                                 ),
                                 RatingBar(
-                                    rating: product.rating.length > 0
-                                        ? double.parse(
-                                            product.rating[0].average)
+                                    rating: product.rating != null
+                                        ?
+                                            product.rating.average
                                         : 0.0,
                                     size: 15),
                                 SizedBox(height: 10),
@@ -306,7 +306,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                                     Text(
                                       '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType)}'
                                       '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType)}' : ''}',
-                                      style: rubikMedium.copyWith(
+                                      style: robotoMedium.copyWith(
                                           fontSize: Dimensions.FONT_SIZE_LARGE),
                                     ),
                                     price == priceWithDiscount
@@ -347,7 +347,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                                             Text(
                                               '${PriceConverter.convertPrice(context, _startingPrice)}'
                                               '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice)}' : ''}',
-                                              style: rubikMedium.copyWith(
+                                              style: robotoMedium.copyWith(
                                                   color:
                                                       ColorResources.COLOR_GREY,
                                                   decoration: TextDecoration
@@ -390,7 +390,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                       // Quantity
                       Row(children: [
                         Text(getTranslated('quantity', context),
-                            style: rubikMedium.copyWith(
+                            style: robotoMedium.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_LARGE)),
                         Expanded(child: SizedBox()),
                         Container(
@@ -413,7 +413,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                               ),
                             ),
                             Text(productProvider.quantity.toString(),
-                                style: rubikMedium.copyWith(
+                                style: robotoMedium.copyWith(
                                     fontSize:
                                         Dimensions.FONT_SIZE_EXTRA_LARGE)),
                             InkWell(
@@ -441,7 +441,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(product.choiceOptions[index].title,
-                                    style: rubikMedium.copyWith(
+                                    style: robotoMedium.copyWith(
                                         fontSize: Dimensions.FONT_SIZE_LARGE)),
                                 SizedBox(
                                     height:
@@ -492,7 +492,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                                               .trim(),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: rubikRegular.copyWith(
+                                          style: robotoRegular.copyWith(
                                             color: productProvider
                                                             .variationIndex[
                                                         index] !=
@@ -522,7 +522,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                   Text(getTranslated('description', context),
-                                      style: rubikMedium.copyWith(
+                                      style: robotoMedium.copyWith(
                                           fontSize:
                                               Dimensions.FONT_SIZE_LARGE)),
                                   SizedBox(
@@ -531,7 +531,7 @@ class CartBottomSheetScreen extends StatelessWidget {
 
                                   /// split description by a comma, display items in a list
                                   Text(product.description ?? '',
-                                      style: rubikRegular),
+                                      style: robotoRegular),
                                   SizedBox(
                                       height: Dimensions.PADDING_SIZE_LARGE),
                                 ])
@@ -540,7 +540,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                       //Ingredients
 
                       Text('Ingredients',
-                          style: rubikMedium.copyWith(
+                          style: robotoMedium.copyWith(
                               fontSize: Dimensions.FONT_SIZE_LARGE)),
 
                       SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -572,7 +572,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                   Text(getTranslated('addons', context),
-                                      style: rubikMedium.copyWith(
+                                      style: robotoMedium.copyWith(
                                           fontSize:
                                               Dimensions.FONT_SIZE_LARGE)),
                                   SizedBox(
@@ -656,7 +656,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                                                       textAlign:
                                                           TextAlign.center,
                                                       style:
-                                                          rubikMedium.copyWith(
+                                                          robotoMedium.copyWith(
                                                         color: productProvider
                                                                     .addOnActiveList[
                                                                 index]
@@ -676,7 +676,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                                                     maxLines: 1,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    style: rubikRegular.copyWith(
+                                                    style: robotoRegular.copyWith(
                                                         color: productProvider
                                                                     .addOnActiveList[
                                                                 index]
@@ -734,7 +734,7 @@ class CartBottomSheetScreen extends StatelessWidget {
                                                                   .addOnQtyList[
                                                                       index]
                                                                   .toString(),
-                                                              style: rubikMedium
+                                                              style: robotoMedium
                                                                   .copyWith(
                                                                       fontSize:
                                                                           Dimensions
@@ -769,13 +769,13 @@ class CartBottomSheetScreen extends StatelessWidget {
 
                       Row(children: [
                         Text('${getTranslated('total_amount', context)}:',
-                            style: rubikMedium.copyWith(
+                            style: robotoMedium.copyWith(
                                 fontSize: Dimensions.FONT_SIZE_LARGE)),
                         SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                         Text(
                             PriceConverter.convertPrice(
                                 context, priceWithAddons),
-                            style: rubikBold.copyWith(
+                            style: robotoBold.copyWith(
                               color: ColorResources.COLOR_PRIMARY,
                               fontSize: Dimensions.FONT_SIZE_LARGE,
                             )),
@@ -817,14 +817,14 @@ class CartBottomSheetScreen extends StatelessWidget {
                               child: Column(children: [
                                 Text(
                                     getTranslated('not_available_now', context),
-                                    style: rubikMedium.copyWith(
+                                    style: robotoMedium.copyWith(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: Dimensions.FONT_SIZE_LARGE,
                                     )),
                                 Text(
                                   '${getTranslated('available_will_be', context)} ${DateConverter.convertTimeToTime(product.availableTimeStarts)} '
                                   '- ${DateConverter.convertTimeToTime(product.availableTimeEnds)}',
-                                  style: rubikRegular,
+                                  style: robotoRegular,
                                 ),
                               ]),
                             ),

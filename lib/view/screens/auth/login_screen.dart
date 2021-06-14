@@ -7,12 +7,16 @@ import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
+import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/custom_text_field.dart';
+import 'package:flutter_restaurant/view/screens/auth/create_account_screen.dart';
+import 'package:flutter_restaurant/view/screens/auth/mobile_otp_Screen.dart';
 import 'package:flutter_restaurant/view/screens/auth/signup_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter_restaurant/view/screens/forgot_password/forgot_password_screen.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -26,6 +30,8 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController _emailController;
   TextEditingController _passwordController;
   GlobalKey<FormState> _formKeyLogin;
+  String _passwordError = '';
+  String _emailError = '';
 
   @override
   void initState() {
@@ -54,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/image/Ellipse8.png"),
+            image: AssetImage("assets/image/Ellipse9.png"),
             alignment: AlignmentDirectional.topCenter,
             scale: 1,
           ),
@@ -67,19 +73,30 @@ class _LoginScreenState extends State<LoginScreen> {
               child: ListView(
                 physics: BouncingScrollPhysics(),
                 children: [
+                  SizedBox(
+                    height: 30,
+                  ),
                   Text(
-                    'Welcome Back!',
+                    'Welcome',
                     maxLines: 2,
-                    style: TextStyle(
-                        fontSize: 40,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                    style: robotoBold.copyWith(
+                        fontSize: 35,
+                        color: ColorResources.getBackgroundColor(context),
+                        fontWeight: FontWeight.w600),
+                  ),
+                  Text(
+                    'Back!',
+                    maxLines: 2,
+                    style: robotoBold.copyWith(
+                        fontSize: 35,
+                        color: ColorResources.getBackgroundColor(context),
+                        fontWeight: FontWeight.w600),
                   ),
 
                   Text(
                     'Hey, we are happy to have you.',
                     style: TextStyle(
-                      color: ColorResources.COLOR_WHITE,
+                      color: ColorResources.getBackgroundColor(context),
                     ),
                   ),
                   SizedBox(
@@ -91,24 +108,24 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   Text(
                     getTranslated('login', context),
-                    style: Theme.of(context).textTheme.headline3.copyWith(
-                        fontSize: 24,
-                        color: ColorResources.COLOR_WHITE,
-                        fontWeight: FontWeight.bold),
+                    style: robotoBold.copyWith(
+                        fontSize: 25,
+                        color: ColorResources.getBackgroundColor(context),
+                        fontWeight: FontWeight.w600),
                   ),
 
                   SizedBox(height: 30.0),
 
                   Container(
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorResources.getBackgroundColor(context),
                       borderRadius: BorderRadius.all(Radius.circular(20)),
                       boxShadow: [
                         BoxShadow(
                           color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 7,
-                          offset: Offset(0, 3), // changes position of shadow
+                          spreadRadius: 2,
+                          blurRadius: 2,
+                          offset: Offset(1, 1), // changes position of shadow
                         ),
                       ],
                     ),
@@ -121,6 +138,9 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           'Please fill your valid info',
                           style: TextStyle(
@@ -130,6 +150,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           textAlign: TextAlign.start,
                         ),
                         CustomTextField(
+                          errorMessage: _emailError,
                           hintText: getTranslated('demo_gmail', context),
                           isShowBorder: true,
                           focusNode: _emailNumberFocus,
@@ -144,6 +165,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                         CustomTextField(
                           hintText: getTranslated('password_hint', context),
+                          errorMessage: _passwordError,
                           isShowBorder: true,
                           isPassword: true,
                           isShowSuffixIcon: true,
@@ -236,9 +258,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             authProvider.loginErrorMessage.length > 0
                                 ? CircleAvatar(
-                                    backgroundColor:
-                                        ColorResources.getPrimaryColor(context),
-                                    radius: 5)
+                                    backgroundColor: Colors.red, radius: 5)
                                 : SizedBox.shrink(),
                             SizedBox(width: 8),
                             Expanded(
@@ -249,8 +269,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     .headline2
                                     .copyWith(
                                       fontSize: Dimensions.FONT_SIZE_SMALL,
-                                      color: ColorResources.getPrimaryColor(
-                                          context),
+                                      color: Colors.red,
                                     ),
                               ),
                             )
@@ -261,56 +280,82 @@ class _LoginScreenState extends State<LoginScreen> {
                             ? CustomButton(
                                 btnTxt: getTranslated('login', context),
                                 onTap: () async {
-                                  String _email = _emailController.text.trim();
-                                  String _password =
-                                      _passwordController.text.trim();
-                                  if (_email.isEmpty) {
-                                    showCustomSnackBar(
-                                        getTranslated(
-                                            'enter_email_address', context),
-                                        context);
-                                  } else if (EmailChecker.isNotValid(_email)) {
-                                    showCustomSnackBar(
-                                        getTranslated(
-                                            'enter_valid_email', context),
-                                        context);
-                                  } else if (_password.isEmpty) {
-                                    showCustomSnackBar(
-                                        getTranslated(
-                                            'enter_password', context),
-                                        context);
-                                  } else if (_password.length < 6) {
-                                    showCustomSnackBar(
-                                        getTranslated(
-                                            'password_should_be', context),
-                                        context);
-                                  } else {
-                                    authProvider
-                                        .login(_email, _password)
-                                        .then((status) async {
-                                      if (status.isSuccess) {
-                                        if (authProvider.isActiveRememberMe) {
-                                          authProvider
-                                              .saveUserNumberAndPassword(
-                                                  _email, _password);
-                                        } else {
-                                          authProvider
-                                              .clearUserNumberAndPassword();
-                                        }
-
-                                        await Provider.of<WishListProvider>(
-                                                context,
-                                                listen: false)
-                                            .initWishList(context);
-                                        Navigator.pushAndRemoveUntil(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (_) =>
-                                                    DashboardScreen()),
-                                            (route) => false);
+                                  setState(() {
+                                    String _email =
+                                        _emailController.text.trim();
+                                    String _password =
+                                        _passwordController.text.trim();
+                                    if (_email.isEmpty ||
+                                        EmailChecker.isNotValid(_email) ||
+                                        _password.isEmpty ||
+                                        _password.length < 6) {
+                                      if (_email.isEmpty) {
+                                        _emailError = 'required';
+                                      } else if (EmailChecker.isNotValid(
+                                          _email)) {
+                                        _emailError = getTranslated(
+                                            'enter_valid_email', context);
+                                      } else {
+                                        _emailError = '';
                                       }
-                                    });
-                                  }
+
+                                      // if (EmailChecker.isNotValid(_email)) {
+                                      //   // showCustomSnackBar(
+                                      //   //     getTranslated(
+                                      //   //         'enter_valid_email', context),
+                                      //   //     context);
+                                      //   _emailValidate = true;
+                                      // }
+                                      if (_password.isEmpty) {
+                                        _passwordError = getTranslated(
+                                            'enter_password', context);
+                                        // showCustomSnackBar(
+                                        //     getTranslated(
+                                        //         'enter_password', context),
+                                        //     context);
+                                      } else if (_password.length < 6) {
+                                        _passwordError = getTranslated(
+                                            'password_should_be', context);
+                                      } else
+                                        _passwordError = '';
+                                    }
+                                    // if (_password.length < 6) {
+                                    //   // showCustomSnackBar(
+                                    //   //     getTranslated(
+                                    //   //         'password_should_be', context),
+                                    //   //     context);
+                                    //   _passwordValidate = true;
+                                    // }
+                                    else {
+                                      _emailError = '';
+                                      _passwordError = '';
+                                      authProvider
+                                          .login(_email, _password)
+                                          .then((status) async {
+                                        if (status.isSuccess) {
+                                          if (authProvider.isActiveRememberMe) {
+                                            authProvider
+                                                .saveUserNumberAndPassword(
+                                                    _email, _password);
+                                          } else {
+                                            authProvider
+                                                .clearUserNumberAndPassword();
+                                          }
+
+                                          await Provider.of<WishListProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .initWishList(context);
+                                          Navigator.pushAndRemoveUntil(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (_) =>
+                                                      DashboardScreen()),
+                                              (route) => false);
+                                        }
+                                      });
+                                    }
+                                  });
                                 },
                               )
                             : Center(
@@ -321,10 +366,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
                         // for create an account
                         SizedBox(height: 30),
+                        // Center(
+                        //   child: GestureDetector(
+                        //     onTap: () {
+                        //       Navigator.push(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (context) => MobileOTP()));
+                        //     },
+                        //     child: Text(
+                        //       'Login using OTP',
+                        //       style: Theme.of(context)
+                        //           .textTheme
+                        //           .headline3
+                        //           .copyWith(
+                        //               fontSize: Dimensions.FONT_SIZE_SMALL,
+                        //               color: ColorResources.getGreyBunkerColor(
+                        //                   context)),
+                        //     ),
+                        //   ),
+                        // ),
+                        // SizedBox(
+                        //   height: 20,
+                        // ),
                         InkWell(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (_) => SignUpScreen()));
+                                builder: (_) => CreateAccountScreen()));
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -354,6 +422,85 @@ class _LoginScreenState extends State<LoginScreen> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Center(
+                          child: Text(
+                            'or',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3
+                                .copyWith(
+                                    fontSize: Dimensions.FONT_SIZE_SMALL,
+                                    color: ColorResources.getGreyBunkerColor(
+                                        context)),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        CustomButton(
+                          onTap: () {
+
+                          },
+                          inactiveColor: ColorResources.COLOR_WHITE,
+                          btnTxt: 'NA',
+                          child: Container(
+                            padding:
+                                EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(Images.google_logo),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  'Sign in with Google',
+                                  style: TextStyle(
+                                    color:
+                                        ColorResources.getThemeColor(context),
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        // Center(
+                        //   child: TextButton(
+                        //     style: TextButton.styleFrom(
+                        //       minimumSize: Size(1, 40),
+                        //     ),
+                        //     onPressed: () {
+                        //       Navigator.pushReplacement(
+                        //           context,
+                        //           MaterialPageRoute(
+                        //               builder: (_) => DashboardScreen()));
+                        //     },
+                        //     child: RichText(
+                        //         text: TextSpan(children: [
+                        //       TextSpan(
+                        //           text:
+                        //               '${getTranslated('login_as_a', context)} ',
+                        //           style: robotoRegular.copyWith(
+                        //               color: ColorResources.getGreyColor(
+                        //                   context))),
+                        //       TextSpan(
+                        //           text: getTranslated('guest', context),
+                        //           style: robotoMedium.copyWith(
+                        //               color: Theme.of(context)
+                        //                   .textTheme
+                        //                   .bodyText1
+                        //                   .color)),
+                        //     ])),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

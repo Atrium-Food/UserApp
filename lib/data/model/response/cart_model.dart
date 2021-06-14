@@ -11,14 +11,14 @@ class CartModel {
   Product _product;
 
   CartModel(
-        double price,
-        double discountedPrice,
-        List<Variation> variation,
-        double discountAmount,
-        int quantity,
-        double taxAmount,
-        List<AddOn> addOnIds,
-        Product product) {
+      double price,
+      double discountedPrice,
+      List<Variation> variation,
+      double discountAmount,
+      int quantity,
+      double taxAmount,
+      List<AddOn> addOnIds,
+      Product product) {
     this._price = price;
     this._discountedPrice = discountedPrice;
     this._variation = variation;

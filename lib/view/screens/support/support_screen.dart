@@ -8,6 +8,7 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/screens/chat/chat_screen.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -19,22 +20,22 @@ class SupportScreen extends StatelessWidget {
       body: ListView(
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           children: [
-            Image.asset(Images.customer_support),
+            SvgPicture.asset(Images.customer_support),
             SizedBox(height: 20),
 
             // Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             //   Icon(Icons.location_on, color: Theme.of(context).primaryColor, size: 25),
-            //   Text(getTranslated('restaurant_address', context), style: rubikMedium),
+            //   Text(getTranslated('restaurant_address', context), style: robotoMedium),
             // ]),
             // SizedBox(height: 10),
             Text(
               'How can we help you?',
-              style: rubikMedium,
+              style: robotoMedium,
               textAlign: TextAlign.center,
             ),
             Text(
               'Feel free to ask help from our expert chefs',
-              style: rubikRegular,
+              style: robotoRegular,
               textAlign: TextAlign.center,
             ),
             // Divider(thickness: 2),
@@ -60,7 +61,7 @@ class SupportScreen extends StatelessWidget {
                       ),
                       Text(
                         'Call us',
-                        style: rubikRegular.copyWith(
+                        style: robotoRegular.copyWith(
                             fontSize: Dimensions.FONT_SIZE_DEFAULT),
                       ),
                     ],
@@ -90,8 +91,8 @@ class SupportScreen extends StatelessWidget {
                         color: ColorResources.getPrimaryColor(context),
                       ),
                       Text(
-                        'Call us',
-                        style: rubikRegular.copyWith(
+                        'Chat with us',
+                        style: robotoRegular.copyWith(
                             fontSize: Dimensions.FONT_SIZE_DEFAULT),
                       ),
                     ],

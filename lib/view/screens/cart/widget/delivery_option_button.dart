@@ -28,11 +28,11 @@ class DeliveryOptionButton extends StatelessWidget {
               ),
               SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
 
-              Text(title, style: rubikRegular),
+              Text(title, style: robotoRegular),
               SizedBox(width: 5),
 
               Text('(${value == 'delivery' ? PriceConverter.convertPrice(context, double.parse(Provider.of<SplashProvider>(context, listen: false)
-                  .configModel.deliveryCharge)) : getTranslated('free', context)})', style: rubikMedium),
+                  .configModel.deliveryCharge)) : getTranslated('free', context)})', style: robotoMedium),
 
             ],
           ),

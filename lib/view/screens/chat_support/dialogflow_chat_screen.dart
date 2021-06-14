@@ -79,12 +79,12 @@ class _DialogFlowChatScreenState extends State<DialogFlowChatScreen> {
                       child: TextField(
                         controller: _controller,
                         textCapitalization: TextCapitalization.sentences,
-                        style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+                        style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
                         keyboardType: TextInputType.multiline,
                         maxLines: null,
                         decoration: InputDecoration(
                           hintText: getTranslated('type_message_here', context),
-                          hintStyle: rubikRegular.copyWith(color: ColorResources.getGreyBunkerColor(context), fontSize: Dimensions.FONT_SIZE_LARGE),
+                          hintStyle: robotoRegular.copyWith(color: ColorResources.getGreyBunkerColor(context), fontSize: Dimensions.FONT_SIZE_LARGE),
                         ),
                         onChanged: (String newText) {
                           // if(newText.isNotEmpty && !Provider.of<ChatProvider>(context, listen: false).isSendButtonActive) {

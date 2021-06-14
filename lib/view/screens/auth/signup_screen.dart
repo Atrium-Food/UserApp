@@ -26,7 +26,7 @@ class SignUpScreen extends StatelessWidget {
       body: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/image/Ellipse8.png"),
+            image: AssetImage("assets/image/Ellipse10.png"),
             alignment: AlignmentDirectional.topCenter,
             scale: 1,
           ),
@@ -37,6 +37,9 @@ class SignUpScreen extends StatelessWidget {
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [
+                SizedBox(
+                  height: 10,
+                ),
                 Align(
                   alignment: Alignment.topLeft,
                   child: GestureDetector(
@@ -60,7 +63,7 @@ class SignUpScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.5,
                   child: Text(
-                    'Would love to have to on board',
+                    'Would love to have to on board!',
                     maxLines: 2,
                     textAlign: TextAlign.start,
                     style: TextStyle(
@@ -70,13 +73,13 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
 
-                SizedBox(height: 80),
+                SizedBox(height: 120),
                 Text(
                   getTranslated('signup', context),
                   style: Theme.of(context).textTheme.headline3.copyWith(
                       fontSize: 24, color: ColorResources.COLOR_WHITE),
                 ),
-                SizedBox(height: 80),
+                SizedBox(height: 40),
 
                 Container(
                   decoration: BoxDecoration(
@@ -100,6 +103,9 @@ class SignUpScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Enter your email to proceed',
                         style: TextStyle(
@@ -167,7 +173,7 @@ class SignUpScreen extends StatelessWidget {
                                             MaterialPageRoute(
                                                 builder: (_) =>
                                                     VerificationScreen(
-                                                        emailAddress: _email,
+                                                        contact: _email,
                                                         fromSignUp: true)));
                                       } else {
                                         Navigator.of(context).push(

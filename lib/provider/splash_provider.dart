@@ -33,7 +33,7 @@ class SplashProvider extends ChangeNotifier {
         _error = apiResponse.error.errors[0].message;
       }
       print(_error);
-      globalKey.currentState.showSnackBar(SnackBar(content: Text(_error), backgroundColor: Colors.red));
+      globalKey.currentState?.showSnackBar(SnackBar(content: Text(_error), backgroundColor: Colors.red));
     }
     return isSuccess;
   }

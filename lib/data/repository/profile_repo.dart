@@ -60,5 +60,13 @@ class ProfileRepo{
     return response;
   }
 
+  Future<ApiResponse> addCardProfile(CardModel cardModel) async {
+    try {
+      final response = await dioClient.post(AppConstants.ADD_CARD_URI, data: cardModel.toJson());
+      return ApiResponse.withSuccess(response);
+    } catch (e) {
+      return ApiResponse.withError(ApiErrorHandler.getMessage(e));
+    }
+  }
 
 }

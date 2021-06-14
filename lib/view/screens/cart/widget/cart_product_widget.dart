@@ -4,6 +4,7 @@ import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
+import 'package:flutter_restaurant/provider/coupon_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
@@ -34,7 +35,7 @@ class CartProductWidget extends StatelessWidget {
             cartIndex: cartIndex,
             cart: cart,
             callback: (CartModel cartModel) {
-              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('updated_in_cart', context)), backgroundColor: Colors.green));
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(getTranslated('updated_in_cart', context)), backgroundColor: ColorResources.getPrimaryColor(context)));
             },
           ),
         );
@@ -62,7 +63,6 @@ class CartProductWidget extends StatelessWidget {
               ),
               child: Column(
                 children: [
-
                   Row(children: [
                     Stack(
                       children: [
@@ -73,7 +73,9 @@ class CartProductWidget extends StatelessWidget {
                             image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${cart.product.image}',
                             height: 70, width: 85, fit: BoxFit.cover,
                             imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                              return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                              return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                                height: 70, width: 85
+                              );
                             },
                           ),
                         ),
@@ -82,7 +84,7 @@ class CartProductWidget extends StatelessWidget {
                           child: Container(
                             alignment: Alignment.center,
                             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.black.withOpacity(0.6)),
-                            child: Text(getTranslated('not_available_now_break', context), textAlign: TextAlign.center, style: rubikRegular.copyWith(
+                            child: Text(getTranslated('not_available_now_break', context), textAlign: TextAlign.center, style: robotoRegular.copyWith(
                               color: Colors.white, fontSize: 8,
                             )),
                           ),
@@ -93,20 +95,20 @@ class CartProductWidget extends StatelessWidget {
 
                     Expanded(
                       child: Column(crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.center, children: [
-                        Text(cart.product.name, style: rubikMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                        Text(cart.product.name, style: robotoMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                         SizedBox(height: 2),
-                        RatingBar(rating: cart.product.rating.length > 0 ? double.parse(cart.product.rating[0].average) : 0.0, size: 12),
+                        RatingBar(rating: cart.product.rating!=null ? cart.product.rating.average ?? 0.0 : 0.0, size: 12),
                         SizedBox(height: 5),
                         Row(children: [
                           Flexible(
                             child: Text(
                               PriceConverter.convertPrice(context, cart.discountedPrice),
-                              style: rubikBold,
+                              style: robotoBold,
                             ),
                           ),
                           SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                           cart.discountAmount > 0 ? Flexible(
-                            child: Text(PriceConverter.convertPrice(context, cart.discountedPrice+cart.discountAmount), style: rubikBold.copyWith(
+                            child: Text(PriceConverter.convertPrice(context, cart.discountedPrice+cart.discountAmount), style: robotoBold.copyWith(
                               color: ColorResources.COLOR_GREY,
                               fontSize: Dimensions.FONT_SIZE_SMALL,
                               decoration: TextDecoration.lineThrough,
@@ -121,8 +123,18 @@ class CartProductWidget extends StatelessWidget {
                       child: Row(children: [
                         InkWell(
                           onTap: () {
+                            if(cart.quantity==1){
+                              // print("Quantity 1 ");
+                              // print("Cart ${cart.toJson()}");
+                              Provider.of<CartProvider>(context, listen: false).removeFromCart(cart);
+                              Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);
+
+                            }
                             if (cart.quantity > 1) {
+                              // print("Quantity > 1 ");
+                              // print("${cart.toJson()}");
                               Provider.of<CartProvider>(context, listen: false).setQuantity(false, cart);
+                              Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);
                             }
                           },
                           child: Padding(
@@ -130,9 +142,10 @@ class CartProductWidget extends StatelessWidget {
                             child: Icon(Icons.remove, size: 20),
                           ),
                         ),
-                        Text(cart.quantity.toString(), style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+                        Text(cart.quantity.toString(), style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
                         InkWell(
-                          onTap: () => Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart),
+                          onTap: () {Provider.of<CartProvider>(context, listen: false).setQuantity(true, cart);
+                          Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);},
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: Dimensions.PADDING_SIZE_SMALL, vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
                             child: Icon(Icons.add, size: 20),
@@ -157,17 +170,18 @@ class CartProductWidget extends StatelessWidget {
                             InkWell(
                               onTap: () {
                                 Provider.of<CartProvider>(context, listen: false).removeAddOn(cartIndex, index);
+                                Provider.of<CouponProvider>(context,listen: false).removeCouponData(true);
                               },
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: 2),
                                 child: Icon(Icons.remove_circle, color: Theme.of(context).primaryColor, size: 18),
                               ),
                             ),
-                            Text(addOns[index].name, style: rubikRegular),
+                            Text(addOns[index].name, style: robotoRegular),
                             SizedBox(width: 2),
-                            Text(PriceConverter.convertPrice(context, addOns[index].price), style: rubikMedium),
+                            Text(PriceConverter.convertPrice(context, addOns[index].price), style: robotoMedium),
                             SizedBox(width: 2),
-                            Text('(${cart.addOnIds[index].quantity})', style: rubikRegular),
+                            Text('(${cart.addOnIds[index].quantity})', style: robotoRegular),
                           ]),
                         );
                       },

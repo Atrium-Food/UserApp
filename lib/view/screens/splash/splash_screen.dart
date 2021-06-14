@@ -4,11 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
+import 'package:flutter_restaurant/provider/location_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/wishlist_provider.dart';
 import 'package:flutter_restaurant/utill/images.dart';
+import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
 import 'package:flutter_restaurant/view/screens/language/choose_language_screen.dart';
+import 'package:flutter_restaurant/view/screens/onboarding/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -60,13 +63,15 @@ class _SplashScreenState extends State<SplashScreen> {
   void _route() {
     Provider.of<SplashProvider>(context, listen: false).initConfig(_globalKey).then((bool isSuccess) {
       if (isSuccess) {
+
         Timer(Duration(seconds: 1), () async {
           if (Provider.of<AuthProvider>(context, listen: false).isLoggedIn()) {
             Provider.of<AuthProvider>(context, listen: false).updateToken();
+
             await Provider.of<WishListProvider>(context, listen: false).initWishList(context);
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => DashboardScreen()));
           } else {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => ChooseLanguageScreen()));
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (BuildContext context) => OnBoardingScreen()));
           }
         });
       }
@@ -77,14 +82,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _globalKey,
-      backgroundColor: Theme.of(context).primaryColor,
+      backgroundColor: Color(0xfff8f6df),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Image.asset(Images.efood_bike, height: 165),
+            Image.asset(Images.kiwis_logo, height: 165),
             SizedBox(height: 45),
-            Image.asset(Images.efood, height: 33),
+            Image.asset(Images.kiwis, height: 33),
           ],
         ),
       ),

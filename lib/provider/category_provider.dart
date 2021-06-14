@@ -14,6 +14,8 @@ class CategoryProvider extends ChangeNotifier {
   List<CategoryModel> _subCategoryList;
   List<Product> _categoryProductList;
 
+  Map<String, bool> _availableList={};
+
   List<CategoryModel> get categoryList => _categoryList;
   List<CategoryModel> get subCategoryList => _subCategoryList;
   List<Product> get categoryProductList => _categoryProductList;
@@ -31,25 +33,27 @@ class CategoryProvider extends ChangeNotifier {
     }
   }
 
-  void getSubCategoryList(BuildContext context, String categoryID) async {
+  void getSubCategoryList(BuildContext context, String categoryID, {double lat,double long}) async {
     _subCategoryList = null;
     ApiResponse apiResponse = await categoryRepo.getSubCategoryList(categoryID);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _subCategoryList= [];
       apiResponse.response.data.forEach((category) => _subCategoryList.add(CategoryModel.fromJson(category)));
-      getCategoryProductList(context, categoryID);
+      getCategoryProductList(context, categoryID, lat: lat,long: long);
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
     notifyListeners();
   }
 
-  void getCategoryProductList(BuildContext context, String categoryID) async {
+  void getCategoryProductList(BuildContext context, String categoryID, {double lat, double long}) async {
     _categoryProductList = null;
     notifyListeners();
-    ApiResponse apiResponse = await categoryRepo.getCategoryProductList(categoryID);
+    print("Lat, Long Category: $lat, $long");
+    ApiResponse apiResponse = await categoryRepo.getCategoryProductList(categoryID,lat: lat,long: long);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _categoryProductList = [];
+      _availableList[categoryID]=apiResponse.response.data.isEmpty;
       apiResponse.response.data.forEach((category) => _categoryProductList.add(Product.fromJson(category)));
       notifyListeners();
     } else {

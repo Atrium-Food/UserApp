@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:flutter_restaurant/data/model/response/address_model.dart';
 import 'package:flutter_restaurant/data/model/response/config_model.dart';
 import 'package:flutter_restaurant/data/model/response/delivery_man_model.dart';
@@ -30,18 +31,26 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
   GoogleMapController _controller;
   bool _isLoading = true;
   Set<Marker> _markers = HashSet<Marker>();
+  Set<Polyline> _polylines=HashSet<Polyline>();
   LatLng _deliveryBoyLatLng;
   LatLng _addressLatLng;
   LatLng _restaurantLatLng;
 
+  List<LatLng> polylineCoordinates = [];
+
+  String googleAPIkey= "AIzaSyBwWiMORYuexNkxJQfwnaoi95ySlH15qJQ";
   @override
   void initState() {
     super.initState();
-
+    // requestPermission();
+    print("Delivery Man"+widget.deliveryManModel?.longitude.toString());
+    print("Delivery Man"+ widget.deliveryManModel?.latitude.toString());
     RestaurantLocationCoverage coverage = Provider.of<SplashProvider>(context, listen: false).configModel.restaurantLocationCoverage;
     _deliveryBoyLatLng = LatLng(double.parse(widget.deliveryManModel.latitude ?? '0'), double.parse(widget.deliveryManModel.longitude ?? '0'));
+    // _deliveryBoyLatLng = LatLng(double.parse('16.9987'), double.parse('81.7845'));
     _addressLatLng = widget.addressModel != null ? LatLng(double.parse(widget.addressModel.latitude), double.parse(widget.addressModel.longitude)) : LatLng(0,0);
     _restaurantLatLng = LatLng(double.parse(coverage.latitude), double.parse(coverage.longitude));
+    // setPolylines();
   }
 
   @override
@@ -69,6 +78,7 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
             initialCameraPosition: CameraPosition(target: _addressLatLng, zoom: 18),
             zoomControlsEnabled: true,
             markers: _markers,
+            polylines: _polylines,
             onMapCreated: (GoogleMapController controller) {
               _controller = controller;
               _isLoading = false;
@@ -76,7 +86,7 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
             },
             onTap: (latLng) async {
               await Provider.of<OrderProvider>(context, listen: false).getDeliveryManData(widget.orderID, context);
-              String url ='https://www.google.com/maps/dir/?api=1&origin=${widget.deliveryManModel.latitude},${widget.deliveryManModel.longitude}'
+              String url ='https://www.google.com/maps/dir/?api=1&origin=${_deliveryBoyLatLng.latitude},${_deliveryBoyLatLng.longitude}'
                   '&destination=${_addressLatLng.latitude},${_addressLatLng.longitude}&mode=d';
               if (await canLaunch(url)) {
                 await launch(url);
@@ -101,13 +111,13 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
     LatLngBounds bounds;
     double _rotation = 0;
     if(_controller != null) {
-      if (_addressLatLng.latitude < _restaurantLatLng.latitude) {
+      // if (_addressLatLng.latitude < _restaurantLatLng.latitude) {
         bounds = LatLngBounds(southwest: _addressLatLng, northeast: _restaurantLatLng);
         _rotation = 0;
-      }else {
-        bounds = LatLngBounds(southwest: _restaurantLatLng, northeast: _addressLatLng);
-        _rotation = 180;
-      }
+      // }else {
+      //   bounds = LatLngBounds(southwest: _restaurantLatLng, northeast: _addressLatLng);
+      //   _rotation = 180;
+      // }
     }
     LatLng centerBounds = LatLng(
         (bounds.northeast.latitude + bounds.southwest.latitude)/2,
@@ -129,15 +139,15 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
       icon: BitmapDescriptor.fromBytes(destinationImageData),
     ));
 
-    _markers.add(Marker(
-      markerId: MarkerId('restaurant'),
-      position: _restaurantLatLng,
-      infoWindow: InfoWindow(
-        title: 'Restaurant',
-        snippet: '${_restaurantLatLng.latitude}, ${_restaurantLatLng.longitude}',
-      ),
-      icon: BitmapDescriptor.fromBytes(restaurantImageData),
-    ));
+    // _markers.add(Marker(
+    //   markerId: MarkerId('restaurant'),
+    //   position: _restaurantLatLng,
+    //   infoWindow: InfoWindow(
+    //     title: 'Restaurant',
+    //     snippet: '${_restaurantLatLng.latitude}, ${_restaurantLatLng.longitude}',
+    //   ),
+    //   icon: BitmapDescriptor.fromBytes(restaurantImageData),
+    // ));
     widget.deliveryManModel.latitude != null ? _markers.add(Marker(
       markerId: MarkerId('delivery_boy'),
       position: _deliveryBoyLatLng,
@@ -148,10 +158,38 @@ class _TrackingMapWidgetState extends State<TrackingMapWidget> {
       rotation: _rotation,
       icon: BitmapDescriptor.fromBytes(deliveryBoyImageData),
     )) : SizedBox();
-
+    // setPolylines();
     setState(() {});
   }
 
+  // void setPolylines() async {
+  //   print("Setting Polylines");
+  //   PolylinePoints polylinePoints=PolylinePoints();
+  //   PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(googleAPIkey,
+  //       PointLatLng(_deliveryBoyLatLng.latitude, _deliveryBoyLatLng.longitude),
+  //       PointLatLng(_addressLatLng.latitude, _addressLatLng.longitude));
+  //   print("Result ${result.errorMessage}");
+  //   if (result.points.isNotEmpty) {
+  //     print("Not Empty Polylines");
+  //     result.points.forEach((PointLatLng point) {
+  //       polylineCoordinates.add(
+  //           LatLng(point.latitude, point.longitude)
+  //       );
+  //     });
+  //     setState(() {
+  //       _polylines.add(Polyline(
+  //           width: 5, // set the width of the polylines
+  //           polylineId: PolylineId("poly"),
+  //           color: Color.fromARGB(255, 40, 122, 198),
+  //           points: polylineCoordinates
+  //       ));
+  //
+  //     });
+  //     print("Polylines"+_polylines.toString());
+  //   } else {
+  //     print("Empty Polylines");
+  //   }
+  // }
   Future<void> zoomToFit(GoogleMapController controller, LatLngBounds bounds, LatLng centerBounds) async {
     bool keepZoomingOut = true;
 

@@ -5,12 +5,11 @@ class ErrorResponse {
 
   List<Errors> get errors => _errors;
 
-  ErrorResponse({
-      List<Errors> errors}){
+  ErrorResponse({List<Errors> errors}) {
     _errors = errors;
-}
+  }
 
-  ErrorResponse.fromJson(dynamic json) {
+  ErrorResponse.fromJson(Map<String, dynamic> json) {
     if (json["errors"] != null) {
       _errors = [];
       json["errors"].forEach((v) {
@@ -26,7 +25,6 @@ class ErrorResponse {
     }
     return map;
   }
-
 }
 
 /// code : "l_name"
@@ -39,15 +37,13 @@ class Errors {
   String get code => _code;
   String get message => _message;
 
-  Errors({
-      String code, 
-      String message}){
+  Errors({String code, String message}) {
     _code = code;
     _message = message;
-}
+  }
 
   Errors.fromJson(dynamic json) {
-    _code = json["code"];
+    _code = json["code"].toString();
     _message = json["message"];
   }
 
@@ -57,5 +53,4 @@ class Errors {
     map["message"] = _message;
     return map;
   }
-
 }

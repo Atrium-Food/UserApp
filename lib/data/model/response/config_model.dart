@@ -5,6 +5,7 @@ class ConfigModel {
   String _restaurantLogo;
   String _restaurantAddress;
   String _restaurantPhone;
+  String _recipePhone;
   String _restaurantEmail;
   BaseUrls _baseUrls;
   String _currencySymbol;
@@ -18,27 +19,30 @@ class ConfigModel {
 
   ConfigModel(
       {String restaurantName,
-        String restaurantOpenTime,
-        String restaurantCloseTime,
-        String restaurantLogo,
-        String restaurantAddress,
-        String restaurantPhone,
-        String restaurantEmail,
-        BaseUrls baseUrls,
-        String currencySymbol,
-        String deliveryCharge,
-        String cashOnDelivery,
-        String digitalPayment,
-        String termsAndConditions,
-        RestaurantLocationCoverage restaurantLocationCoverage,
-        double minimumOrderValue,
-        List<Branches> branches}) {
+      String restaurantOpenTime,
+      String restaurantCloseTime,
+      String restaurantLogo,
+      String restaurantAddress,
+      String restaurantPhone,
+      String recipePhone,
+      String restaurantEmail,
+      BaseUrls baseUrls,
+      String currencySymbol,
+      String deliveryCharge,
+      String cashOnDelivery,
+      String digitalPayment,
+      String termsAndConditions,
+      RestaurantLocationCoverage restaurantLocationCoverage,
+      double minimumOrderValue,
+      List<Branches> branches
+      }) {
     this._restaurantName = restaurantName;
     this._restaurantOpenTime = restaurantOpenTime;
     this._restaurantCloseTime = restaurantCloseTime;
     this._restaurantLogo = restaurantLogo;
     this._restaurantAddress = restaurantAddress;
     this._restaurantPhone = restaurantPhone;
+    this._recipePhone = recipePhone;
     this._restaurantEmail = restaurantEmail;
     this._baseUrls = baseUrls;
     this._currencySymbol = currencySymbol;
@@ -57,6 +61,7 @@ class ConfigModel {
   String get restaurantLogo => _restaurantLogo;
   String get restaurantAddress => _restaurantAddress;
   String get restaurantPhone => _restaurantPhone;
+  String get recipePhone => _recipePhone;
   String get restaurantEmail => _restaurantEmail;
   BaseUrls get baseUrls => _baseUrls;
   String get currencySymbol => _currencySymbol;
@@ -64,7 +69,8 @@ class ConfigModel {
   String get cashOnDelivery => _cashOnDelivery;
   String get digitalPayment => _digitalPayment;
   String get termsAndConditions => _termsAndConditions;
-  RestaurantLocationCoverage get restaurantLocationCoverage => _restaurantLocationCoverage;
+  RestaurantLocationCoverage get restaurantLocationCoverage =>
+      _restaurantLocationCoverage;
   double get minimumOrderValue => _minimumOrderValue;
   List<Branches> get branches => _branches;
 
@@ -75,6 +81,7 @@ class ConfigModel {
     _restaurantLogo = json['restaurant_logo'];
     _restaurantAddress = json['restaurant_address'];
     _restaurantPhone = json['restaurant_phone'];
+    _recipePhone = json['recipePhone'];
     _restaurantEmail = json['restaurant_email'];
     _baseUrls = json['base_urls'] != null
         ? new BaseUrls.fromJson(json['base_urls'])
@@ -85,8 +92,12 @@ class ConfigModel {
     _digitalPayment = json['digital_payment'];
     _termsAndConditions = json['terms_and_conditions'];
     _restaurantLocationCoverage = json['restaurant_location_coverage'] != null
-        ? new RestaurantLocationCoverage.fromJson(json['restaurant_location_coverage']) : null;
-    _minimumOrderValue = json['minimum_order_value'] != null ? json['minimum_order_value'].toDouble() : 0;
+        ? new RestaurantLocationCoverage.fromJson(
+            json['restaurant_location_coverage'])
+        : null;
+    _minimumOrderValue = json['minimum_order_value'] != null
+        ? json['minimum_order_value'].toDouble()
+        : 0;
     if (json['branches'] != null) {
       _branches = [];
       json['branches'].forEach((v) {
@@ -103,6 +114,7 @@ class ConfigModel {
     data['restaurant_logo'] = this._restaurantLogo;
     data['restaurant_address'] = this._restaurantAddress;
     data['restaurant_phone'] = this._restaurantPhone;
+    data['recipePhone'] = this._recipePhone;
     data['restaurant_email'] = this._restaurantEmail;
     if (this._baseUrls != null) {
       data['base_urls'] = this._baseUrls.toJson();
@@ -113,12 +125,13 @@ class ConfigModel {
     data['digital_payment'] = this._digitalPayment;
     data['terms_and_conditions'] = this._termsAndConditions;
     if (this._restaurantLocationCoverage != null) {
-      data['restaurant_location_coverage'] = this._restaurantLocationCoverage.toJson();
+      data['restaurant_location_coverage'] =
+          this._restaurantLocationCoverage.toJson();
     }
     data['minimum_order_value'] = this._minimumOrderValue;
-    if (this._branches != null) {
-      data['branches'] = this._branches.map((v) => v.toJson()).toList();
-    }
+    // if (this._branches != null) {
+    //   data['branches'] = this._branches.map((v) => v.toJson()).toList();
+    // }
     return data;
   }
 }
@@ -136,14 +149,14 @@ class BaseUrls {
 
   BaseUrls(
       {String productImageUrl,
-        String customerImageUrl,
-        String bannerImageUrl,
-        String categoryImageUrl,
-        String reviewImageUrl,
-        String notificationImageUrl,
-        String restaurantImageUrl,
-        String deliveryManImageUrl,
-        String chatImageUrl}) {
+      String customerImageUrl,
+      String bannerImageUrl,
+      String categoryImageUrl,
+      String reviewImageUrl,
+      String notificationImageUrl,
+      String restaurantImageUrl,
+      String deliveryManImageUrl,
+      String chatImageUrl}) {
     this._productImageUrl = productImageUrl;
     this._customerImageUrl = customerImageUrl;
     this._bannerImageUrl = bannerImageUrl;
@@ -234,12 +247,12 @@ class Branches {
 
   Branches(
       {int id,
-        String name,
-        String email,
-        String longitude,
-        String latitude,
-        String address,
-        double coverage}) {
+      String name,
+      String email,
+      String longitude,
+      String latitude,
+      String address,
+      double coverage}) {
     this._id = id;
     this._name = name;
     this._email = email;

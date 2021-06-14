@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/onboarding_provider.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
 import 'package:flutter_restaurant/view/screens/welcome_screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OnBoardingScreen extends StatelessWidget {
   final PageController _pageController = PageController();
@@ -22,40 +24,43 @@ class OnBoardingScreen extends StatelessWidget {
                 0
             ? SafeArea(
                 child: ListView(
+                  dragStartBehavior: DragStartBehavior.down,
                   children: [
-                    onBoardingList.selectedIndex !=
-                            onBoardingList.onBoardingList.length - 1
-                        ? Align(
-                            alignment: Alignment.topRight,
-                            child: TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (_) => WelcomeScreen()));
-                                },
-                                child: Text(
-                                  getTranslated('skip', context),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .headline3
-                                      .copyWith(
-                                          color: Theme.of(context)
-                                              .textTheme
-                                              .bodyText1
-                                              .color),
-                                )),
-                          )
-                        : SizedBox(),
+                    Align(
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                          onPressed: () {
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (_) => WelcomeScreen()));
+                          },
+                          child: Text(
+                            getTranslated('skip', context),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headline3
+                                .copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: onBoardingList.selectedIndex !=
+                                            onBoardingList
+                                                    .onBoardingList.length -
+                                                1
+                                        ? ColorResources.getAccentColor(context)
+                                        : ColorResources.getBackgroundColor(
+                                            context)),
+                          )),
+                    ),
                     SizedBox(
                       height: 400,
                       child: PageView.builder(
+                        dragStartBehavior: DragStartBehavior.down,
                         itemCount: onBoardingList.onBoardingList.length,
                         controller: _pageController,
                         physics: BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
                           return Padding(
                             padding: EdgeInsets.all(30),
-                            child: Image.asset(
+                            child: SvgPicture.asset(
                                 onBoardingList.onBoardingList[index].imageUrl),
                           );
                         },

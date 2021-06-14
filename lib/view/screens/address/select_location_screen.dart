@@ -30,7 +30,6 @@ class _SelectLocationScreenState extends State<SelectLocationScreen> {
           '${Provider.of<LocationProvider>(context).address.subAdministrativeArea ?? ''}, '
           '${Provider.of<LocationProvider>(context).address.isoCountryCode ?? ''}';
     }
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: ColorResources.getPrimaryColor(context),

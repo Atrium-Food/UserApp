@@ -28,7 +28,7 @@ class DeliveryManWidget extends StatelessWidget {
         )],
       ),
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-        Text(getTranslated('delivery_man', context), style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
+        Text(getTranslated('delivery_man', context), style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL)),
         ListTile(
           leading: ClipOval(
             child: FadeInImage.assetNetwork(
@@ -36,15 +36,17 @@ class DeliveryManWidget extends StatelessWidget {
               image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.deliveryManImageUrl}/${deliveryMan.image}',
               height: 40, width: 40, fit: BoxFit.cover,
               imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                return Image.asset(Images.placeholder_image,
+                  height: 40, width: 40, fit: BoxFit.cover,
+                );
               },
             ),
           ),
           title: Text(
             '${deliveryMan.fName} ${deliveryMan.lName}',
-            style: rubikRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+            style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
-          subtitle: RatingBar(rating: deliveryMan.rating.length > 0 ? double.parse(deliveryMan.rating[0].average) : 0, size: 15),
+          subtitle: RatingBar(rating: deliveryMan.rating.length > 0 ? deliveryMan.rating[0].average: 0, size: 15),
           trailing: InkWell(
             onTap: () => launch('tel:${deliveryMan.phone}'),
             child: Container(

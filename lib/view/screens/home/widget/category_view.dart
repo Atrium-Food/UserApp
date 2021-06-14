@@ -16,6 +16,7 @@ class CategoryView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<CategoryProvider>(
       builder: (context, category, child) {
+        // print(category.categoryList.length);
         return Column(
           children: [
             Padding(
@@ -58,7 +59,10 @@ class CategoryView extends StatelessWidget {
                                       height: 180,
                                       fit: BoxFit.cover,
                                       imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                                        return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                                        return Image.asset(Images.placeholder_image, fit: BoxFit.cover,
+                                          width: 120,
+                                          height: 180,
+                                        );
                                       },
                                     ),
                                   ),
@@ -67,7 +71,7 @@ class CategoryView extends StatelessWidget {
                                   ),
                                   Text(
                                     category.categoryList[index].name,
-                                    style: rubikMedium.copyWith(
+                                    style: robotoMedium.copyWith(
                                         fontSize: Dimensions.FONT_SIZE_DEFAULT),
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -93,7 +97,7 @@ class CategoryShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: 210,
       child: ListView.builder(
         itemCount: 10,
         padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
@@ -110,11 +114,11 @@ class CategoryShimmer extends StatelessWidget {
                   Provider.of<CategoryProvider>(context).categoryList == null,
               child: Column(children: [
                 Container(
-                  height: 65,
-                  width: 65,
+                  width: 120,
+                  height: 180,
                   decoration: BoxDecoration(
                     color: ColorResources.COLOR_WHITE,
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                 ),
                 SizedBox(height: 5),

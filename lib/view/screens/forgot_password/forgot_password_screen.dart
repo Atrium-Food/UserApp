@@ -11,7 +11,14 @@ import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/forgot_password/verification_screen.dart';
 import 'package:provider/provider.dart';
 
-class ForgotPasswordScreen extends StatelessWidget {
+class ForgotPasswordScreen extends StatefulWidget {
+  @override
+  _ForgotPasswordScreenState createState() => _ForgotPasswordScreenState();
+}
+
+class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  String _emailError = '';
+
   @override
   Widget build(BuildContext context) {
     TextEditingController _emailController = TextEditingController();
@@ -31,10 +38,13 @@ class ForgotPasswordScreen extends StatelessWidget {
               SizedBox(height: 40),
               Center(
                   child: Text(
-                    getTranslated('please_enter_your_number_to', context),
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
-                  )),
+                getTranslated('please_enter_your_number_to', context),
+                textAlign: TextAlign.center,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline2
+                    .copyWith(color: ColorResources.getHintColor(context)),
+              )),
               Padding(
                 padding: const EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
                 child: Column(
@@ -43,10 +53,12 @@ class ForgotPasswordScreen extends StatelessWidget {
                     SizedBox(height: 80),
                     Text(
                       getTranslated('email', context),
-                      style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                          color: ColorResources.getHintColor(context)),
                     ),
                     SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                     CustomTextField(
+                      errorMessage: _emailError,
                       hintText: getTranslated('demo_gmail', context),
                       isShowBorder: true,
                       controller: _emailController,
@@ -54,24 +66,55 @@ class ForgotPasswordScreen extends StatelessWidget {
                       inputAction: TextInputAction.done,
                     ),
                     SizedBox(height: 24),
-                    !auth.isForgotPasswordLoading ? CustomButton(
-                      btnTxt: getTranslated('send', context),
-                      onTap: () {
-                        if (_emailController.text.isEmpty) {
-                          showCustomSnackBar(getTranslated('enter_email_address', context), context);
-                        }else if (!_emailController.text.contains('@')) {
-                          showCustomSnackBar(getTranslated('enter_valid_email', context), context);
-                        }else {
-                          Provider.of<AuthProvider>(context, listen: false).forgetPassword(_emailController.text).then((value) {
-                            if (value.isSuccess) {
-                              Navigator.of(context).push(MaterialPageRoute(builder: (_) => VerificationScreen(emailAddress: _emailController.text)));
-                            } else {
-                              showCustomSnackBar(value.message, context);
-                            }
-                          });
-                        }
-                      },
-                    ) : Center(child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(ColorResources.COLOR_PRIMARY))),
+                    !auth.isForgotPasswordLoading
+                        ? CustomButton(
+                            btnTxt: getTranslated('send', context),
+                            onTap: () {
+                              setState(() {
+                                if (_emailController.text.isEmpty ||
+                                    !_emailController.text.contains('@')) {
+                                  if (_emailController.text.isEmpty) {
+                                    _emailError = getTranslated(
+                                        'enter_email_address', context);
+                                    // showCustomSnackBar(
+                                    //     getTranslated(
+                                    //         'enter_email_address', context),
+                                    //     context);
+                                  } else if (!_emailController.text
+                                      .contains('@')) {
+                                    _emailError = getTranslated(
+                                        'enter_valid_email', context);
+                                    // showCustomSnackBar(
+                                    //     getTranslated('enter_valid_email', context),
+                                    //     context);
+                                  }
+                                } else {
+                                  _emailError = '';
+                                  Provider.of<AuthProvider>(context,
+                                          listen: false)
+                                      .forgetPassword(_emailController.text)
+                                      .then((value) {
+                                    if (value.isSuccess) {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (_) =>
+                                                  VerificationScreen(
+                                                      contact: _emailController
+                                                          .text)));
+                                    } else {
+                                      _emailError = value.message.toString();
+                                      // showCustomSnackBar(
+                                      //     value.message, context);
+                                    }
+                                  });
+                                }
+                              });
+                            },
+                          )
+                        : Center(
+                            child: CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                    ColorResources.COLOR_PRIMARY))),
                   ],
                 ),
               ),

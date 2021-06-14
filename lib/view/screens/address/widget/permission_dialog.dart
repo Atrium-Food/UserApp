@@ -19,7 +19,7 @@ class PermissionDialog extends StatelessWidget {
 
           Text(
             getTranslated('you_denied_location_permission', context), textAlign: TextAlign.justify,
-            style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+            style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
           ),
           SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 

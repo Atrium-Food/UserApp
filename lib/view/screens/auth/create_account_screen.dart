@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restaurant/data/model/response/signup_model.dart';
+import 'package:flutter_restaurant/helper/email_checker.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
 import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/wishlist_provider.dart';
@@ -10,20 +12,45 @@ import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/auth/login_screen.dart';
 import 'package:flutter_restaurant/view/screens/dashboard/dashboard_screen.dart';
+import 'package:flutter_restaurant/view/screens/welcome_screen/welcome_screen.dart';
 import 'package:provider/provider.dart';
 
-class CreateAccountScreen extends StatelessWidget {
+class CreateAccountScreen extends StatefulWidget {
+  @override
+  _CreateAccountScreenState createState() => _CreateAccountScreenState();
+}
+
+class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final FocusNode _firstNameFocus = FocusNode();
+
   final FocusNode _lastNameFocus = FocusNode();
+
   final FocusNode _numberFocus = FocusNode();
+
   final FocusNode _passwordFocus = FocusNode();
+
   final FocusNode _confirmPasswordFocus = FocusNode();
+
   final TextEditingController _firstNameController = TextEditingController();
+
   final TextEditingController _lastNameController = TextEditingController();
+
   final TextEditingController _numberController = TextEditingController();
+
   final TextEditingController _passwordController = TextEditingController();
+
   final TextEditingController _confirmPasswordController =
       TextEditingController();
+
+  final TextEditingController _emailController = TextEditingController();
+
+  String _emailError = '';
+  String _passwordError = '';
+  String _fNameError = '';
+  String _lNameError = '';
+  String _mobileError = '';
+  String _passWordError = '';
+  String _confirmError = '';
 
   @override
   Widget build(BuildContext context) {
@@ -42,15 +69,37 @@ class CreateAccountScreen extends StatelessWidget {
             child: ListView(
               physics: BouncingScrollPhysics(),
               children: [
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => WelcomeScreen()));
+                    },
+                    child: Icon(
+                      CupertinoIcons.back,
+                      color: ColorResources.getBackgroundColor(context),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 20,
+                ),
                 PreferredSize(
                   preferredSize: Size.fromWidth(10.0),
                   child: Text(
-                    'Here We Go!',
-                    maxLines: 2,
+                    'Would love to have you on board!',
+                    maxLines: 20,
+                    textAlign: TextAlign.start,
                     style: TextStyle(
-                        fontSize: 50,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold),
+                      fontSize: 22,
+                      color: ColorResources.getBackgroundColor(context),
+                    ),
                   ),
                 ),
 
@@ -59,22 +108,23 @@ class CreateAccountScreen extends StatelessWidget {
                 ),
 
                 Text(
-                  getTranslated('create_account', context),
+                  getTranslated('signup', context),
                   style: Theme.of(context).textTheme.headline3.copyWith(
-                      fontSize: 24, color: ColorResources.COLOR_WHITE),
+                      fontSize: 24,
+                      color: ColorResources.getBackgroundColor(context)),
                 ),
                 SizedBox(height: 50),
 
                 Container(
                   decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: ColorResources.getBackgroundColor(context),
                     borderRadius: BorderRadius.all(Radius.circular(20)),
                     boxShadow: [
                       BoxShadow(
                         color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 5,
-                        blurRadius: 7,
-                        offset: Offset(0, 3), // changes position of shadow
+                        spreadRadius: 1,
+                        blurRadius: 1,
+                        offset: Offset(1, 1), // changes position of shadow
                       ),
                     ],
                   ),
@@ -87,6 +137,9 @@ class CreateAccountScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      SizedBox(
+                        height: 10,
+                      ),
                       Text(
                         'Enter the following details.',
                         style: TextStyle(
@@ -96,7 +149,17 @@ class CreateAccountScreen extends StatelessWidget {
                         textAlign: TextAlign.start,
                       ),
                       CustomTextField(
+                        hintText: getTranslated('demo_gmail', context),
+                        errorMessage: _emailError,
+                        isShowBorder: true,
+                        inputAction: TextInputAction.done,
+                        inputType: TextInputType.emailAddress,
+                        controller: _emailController,
+                      ),
+                      SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
+                      CustomTextField(
                         hintText: getTranslated('first_name', context),
+                        errorMessage: _fNameError,
                         isShowBorder: true,
                         controller: _firstNameController,
                         focusNode: _firstNameFocus,
@@ -108,6 +171,7 @@ class CreateAccountScreen extends StatelessWidget {
                       CustomTextField(
                         hintText: getTranslated('last_name', context),
                         isShowBorder: true,
+                        errorMessage: _lNameError,
                         controller: _lastNameController,
                         focusNode: _lastNameFocus,
                         nextFocus: _numberFocus,
@@ -118,6 +182,7 @@ class CreateAccountScreen extends StatelessWidget {
                       CustomTextField(
                         hintText: getTranslated('mobile_number', context),
                         isShowBorder: true,
+                        errorMessage: _mobileError,
                         controller: _numberController,
                         focusNode: _numberFocus,
                         nextFocus: _passwordFocus,
@@ -127,6 +192,7 @@ class CreateAccountScreen extends StatelessWidget {
                       CustomTextField(
                         hintText: getTranslated('password', context),
                         isShowBorder: true,
+                        errorMessage: _passwordError,
                         isPassword: true,
                         controller: _passwordController,
                         focusNode: _passwordFocus,
@@ -137,6 +203,7 @@ class CreateAccountScreen extends StatelessWidget {
                       CustomTextField(
                         hintText: getTranslated('confirm_password', context),
                         isShowBorder: true,
+                        errorMessage: _confirmError,
                         isPassword: true,
                         controller: _confirmPasswordController,
                         focusNode: _confirmPasswordFocus,
@@ -174,73 +241,130 @@ class CreateAccountScreen extends StatelessWidget {
                           ? CustomButton(
                               btnTxt: getTranslated('signup', context),
                               onTap: () {
-                                String _firstName =
-                                    _firstNameController.text.trim();
-                                String _lastName =
-                                    _lastNameController.text.trim();
-                                String _number = _numberController.text.trim();
-                                String _password =
-                                    _passwordController.text.trim();
-                                String _confirmPassword =
-                                    _confirmPasswordController.text.trim();
-                                if (_firstName.isEmpty) {
-                                  showCustomSnackBar(
-                                      getTranslated(
-                                          'enter_first_name', context),
-                                      context);
-                                } else if (_lastName.isEmpty) {
-                                  showCustomSnackBar(
-                                      getTranslated('enter_last_name', context),
-                                      context);
-                                } else if (_number.isEmpty) {
-                                  showCustomSnackBar(
-                                      getTranslated(
-                                          'enter_phone_number', context),
-                                      context);
-                                } else if (_password.isEmpty) {
-                                  showCustomSnackBar(
-                                      getTranslated('enter_password', context),
-                                      context);
-                                } else if (_password.length < 6) {
-                                  showCustomSnackBar(
-                                      getTranslated(
-                                          'password_should_be', context),
-                                      context);
-                                } else if (_confirmPassword.isEmpty) {
-                                  showCustomSnackBar(
-                                      getTranslated(
-                                          'enter_confirm_password', context),
-                                      context);
-                                } else if (_password != _confirmPassword) {
-                                  showCustomSnackBar(
-                                      getTranslated(
-                                          'password_did_not_match', context),
-                                      context);
-                                } else {
-                                  SignUpModel signUpModel = SignUpModel(
-                                    fName: _firstName,
-                                    lName: _lastName,
-                                    email: authProvider.email,
-                                    password: _password,
-                                    phone: _number,
-                                  );
-                                  authProvider
-                                      .registration(signUpModel)
-                                      .then((status) async {
-                                    if (status.isSuccess) {
-                                      await Provider.of<WishListProvider>(
-                                              context,
-                                              listen: false)
-                                          .initWishList(context);
-                                      Navigator.pushAndRemoveUntil(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (_) =>
-                                                  DashboardScreen()),
-                                          (route) => false);
+                                setState(() {
+                                  String _firstName =
+                                      _firstNameController.text.trim();
+                                  String _lastName =
+                                      _lastNameController.text.trim();
+                                  String _number =
+                                      _numberController.text.trim();
+                                  String _password =
+                                      _passwordController.text.trim();
+                                  String _confirmPassword =
+                                      _confirmPasswordController.text.trim();
+                                  String _email = _emailController.text.trim();
+                                  if (_email.isEmpty ||
+                                      EmailChecker.isNotValid(_email) ||
+                                      _firstName.isEmpty ||
+                                      _lastName.isEmpty ||
+                                      _number.isEmpty ||
+                                      _password.isEmpty ||
+                                      _confirmPassword.isEmpty ||
+                                      _password.length < 6 ||
+                                      _password != _confirmPassword) {
+                                    if (_email.isEmpty) {
+                                      _emailError = getTranslated(
+                                          'enter_email_address', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_email_address', context),
+                                      //     context);
                                     }
-                                  });
-                                }
+                                    if (EmailChecker.isNotValid(_email)) {
+                                      _emailError = getTranslated(
+                                          'enter_valid_email', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_valid_email', context),
+                                      //     context);
+                                    }
+                                    if (_firstName.isEmpty) {
+                                      _fNameError = getTranslated(
+                                          'enter_first_name', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_first_name', context),
+                                      //     context);
+                                    }
+                                    if (_lastName.isEmpty) {
+                                      _lNameError = getTranslated(
+                                          'enter_last_name', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_last_name', context),
+                                      //     context);
+                                    }
+                                    if (_number.isEmpty) {
+                                      _mobileError = getTranslated(
+                                          'enter_phone_number', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_phone_number', context),
+                                      //     context);
+                                    }
+                                    if (_password.isEmpty) {
+                                      _passwordError = getTranslated(
+                                          'enter_password', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_password', context),
+                                      //     context);
+                                    }
+                                    if (_password.length < 6) {
+                                      _passwordError = getTranslated(
+                                          'password_should_be', context);
+                                      // \
+                                    }
+                                    if (_confirmPassword.isEmpty) {
+                                      _confirmError = getTranslated(
+                                          'enter_confirm_password', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'enter_confirm_password', context),
+                                      //     context);
+                                    }
+                                    if (_password != _confirmPassword) {
+                                      _passwordError = getTranslated(
+                                          'password_did_not_match', context);
+                                      _confirmError = getTranslated(
+                                          'password_did_not_match', context);
+                                      // showCustomSnackBar(
+                                      //     getTranslated(
+                                      //         'password_did_not_match', context),
+                                      //     context);
+                                    }
+                                  } else {
+                                    _emailError = '';
+                                    _passwordError = '';
+                                    _fNameError = '';
+                                    _lNameError = '';
+                                    _mobileError = '';
+                                    _passwordError = '';
+                                    SignUpModel signUpModel = SignUpModel(
+                                      fName: _firstName,
+                                      lName: _lastName,
+                                      email: _email,
+                                      password: _password,
+                                      phone: _number,
+                                    );
+                                    authProvider
+                                        .registration(signUpModel)
+                                        .then((status) async {
+                                      if (status.isSuccess) {
+                                        await Provider.of<WishListProvider>(
+                                                context,
+                                                listen: false)
+                                            .initWishList(context);
+                                        Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (_) =>
+                                                    DashboardScreen()),
+                                            (route) => false);
+                                      }
+                                    });
+                                  }
+                                });
                               },
                             )
                           : Center(

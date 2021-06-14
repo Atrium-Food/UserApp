@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_restaurant/data/model/response/response_model.dart';
+import 'package:flutter_restaurant/data/model/response/userinfo_model.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/custom_text_field.dart';
 import 'package:flutter_restaurant/view/screens/menu/widget/menu_app_bar.dart';
+import 'package:provider/provider.dart';
 
 class AddCardScreen extends StatefulWidget {
   @override
@@ -23,6 +28,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   TextEditingController _expiryMonthController;
   TextEditingController _expiryYearController;
 
+  final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   @override
   void initState() {
     // TODO: implement initState
@@ -39,6 +45,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _scaffoldKey,
       appBar: MenuAppBar(),
       backgroundColor: ColorResources.getThemeColor(context),
       body: Center(
@@ -54,7 +61,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
               ),
               Text(
                 'Add Card',
-                style: rubikRegular.copyWith(fontSize: 25),
+                style: robotoRegular.copyWith(fontSize: 25),
               ),
               SizedBox(
                 height: 20,
@@ -83,7 +90,7 @@ class _AddCardScreenState extends State<AddCardScreen> {
                         SizedBox(height: 10,),
                         Text(
                           'Add New Credit/Debit Card',
-                          style: rubikMedium.copyWith(fontSize: 15),
+                          style: robotoMedium.copyWith(fontSize: 15),
                         ),
                         SizedBox(
                           height: 20,
@@ -142,11 +149,47 @@ class _AddCardScreenState extends State<AddCardScreen> {
                           alignment: Alignment.bottomCenter,
                           child: Padding(
                             padding: EdgeInsets.symmetric(vertical: Dimensions.PADDING_SIZE_SMALL),
-                            child: CustomButton(
-                              btnTxt: 'Save',
-                              onTap: () {
+                            child: Consumer<ProfileProvider>(
+                              builder: (context, profileProvider, index) {
+                                return CustomButton(
+                                  btnTxt: 'Save',
+                                  onTap: () async {
+                                    String _cardNumber = _cardNumberController.text.trim();
+                                    String _cardHolderName = _cardNameController.text.trim();
+                                    String _expiryMonth = _expiryMonthController.text.trim();
+                                    String _expiryYear = _expiryYearController.text.trim();
+                                    // String _createdAt = D;
+                                    if (_cardHolderName.isEmpty) {
+                                      showCustomSnackBar('Enter Card Holder Name', context);
+                                    }else if (_cardNumber.isEmpty) {
+                                      showCustomSnackBar('Enter Card Number', context);
+                                    }else if (_expiryYear.isEmpty) {
+                                      showCustomSnackBar('Enter Expiry Year', context);
+                                    } else if(_expiryMonth.isEmpty) {
+                                      showCustomSnackBar('Enter Expiry Month', context);
+                                    } else {
+                                      CardModel card = CardModel(
+                                        userId: profileProvider.userInfoModel.id,
+                                        expiryMonth: int.parse(_expiryMonth),
+                                        expiryYear: int.parse(_expiryYear),
+                                        cardHolderName: _cardHolderName,
+                                        cardNumber: _cardNumber
+                                      );
 
-                              },
+                                      ResponseModel _responseModel = await profileProvider.addCardInfo(
+                                        card
+                                      );
+                                      if(_responseModel.isSuccess) {
+                                        profileProvider.getUserInfo(context);
+                                        _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(getTranslated('added_successfully', context)), backgroundColor: Colors.green));
+                                      }else {
+                                        _scaffoldKey.currentState.showSnackBar(SnackBar(content: Text(_responseModel.message), backgroundColor: Colors.red));
+                                      }
+                                      setState(() {});
+                                    }
+                                  },
+                                );
+                              }
                             ),
                           ),
                         )

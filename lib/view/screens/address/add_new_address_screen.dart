@@ -205,20 +205,20 @@ class AddNewAddressScreen extends StatelessWidget {
                         ),
 
                         // for Address Field
-                        Text(
-                          getTranslated('address_line_01', context),
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
-                        ),
-                        SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-                        CustomTextField(
-                          hintText: getTranslated('address_line_02', context),
-                          isShowBorder: true,
-                          inputType: TextInputType.streetAddress,
-                          inputAction: TextInputAction.next,
-                          focusNode: _addressNode,
-                          nextFocus: _nameNode,
-                          controller: _locationController,
-                        ),
+                        // Text(
+                        //   getTranslated('address_line_01', context),
+                        //   style: Theme.of(context).textTheme.headline2.copyWith(color: ColorResources.getHintColor(context)),
+                        // ),
+                        // SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
+                        // CustomTextField(
+                        //   hintText: getTranslated('address_line_02', context),
+                        //   isShowBorder: true,
+                        //   inputType: TextInputType.streetAddress,
+                        //   inputAction: TextInputAction.next,
+                        //   focusNode: _addressNode,
+                        //   nextFocus: _nameNode,
+                        //   controller: _locationController,
+                        // ),
                         SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
                         // for Contact Person Name
@@ -262,6 +262,7 @@ class AddNewAddressScreen extends StatelessWidget {
                     ),
                   ),
                 ),
+                SizedBox(height: Dimensions.PADDING_SIZE_DEFAULT),
                 locationProvider.addressStatusMessage != null
                     ? Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -301,26 +302,26 @@ class AddNewAddressScreen extends StatelessWidget {
                   child: !locationProvider.isLoading ? CustomButton(
                     btnTxt: isEnableUpdate ? getTranslated('update_address', context) : getTranslated('save_location', context),
                     onTap: locationProvider.loading ? null : () {
-                      List<Branches> _branches = Provider.of<SplashProvider>(context, listen: false).configModel.branches;
-                      bool _isAvailable = _branches.length == 1 && (_branches[0].latitude == null || _branches[0].latitude.isEmpty);
-                      if(!_isAvailable) {
-                        for (Branches branch in _branches) {
-                          double _distance = Geolocator.distanceBetween(
-                            double.parse(branch.latitude), double.parse(branch.longitude),
-                            locationProvider.position.latitude, locationProvider.position.longitude,
-                          ) / 1000;
-                          if (_distance < branch.coverage) {
-                            _isAvailable = true;
-                            break;
-                          }
-                        }
-                      }
-                      if(!_isAvailable) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(getTranslated('service_is_not_available', context)),
-                          backgroundColor: Colors.red,
-                        ));
-                      }else {
+                      // List<Branches> _branches = Provider.of<SplashProvider>(context, listen: false).configModel.branches;
+                      // bool _isAvailable = _branches.length == 1 && (_branches[0].latitude == null || _branches[0].latitude.isEmpty);
+                      // if(!_isAvailable) {
+                      //   for (Branches branch in _branches) {
+                      //     double _distance = Geolocator.distanceBetween(
+                      //       double.parse(branch.latitude), double.parse(branch.longitude),
+                      //       locationProvider.position.latitude, locationProvider.position.longitude,
+                      //     ) / 1000;
+                      //     if (_distance < branch.coverage) {
+                      //       _isAvailable = true;
+                      //       break;
+                      //     }
+                      //   }
+                      // }
+                      // if(!_isAvailable) {
+                      //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      //     content: Text(getTranslated('service_is_not_available', context)),
+                      //     backgroundColor: Colors.red,
+                      //   ));
+                      // }else {
                         AddressModel addressModel = AddressModel(
                           addressType: locationProvider.getAllAddressType[locationProvider.selectAddressIndex],
                           contactPersonName: _contactPersonNameController.text ?? '',
@@ -350,7 +351,7 @@ class AddNewAddressScreen extends StatelessWidget {
                             }
                           });
                         }
-                      }
+                      // }
                     },
                   )
                       : Center(

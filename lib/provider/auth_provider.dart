@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_restaurant/data/model/response/base/api_response.dart';
 import 'package:flutter_restaurant/data/model/response/base/error_response.dart';
@@ -29,7 +30,8 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     ApiResponse apiResponse = await authRepo.registration(signUpModel);
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       Map map = apiResponse.response.data;
       String token = map["token"];
       authRepo.saveUserToken(token);
@@ -61,9 +63,11 @@ class AuthProvider with ChangeNotifier {
     _isLoading = true;
     _loginErrorMessage = '';
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.login(email: email, password: password);
+    ApiResponse apiResponse =
+        await authRepo.login(email: email, password: password);
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       Map map = apiResponse.response.data;
       String token = map["token"];
       authRepo.saveUserToken(token);
@@ -85,6 +89,71 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
+  Future<ResponseModel> signinGoogle() async {
+    _isLoading = true;
+    _loginErrorMessage = '';
+    notifyListeners();
+    ApiResponse apiResponse = await authRepo.googleSignIn();
+    // ApiResponse apiResponse =
+    // await authRepo.login(email: email, password: password);
+    ResponseModel responseModel;
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      Map map = apiResponse.response.data;
+      String token = map["access_token"];
+      if(token!=null) {
+        authRepo.saveUserToken(token);
+        await authRepo.updateToken();
+        responseModel = ResponseModel(true, 'successful');
+      } else {
+        responseModel = ResponseModel(false, 'Null token received');
+      }
+    } else {
+      String errorMessage;
+      if (apiResponse.error is String) {
+        errorMessage = apiResponse.error.toString();
+      } else {
+        errorMessage = apiResponse.error.errors[0].message;
+      }
+      print(errorMessage);
+      _loginErrorMessage = errorMessage;
+      responseModel = ResponseModel(false, errorMessage);
+    }
+    _isLoading = false;
+    notifyListeners();
+    return responseModel;
+  }
+
+  //for otpLogin
+  bool _isOtpLoginLoading = false;
+
+  bool get isOtpLoginLoading => _isOtpLoginLoading;
+
+  Future<ResponseModel> otpLogin(String number) async {
+    _isOtpLoginLoading = true;
+    notifyListeners();
+    ApiResponse apiResponse = await authRepo.otpLogin(number);
+    _isOtpLoginLoading = false;
+    notifyListeners();
+    ResponseModel responseModel;
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
+      responseModel = ResponseModel(true, apiResponse.response.data["message"]);
+    } else {
+      String errorMessage;
+      if (apiResponse.error is String) {
+        print(apiResponse.error.toString());
+        errorMessage = apiResponse.error.toString();
+      } else {
+        ErrorResponse errorResponse = apiResponse.error;
+        print(errorResponse.errors[0].message);
+        errorMessage = errorResponse.errors[0].message;
+      }
+      responseModel = ResponseModel(false, errorMessage);
+    }
+    return responseModel;
+  }
+
   // for forgot password
   bool _isForgotPasswordLoading = false;
 
@@ -97,7 +166,8 @@ class AuthProvider with ChangeNotifier {
     _isForgotPasswordLoading = false;
     notifyListeners();
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       responseModel = ResponseModel(true, apiResponse.response.data["message"]);
     } else {
       String errorMessage;
@@ -116,8 +186,8 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> updateToken() async {
     ApiResponse apiResponse = await authRepo.updateToken();
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
-
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
     } else {
       String errorMessage;
       if (apiResponse.error is String) {
@@ -132,11 +202,13 @@ class AuthProvider with ChangeNotifier {
   Future<ResponseModel> verifyToken(String email) async {
     _isPhoneNumberVerificationButtonLoading = true;
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.verifyToken(email, _verificationCode);
+    ApiResponse apiResponse =
+        await authRepo.verifyToken(email, _verificationCode);
     _isPhoneNumberVerificationButtonLoading = false;
     notifyListeners();
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       responseModel = ResponseModel(true, apiResponse.response.data["message"]);
     } else {
       String errorMessage;
@@ -153,14 +225,17 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
-  Future<ResponseModel> resetPassword(String resetToken, String password, String confirmPassword) async {
+  Future<ResponseModel> resetPassword(
+      String resetToken, String password, String confirmPassword) async {
     _isForgotPasswordLoading = true;
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.resetPassword(resetToken, password, confirmPassword);
+    ApiResponse apiResponse =
+        await authRepo.resetPassword(resetToken, password, confirmPassword);
     _isForgotPasswordLoading = false;
     notifyListeners();
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       responseModel = ResponseModel(true, apiResponse.response.data["message"]);
     } else {
       String errorMessage;
@@ -180,7 +255,8 @@ class AuthProvider with ChangeNotifier {
   // for phone verification
   bool _isPhoneNumberVerificationButtonLoading = false;
 
-  bool get isPhoneNumberVerificationButtonLoading => _isPhoneNumberVerificationButtonLoading;
+  bool get isPhoneNumberVerificationButtonLoading =>
+      _isPhoneNumberVerificationButtonLoading;
   String _verificationMsg = '';
 
   String get verificationMessage => _verificationMsg;
@@ -205,7 +281,8 @@ class AuthProvider with ChangeNotifier {
     _isPhoneNumberVerificationButtonLoading = false;
     notifyListeners();
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       responseModel = ResponseModel(true, apiResponse.response.data["token"]);
     } else {
       String errorMessage;
@@ -224,15 +301,19 @@ class AuthProvider with ChangeNotifier {
     return responseModel;
   }
 
+
+
   Future<ResponseModel> verifyEmail(String email) async {
     _isPhoneNumberVerificationButtonLoading = true;
     _verificationMsg = '';
     notifyListeners();
-    ApiResponse apiResponse = await authRepo.verifyEmail(email, _verificationCode);
+    ApiResponse apiResponse =
+        await authRepo.verifyEmail(email, _verificationCode);
     _isPhoneNumberVerificationButtonLoading = false;
     notifyListeners();
     ResponseModel responseModel;
-    if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
+    if (apiResponse.response != null &&
+        apiResponse.response.statusCode == 200) {
       responseModel = ResponseModel(true, apiResponse.response.data["message"]);
     } else {
       String errorMessage;
@@ -250,7 +331,6 @@ class AuthProvider with ChangeNotifier {
     notifyListeners();
     return responseModel;
   }
-
 
   // for verification Code
   String _verificationCode = '';
@@ -296,6 +376,7 @@ class AuthProvider with ChangeNotifier {
   String getUserNumber() {
     return authRepo.getUserNumber() ?? "";
   }
+
   String getUserPassword() {
     return authRepo.getUserPassword() ?? "";
   }
@@ -307,6 +388,4 @@ class AuthProvider with ChangeNotifier {
   String getUserToken() {
     return authRepo.getUserToken();
   }
-
-
 }

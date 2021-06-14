@@ -25,8 +25,9 @@ dependencies:
   shimmer: ^2.0.0-nullsafety.0
   url_launcher: ^6.0.2
   webview_flutter: ^2.0.2
+  flutter_inappwebview: ^5.3.2
   firebase_core: ^1.0.1
-  firebase_messaging: ^9.0.0
+  firebase_messaging: ^10.0.1
   flutter_local_notifications: ^5.0.0-nullsafety.1
   path_provider: ^2.0.1
   flutter_html: ^2.0.0-nullsafety.0
@@ -34,8 +35,19 @@ dependencies:
   flutter_native_timezone: ^1.0.10
   percent_indicator: ^3.0.1
   googleapis_auth: ^1.1.0
+  fl_chart: ^0.36.1-nullsafety
+  flutter_svg: ^0.22.0
+  flutter_polyline_points: ^1.0.0
+  firebase_auth: ^1.3.0
+  google_sign_in: ^5.0.4
+  flutter_secure_storage: ^4.2.0
+  razorpay_flutter: ^1.2.6
+  location_permissions: ^4.0.0
+#  permission_handler: ^8.0.1
 #  flutter_dialogflow_v2: ^0.3.2
 #  kommunicate_flutter: ^1.1.7
+
+
 
 
 dev_dependencies:
@@ -59,3 +71,14 @@ flutter:
           weight: 500
         - asset: assets/fonts/Rubik-Bold.ttf
           weight: 700
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 700
+    - family: Raleway
+      fonts:
+        - asset: assets/fonts/Raleway/Raleway-Regular.ttf

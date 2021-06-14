@@ -3,7 +3,9 @@ import 'package:flutter_restaurant/data/model/body/review_body_model.dart';
 import 'package:flutter_restaurant/data/model/response/order_details_model.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
+import 'package:flutter_restaurant/provider/profile_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
@@ -37,41 +39,45 @@ class ProductReviewWidget extends StatelessWidget {
               ),
               child: Column(
                 children: [
-
                   // Product details
                   Row(
                     children: [
-                      ClipRRect(
+                  // (Provider.of<SplashProvider>(context, listen: false).baseUrls!=null)?
+                  ClipRRect(
                         borderRadius: BorderRadius.circular(10),
                         child: FadeInImage.assetNetwork(
                           placeholder: Images.placeholder_image,
-                          image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${orderDetailsList[index].productDetails.image}',
+                          image: '${Provider.of<SplashProvider>(context, listen: false).baseUrls?.productImageUrl}/${orderDetailsList[index].productDetails.image}',
                           height: 70,
                           width: 85,
                           fit: BoxFit.cover,
                           imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                            return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                            return Image.asset(Images.placeholder_image, fit: BoxFit.contain,
+                              height: 70,
+                              width: 85,
+                            );
                           },
                         ),
                       ),
+                      // :null,
                       SizedBox(width: Dimensions.PADDING_SIZE_SMALL),
                       Expanded(child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(orderDetailsList[index].productDetails.name, style: rubikMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
+                          Text(orderDetailsList[index].productDetails.name, style: robotoMedium, maxLines: 2, overflow: TextOverflow.ellipsis),
                           SizedBox(height: 10),
-                          Text(PriceConverter.convertPrice(context, orderDetailsList[index].productDetails.price), style: rubikBold),
+                          Text(PriceConverter.convertPrice(context, orderDetailsList[index].productDetails.price), style: robotoBold),
                         ],
                       )),
                       Row(children: [
                         Text(
                           '${getTranslated('quantity', context)}: ',
-                          style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                          style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
                         ),
                         Text(
                           orderDetailsList[index].quantity.toString(),
-                          style: rubikMedium.copyWith(color: ColorResources.getPrimaryColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),
+                          style: robotoMedium.copyWith(color: ColorResources.getPrimaryColor(context), fontSize: Dimensions.FONT_SIZE_SMALL),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ]),
@@ -82,7 +88,7 @@ class ProductReviewWidget extends StatelessWidget {
                   // Rate
                   Text(
                     getTranslated('rate_the_food', context),
-                    style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                    style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
                   SizedBox(
@@ -112,7 +118,7 @@ class ProductReviewWidget extends StatelessWidget {
                   SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                   Text(
                     getTranslated('share_your_opinion', context),
-                    style: rubikMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
+                    style: robotoMedium.copyWith(color: ColorResources.getGreyBunkerColor(context)), overflow: TextOverflow.ellipsis,
                   ),
                   SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
                   CustomTextField(
@@ -148,9 +154,12 @@ class ProductReviewWidget extends StatelessWidget {
                                 }
                                 ReviewBody reviewBody = ReviewBody(
                                   productId: orderDetailsList[index].productId.toString(),
-                                  rating: productProvider.ratingList[index].toString(),
+                                  rating: productProvider.ratingList[index],
                                   comment: productProvider.reviewList[index],
                                   orderId: orderDetailsList[index].orderId.toString(),
+                                  userId: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.id.toString(),
+                                  userImage: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.image,
+                                  userName: Provider.of<ProfileProvider>(context,listen: false).userInfoModel.fName,
                                 );
                                 productProvider.submitReview(index, reviewBody).then((value) {
                                   if (value.isSuccess) {

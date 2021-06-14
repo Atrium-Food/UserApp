@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_restaurant/data/model/response/cart_model.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_restaurant/data/model/response/product_model.dart';
 import 'package:flutter_restaurant/helper/date_converter.dart';
 import 'package:flutter_restaurant/helper/price_converter.dart';
 import 'package:flutter_restaurant/localization/language_constrants.dart';
+import 'package:flutter_restaurant/provider/auth_provider.dart';
 import 'package:flutter_restaurant/provider/cart_provider.dart';
 import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
@@ -17,6 +19,7 @@ import 'package:flutter_restaurant/utill/images.dart';
 import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/custom_app_bar.dart';
 import 'package:flutter_restaurant/view/base/custom_button.dart';
+import 'package:flutter_restaurant/view/base/custom_snackbar.dart';
 import 'package:flutter_restaurant/view/base/rating_bar.dart';
 import 'package:flutter_restaurant/view/screens/home/widget/ReviewPage.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
@@ -25,18 +28,45 @@ import 'package:intl/intl.dart';
 import 'detailsPage.dart';
 import 'recipePage.dart';
 
-class CartBottomSheetScreen extends StatelessWidget {
+class CartBottomSheetScreen extends StatefulWidget {
   final Product product;
   final bool fromSetMenu;
   final Function callback;
   final CartModel cart;
   final int cartIndex;
+  final bool isAvailable;
   CartBottomSheetScreen(
       {@required this.product,
       this.fromSetMenu = false,
       this.callback,
       this.cart,
-      this.cartIndex});
+      this.cartIndex,
+        this.isAvailable=true,
+      });
+
+  @override
+  _CartBottomSheetScreenState createState() => _CartBottomSheetScreenState();
+}
+
+class _CartBottomSheetScreenState extends State<CartBottomSheetScreen>
+    with SingleTickerProviderStateMixin {
+  ScrollController _scrollController;
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+
+    _tabController = TabController(length: 3, vsync: this);
+    _scrollController = ScrollController(keepScrollOffset: false);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _scrollController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,126 +74,128 @@ class CartBottomSheetScreen extends StatelessWidget {
         List.generate(7, (index) => {"id": index, "name": "Ingredient $index"})
             .toList();
 
-    final List<Widget> ingredients = [
-      Row(children: [
-        Text(
-          'Ingredient1',
-          style: rubikRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Text(
-          'Ingredient2',
-          style: rubikRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-      Row(children: [
-        Text(
-          'Ingredient3',
-          style: rubikRegular,
-        ),
-        Expanded(child: SizedBox()),
-        Container(
-          decoration: BoxDecoration(
-              color: ColorResources.getBackgroundColor(context),
-              borderRadius: BorderRadius.circular(5)),
-          child: Row(children: [
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.remove, size: 20),
-              ),
-            ),
-            Text('1',
-                style: rubikMedium.copyWith(
-                    fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
-            InkWell(
-              onTap: () {},
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: Dimensions.PADDING_SIZE_SMALL,
-                    vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-                child: Icon(Icons.add, size: 20),
-              ),
-            ),
-          ]),
-        ),
-      ]),
-    ];
+    // final List<Widget> ingredients = [
+    //   Row(children: [
+    //     Text(
+    //       'Ingredient1',
+    //       style: robotoRegular,
+    //     ),
+    //     Expanded(child: SizedBox()),
+    //     Container(
+    //       decoration: BoxDecoration(
+    //           color: ColorResources.getBackgroundColor(context),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       child: Row(children: [
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.remove, size: 20),
+    //           ),
+    //         ),
+    //         Text('1',
+    //             style: robotoMedium.copyWith(
+    //                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.add, size: 20),
+    //           ),
+    //         ),
+    //       ]),
+    //     ),
+    //   ]),
+    //   Row(children: [
+    //     Text(
+    //       'Ingredient2',
+    //       style: robotoRegular,
+    //     ),
+    //     Expanded(child: SizedBox()),
+    //     Container(
+    //       decoration: BoxDecoration(
+    //           color: ColorResources.getBackgroundColor(context),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       child: Row(children: [
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.remove, size: 20),
+    //           ),
+    //         ),
+    //         Text('1',
+    //             style: robotoMedium.copyWith(
+    //                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.add, size: 20),
+    //           ),
+    //         ),
+    //       ]),
+    //     ),
+    //   ]),
+    //   Row(children: [
+    //     Text(
+    //       'Ingredient3',
+    //       style: robotoRegular,
+    //     ),
+    //     Expanded(child: SizedBox()),
+    //     Container(
+    //       decoration: BoxDecoration(
+    //           color: ColorResources.getBackgroundColor(context),
+    //           borderRadius: BorderRadius.circular(5)),
+    //       child: Row(children: [
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.remove, size: 20),
+    //           ),
+    //         ),
+    //         Text('1',
+    //             style: robotoMedium.copyWith(
+    //                 fontSize: Dimensions.FONT_SIZE_EXTRA_LARGE)),
+    //         InkWell(
+    //           onTap: () {},
+    //           child: Padding(
+    //             padding: EdgeInsets.symmetric(
+    //                 horizontal: Dimensions.PADDING_SIZE_SMALL,
+    //                 vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+    //             child: Icon(Icons.add, size: 20),
+    //           ),
+    //         ),
+    //       ]),
+    //     ),
+    //   ]),
+    // ];
 
-    bool fromCart = cart != null;
+    bool fromCart = widget.cart != null;
     Provider.of<ProductProvider>(context, listen: false)
-        .initData(product, cart);
+        .initData(widget.product, widget.cart);
     Variation _variation = Variation();
 
     return Scaffold(
       body: DefaultTabController(
         length: 3,
         child: NestedScrollView(
+          controller: _scrollController,
           headerSliverBuilder: (context, value) {
             return [
               SliverAppBar(
+                forceElevated: value,
                 backgroundColor: ColorResources.getPrimaryColor(context),
                 toolbarHeight: MediaQuery.of(context).size.height * 0.065,
                 collapsedHeight: MediaQuery.of(context).size.height * 0.065,
@@ -175,31 +207,67 @@ class CartBottomSheetScreen extends StatelessWidget {
                 ),
                 floating: true,
                 pinned: true,
+                stretch: true,
                 flexibleSpace: FlexibleSpaceBar(
-                  titlePadding: EdgeInsets.only(left: 15),
-                  centerTitle: true,
-                  title: Container(
-                    padding: EdgeInsets.only(top: 65.0),
+                  stretchModes: [StretchMode.fadeTitle],
+                  background: Container(
+                    padding: EdgeInsets.only(top: 0.0, right: 8, left: 20),
                     alignment: Alignment.bottomLeft,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                    child: Row(
                       children: [
-                        Text(
-                          product.name,
-                          maxLines: 1,
-                          overflow: TextOverflow.visible,
-                          style: rubikMedium.copyWith(
-                              color: ColorResources.getAccentColor(context)),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.product.name,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: robotoMedium.copyWith(
+                                  color: ColorResources.getAccentColor(context),
+                                  fontSize: 21),
+                            ),
+                            RatingBar(
+                                rating: widget.product.rating != null
+                                    ?
+                                        widget.product.rating.average ?? 0
+                                    : 0.0,
+                                size: 10),
+                          ],
                         ),
-                        RatingBar(
-                            rating: product.rating.length > 0
-                                ? double.parse(product.rating[0].average)
-                                : 0.0,
-                            size: 10),
+                        Spacer(),
+                        Consumer<WishListProvider>(
+                            builder: (context, wishList, child) {
+                          return IconButton(
+                            onPressed: () {
+                              Provider.of<AuthProvider>(context, listen: false)
+                                      .isLoggedIn()
+                                  ? wishList.wishIdList
+                                          .contains(widget.product.id)
+                                      ? wishList.removeFromWishList(
+                                          widget.product, (message) {})
+                                      : wishList.addToWishList(
+                                          widget.product, (message) {})
+                                  : showCustomSnackBar(
+                                      'Login to add favorites', context);
+                            },
+                            icon: Icon(
+                              wishList.wishIdList.contains(widget.product.id)
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: wishList.wishIdList
+                                      .contains(widget.product.id)
+                                  ? ColorResources.getAccentColor(context)
+                                  : ColorResources.getAccentColor(context),
+                              size: 20,
+                            ),
+                          );
+                        })
                       ],
                     ),
                   ),
+                  titlePadding: EdgeInsets.only(left: 15),
+                  centerTitle: true,
                 ),
                 //title: Text('My App Bar'),
                 leading: IconButton(
@@ -214,15 +282,16 @@ class CartBottomSheetScreen extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 20.0, left: 15, right: 15),
                     // padding: EdgeInsets.only(top: 5, bottom: 5),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: ColorResources.getThemeColor(context),
                       borderRadius: BorderRadius.all(
                         Radius.circular(10.0),
                       ),
                     ),
                     child: TabBar(
+                      controller: _tabController,
                       unselectedLabelColor:
-                          ColorResources.getGrayColor(context),
-                      labelColor: Colors.white,
+                          ColorResources.getGreyBunkerColor(context),
+                      labelColor: ColorResources.getThemeColor(context),
                       indicator: BoxDecoration(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10.0),
@@ -234,17 +303,17 @@ class CartBottomSheetScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('DETAILS',
-                              style: rubikRegular.copyWith(fontSize: 16)),
+                              style: robotoRegular.copyWith(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('RECIPE',
-                              style: rubikRegular.copyWith(fontSize: 16)),
+                              style: robotoRegular.copyWith(fontSize: 13)),
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(2.0, 8, 2, 8),
                           child: Text('REVIEW',
-                              style: rubikRegular.copyWith(fontSize: 16)),
+                              style: robotoRegular.copyWith(fontSize: 13)),
                         ),
                       ],
                     ),
@@ -254,15 +323,17 @@ class CartBottomSheetScreen extends StatelessWidget {
             ];
           },
           body: TabBarView(
+            controller: _tabController,
             children: [
               DetailsPage(
-                product: product,
-                callback: callback,
-                cart: cart,
-                cartIndex: cartIndex,
+                product: widget.product,
+                callback: widget.callback,
+                cart: widget.cart,
+                cartIndex: widget.cartIndex,
+                isAvailable: widget.isAvailable,
               ),
-              RecipePage(product: product),
-              ReviewPage(product: product),
+              RecipePage(product: widget.product),
+              ReviewPage(product: widget.product),
             ],
           ),
         ),

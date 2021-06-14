@@ -27,7 +27,7 @@ class ChangeMethodDialog extends StatelessWidget {
 
               Text(
                 getTranslated('do_you_want_to_switch', context), textAlign: TextAlign.justify,
-                style: rubikMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
+                style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
               ),
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 

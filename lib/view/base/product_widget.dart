@@ -19,13 +19,14 @@ import 'package:intl/intl.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product product;
-  ProductWidget({@required this.product});
+  final bool isAvailable;
+  ProductWidget({@required this.product,this.isAvailable=true});
 
   @override
   Widget build(BuildContext context) {
     double _startingPrice;
     double _endingPrice;
-    if (product.choiceOptions.length != 0) {
+    if (product.choiceOptions != null && product.choiceOptions.length != 0) {
       List<double> _priceList = [];
       product.variations
           .forEach((variation) => _priceList.add(variation.price));
@@ -41,22 +42,23 @@ class ProductWidget extends StatelessWidget {
     double _discountedPrice = PriceConverter.convertWithDiscount(
         context, product.price, product.discount, product.discountType);
 
-    DateTime _currentTime =
-        Provider.of<SplashProvider>(context, listen: false).currentTime;
-    DateTime _start = DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
-    DateTime _end = DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
-    DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
-        _currentTime.day, _start.hour, _start.minute, _start.second);
-    DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
-        _currentTime.day, _end.hour, _end.minute, _end.second);
-    if (_endTime.isBefore(_startTime)) {
-      _endTime = _endTime.add(Duration(days: 1));
-    }
-    bool _isAvailable =
-        _currentTime.isAfter(_startTime) && _currentTime.isBefore(_endTime);
+    // DateTime _currentTime =
+    //     Provider.of<SplashProvider>(context, listen: false).currentTime;
+    // DateTime _start = DateFormat('hh:mm:ss').parse(product.availableTimeStarts);
+    // DateTime _end = DateFormat('hh:mm:ss').parse(product.availableTimeEnds);
+    // DateTime _startTime = DateTime(_currentTime.year, _currentTime.month,
+    //     _currentTime.day, _start.hour, _start.minute, _start.second);
+    // DateTime _endTime = DateTime(_currentTime.year, _currentTime.month,
+    //     _currentTime.day, _end.hour, _end.minute, _end.second);
+    // if (_endTime.isBefore(_startTime)) {
+    //   _endTime = _endTime.add(Duration(days: 1));
+    // }
+    // bool _isAvailable =
+    //     _currentTime.isAfter(_startTime) && _currentTime.isBefore(_endTime);
 
     return InkWell(
       onTap: () {
+        print(isAvailable);
         Navigator.push(
             context,
             MaterialPageRoute(
@@ -67,14 +69,15 @@ class ProductWidget extends StatelessWidget {
                       content: Text(getTranslated('added_to_cart', context)),
                       backgroundColor: Colors.green));
                 },
+                isAvailable: isAvailable
               ),
             ));
       },
       child: Container(
-        height: 85,
+        height: 105,
         padding: EdgeInsets.symmetric(
             vertical: Dimensions.PADDING_SIZE_EXTRA_SMALL,
-            horizontal: Dimensions.PADDING_SIZE_SMALL),
+            horizontal: Dimensions.PADDING_SIZE_EXTRA_SMALL),
         margin: EdgeInsets.only(bottom: Dimensions.PADDING_SIZE_SMALL),
         decoration: BoxDecoration(
           color: Theme.of(context).accentColor,
@@ -97,15 +100,21 @@ class ProductWidget extends StatelessWidget {
                   placeholder: Images.placeholder_image,
                   image:
                       '${Provider.of<SplashProvider>(context, listen: false).baseUrls.productImageUrl}/${product.image}',
-                  imageErrorBuilder: (BuildContext context, Object exception, StackTrace stackTrace) {
-                    return Image.asset(Images.placeholder_image, fit: BoxFit.contain);
+                  imageErrorBuilder: (BuildContext context, Object exception,
+                      StackTrace stackTrace) {
+                    return Image.asset(
+                      Images.placeholder_image,
+                      fit: BoxFit.cover,
+                      height: 100,
+                      width: 95,
+                    );
                   },
-                  height: 70,
-                  width: 85,
+                  height: 100,
+                  width: 95,
                   fit: BoxFit.cover,
                 ),
               ),
-              _isAvailable
+              isAvailable
                   ? SizedBox()
                   : Positioned(
                       top: 0,
@@ -118,11 +127,11 @@ class ProductWidget extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                             color: Colors.black.withOpacity(0.6)),
                         child: Text(
-                            getTranslated('not_available_now_break', context),
+                            'Not available\n in your area',
                             textAlign: TextAlign.center,
-                            style: rubikRegular.copyWith(
+                            style: robotoRegular.copyWith(
                               color: Colors.white,
-                              fontSize: 8,
+                              fontSize: 12,
                             )),
                       ),
                     ),
@@ -132,57 +141,98 @@ class ProductWidget extends StatelessWidget {
           Expanded(
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Text(product.name,
-                      style: rubikMedium,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Flexible(
+                        child: Text(product.name,
+                            style: robotoMedium.copyWith(fontSize: 15),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis),
+                      ),
+                      InkWell(
+                          onTap: () {
+                            showModalBottomSheet(
+                              context: context,
+                              isScrollControlled: true,
+                              backgroundColor: Colors.transparent,
+                              builder: (con) => CartBottomSheet(
+                                product: product,
+                                callback: (CartModel cartModel) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(getTranslated(
+                                              'added_to_cart', context)),
+                                          backgroundColor: Colors.green));
+                                },
+                                isAvailable: isAvailable,
+                              ),
+                            );
+                          },
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  // boxShadow: [
+                                  //   BoxShadow(
+                                  //     color: ColorResources.getGrayColor(context),
+                                  //     blurRadius: 10.0,
+                                  //   ),
+                                  // ]
+                                  border: Border.all(
+                                      color: ColorResources.getGrayColor(
+                                          context))),
+                              child: Icon(
+                                Icons.add,
+                                color: ColorResources.getAccentColor(context),
+                                size: 20,
+                              ))),
+                    ],
+                  ),
                   SizedBox(height: 5.0),
                   Text(
-                    '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
-                    '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
-                    style: rubikMedium.copyWith(
-                        fontSize: Dimensions.FONT_SIZE_SMALL),
+                    product.description ?? '',
+                    style: robotoMedium.copyWith(
+                        fontSize: Dimensions.FONT_SIZE_SMALL,
+                        fontWeight: FontWeight.w300,
+                        color: ColorResources.getGrayColor(context)),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${PriceConverter.convertPrice(context, _startingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}'
+                        '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, discount: product.discount, discountType: product.discountType, asFixed: 1)}' : ''}',
+                        style: robotoMedium.copyWith(
+                            fontSize: Dimensions.FONT_SIZE_DEFAULT - 1,
+                            fontWeight: FontWeight.w600),
+                      ),
+                      RatingBar(
+                        rating: product.rating != null
+                            // product.rating.length > 0
+                            ? product.rating.average ?? 0 :0
+                            ,
+                        size: 10,
+                        color: ColorResources.getGrayColor(context),
+                      ),
+                    ],
                   ),
                   product.price > _discountedPrice
                       ? Text(
                           '${PriceConverter.convertPrice(context, _startingPrice, asFixed: 1)}'
                           '${_endingPrice != null ? ' - ${PriceConverter.convertPrice(context, _endingPrice, asFixed: 1)}' : ''}',
-                          style: rubikMedium.copyWith(
+                          style: robotoMedium.copyWith(
                             color: ColorResources.COLOR_GREY,
                             decoration: TextDecoration.lineThrough,
-                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL,
+                            fontSize: Dimensions.FONT_SIZE_EXTRA_SMALL - 1,
                           ))
                       : SizedBox(),
                 ]),
           ),
-          Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-            GestureDetector(
-                onTap: () {
-                  showModalBottomSheet(
-                    context: context,
-                    isScrollControlled: true,
-                    backgroundColor: Colors.transparent,
-                    builder: (con) => CartBottomSheet(
-                      product: product,
-                      callback: (CartModel cartModel) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text(getTranslated('added_to_cart', context)),
-                            backgroundColor: Colors.green));
-                      },
-                    ),
-                  );
-                },
-                child: Icon(Icons.add)),
-            Expanded(child: SizedBox()),
-            RatingBar(
-                rating: product.rating.length > 0
-                    ? double.parse(product.rating[0].average)
-                    : 0.0,
-                size: 10),
-          ]),
         ]),
       ),
     );
