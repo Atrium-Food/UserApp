@@ -30,7 +30,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     // selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
-    selectedUrl = 'http://3.108.112.158/razorpay-payment';
+    selectedUrl =
+        'http://3.108.112.158/paywithrazorpay/${widget.orderModel.id}';
 
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }

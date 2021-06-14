@@ -647,20 +647,26 @@ class OrderDetailsScreen extends StatelessWidget {
                                     child: CustomButton(
                                       btnTxt: getTranslated('pay_now', context),
                                       onTap: () async {
-                                        // Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => PaymentScreen(orderModel: order.trackModel, fromCheckout: false)));
                                         Navigator.pushReplacement(
                                             context,
                                             MaterialPageRoute(
-                                              builder: (_) => RazorPayment(
-                                                orderModel: order.trackModel,
-                                                amount: _total,
-                                                userInfoModel: Provider.of<
-                                                            ProfileProvider>(
-                                                        context,
-                                                        listen: false)
-                                                    .userInfoModel,
-                                              ),
-                                            ));
+                                                builder: (_) => PaymentScreen(
+                                                    orderModel:
+                                                        order.trackModel,
+                                                    fromCheckout: false)));
+                                        // Navigator.pushReplacement(
+                                        //     context,
+                                        //     MaterialPageRoute(
+                                        //       builder: (_) => RazorPayment(
+                                        //         orderModel: order.trackModel,
+                                        //         amount: _total,
+                                        //         userInfoModel: Provider.of<
+                                        //                     ProfileProvider>(
+                                        //                 context,
+                                        //                 listen: false)
+                                        //             .userInfoModel,
+                                        //       ),
+                                        //     ));
                                       },
                                     ),
                                   ))

@@ -32,7 +32,7 @@ class AppConstants {
       '/api/v1/customer/address/delete?address_id=';
   static const String ADD_ADDRESS_URI = '/api/v1/customer/address/add';
   static const String UPDATE_ADDRESS_URI = '/api/v1/customer/address/update/';
-  static const String GOOGLE_AUTH_URI='/api/v1/auth/social';
+  static const String GOOGLE_AUTH_URI = '/api/v1/auth/social';
 
   // static const String SET_MENU_URI = '/api/v1/products/set-menu';
   static const String CUSTOMER_INFO_URI = '/api/v1/customer/info';
