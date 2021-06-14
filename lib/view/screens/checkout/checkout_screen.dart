@@ -532,12 +532,14 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (_) => RazorPayment(
-                    orderModel: _orderModel,
-                    amount: widget.amount,
-                    userInfoModel:
-                        Provider.of<ProfileProvider>(context, listen: false)
-                            .userInfoModel)));
+                builder: (_) => PaymentScreen(orderModel: _orderModel, fromCheckout: true)
+                    // RazorPayment(
+                    // orderModel: _orderModel,
+                    // amount: widget.amount,
+                    // userInfoModel:
+                    //     Provider.of<ProfileProvider>(context, listen: false)
+                    //         .userInfoModel)
+            ));
       }
     } else {
       _scaffoldKey.currentState.showSnackBar(

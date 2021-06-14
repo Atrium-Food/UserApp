@@ -30,8 +30,9 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     // selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
-    selectedUrl = 'http://3.108.112.158/razorpay-payment';
+    selectedUrl = '${AppConstants.BASE_URL}/paywithrazorpay/${widget.orderModel.id}';
 
+    print(selectedUrl);
     if (Platform.isAndroid) WebView.platform = SurfaceAndroidWebView();
   }
 
@@ -62,6 +63,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                   _isLoading = true;
                 });
                 if (url == '${AppConstants.BASE_URL}/payment-success') {
+                  print(url);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -71,6 +73,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 addressID: widget.orderModel.deliveryAddressId,
                               )));
                 } else if (url == '${AppConstants.BASE_URL}/payment-fail') {
+                  print(url);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
@@ -80,6 +83,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 addressID: widget.orderModel.deliveryAddressId,
                               )));
                 } else if (url == '${AppConstants.BASE_URL}/payment-cancel') {
+                  print(url);
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(

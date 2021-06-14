@@ -690,13 +690,16 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
         Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-                builder: (_) => RazorPayment(
-                      amount: widget.amount,
-                      orderModel: _orderModel,
-                      userInfoModel:
-                          Provider.of<ProfileProvider>(context, listen: false)
-                              .userInfoModel,
-                    )));
+                builder: (_) =>
+                    PaymentScreen(orderModel: _orderModel, fromCheckout: true)
+                    // RazorPayment(
+                    //   amount: widget.amount,
+                    //   orderModel: _orderModel,
+                    //   userInfoModel:
+                    //       Provider.of<ProfileProvider>(context, listen: false)
+                    //           .userInfoModel,
+                    // )
+            ));
       }
     } else {
       // _scaffoldKey.currentState.showSnackBar(

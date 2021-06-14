@@ -61,7 +61,6 @@ class AuthRepo {
       User currentUser = await _auth.currentUser;
 
       // String _token = googleSignInAuthentication.accessToken;
-
       String _token = await currentUser.getIdToken(true);
       print("Google Token: $_token");
       // while (_token.length > 0) {
