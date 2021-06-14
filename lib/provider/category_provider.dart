@@ -33,13 +33,13 @@ class CategoryProvider extends ChangeNotifier {
     }
   }
 
-  void getSubCategoryList(BuildContext context, String categoryID) async {
+  void getSubCategoryList(BuildContext context, String categoryID, {double lat,double long}) async {
     _subCategoryList = null;
     ApiResponse apiResponse = await categoryRepo.getSubCategoryList(categoryID);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _subCategoryList= [];
       apiResponse.response.data.forEach((category) => _subCategoryList.add(CategoryModel.fromJson(category)));
-      getCategoryProductList(context, categoryID);
+      getCategoryProductList(context, categoryID, lat: lat,long: long);
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }

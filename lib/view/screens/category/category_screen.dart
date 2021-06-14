@@ -10,6 +10,7 @@ import 'package:flutter_restaurant/utill/styles.dart';
 import 'package:flutter_restaurant/view/base/no_data_screen.dart';
 import 'package:flutter_restaurant/view/base/product_shimmer.dart';
 import 'package:flutter_restaurant/view/base/product_widget.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CategoryScreen extends StatefulWidget {
@@ -26,7 +27,8 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
   @override
   void initState() {
     super.initState();
-    Provider.of<CategoryProvider>(context, listen: false).getSubCategoryList(context, widget.categoryModel.id.toString());
+    LatLng _latLng = Provider.of<LocationProvider>(context,listen: false).filterLatLng;
+    Provider.of<CategoryProvider>(context, listen: false).getSubCategoryList(context, widget.categoryModel.id.toString(),lat: _latLng.latitude,long: _latLng.longitude);
   }
 
   @override

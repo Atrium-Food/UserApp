@@ -48,6 +48,8 @@ class MyNotification {
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print("onMessageApp: ${message.data}");
     });
+
+    // FirebaseMessaging.instance.getToken()
   }
 
   static Future<void> showNotification(Map<String, dynamic> message, FlutterLocalNotificationsPlugin fln) async {
