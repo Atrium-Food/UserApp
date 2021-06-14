@@ -549,199 +549,199 @@ class CartBottomSheet extends StatelessWidget {
                   : SizedBox(),
 
               //Ingredients
-              Text('Ingredients',
-                  style: robotoMedium.copyWith(
-                      fontSize: Dimensions.FONT_SIZE_LARGE)),
+              // Text('Ingredients',
+              //     style: robotoMedium.copyWith(
+              //         fontSize: Dimensions.FONT_SIZE_LARGE)),
+              //
+              // SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
 
-              SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-
-              ListView.builder(
-                // Let the ListView know how many items it needs to build.
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: product.ingredients.length,
-                // Provide a builder function. This is where the magic happens.
-                // Convert each item into a widget based on the type of item it is.
-                itemBuilder: (context, index) {
-                  final ingredient = product.ingredients[index];
-
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        ingredient.name,
-                        style: robotoRegular,
-                      ),
-                    ],
-                  );
-                },
-              ),
+              // ListView.builder(
+              //   // Let the ListView know how many items it needs to build.
+              //   shrinkWrap: true,
+              //   physics: NeverScrollableScrollPhysics(),
+              //   itemCount: product.ingredients.length,
+              //   // Provide a builder function. This is where the magic happens.
+              //   // Convert each item into a widget based on the type of item it is.
+              //   itemBuilder: (context, index) {
+              //     final ingredient = product.ingredients[index];
+              //
+              //     return Column(
+              //       crossAxisAlignment: CrossAxisAlignment.start,
+              //       children: [
+              //         Text(
+              //           ingredient.name,
+              //           style: robotoRegular,
+              //         ),
+              //       ],
+              //     );
+              //   },
+              // ),
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
               // Addons
-              // product.addOns.length > 0
-              //     ? Column(
-              //         crossAxisAlignment: CrossAxisAlignment.start,
-              //         children: [
-              //             Text(getTranslated('addons', context),
-              //                 style: robotoMedium.copyWith(
-              //                     fontSize: Dimensions.FONT_SIZE_LARGE)),
-              //             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              //             GridView.builder(
-              //               gridDelegate:
-              //                   SliverGridDelegateWithFixedCrossAxisCount(
-              //                 crossAxisCount: 4,
-              //                 crossAxisSpacing: 20,
-              //                 mainAxisSpacing: 10,
-              //                 childAspectRatio: (1 / 1.1),
-              //               ),
-              //               shrinkWrap: true,
-              //               physics: NeverScrollableScrollPhysics(),
-              //               itemCount: product.addOns.length,
-              //               itemBuilder: (context, index) {
-              //                 return InkWell(
-              //                   onTap: () {
-              //                     if (!productProvider.addOnActiveList[index]) {
-              //                       productProvider.addAddOn(true, index);
-              //                     } else if (productProvider
-              //                             .addOnQtyList[index] ==
-              //                         1) {
-              //                       productProvider.addAddOn(false, index);
-              //                     }
-              //                   },
-              //                   child: Container(
-              //                     alignment: Alignment.center,
-              //                     margin: EdgeInsets.only(
-              //                         bottom:
-              //                             productProvider.addOnActiveList[index]
-              //                                 ? 2
-              //                                 : 20),
-              //                     decoration: BoxDecoration(
-              //                       color:
-              //                           productProvider.addOnActiveList[index]
-              //                               ? ColorResources.COLOR_PRIMARY
-              //                               : ColorResources.BACKGROUND_COLOR,
-              //                       borderRadius: BorderRadius.circular(5),
-              //                       border: productProvider
-              //                               .addOnActiveList[index]
-              //                           ? null
-              //                           : Border.all(
-              //                               color: ColorResources.BORDER_COLOR,
-              //                               width: 2),
-              //                       boxShadow:
-              //                           productProvider.addOnActiveList[index]
-              //                               ? [
-              //                                   BoxShadow(
-              //                                       color: Colors.grey[
-              //                                           Provider.of<ThemeProvider>(
-              //                                                       context)
-              //                                                   .darkTheme
-              //                                               ? 700
-              //                                               : 300],
-              //                                       blurRadius: 5,
-              //                                       spreadRadius: 1)
-              //                                 ]
-              //                               : null,
-              //                     ),
-              //                     child: Column(children: [
-              //                       Expanded(
-              //                           child: Column(
-              //                               mainAxisAlignment:
-              //                                   MainAxisAlignment.center,
-              //                               children: [
-              //                             Text(product.addOns[index].name,
-              //                                 maxLines: 2,
-              //                                 overflow: TextOverflow.ellipsis,
-              //                                 textAlign: TextAlign.center,
-              //                                 style: robotoMedium.copyWith(
-              //                                   color: productProvider
-              //                                           .addOnActiveList[index]
-              //                                       ? ColorResources.COLOR_WHITE
-              //                                       : ColorResources
-              //                                           .COLOR_BLACK,
-              //                                   fontSize:
-              //                                       Dimensions.FONT_SIZE_SMALL,
-              //                                 )),
-              //                             SizedBox(height: 5),
-              //                             Text(
-              //                               PriceConverter.convertPrice(context,
-              //                                   product.addOns[index].price),
-              //                               maxLines: 1,
-              //                               overflow: TextOverflow.ellipsis,
-              //                               style: robotoRegular.copyWith(
-              //                                   color: productProvider
-              //                                           .addOnActiveList[index]
-              //                                       ? ColorResources.COLOR_WHITE
-              //                                       : ColorResources
-              //                                           .COLOR_BLACK,
-              //                                   fontSize: Dimensions
-              //                                       .FONT_SIZE_EXTRA_SMALL),
-              //                             ),
-              //                           ])),
-              //                       // productProvider.addOnActiveList[index]
-              //                       //     ? Container(
-              //                       //         height: 25,
-              //                       //         decoration: BoxDecoration(
-              //                       //             borderRadius:
-              //                       //                 BorderRadius.circular(5),
-              //                       //             color: Theme.of(context)
-              //                       //                 .accentColor),
-              //                       //         child: Row(
-              //                       //             mainAxisAlignment:
-              //                       //                 MainAxisAlignment.center,
-              //                       //             children: [
-              //                       //               Expanded(
-              //                       //                 child: InkWell(
-              //                       //                   onTap: () {
-              //                       //                     if (productProvider
-              //                       //                                 .addOnQtyList[
-              //                       //                             index] >
-              //                       //                         1) {
-              //                       //                       productProvider
-              //                       //                           .setAddOnQuantity(
-              //                       //                               false, index);
-              //                       //                     } else {
-              //                       //                       productProvider
-              //                       //                           .addAddOn(
-              //                       //                               false, index);
-              //                       //                     }
-              //                       //                   },
-              //                       //                   child: Center(
-              //                       //                       child: Icon(
-              //                       //                           Icons.remove,
-              //                       //                           size: 15)),
-              //                       //                 ),
-              //                       //               ),
-              //                       //               Text(
-              //                       //                   productProvider
-              //                       //                       .addOnQtyList[index]
-              //                       //                       .toString(),
-              //                       //                   style: robotoMedium.copyWith(
-              //                       //                       fontSize: Dimensions
-              //                       //                           .FONT_SIZE_SMALL)),
-              //                       //               Expanded(
-              //                       //                 child: InkWell(
-              //                       //                   onTap: () =>
-              //                       //                       productProvider
-              //                       //                           .setAddOnQuantity(
-              //                       //                               true, index),
-              //                       //                   child: Center(
-              //                       //                       child: Icon(Icons.add,
-              //                       //                           size: 15)),
-              //                       //                 ),
-              //                       //               ),
-              //                       //             ]),
-              //                       //       )
-              //                       //     : SizedBox(),
-              //                     ]),
-              //                   ),
-              //                 );
-              //               },
-              //             ),
-              //             SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              //           ])
-              //     : SizedBox(),
+              product.addOns.length > 0
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                          Text(getTranslated('addons', context),
+                              style: robotoMedium.copyWith(
+                                  fontSize: Dimensions.FONT_SIZE_LARGE)),
+                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                          GridView.builder(
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4,
+                              crossAxisSpacing: 20,
+                              mainAxisSpacing: 10,
+                              childAspectRatio: (1 / 1.1),
+                            ),
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: product.addOns.length,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  if (!productProvider.addOnActiveList[index]) {
+                                    productProvider.addAddOn(true, index);
+                                  } else if (productProvider
+                                          .addOnQtyList[index] ==
+                                      1) {
+                                    productProvider.addAddOn(false, index);
+                                  }
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  margin: EdgeInsets.only(
+                                      bottom:
+                                          productProvider.addOnActiveList[index]
+                                              ? 2
+                                              : 20),
+                                  decoration: BoxDecoration(
+                                    color:
+                                        productProvider.addOnActiveList[index]
+                                            ? ColorResources.COLOR_PRIMARY
+                                            : ColorResources.BACKGROUND_COLOR,
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: productProvider
+                                            .addOnActiveList[index]
+                                        ? null
+                                        : Border.all(
+                                            color: ColorResources.BORDER_COLOR,
+                                            width: 2),
+                                    boxShadow:
+                                        productProvider.addOnActiveList[index]
+                                            ? [
+                                                BoxShadow(
+                                                    color: Colors.grey[
+                                                        Provider.of<ThemeProvider>(
+                                                                    context)
+                                                                .darkTheme
+                                                            ? 700
+                                                            : 300],
+                                                    blurRadius: 5,
+                                                    spreadRadius: 1)
+                                              ]
+                                            : null,
+                                  ),
+                                  child: Column(children: [
+                                    Expanded(
+                                        child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                          Text(product.addOns[index].name,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
+                                              textAlign: TextAlign.center,
+                                              style: robotoMedium.copyWith(
+                                                color: productProvider
+                                                        .addOnActiveList[index]
+                                                    ? ColorResources.COLOR_WHITE
+                                                    : ColorResources
+                                                        .COLOR_BLACK,
+                                                fontSize:
+                                                    Dimensions.FONT_SIZE_SMALL,
+                                              )),
+                                          SizedBox(height: 5),
+                                          Text(
+                                            PriceConverter.convertPrice(context,
+                                                product.addOns[index].price),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: robotoRegular.copyWith(
+                                                color: productProvider
+                                                        .addOnActiveList[index]
+                                                    ? ColorResources.COLOR_WHITE
+                                                    : ColorResources
+                                                        .COLOR_BLACK,
+                                                fontSize: Dimensions
+                                                    .FONT_SIZE_EXTRA_SMALL),
+                                          ),
+                                        ])),
+                                    productProvider.addOnActiveList[index]
+                                        ? Container(
+                                            height: 25,
+                                            decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(5),
+                                                color: Theme.of(context)
+                                                    .accentColor),
+                                            child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      onTap: () {
+                                                        if (productProvider
+                                                                    .addOnQtyList[
+                                                                index] >
+                                                            1) {
+                                                          productProvider
+                                                              .setAddOnQuantity(
+                                                                  false, index);
+                                                        } else {
+                                                          productProvider
+                                                              .addAddOn(
+                                                                  false, index);
+                                                        }
+                                                      },
+                                                      child: Center(
+                                                          child: Icon(
+                                                              Icons.remove,
+                                                              size: 15)),
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                      productProvider
+                                                          .addOnQtyList[index]
+                                                          .toString(),
+                                                      style: robotoMedium.copyWith(
+                                                          fontSize: Dimensions
+                                                              .FONT_SIZE_SMALL)),
+                                                  Expanded(
+                                                    child: InkWell(
+                                                      onTap: () =>
+                                                          productProvider
+                                                              .setAddOnQuantity(
+                                                                  true, index),
+                                                      child: Center(
+                                                          child: Icon(Icons.add,
+                                                              size: 15)),
+                                                    ),
+                                                  ),
+                                                ]),
+                                          )
+                                        : SizedBox(),
+                                  ]),
+                                ),
+                              );
+                            },
+                          ),
+                          SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
+                        ])
+                  : SizedBox(),
 
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Text('${getTranslated('total_amount', context)}:',

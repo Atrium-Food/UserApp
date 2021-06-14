@@ -97,7 +97,7 @@ class CategoryShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 80,
+      height: 210,
       child: ListView.builder(
         itemCount: 10,
         padding: EdgeInsets.only(left: Dimensions.PADDING_SIZE_SMALL),
@@ -114,11 +114,11 @@ class CategoryShimmer extends StatelessWidget {
                   Provider.of<CategoryProvider>(context).categoryList == null,
               child: Column(children: [
                 Container(
-                  height: 65,
-                  width: 65,
+                  width: 120,
+                  height: 180,
                   decoration: BoxDecoration(
                     color: ColorResources.COLOR_WHITE,
-                    shape: BoxShape.circle,
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                 ),
                 SizedBox(height: 5),

@@ -46,7 +46,8 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     // selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
-    selectedUrl = '${AppConstants.BASE_URL}/paywithrazorpay/${widget.orderModel.id}';
+    selectedUrl =
+        '${AppConstants.BASE_URL}/paywithrazorpay/${widget.orderModel.id}';
 
     print(selectedUrl);
     if (Platform.isAndroid) wv.WebView.platform = wv.SurfaceAndroidWebView();
@@ -68,54 +69,66 @@ class _PaymentScreenState extends State<PaymentScreen> {
               initialOptions: InAppWebViewGroupOptions(
                   crossPlatform: InAppWebViewOptions(
                       useShouldOverrideUrlLoading: true,
-                      javaScriptCanOpenWindowsAutomatically: true
-                  ),
+                      javaScriptCanOpenWindowsAutomatically: true),
                   android: AndroidInAppWebViewOptions(
                       supportMultipleWindows: true,
-                      useHybridComposition: true
-                  )
-              ),
+                      useHybridComposition: true)),
               onWebViewCreated: (InAppWebViewController controller) {
                 _webViewController = controller;
-                _webViewController.loadUrl(urlRequest: URLRequest(url: Uri.parse(selectedUrl)));
+                _webViewController.loadUrl(
+                    urlRequest: URLRequest(url: Uri.parse(selectedUrl)));
               },
-              onLoadStart: (InAppWebViewController controller, Uri uri){
-                String url=uri.toString();
+              onLoadStart: (InAppWebViewController controller, Uri uri) {
+                String url = uri.toString();
                 print('Page started loading: $url');
-                    setState(() {
-                      _isLoading = true;
-                    });
-                    if (url == '${AppConstants.BASE_URL}/payment-success') {
-                      print(url);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => OrderSuccessfulScreen(
-                                    orderID: widget.orderModel.id.toString(),
-                                    status: 0,
-                                    addressID: widget.orderModel.deliveryAddressId,
-                                  )));
-                    } else if (url == '${AppConstants.BASE_URL}/payment-fail') {
-                      print(url);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => OrderSuccessfulScreen(
-                                    orderID: widget.orderModel.id.toString(),
-                                    status: 1,
-                                    addressID: widget.orderModel.deliveryAddressId,
-                                  )));
-                    } else if (url == '${AppConstants.BASE_URL}/payment-cancel') {
-                      print(url);
-                      Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                              builder: (_) => OrderSuccessfulScreen(
-                                    orderID: widget.orderModel.id.toString(),
-                                    status: 2,
-                                    addressID: widget.orderModel.deliveryAddressId,
-                                  )));
-                    }
+                setState(() {
+                  _isLoading = false;
+                });
+                if (url == '${AppConstants.BASE_URL}/payment-success') {
+                  print(url);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OrderSuccessfulScreen(
+                                orderID: widget.orderModel.id.toString(),
+                                status: 0,
+                                addressID: widget.orderModel.deliveryAddressId,
+                              )));
+                } else if (url == '${AppConstants.BASE_URL}/payment-fail') {
+                  print(url);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OrderSuccessfulScreen(
+                                orderID: widget.orderModel.id.toString(),
+                                status: 1,
+                                addressID: widget.orderModel.deliveryAddressId,
+                              )));
+                } else if (url == '${AppConstants.BASE_URL}/payment-cancel') {
+                  print(url);
+                  Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (_) => OrderSuccessfulScreen(
+                                orderID: widget.orderModel.id.toString(),
+                                status: 2,
+                                addressID: widget.orderModel.deliveryAddressId,
+                              )));
+                } else if (uri
+                        .toString()
+                        .startsWith("https://api.razorpay.com/v1/payments/") &&
+                    uri.toString().contains("?status=")) {
+                  if (uri.queryParameters["status"] == "failed")
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => OrderSuccessfulScreen(
+                                  orderID: widget.orderModel.id.toString(),
+                                  status: 1,
+                                  addressID:
+                                      widget.orderModel.deliveryAddressId,
+                                )));
+                }
               },
               onCreateWindow: (controller, createWindowRequest) async {
                 print("onCreateWindow");
@@ -132,20 +145,35 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           initialOptions: InAppWebViewGroupOptions(
                               crossPlatform: InAppWebViewOptions(
                                   useShouldOverrideUrlLoading: true,
-                                  javaScriptCanOpenWindowsAutomatically: true
-                              ),
+                                  javaScriptCanOpenWindowsAutomatically: true),
                               android: AndroidInAppWebViewOptions(
                                   supportMultipleWindows: true,
-                                  useHybridComposition: true
-                              )
-                          ),
-                          onWebViewCreated: (InAppWebViewController controller) {
+                                  useHybridComposition: true)),
+                          onWebViewCreated:
+                              (InAppWebViewController controller) {
                             _webViewPopupController = controller;
                           },
-                          onLoadStart: (InAppWebViewController controller, Uri uri) {
+                          onLoadStart:
+                              (InAppWebViewController controller, Uri uri) {
                             print("onLoadStart popup ${uri.toString()}");
+                            if (uri.toString().startsWith(
+                                    "https://api.razorpay.com/v1/payments/") &&
+                                uri.toString().contains("?status=")) {
+                              if (uri.queryParameters["status"] == "failed")
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => OrderSuccessfulScreen(
+                                              orderID: widget.orderModel.id
+                                                  .toString(),
+                                              status: 1,
+                                              addressID: widget
+                                                  .orderModel.deliveryAddressId,
+                                            )));
+                            }
                           },
-                          onLoadStop: (InAppWebViewController controller, Uri uri) {
+                          onLoadStop:
+                              (InAppWebViewController controller, Uri uri) {
                             print("onLoadStop popup ${uri.toString()}");
                             // Navigator.pop(context);
                           },
@@ -156,7 +184,6 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 );
                 return true;
               },
-
             ),
             // WebView(
             //   javascriptMode: JavascriptMode.unrestricted,
@@ -223,13 +250,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             //
             //   },
             // ),
-            // _isLoading
-            //     ? Center(
-            //         child: CircularProgressIndicator(
-            //             valueColor: AlwaysStoppedAnimation<Color>(
-            //                 Theme.of(context).primaryColor)),
-            //       )
-            //     : SizedBox.shrink(),
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor)),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ),
