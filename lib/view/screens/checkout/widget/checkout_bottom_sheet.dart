@@ -75,6 +75,8 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
       _branches = Provider.of<SplashProvider>(context, listen: false)
           .configModel
           .branches;
+      Provider.of<LocationProvider>(context, listen: false)
+          .initAddressList(context);
       // Provider.of<LocationProvider>(context, listen: false)
       //     .initAddressList(context);
       // Provider.of<OrderProvider>(context, listen: false).clearPrevData();
