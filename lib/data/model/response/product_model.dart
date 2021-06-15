@@ -149,7 +149,7 @@ class Product {
     this._recipe = recipe;
     this._nutrient = nutrient;
     this._reviews = reviews;
-    this._tags=tags;
+    this._tags = tags;
   }
 
   int get id => _id;
@@ -515,6 +515,7 @@ class AddOns {
 }
 
 class Ingredients {
+  String _image;
   int _id;
   String _name;
   int _quantity;
@@ -524,13 +525,15 @@ class Ingredients {
   int _minQuantity;
 
   Ingredients(
-      {int id,
+      {String image,
+      int id,
       String name,
       double price,
       String createdAt,
       String updatedAt,
       int quantity,
       int minQuantity}) {
+    this._image = image;
     this._id = id;
     this._name = name;
     this._price = price;
@@ -540,6 +543,7 @@ class Ingredients {
     this._minQuantity = minQuantity;
   }
 
+  String get image => _image;
   int get id => _id;
   int get quantity => _quantity;
   String get name => _name;
@@ -549,6 +553,7 @@ class Ingredients {
   int get minQuantity => _minQuantity;
 
   Ingredients.fromJson(Map<String, dynamic> json) {
+    _image = json['image'];
     _id = json['id'];
     _name = json['name'];
     _price = json['price']?.toDouble();
@@ -560,6 +565,7 @@ class Ingredients {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['image'] = this._image;
     data['id'] = this._id;
     data['name'] = this._name;
     data['price'] = this._price;
@@ -659,18 +665,17 @@ class Rating {
   }
 }
 
-class Tag{
+class Tag {
   int _id;
   String _key;
   String _createdAt;
   String _updatedAt;
 
-
   Tag({int id, String key, String createdAt, String updatedAt}) {
-    this._id=id;
-    this._key=key;
-    this._createdAt=createdAt;
-    this._updatedAt=updatedAt;
+    this._id = id;
+    this._key = key;
+    this._createdAt = createdAt;
+    this._updatedAt = updatedAt;
   }
 
   int get id => _id;
@@ -690,5 +695,4 @@ class Tag{
     data['key'] = this._key;
     return data;
   }
-
 }
