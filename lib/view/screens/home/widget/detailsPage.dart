@@ -822,23 +822,24 @@ class DetailsPage extends StatelessWidget {
                   style: robotoMedium.copyWith(
                       fontSize: Dimensions.FONT_SIZE_LARGE)),
               SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              Wrap(
-                children: product.tags
-                    .map((_tag) {
-                      return Container(
-                          padding: EdgeInsets.all(4),
-                          margin: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                              color: ColorResources.getSearchBg(context),
-                              borderRadius: BorderRadius.circular(3)),
-                          child: Text(_tag.key,
-                              style: robotoRegular.copyWith(
-                                  color:
-                                      ColorResources.getAccentColor(context))));
-                    })
-                    .toList()
-                    .cast<Widget>(),
-              ),
+              if (product.tags != null)
+                Wrap(
+                  children: product.tags
+                      .map((_tag) {
+                        return Container(
+                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                                color: ColorResources.getSearchBg(context),
+                                borderRadius: BorderRadius.circular(3)),
+                            child: Text(_tag.key,
+                                style: robotoRegular.copyWith(
+                                    color: ColorResources.getAccentColor(
+                                        context))));
+                      })
+                      .toList()
+                      .cast<Widget>(),
+                ),
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
               //Ingredients
@@ -867,7 +868,7 @@ class DetailsPage extends StatelessWidget {
                         children: [
                           ClipOval(
                             child: CircleAvatar(
-                              radius: 20.0,
+                              radius: MediaQuery.of(context).size.width * 0.08,
                               child: product.ingredients[index].image != null &&
                                       product.image[index].length != 0
                                   ? Image.network(

@@ -77,8 +77,8 @@ class AddressBottomSheet extends StatelessWidget {
                                   return InkWell(
                                     onTap: () {
                                       print(index);
-                                      order.setAddressIndex(index);
-                                      address.setAddress(index);
+                                      Provider.of<OrderProvider>(context,listen: false).setAddressIndex(index);
+                                      Provider.of<LocationProvider>(context,listen: false).setAddress(index);
                                       print(address.addressList[index].address);
                                       Navigator.pop(context);
                                     },
