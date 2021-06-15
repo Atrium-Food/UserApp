@@ -36,7 +36,9 @@ class OrderSuccessfulScreen extends StatelessWidget {
           style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_LARGE),
         ),
         SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
-
+        if (status==1)
+          Text("Pending order, pay again to confirm.",style: robotoMedium.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
+        SizedBox(height: Dimensions.PADDING_SIZE_SMALL),
         Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           Text('${getTranslated('order_id', context)}:', style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_SMALL)),
           SizedBox(width: Dimensions.PADDING_SIZE_EXTRA_SMALL),
@@ -48,7 +50,7 @@ class OrderSuccessfulScreen extends StatelessWidget {
           padding: EdgeInsets.all(Dimensions.PADDING_SIZE_LARGE),
           child: CustomButton(btnTxt: getTranslated(status == 0 ? 'track_order' : 'back_home', context), onTap: () {
             if(status == 0) {
-              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderTrackingScreen(orderID: orderID, addressID: addressID,fromNotifs: false,)));
+              Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => OrderTrackingScreen(orderID: orderID, addressID: addressID,fromNotifs:true,)));
             }else {
               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (_) => DashboardScreen()), (route) => false);
             }

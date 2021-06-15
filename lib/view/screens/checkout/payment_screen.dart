@@ -84,7 +84,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 print('Page started loading: $url');
 
                 setState(() {
-                  _isLoading = true;
+                  _isLoading = false;
                 });
                 if (url == '${AppConstants.BASE_URL}/payment-success') {
                   print(url);
@@ -116,6 +116,20 @@ class _PaymentScreenState extends State<PaymentScreen> {
                                 status: 2,
                                 addressID: widget.orderModel.deliveryAddressId,
                               )));
+                } else if (uri
+                        .toString()
+                        .startsWith("https://api.razorpay.com/v1/payments/") &&
+                    uri.toString().contains("?status=")) {
+                  if (uri.queryParameters["status"] == "failed")
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => OrderSuccessfulScreen(
+                                  orderID: widget.orderModel.id.toString(),
+                                  status: 1,
+                                  addressID:
+                                      widget.orderModel.deliveryAddressId,
+                                )));
                 }
               },
               onCreateWindow: (controller, createWindowRequest) async {
@@ -144,6 +158,21 @@ class _PaymentScreenState extends State<PaymentScreen> {
                           onLoadStart:
                               (InAppWebViewController controller, Uri uri) {
                             print("onLoadStart popup ${uri.toString()}");
+                            if (uri.toString().startsWith(
+                                    "https://api.razorpay.com/v1/payments/") &&
+                                uri.toString().contains("?status=")) {
+                              if (uri.queryParameters["status"] == "failed")
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (_) => OrderSuccessfulScreen(
+                                              orderID: widget.orderModel.id
+                                                  .toString(),
+                                              status: 1,
+                                              addressID: widget
+                                                  .orderModel.deliveryAddressId,
+                                            )));
+                            }
                           },
                           onLoadStop:
                               (InAppWebViewController controller, Uri uri) {
@@ -223,13 +252,13 @@ class _PaymentScreenState extends State<PaymentScreen> {
             //
             //   },
             // ),
-            // _isLoading
-            //     ? Center(
-            //         child: CircularProgressIndicator(
-            //             valueColor: AlwaysStoppedAnimation<Color>(
-            //                 Theme.of(context).primaryColor)),
-            //       )
-            //     : SizedBox.shrink(),
+            _isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                            Theme.of(context).primaryColor)),
+                  )
+                : SizedBox.shrink(),
           ],
         ),
       ),
