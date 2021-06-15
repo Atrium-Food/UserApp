@@ -866,14 +866,17 @@ class DetailsPage extends StatelessWidget {
                         children: [
                           CircleAvatar(
                             radius: 20.0,
-                            child: Text(
-                              product.ingredients[index].name
-                                  .substring(0, 2)
-                                  .toUpperCase(),
-                              style: robotoRegular.copyWith(
-                                  color:
-                                      ColorResources.getAccentColor(context)),
-                            ),
+                            child: product.ingredients[index].image != null &&
+                                    product.image[index].length != 0
+                                ? NetworkImage(product.ingredients[index].image)
+                                : Text(
+                                    product.ingredients[index].name
+                                        .substring(0, 2)
+                                        .toUpperCase(),
+                                    style: robotoRegular.copyWith(
+                                        color: ColorResources.getAccentColor(
+                                            context)),
+                                  ),
                             backgroundColor:
                                 ColorResources.getSearchBg(context),
                           ),
