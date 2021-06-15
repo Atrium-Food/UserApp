@@ -13,6 +13,7 @@ import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
 import 'package:flutter_restaurant/provider/wishlist_provider.dart';
+import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -864,21 +865,28 @@ class DetailsPage extends StatelessWidget {
                       child: Column(
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            radius: 20.0,
-                            child: product.ingredients[index].image != null &&
-                                    product.image[index].length != 0
-                                ? NetworkImage(product.ingredients[index].image)
-                                : Text(
-                                    product.ingredients[index].name
-                                        .substring(0, 2)
-                                        .toUpperCase(),
-                                    style: robotoRegular.copyWith(
-                                        color: ColorResources.getAccentColor(
-                                            context)),
-                                  ),
-                            backgroundColor:
-                                ColorResources.getSearchBg(context),
+                          ClipOval(
+                            child: CircleAvatar(
+                              radius: 20.0,
+                              child: product.ingredients[index].image != null &&
+                                      product.image[index].length != 0
+                                  ? Image.network(
+                                      '${AppConstants.BASE_URL}/storage/ingredient/${product.ingredients[index].image}',
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Text(
+                                      product.ingredients[index].name
+                                          .substring(0, 2)
+                                          .toUpperCase(),
+                                      style: robotoRegular.copyWith(
+                                          color: ColorResources.getAccentColor(
+                                              context)),
+                                    ),
+                              backgroundColor:
+                                  ColorResources.getSearchBg(context),
+                            ),
                           ),
                           SizedBox(
                             height: 5.0,
