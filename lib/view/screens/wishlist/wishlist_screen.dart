@@ -44,7 +44,8 @@ class _WishListScreenState extends State<WishListScreen> {
                                   EdgeInsets.all(Dimensions.PADDING_SIZE_SMALL),
                               itemBuilder: (context, index) {
                                 return ProductDescriptionWidget(
-                                    product: wishlistProvider.wishList[index]);
+                                    product: wishlistProvider.wishList[index],
+                                );
                               },
                             ),
                           )

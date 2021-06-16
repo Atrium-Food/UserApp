@@ -218,8 +218,8 @@ class DetailsPage extends StatelessWidget {
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-              Text(
-                'From Atrium',
+              if(product.cuisine!=null && product.cuisine.isNotEmpty)Text(
+                product.cuisine,
                 style: robotoMedium.copyWith(
                     fontSize: 20,
                     color: ColorResources.getAccentColor(context)),
@@ -876,6 +876,9 @@ class DetailsPage extends StatelessWidget {
                                       width: 80,
                                       height: 80,
                                       fit: BoxFit.cover,
+                                errorBuilder: (context, trace, image){
+                                        return Image.asset(Images.placeholder_image);
+                                },
                                     )
                                   : Text(
                                       product.ingredients[index].name

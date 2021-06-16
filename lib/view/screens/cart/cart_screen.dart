@@ -74,11 +74,11 @@ class CartScreen extends StatelessWidget {
                 _addOns = _addOns + (_addOnList[index].price * cartModel.addOnIds[index].quantity);
               }
               _itemPrice = _itemPrice + (cartModel.price * cartModel.quantity);
-              _discount = _discount + (cartModel.discountAmount * cartModel.quantity);
+              // _discount = _discount + (cartModel.discountAmount * cartModel.quantity);
               _tax = _tax + (cartModel.taxAmount * cartModel.quantity);
             });
             double _subTotal = _itemPrice + _tax + _addOns;
-            double _total = _subTotal - _discount - Provider.of<CouponProvider>(context).discount + deliveryCharge;
+            double _total = _subTotal + deliveryCharge - _discount - Provider.of<CouponProvider>(context).discount ;
 
             double _orderAmount = _itemPrice + _addOns;
 
@@ -137,7 +137,7 @@ class CartScreen extends StatelessWidget {
                                 print(coupon.discount);
                                 if(_couponController.text.isNotEmpty && !coupon.isLoading) {
                                   if(coupon.discount < 1) {
-                                    coupon.applyCoupon(_couponController.text, _total).then((discount) {
+                                    coupon.applyCoupon(_couponController.text, _itemPrice).then((discount) {
                                       print(discount);
                                       if (discount > 0) {
                                         showCustomSnackBar("You got ${Provider.of<SplashProvider>(context, listen: false)

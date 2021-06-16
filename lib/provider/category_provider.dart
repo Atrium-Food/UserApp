@@ -20,6 +20,15 @@ class CategoryProvider extends ChangeNotifier {
   List<CategoryModel> get subCategoryList => _subCategoryList;
   List<Product> get categoryProductList => _categoryProductList;
 
+  bool _veg = false;
+
+  bool get veg => _veg;
+
+  setVeg(bool val){
+    _veg=val;
+    notifyListeners();
+  }
+
   Future<void> getCategoryList(BuildContext context, bool reload) async {
     if(_categoryList == null || reload) {
       ApiResponse apiResponse = await categoryRepo.getCategoryList();
@@ -33,24 +42,24 @@ class CategoryProvider extends ChangeNotifier {
     }
   }
 
-  void getSubCategoryList(BuildContext context, String categoryID, {double lat,double long}) async {
+  void getSubCategoryList(BuildContext context, String categoryID, {double lat,double long,bool veg=false}) async {
     _subCategoryList = null;
     ApiResponse apiResponse = await categoryRepo.getSubCategoryList(categoryID);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _subCategoryList= [];
       apiResponse.response.data.forEach((category) => _subCategoryList.add(CategoryModel.fromJson(category)));
-      getCategoryProductList(context, categoryID, lat: lat,long: long);
+      getCategoryProductList(context, categoryID, lat: lat,long: long,veg: veg);
     } else {
       ApiChecker.checkApi(context, apiResponse);
     }
     notifyListeners();
   }
 
-  void getCategoryProductList(BuildContext context, String categoryID, {double lat, double long}) async {
+  void getCategoryProductList(BuildContext context, String categoryID, {double lat, double long,bool veg=false}) async {
     _categoryProductList = null;
     notifyListeners();
     print("Lat, Long Category: $lat, $long");
-    ApiResponse apiResponse = await categoryRepo.getCategoryProductList(categoryID,lat: lat,long: long);
+    ApiResponse apiResponse = await categoryRepo.getCategoryProductList(categoryID,lat: lat,long: long,veg: veg);
     if (apiResponse.response != null && apiResponse.response.statusCode == 200) {
       _categoryProductList = [];
       _availableList[categoryID]=apiResponse.response.data.isEmpty;
