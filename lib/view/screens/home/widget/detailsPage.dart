@@ -218,12 +218,13 @@ class DetailsPage extends StatelessWidget {
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-              if(product.cuisine!=null && product.cuisine.isNotEmpty)Text(
-                product.cuisine,
-                style: robotoMedium.copyWith(
-                    fontSize: 20,
-                    color: ColorResources.getAccentColor(context)),
-              ),
+              if (product.cuisine != null && product.cuisine.isNotEmpty)
+                Text(
+                  product.cuisine,
+                  style: robotoMedium.copyWith(
+                      fontSize: 20,
+                      color: ColorResources.getAccentColor(context)),
+                ),
 
               SizedBox(
                 height: 15,
@@ -868,7 +869,7 @@ class DetailsPage extends StatelessWidget {
                         children: [
                           ClipOval(
                             child: CircleAvatar(
-                              radius: MediaQuery.of(context).size.width * 0.08,
+                              radius: MediaQuery.of(context).size.width * 0.078,
                               child: product.ingredients[index].image != null &&
                                       product.image[index].length != 0
                                   ? Image.network(
@@ -876,9 +877,10 @@ class DetailsPage extends StatelessWidget {
                                       width: 80,
                                       height: 80,
                                       fit: BoxFit.cover,
-                                errorBuilder: (context, trace, image){
-                                        return Image.asset(Images.placeholder_image);
-                                },
+                                      errorBuilder: (context, trace, image) {
+                                        return Image.asset(
+                                            Images.placeholder_image);
+                                      },
                                     )
                                   : Text(
                                       product.ingredients[index].name
