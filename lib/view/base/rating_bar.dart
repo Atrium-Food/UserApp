@@ -6,7 +6,7 @@ class RatingBar extends StatelessWidget {
   final double size;
   final Color color;
 
-  RatingBar({@required this.rating, this.size = 18,this.color});
+  RatingBar({@required this.rating, this.size = 18, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -18,23 +18,26 @@ class RatingBar extends StatelessWidget {
     for (int i = 0; i < 5; i++) {
       if (i < realNumber) {
         _starList.add(Icon(Icons.star, color: Color(0xFFFFD700), size: size));
-      } else if (i == realNumber) {
-        _starList.add(SizedBox(
-          height: size,
-          width: size,
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Icon(Icons.star, color: Color(0xFFFFD700), size: size),
-              ClipRect(
-                clipper: _Clipper(part: partNumber),
-                child: Icon(Icons.star_border, color: Color(0xFFFFD700), size: size),
-              )
-            ],
-          ),
-        ));
-      } else {
-        _starList.add(Icon(Icons.star_border, color: Color(0xFFFFD700), size: size));
+      }
+      // else if (i == realNumber) {
+      //   _starList.add(SizedBox(
+      //     height: size,
+      //     width: size,
+      //     child: Stack(
+      //       fit: StackFit.expand,
+      //       children: [
+      //         Icon(Icons.star_border, color: Color(0xFFFFD700), size: size),
+      //         ClipRect(
+      //           clipper: _Clipper(part: partNumber),
+      //           child: Icon(Icons.star, color: Color(0xFFFFD700), size: size),
+      //         )
+      //       ],
+      //     ),
+      //   ));
+      // }
+      else {
+        _starList
+            .add(Icon(Icons.star_border, color: Color(0xFFFFD700), size: size));
       }
     }
 
@@ -55,7 +58,7 @@ class _Clipper extends CustomClipper<Rect> {
     return Rect.fromLTRB(
       (size.width / 10) * part,
       0.0,
-      size.width,
+      (size.width / 10) * part,
       size.height,
     );
   }
