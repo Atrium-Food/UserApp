@@ -121,7 +121,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                     style: robotoRegular.copyWith(
                         fontWeight: FontWeight.w400),
                   )
-                      : Text(""),
+                      : null,
                 ),
                 if(order.addressIndex == -1)
                     Padding(
@@ -133,10 +133,10 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (_) => AddLocationScreen(
-                                        fromCheckout: true))),
+                                        fromCheckout: true, isUseAddress: true,))),
                             icon: Icon(Icons.add),
                             label:
-                                Text('Add address', style: robotoRegular),
+                                Text("Confirm current address", style: robotoRegular),
                           ),
                         ]),
                       ),
@@ -610,7 +610,7 @@ class _CheckoutBottomSheetState extends State<CheckoutBottomSheet> {
                                   //   behavior: SnackBarBehavior.floating,
                                   // ));
                                   setState(() {
-                                    _errorMessage = 'Select an address';
+                                    _errorMessage = 'Confirm Address';
                                   });
                                 } else {
                                   List<Cart> carts = [];

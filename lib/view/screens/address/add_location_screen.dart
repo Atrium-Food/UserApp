@@ -20,8 +20,9 @@ import 'package:provider/provider.dart';
 class AddLocationScreen extends StatefulWidget {
   final bool isEnableUpdate;
   final bool fromCheckout;
+  final bool isUseAddress;
   final AddressModel address;
-  AddLocationScreen({this.isEnableUpdate = false, this.address, this.fromCheckout = false});
+  AddLocationScreen({this.isEnableUpdate = false, this.isUseAddress = false, this.address, this.fromCheckout = false});
 
   @override
   _AddLocationScreenState createState() => _AddLocationScreenState();
@@ -83,11 +84,11 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
       ),
       body: Consumer<LocationProvider>(
         builder: (context, locationProvider, child) {
-          // if (widget.isEnableUpdate && locationProvider.address != null) {
-          //   _locationController.text = '${locationProvider.address.name ?? ''}, '
-          //       '${locationProvider.address.subAdministrativeArea ?? ''}, '
-          //       '${locationProvider.address.isoCountryCode ?? ''}';
-          // }
+          if (widget.isUseAddress && locationProvider.address != null) {
+            _locationController.text = '${locationProvider.address.name ?? ''}, '
+                '${locationProvider.address.subAdministrativeArea ?? ''}, '
+                '${locationProvider.address.isoCountryCode ?? ''}';
+          }
           return Column(
             children: [
               Expanded(
@@ -454,6 +455,16 @@ class _AddLocationScreenState extends State<AddLocationScreen> {
                                             if (widget.fromCheckout) {
                                               Provider.of<LocationProvider>(context, listen: false).initAddressList(context);
                                               Provider.of<OrderProvider>(context, listen: false).setAddressIndex(-1);
+                                              if(widget.isUseAddress)
+                                                {
+                                                  int len=Provider.of<LocationProvider>(context,listen: false).addressList.length;
+                                                  // print("----------Addresses-------------");
+                                                //   for(AddressModel i in Provider.of<LocationProvider>(context,listen: false).addressList){
+                                                //     print(i.toJson());
+                                                // }
+                                                  Provider.of<OrderProvider>(context,listen: false).setAddressIndex(0);
+                                                  Provider.of<LocationProvider>(context,listen: false).setAddress(0);
+                                                }
                                               Navigator.pop(context);
                                             } else {
                                               // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(value.message), backgroundColor: Colors.green));

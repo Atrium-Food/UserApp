@@ -205,12 +205,14 @@ class LocationProvider with ChangeNotifier {
 
   String _addressSheetMessage='';
   String get addressSheetMessage => _addressSheetMessage;
+
   void getUserLocation({BuildContext context,bool isReset=false, bool fromSheet=false}) async {
     if (isReset || _locality == null ) {
       _addressSheetMessage='';
       if(!isReset) {
         _currentLocation = await locateUser();
         if (_currentLocation != null)
+          print("Location not null");
           _filterLatLng =
               LatLng(_currentLocation.latitude, _currentLocation.longitude);
         notifyListeners();
@@ -232,6 +234,7 @@ class LocationProvider with ChangeNotifier {
           var currentAddresses = await placemarkFromCoordinates(
               _currentLocation.latitude, _currentLocation.longitude);
           _locality = currentAddresses.first.locality;
+          _address=currentAddresses.first;
           notifyListeners();
         } on Exception catch (e) {
           print("$e Address can't be found");

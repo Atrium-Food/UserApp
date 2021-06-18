@@ -40,7 +40,11 @@ class AddressBottomSheet extends StatelessWidget {
                                   isReset: true,
                                   fromSheet: true);
                           if (address.addressSheetMessage.isEmpty) {
+                            print("Why the hell");
+                            Provider.of<OrderProvider>(context,listen: false).setAddressIndex(-1);
+                            Provider.of<LocationProvider>(context,listen: false).setAddress(-1);
                             Navigator.pop(context);
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => AddLocationScreen()));
                           }
                         },
                         icon: Icon(Icons.gps_fixed),

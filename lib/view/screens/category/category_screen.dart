@@ -32,6 +32,13 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Provider.of<CategoryProvider>(context,listen: false).setVeg(false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorResources.getBackgroundColor(context),
