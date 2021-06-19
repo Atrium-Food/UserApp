@@ -21,7 +21,7 @@ class AddressBottomSheet extends StatelessWidget {
         builder: (context) {
           return Consumer<LocationProvider>(builder: (context, address, child) {
             return Container(
-              padding: EdgeInsets.all(10),
+              padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
               child: Consumer<OrderProvider>(builder: (context, order, child) {
                 return Column(mainAxisSize: MainAxisSize.min, children: [
                   Padding(
@@ -30,27 +30,39 @@ class AddressBottomSheet extends StatelessWidget {
                     child: Row(children: [
                       TextButton.icon(
                         onPressed: () async {
-
                           // Position _position =
                           //     await Provider.of<LocationProvider>(context,
                           //             listen: false)
                           //         .locateUser();
-                          Provider.of<LocationProvider>(context,listen: false).getUserLocation(context: context,isReset: true,fromSheet: true);
-                          if(address.addressSheetMessage.isEmpty){
+                          Provider.of<LocationProvider>(context, listen: false)
+                              .getUserLocation(
+                                  context: context,
+                                  isReset: true,
+                                  fromSheet: true);
+                          if (address.addressSheetMessage.isEmpty) {
+                            print("Why the hell");
+                            Provider.of<OrderProvider>(context,listen: false).setAddressIndex(-1);
+                            Provider.of<LocationProvider>(context,listen: false).setAddress(-1);
                             Navigator.pop(context);
+                            // Navigator.push(context, MaterialPageRoute(builder: (context) => AddLocationScreen()));
                           }
-                          },
+                        },
                         icon: Icon(Icons.gps_fixed),
                         label:
                             Text('Use current location', style: robotoRegular),
                       ),
-                      Text(address.addressSheetMessage,style: robotoRegular.copyWith(color: ColorResources.getPrimaryColor(context),fontSize: 10),)
+                      Text(
+                        address.addressSheetMessage,
+                        style: robotoRegular.copyWith(
+                            color: ColorResources.getPrimaryColor(context),
+                            fontSize: 10),
+                      )
                     ]),
                   ),
                   ConstrainedBox(
                     constraints: BoxConstraints(
                         maxHeight: MediaQuery.of(context).size.height * 0.4,
-                        minHeight: MediaQuery.of(context).size.height * 0.05),
+                        minHeight: MediaQuery.of(context).size.height * 0.04),
                     child: address.addressList != null
                         ? address.addressList.length > 0
                             ? ListView.separated(
@@ -69,8 +81,8 @@ class AddressBottomSheet extends StatelessWidget {
                                   return InkWell(
                                     onTap: () {
                                       print(index);
-                                      order.setAddressIndex(index);
-                                      address.setAddress(index);
+                                      Provider.of<OrderProvider>(context,listen: false).setAddressIndex(index);
+                                      Provider.of<LocationProvider>(context,listen: false).setAddress(index);
                                       print(address.addressList[index].address);
                                       Navigator.pop(context);
                                     },
@@ -226,7 +238,7 @@ class AddressBottomSheet extends StatelessWidget {
                                     'no_address_available', context)))
                         : SizedBox(),
                   ),
-                  Padding(
+                  Container(
                     padding: EdgeInsets.symmetric(
                         horizontal: Dimensions.PADDING_SIZE_SMALL),
                     child: Row(children: [

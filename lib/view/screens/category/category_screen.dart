@@ -32,6 +32,13 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    Provider.of<CategoryProvider>(context,listen: false).setVeg(false);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: ColorResources.getBackgroundColor(context),
@@ -90,12 +97,11 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                                   Text("Veg",style: robotoRegular.copyWith(fontSize: Dimensions.FONT_SIZE_DEFAULT),),
                                   Switch(
                                     activeColor: ColorResources.getPrimaryColor(context),
-                                      value: veg,
+                                      value: category.veg,
                                       onChanged: (val){
-                                        setState(() {
-                                          veg=val;
-                                        });
-
+                                        Provider.of<CategoryProvider>(context,listen: false).setVeg(val);
+                                        LatLng _latLng = Provider.of<LocationProvider>(context,listen: false).filterLatLng;
+                                        Provider.of<CategoryProvider>(context, listen: false).getSubCategoryList(context, widget.categoryModel.id.toString(),lat: _latLng.latitude,long: _latLng.longitude,veg: category.veg);
                                       }
                                   )
                                 ],
@@ -115,10 +121,10 @@ class _CategoryScreenState extends State<CategoryScreen> with TickerProviderStat
                                 if(index == 0) {
                                   print("Here");
                                   if(locationProvider.filterLatLng!=null)
-                                  category.getCategoryProductList(context, widget.categoryModel.id.toString(),lat: locationProvider.filterLatLng.latitude,long: locationProvider.filterLatLng.longitude);
+                                  category.getCategoryProductList(context, widget.categoryModel.id.toString(),lat: locationProvider.filterLatLng.latitude,long: locationProvider.filterLatLng.longitude,veg: category.veg);
                                   // category.getCategoryProductList(context, widget.categoryModel.id.toString(),lat: 20,long: 20);
                                 }else {
-                                  category.getCategoryProductList(context, category.subCategoryList[index-1].id.toString());
+                                  category.getCategoryProductList(context, category.subCategoryList[index-1].id.toString(),veg: category.veg);
                                 }
                               },
                             ),

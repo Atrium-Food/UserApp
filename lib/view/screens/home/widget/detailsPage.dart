@@ -13,6 +13,7 @@ import 'package:flutter_restaurant/provider/product_provider.dart';
 import 'package:flutter_restaurant/provider/splash_provider.dart';
 import 'package:flutter_restaurant/provider/theme_provider.dart';
 import 'package:flutter_restaurant/provider/wishlist_provider.dart';
+import 'package:flutter_restaurant/utill/app_constants.dart';
 import 'package:flutter_restaurant/utill/color_resources.dart';
 import 'package:flutter_restaurant/utill/dimensions.dart';
 import 'package:flutter_restaurant/utill/images.dart';
@@ -217,12 +218,13 @@ class DetailsPage extends StatelessWidget {
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
 
-              Text(
-                'From Atrium',
-                style: robotoMedium.copyWith(
-                    fontSize: 20,
-                    color: ColorResources.getAccentColor(context)),
-              ),
+              if (product.cuisine != null && product.cuisine.isNotEmpty)
+                Text(
+                  product.cuisine,
+                  style: robotoMedium.copyWith(
+                      fontSize: 20,
+                      color: ColorResources.getAccentColor(context)),
+                ),
 
               SizedBox(
                 height: 15,
@@ -821,23 +823,24 @@ class DetailsPage extends StatelessWidget {
                   style: robotoMedium.copyWith(
                       fontSize: Dimensions.FONT_SIZE_LARGE)),
               SizedBox(height: Dimensions.PADDING_SIZE_EXTRA_SMALL),
-              Wrap(
-                children: product.tags
-                    .map((_tag) {
-                      return Container(
-                          padding: EdgeInsets.all(4),
-                          margin: EdgeInsets.all(6),
-                          decoration: BoxDecoration(
-                              color: ColorResources.getSearchBg(context),
-                              borderRadius: BorderRadius.circular(3)),
-                          child: Text(_tag.key,
-                              style: robotoRegular.copyWith(
-                                  color:
-                                      ColorResources.getAccentColor(context))));
-                    })
-                    .toList()
-                    .cast<Widget>(),
-              ),
+              if (product.tags != null)
+                Wrap(
+                  children: product.tags
+                      .map((_tag) {
+                        return Container(
+                            padding: EdgeInsets.all(4),
+                            margin: EdgeInsets.all(6),
+                            decoration: BoxDecoration(
+                                color: ColorResources.getSearchBg(context),
+                                borderRadius: BorderRadius.circular(3)),
+                            child: Text(_tag.key,
+                                style: robotoRegular.copyWith(
+                                    color: ColorResources.getAccentColor(
+                                        context))));
+                      })
+                      .toList()
+                      .cast<Widget>(),
+                ),
 
               SizedBox(height: Dimensions.PADDING_SIZE_LARGE),
               //Ingredients
@@ -864,18 +867,32 @@ class DetailsPage extends StatelessWidget {
                       child: Column(
                         // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          CircleAvatar(
-                            radius: 20.0,
-                            child: Text(
-                              product.ingredients[index].name
-                                  .substring(0, 2)
-                                  .toUpperCase(),
-                              style: robotoRegular.copyWith(
-                                  color:
-                                      ColorResources.getAccentColor(context)),
+                          ClipOval(
+                            child: CircleAvatar(
+                              radius: MediaQuery.of(context).size.width * 0.078,
+                              child: product.ingredients[index].image != null &&
+                                      product.image[index].length != 0
+                                  ? Image.network(
+                                      '${AppConstants.BASE_URL}/storage/ingredient/${product.ingredients[index].image}',
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                      errorBuilder: (context, trace, image) {
+                                        return Image.asset(
+                                            Images.placeholder_image);
+                                      },
+                                    )
+                                  : Text(
+                                      product.ingredients[index].name
+                                          .substring(0, 2)
+                                          .toUpperCase(),
+                                      style: robotoRegular.copyWith(
+                                          color: ColorResources.getAccentColor(
+                                              context)),
+                                    ),
+                              backgroundColor:
+                                  ColorResources.getSearchBg(context),
                             ),
-                            backgroundColor:
-                                ColorResources.getSearchBg(context),
                           ),
                           SizedBox(
                             height: 5.0,

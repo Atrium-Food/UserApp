@@ -46,6 +46,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
   void initState() {
     super.initState();
     // selectedUrl = '${AppConstants.BASE_URL}/payment-mobile?customer_id=${widget.orderModel.userId}&order_id=${widget.orderModel.id}';
+
     selectedUrl =
         '${AppConstants.BASE_URL}/paywithrazorpay/${widget.orderModel.id}';
 
@@ -81,6 +82,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
               onLoadStart: (InAppWebViewController controller, Uri uri) {
                 String url = uri.toString();
                 print('Page started loading: $url');
+
                 setState(() {
                   _isLoading = false;
                 });
